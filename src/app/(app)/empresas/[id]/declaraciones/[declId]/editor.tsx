@@ -32,11 +32,13 @@ export function DeclaracionEditor({
   empresaId,
   renglones,
   valoresIniciales,
+  tarifaRegimen,
 }: {
   declId: string;
   empresaId: string;
   renglones: Renglon[];
   valoresIniciales: Valor[];
+  tarifaRegimen: number | null;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -67,8 +69,10 @@ export function DeclaracionEditor({
   const numerico = useMemo(() => {
     const base = new Map<number, number>();
     for (const [num, str] of valores) base.set(num, parseValor(str));
-    return computarRenglones(base);
-  }, [valores]);
+    return computarRenglones(base, {
+      tarifaRegimen: tarifaRegimen ?? undefined,
+    });
+  }, [valores, tarifaRegimen]);
 
   const totales = useMemo(() => {
     return {

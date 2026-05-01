@@ -20,12 +20,25 @@ export default async function DeclaracionEditorPage({
   const { data: declaracion } = await supabase
     .from("declaraciones")
     .select(
-      "id, ano_gravable, formato, estado, modo_carga, empresa:empresas(id, razon_social, nit)",
+      "id, ano_gravable, formato, estado, modo_carga, empresa:empresas(id, razon_social, nit, regimen_codigo)",
     )
     .eq("id", declId)
     .single();
 
   if (!declaracion) notFound();
+
+  // Tarifa del régimen para calcular renglón 84 automaticamente
+  const regimenCodigo = declaracion.empresa?.regimen_codigo;
+  let tarifaRegimen: number | null = null;
+  if (regimenCodigo) {
+    const { data: reg } = await supabase
+      .from("regimenes_tarifas")
+      .select("tarifa")
+      .eq("codigo", regimenCodigo)
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .maybeSingle();
+    tarifaRegimen = reg ? Number(reg.tarifa) : null;
+  }
 
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
@@ -83,6 +96,8 @@ export default async function DeclaracionEditorPage({
           empresaId={empresaId}
           ano={declaracion.ano_gravable}
           modo={declaracion.modo_carga as "manual" | "balance"}
+          tarifaRegimen={tarifaRegimen}
+          regimenCodigo={regimenCodigo ?? null}
         />
       )}
     </div>
@@ -94,11 +109,15 @@ async function Workspace({
   empresaId,
   ano,
   modo,
+  tarifaRegimen,
+  regimenCodigo,
 }: {
   declId: string;
   empresaId: string;
   ano: number;
   modo: "manual" | "balance";
+  tarifaRegimen: number | null;
+  regimenCodigo: string | null;
 }) {
   const supabase = await createClient();
 
@@ -229,6 +248,18 @@ async function Workspace({
             ? "Los valores vienen del balance importado. Puedes ajustar cualquier renglón manualmente; tu cambio sobreescribe el valor agregado."
             : "Digita los valores en cada renglón. Los miles se formatean automáticamente."}
         </p>
+        {tarifaRegimen != null ? (
+          <p className="mt-2 text-xs text-muted-foreground">
+            Régimen <span className="font-mono">{regimenCodigo}</span> · tarifa{" "}
+            <span className="font-mono">{(tarifaRegimen * 100).toFixed(2)}%</span>{" "}
+            (se aplica al renglón 84 sobre la renta líquida gravable)
+          </p>
+        ) : (
+          <p className="mt-2 text-xs text-destructive">
+            Esta empresa no tiene régimen tributario configurado. Edita la empresa para que el
+            renglón 84 (impuesto) se calcule automáticamente.
+          </p>
+        )}
         <div className="mt-6">
           <DeclaracionEditor
             declId={declId}
@@ -238,6 +269,7 @@ async function Workspace({
               numero: v.numero,
               valor: Number(v.valor),
             }))}
+            tarifaRegimen={tarifaRegimen}
           />
         </div>
       </div>

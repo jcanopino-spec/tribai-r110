@@ -19,7 +19,9 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Ganancias ocasionales
   83, // Ganancias ocasionales gravables = max(0, 80 - 81 - 82)
   // Liquidación privada
+  84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
+  97, // Impuesto neto de ganancias ocasionales = 83 × 10%
   94, // Impuesto neto de renta (sin adicionado) = 91 - 93 (+92 según descrip)
   96, // Impuesto neto de renta (con adicionado) = 94 + 95
   99, // Total impuesto a cargo = 96 + 97 - 98
@@ -49,14 +51,26 @@ const sum = (values: Map<number, number>, from: number, to: number) => {
   return s;
 };
 
+// Tarifa fija para Ganancias Ocasionales (Art. 313 E.T., reformas posteriores).
+// Para AG 2025 es 15% (Ley 2277 de 2022 elevó del 10% al 15%).
+export const TARIFA_GANANCIAS_OCASIONALES = 0.15;
+
+export type ComputeContext = {
+  /** Tarifa del régimen del declarante (0..1). Si no se provee, 84 queda en 0. */
+  tarifaRegimen?: number;
+};
+
 /**
  * Calcula los valores derivados a partir de los inputs.
  * No muta el mapa original. Devuelve un nuevo mapa con los computados aplicados.
  *
  * IMPORTANTE: el orden de cálculo importa porque hay computados que dependen
- * de otros computados (e.g., 79 usa 75; 96 usa 94; 111 usa 99 y 107).
+ * de otros computados (e.g., 79 usa 75; 84 usa 79; 91 usa 84; 96 usa 94).
  */
-export function computarRenglones(valores: Map<number, number>): Map<number, number> {
+export function computarRenglones(
+  valores: Map<number, number>,
+  ctx: ComputeContext = {},
+): Map<number, number> {
   const v = new Map(valores);
   const get = (n: number) => v.get(n) ?? 0;
 
@@ -85,6 +99,15 @@ export function computarRenglones(valores: Map<number, number>): Map<number, num
   v.set(83, Math.max(0, get(80) - get(81) - get(82)));
 
   // --- Liquidación privada ---
+  // 84 = Renta líquida gravable × tarifa del régimen
+  //   Si no hay tarifa configurada en la empresa, queda en 0 (input seguro).
+  if (typeof ctx.tarifaRegimen === "number" && ctx.tarifaRegimen > 0) {
+    v.set(84, Math.round(Math.max(0, get(79)) * ctx.tarifaRegimen));
+  } else if (!v.has(84)) {
+    v.set(84, 0);
+  }
+  // 97 = Ganancias ocasionales gravables × 15% (tarifa fija AG 2025)
+  v.set(97, Math.round(Math.max(0, get(83)) * TARIFA_GANANCIAS_OCASIONALES));
   // 91 = sum(84..90)  (Total impuesto sobre rentas líquidas gravables)
   v.set(91, sum(v, 84, 90));
   // 94 = 91 + 92 - 93  (descripción: "91 + 92 - 93")
@@ -125,7 +148,9 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   75: "72 − 74 (si positivo)",
   79: "max(75, 76) − 77 + 78",
   83: "80 − 81 − 82 (si positivo)",
+  84: "79 × tarifa del régimen",
   91: "Suma de 84 a 90",
+  97: "83 × 15% (tarifa GO)",
   94: "91 + 92 − 93",
   96: "94 + 95",
   99: "96 + 97 − 98",
