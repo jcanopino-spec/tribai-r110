@@ -7,6 +7,7 @@ import {
   RENGLONES_COMPUTADOS,
   FORMULAS_LEYENDA,
   computarRenglones,
+  normalizarSigno,
 } from "@/lib/forms/form110-compute";
 
 type Renglon = { numero: number; descripcion: string; seccion: string };
@@ -44,11 +45,13 @@ export function DeclaracionEditor({
   const [state, formAction, pending] = useActionState(action, initial);
 
   // Mapa de inputs (excluye computados) — los computados se derivan en cada render.
+  // Aplicamos normalizarSigno por seguridad: aunque DB ya esté normalizada,
+  // garantizamos que ningún renglón positivo se muestre con signo negativo.
   const initialMap = useMemo(() => {
     const m = new Map<number, string>();
     for (const v of valoresIniciales) {
       if (RENGLONES_COMPUTADOS.has(v.numero)) continue;
-      m.set(v.numero, formatValor(Number(v.valor)));
+      m.set(v.numero, formatValor(normalizarSigno(v.numero, Number(v.valor))));
     }
     return m;
   }, [valoresIniciales]);

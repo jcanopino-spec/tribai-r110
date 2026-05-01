@@ -73,7 +73,11 @@ export function computarRenglones(
   valores: Map<number, number>,
   ctx: ComputeContext = {},
 ): Map<number, number> {
-  const v = new Map(valores);
+  const v = new Map<number, number>();
+  // Normalizamos signo en la entrada: cualquier valor que llegue en un renglón
+  // que el formulario espera positivo se convierte a abs() antes de calcular.
+  // Esto cubre datos cargados antes de la normalización en escritura.
+  for (const [n, val] of valores) v.set(n, normalizarSigno(n, val));
   const get = (n: number) => v.get(n) ?? 0;
 
   // --- Patrimonio ---

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
+import { RENGLONES_COMPUTADOS, normalizarSigno } from "@/lib/forms/form110-compute";
 
 export type SaveValoresState = {
   error: string | null;
@@ -63,7 +63,7 @@ export async function saveValoresAction(
     const text = String(raw ?? "").replace(/\./g, "").replace(/,/g, ".");
     const valor = text === "" ? 0 : Number(text);
     if (!Number.isFinite(valor)) continue;
-    valores.push({ declaracion_id: declId, numero, valor });
+    valores.push({ declaracion_id: declId, numero, valor: normalizarSigno(numero, valor) });
   }
 
   if (valores.length === 0) {
