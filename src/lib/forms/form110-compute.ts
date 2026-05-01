@@ -14,6 +14,8 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Costos
   67, // Total costos y gastos deducibles = sum(62..66)
   // Renta
+  72, // Renta líquida ordinaria = max(0, 61 + 69 + 70 + 71 - 52..56 - 67 - 68)
+  73, // Pérdida líquida ordinaria (espejo de 72)
   75, // Renta líquida = max(0, 72 - 74)
   79, // Renta líquida gravable = max(75, 76) - 77 + 78
   // Ganancias ocasionales
@@ -87,6 +89,19 @@ export function computarRenglones(
   // --- Costos ---
   v.set(67, sum(v, 62, 66));
 
+  // --- Renta líquida ordinaria / pérdida ---
+  // 72 = max(0, 61 + 69 + 70 + 71 - 52 - 53 - 54 - 55 - 56 - 67 - 68)
+  // 73 = espejo de 72 (cuando es negativo)
+  // Las restas 52..56 son dividendos gravados a tarifas especiales que NO
+  // entran a la renta ordinaria (se gravan aparte). 67 son costos totales.
+  // 68 son inversiones ESAL del año.
+  const baseRenta =
+    get(61) + get(69) + get(70) + get(71) -
+    get(52) - get(53) - get(54) - get(55) - get(56) -
+    get(67) - get(68);
+  v.set(72, Math.max(0, baseRenta));
+  v.set(73, Math.max(0, -baseRenta));
+
   // --- Renta líquida ---
   // 75 = max(0, 72 - 74)
   v.set(75, Math.max(0, get(72) - get(74)));
@@ -145,6 +160,8 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   58: "Suma de 47 a 57",
   61: "58 − 59 − 60 (si positivo)",
   67: "Suma de 62 a 66",
+  72: "61 + 69 + 70 + 71 − (52..56) − 67 − 68 (si positivo)",
+  73: "Espejo de 72 (si la base es negativa)",
   75: "72 − 74 (si positivo)",
   79: "max(75, 76) − 77 + 78",
   83: "80 − 81 − 82 (si positivo)",
