@@ -3,7 +3,7 @@
 import * as XLSX from "xlsx";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
+import { RENGLONES_COMPUTADOS, normalizarSigno } from "@/lib/forms/form110-compute";
 
 export type CuentaSinMapear = {
   cuenta: string;
@@ -306,7 +306,7 @@ export async function uploadBalanceAction(
     const valoresPayload = [...aggByRenglon.entries()].map(([numero, valor]) => ({
       declaracion_id: declId,
       numero,
-      valor: Math.round(valor),
+      valor: Math.round(normalizarSigno(numero, valor)),
     }));
     const { error } = await supabase
       .from("form110_valores")
@@ -423,7 +423,7 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
     const valoresPayload = [...aggByRenglon.entries()].map(([numero, valor]) => ({
       declaracion_id: declId,
       numero,
-      valor: Math.round(valor),
+      valor: Math.round(normalizarSigno(numero, valor)),
     }));
     await supabase.from("form110_valores").insert(valoresPayload);
   }
