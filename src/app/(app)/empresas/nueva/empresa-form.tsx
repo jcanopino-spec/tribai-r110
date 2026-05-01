@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
+import { calcularDV } from "@/lib/nit";
 import { createEmpresaAction, type EmpresaState } from "../actions";
 
 const initial: EmpresaState = { error: null };
@@ -18,15 +19,23 @@ export function EmpresaForm({
   regimenes: { codigo: string; descripcion: string }[];
 }) {
   const [state, formAction, pending] = useActionState(createEmpresaAction, initial);
+  const [nit, setNit] = useState("");
+  const dv = useMemo(() => calcularDV(nit) ?? "", [nit]);
 
   return (
     <form action={formAction} className="space-y-5">
       <div className="grid grid-cols-[1fr_120px] gap-3">
         <Field label="NIT">
-          <Input name="nit" inputMode="numeric" required />
+          <Input
+            name="nit"
+            inputMode="numeric"
+            value={nit}
+            onChange={(e) => setNit(e.target.value.replace(/\D/g, ""))}
+            required
+          />
         </Field>
-        <Field label="DV">
-          <Input name="dv" maxLength={1} />
+        <Field label="DV (auto)">
+          <Input name="dv" value={dv} readOnly tabIndex={-1} className="bg-muted text-center" />
         </Field>
       </div>
 
