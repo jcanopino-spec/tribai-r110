@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SECCIONES_MAPEABLES } from "@/lib/forms/form110-2025";
 import { HomologarForm } from "./homologar-form";
 
 export const metadata = { title: "Homologar cuentas" };
@@ -54,11 +55,12 @@ export default async function HomologarPage({
     (a, b) => Math.abs(b.saldo) - Math.abs(a.saldo),
   );
 
-  // Renglones del 110 para el año
+  // Renglones del 110 mapeables (solo Patrimonio / Ingresos / Costos)
   const { data: renglones } = await supabase
     .from("form110_renglones")
     .select("numero, descripcion, seccion")
     .eq("ano_gravable", declaracion.ano_gravable)
+    .in("seccion", SECCIONES_MAPEABLES as unknown as string[])
     .order("numero");
 
   // Overrides existentes

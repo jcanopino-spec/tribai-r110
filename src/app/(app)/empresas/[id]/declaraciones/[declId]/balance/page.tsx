@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SECCIONES_MAPEABLES } from "@/lib/forms/form110-2025";
 import { BalanceView } from "./balance-view";
 
 export const metadata = { title: "Balance cargado" };
@@ -68,6 +69,7 @@ export default async function BalancePage({
       .from("form110_renglones")
       .select("numero, descripcion, seccion")
       .eq("ano_gravable", declaracion.ano_gravable)
+      .in("seccion", SECCIONES_MAPEABLES as unknown as string[])
       .order("numero"),
   ]);
 

@@ -1,6 +1,16 @@
 // Generado automaticamente desde el .xlsm fuente.
 // No editar a mano. Regenerar con scripts/build_form110_ts.py
 
+// Secciones donde tiene sentido mapear cuentas contables del balance de
+// prueba. Las otras (Datos informativos, Renta, Ganancias ocasionales,
+// Liquidación privada) son derivadas o informativas: no se mapean cuentas.
+export const SECCIONES_MAPEABLES = [
+  "Patrimonio",
+  "Ingresos",
+  "Costos y deducciones",
+] as const;
+export type SeccionMapeable = (typeof SECCIONES_MAPEABLES)[number];
+
 export type Form110Section =
   | "Costos y deducciones"
   | "Datos informativos"
