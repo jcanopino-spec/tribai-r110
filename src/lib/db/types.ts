@@ -323,6 +323,41 @@ export type Database = {
         }
         Relationships: []
       }
+      puc_overrides: {
+        Row: {
+          created_at: string
+          empresa_id: string
+          nombre: string | null
+          puc: string
+          renglon_110: number | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          empresa_id: string
+          nombre?: string | null
+          puc: string
+          renglon_110?: number | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          empresa_id?: string
+          nombre?: string | null
+          puc?: string
+          renglon_110?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "puc_overrides_empresa_id_fkey"
+            columns: ["empresa_id"]
+            isOneToOne: false
+            referencedRelation: "empresas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       regimenes_tarifas: {
         Row: {
           ano_gravable: number
