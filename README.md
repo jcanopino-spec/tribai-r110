@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tribai — R110
 
-## Getting Started
+Plataforma de liquidación tributaria para personas jurídicas en Colombia.
+Carga el balance de prueba, mapea cuentas al PUC y genera el formulario 110
+y los formatos asociados. Hasta 5 empresas por cliente.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router) + React 19 + TypeScript
+- Tailwind v4
+- Supabase (auth + Postgres) vía `@supabase/ssr`
+- Despliegue en Vercel · dominio `tribai.co`
+
+## Desarrollo
 
 ```bash
+cp .env.local.example .env.local   # rellenar valores de Supabase
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/                    # App Router
+  lib/
+    supabase/             # Clientes browser, server y middleware
+    utils.ts              # cn() helper
+    years.ts              # Años gravables soportados
+public/
+  brand/                  # Logos Tribai (SVG)
+```
 
-## Learn More
+## Año gravable
 
-To learn more about Next.js, take a look at the following resources:
+`NEXT_PUBLIC_DEFAULT_YEAR` define el año por defecto. Soporta 2024, 2025 y 2026
+desde el inicio; añadir años nuevos solo requiere extender `src/lib/years.ts`
+y publicar las tablas de tarifas/topes correspondientes.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Fase 0** (en curso): scaffolding + branding + Supabase + Vercel
+- **Fase 1**: ingeniería inversa del .xlsm (listas, fórmulas, reglas) → JSON/TS
+- **Fase 2**: modelo multi-tenant (cliente → empresas → declaraciones)
+- **Fase 3**: importador de balance de prueba con mapeo PUC → renglones
+- **Fase 4**: formulario 110 web con cálculos en vivo
+- **Fase 5**: formatos asociados (2516, anexos)
+- **Fase 6**: exportación PDF + manual con estilo propio

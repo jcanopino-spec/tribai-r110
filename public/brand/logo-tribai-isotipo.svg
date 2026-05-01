@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Tribai Isotipo — fondo claro -->
+  <!-- Triangulo: estabilidad, precision, estructura -->
+  <path d="M32 6L58 54H6L32 6Z" stroke="#0A1628" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+
+  <!-- Nodos de esquina: fuentes de conocimiento -->
+  <circle cx="32" cy="14" r="2.5" fill="#0A1628"/>
+  <circle cx="18" cy="44" r="2.5" fill="#0A1628"/>
+  <circle cx="46" cy="44" r="2.5" fill="#0A1628"/>
+
+  <!-- Nodo central: la inteligencia (gold) -->
+  <circle cx="32" cy="34" r="3" fill="#C4952A"/>
+
+  <!-- Conexiones primarias: red de conocimiento -->
+  <line x1="32" y1="14" x2="32" y2="31" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="32" y1="34" x2="18" y2="44" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="32" y1="34" x2="46" y2="44" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Conexiones secundarias: profundidad de red -->
+  <line x1="32" y1="14" x2="18" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+  <line x1="32" y1="14" x2="46" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+  <line x1="18" y1="44" x2="46" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+</svg>

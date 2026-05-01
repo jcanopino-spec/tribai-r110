@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Tribai Favicon — isotipo compacto -->
+  <path d="M16 3L29 27H3L16 3Z" stroke="#0A1628" stroke-width="2" stroke-linejoin="round" fill="none"/>
+
+  <!-- Nodos de esquina (compactos) -->
+  <circle cx="16" cy="7" r="1.8" fill="#0A1628"/>
+  <circle cx="9" cy="23" r="1.8" fill="#0A1628"/>
+  <circle cx="23" cy="23" r="1.8" fill="#0A1628"/>
+
+  <!-- Nodo central gold -->
+  <circle cx="16" cy="17" r="2.2" fill="#C4952A"/>
+
+  <!-- Conexiones primarias -->
+  <line x1="16" y1="7" x2="16" y2="14.8" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="17" x2="9" y2="23" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="17" x2="23" y2="23" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

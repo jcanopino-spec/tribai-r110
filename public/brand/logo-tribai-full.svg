@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" fill="none">
+  <!-- Tribai Logo completo — fondo claro -->
+
+  <!-- Isotipo -->
+  <g>
+    <path d="M32 6L58 54H6L32 6Z" stroke="#0A1628" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+    <circle cx="32" cy="14" r="2.5" fill="#0A1628"/>
+    <circle cx="18" cy="44" r="2.5" fill="#0A1628"/>
+    <circle cx="46" cy="44" r="2.5" fill="#0A1628"/>
+    <circle cx="32" cy="34" r="3" fill="#C4952A"/>
+    <line x1="32" y1="14" x2="32" y2="31" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="32" y1="34" x2="18" y2="44" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="32" y1="34" x2="46" y2="44" stroke="#0A1628" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="32" y1="14" x2="18" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+    <line x1="32" y1="14" x2="46" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+    <line x1="18" y1="44" x2="46" y2="44" stroke="#0A1628" stroke-width="0.75" stroke-linecap="round" opacity="0.4"/>
+  </g>
+
+  <!-- Logotipo "tribai.co" -->
+  <text x="72" y="42" font-family="Inter, -apple-system, 'Segoe UI', system-ui, sans-serif" font-weight="700" letter-spacing="-0.5">
+    <tspan font-size="30" fill="#0A1628">trib</tspan><tspan font-size="30" fill="#0066FF">ai</tspan><tspan font-size="18" fill="#9CA3AF" font-weight="400">.co</tspan>
+  </text>
+</svg>

@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Tribai design system — Harvey.ai inspired
+   Warm grays only. Zero saturated brand color.
+   ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #0f0e0d;
+  --card: #ffffff;
+  --card-foreground: #0f0e0d;
+  --muted: #f2f1f0;
+  --muted-foreground: #706d66;
+  --border: #e5e5e3;
+  --border-secondary: #cccac6;
+  --primary: #0f0e0d;
+  --primary-foreground: #fafaf9;
+  --accent: #f2f1f0;
+  --accent-foreground: #0f0e0d;
+  --ring: #0f0e0d;
+  --destructive: #dc2626;
+  --success: #16a34a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0e0d;
+    --foreground: #fafaf9;
+    --card: #1f1d1a;
+    --card-foreground: #fafaf9;
+    --muted: #1f1d1a;
+    --muted-foreground: #8f8b85;
+    --border: #33312c;
+    --border-secondary: #524f49;
+    --primary: #fafaf9;
+    --primary-foreground: #0f0e0d;
+    --accent: #1f1d1a;
+    --accent-foreground: #fafaf9;
+    --ring: #fafaf9;
+    --destructive: #ef4444;
+    --success: #22c55e;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-secondary: var(--border-secondary);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+
+  --font-serif: var(--font-playfair);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
 }
+
+h1, h2, h3 {
+  font-family: var(--font-playfair), ui-serif, Georgia, serif;
+  font-feature-settings: "liga" on;
+  text-wrap: pretty;
+}
+
+.font-serif { font-family: var(--font-playfair), ui-serif, Georgia, serif; }
+.font-mono  { font-family: var(--font-geist-mono), ui-monospace, monospace; }
