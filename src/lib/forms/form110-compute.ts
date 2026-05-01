@@ -187,6 +187,39 @@ export function computarRenglones(
 }
 
 /**
+ * Notas contextuales de algunos renglones (regulación, alcance, advertencias).
+ * Aparecen como tooltip o subtítulo gris bajo la descripción del renglón.
+ */
+export const NOTAS_RENGLON: Record<number, string> = {
+  76:
+    "Para AG 2024+ la renta presuntiva es 0% (Ley 2277/2022 mantuvo la base en 0). " +
+    "Solo digitar si tienes obligaciones específicas que la mantengan.",
+  85:
+    "Sobretasa: aplica a entidades financieras (Art. 240 par. 1° E.T.), extractoras de petróleo, " +
+    "carbón y a generadoras hidroeléctricas. No aplica a la mayoría de PJ del régimen ordinario.",
+  86:
+    "Dividendos gravados a la tarifa del 10%. Solo si tienes dividendos en esa categoría específica.",
+  87:
+    "Dividendos gravados a la tarifa del Art. 245 E.T. (no residentes / 35%). Categoría especial.",
+  88:
+    "Dividendos gravados a la tarifa del 20% (Ley 1819/2016 antes de Ley 2277/2022). Casos transitorios.",
+  89:
+    "Dividendos gravados a la tarifa del 35%. Aplicable según condiciones del Art. 240 E.T.",
+  90:
+    "Dividendos gravados a la tarifa del 33% (categoría histórica). Solo si aplica.",
+  92:
+    "Valor adicional (VAA): ajustes positivos al impuesto sobre la renta. Casos especiales.",
+  95:
+    "Impuesto a adicionar (IA): ajustes complementarios. Casos especiales.",
+  100:
+    "Inversión en obras por impuestos (Modalidad de pago 1): hasta 50% del impuesto neto. Decreto 1915/2017.",
+  101:
+    "Descuento efectivo por obras por impuestos (Modalidad de pago 2): por la inversión efectivamente girada.",
+  102:
+    "Crédito fiscal por inversión en investigación, desarrollo e innovación (Art. 256-1 E.T.).",
+};
+
+/**
  * Pequeña descripción de cada fórmula para mostrar como subtítulo del renglón.
  */
 export const FORMULAS_LEYENDA: Record<number, string> = {
@@ -212,6 +245,96 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   112: "99 + 108 + 110 + 113 − (restas de 111)",
   114: "Diferencia (saldo a favor) si las restas exceden",
 };
+
+// ============================================================
+// Validaciones del 110
+// ============================================================
+
+export type Validacion = {
+  nivel: "info" | "warn" | "error";
+  renglon?: number;
+  mensaje: string;
+};
+
+export function validarFormulario(
+  numerico: Map<number, number>,
+  ctx: { tarifaRegimen?: number | null; impuestoNetoAnterior?: number; aniosDeclarando?: string } = {},
+): Validacion[] {
+  const get = (n: number) => numerico.get(n) ?? 0;
+  const out: Validacion[] = [];
+
+  if (ctx.tarifaRegimen == null) {
+    out.push({
+      nivel: "error",
+      mensaje: "Esta empresa no tiene régimen tributario configurado. El renglón 84 quedará en 0.",
+    });
+  }
+
+  if (get(44) < get(45)) {
+    out.push({
+      nivel: "warn",
+      renglon: 46,
+      mensaje: "Patrimonio bruto (44) es menor que pasivos (45). El patrimonio líquido queda en 0.",
+    });
+  }
+
+  if (get(67) > get(58)) {
+    out.push({
+      nivel: "info",
+      renglon: 73,
+      mensaje: "Los costos (67) superan los ingresos brutos (58). Probablemente hay pérdida líquida.",
+    });
+  }
+
+  if (get(73) > 0) {
+    out.push({
+      nivel: "info",
+      renglon: 73,
+      mensaje:
+        "Tienes pérdida líquida del ejercicio. Puedes compensar contra futuras rentas líquidas vía renglón 74.",
+    });
+  }
+
+  if (get(72) > 0 && get(74) > get(72)) {
+    out.push({
+      nivel: "warn",
+      renglon: 74,
+      mensaje: "Compensaciones (74) superan la renta líquida (72). Solo se compensa hasta el monto disponible.",
+    });
+  }
+
+  if (get(79) === 0 && get(76) === 0 && get(72) === 0) {
+    out.push({
+      nivel: "info",
+      renglon: 79,
+      mensaje: "No hay renta líquida gravable. El impuesto será 0.",
+    });
+  }
+
+  if (get(99) > 0 && get(107) === 0 && get(103) === 0 && get(104) === 0) {
+    out.push({
+      nivel: "info",
+      renglon: 111,
+      mensaje:
+        "Tienes impuesto a cargo pero no registras retenciones, anticipos ni saldo a favor. Verifica antes de cerrar.",
+    });
+  }
+
+  if (
+    ctx.aniosDeclarando &&
+    ctx.aniosDeclarando !== "primero" &&
+    (ctx.impuestoNetoAnterior ?? 0) === 0
+  ) {
+    out.push({
+      nivel: "warn",
+      renglon: 108,
+      mensaje:
+        "El impuesto neto del año gravable anterior está en 0. El anticipo se calcula como 50% del impuesto actual / 2; verifica si es correcto.",
+    });
+  }
+
+  return out;
+}
 
 /**
  * Aplica las reglas del 110 al valor agregado de un renglón:

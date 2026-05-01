@@ -12,9 +12,12 @@ import {
 import {
   RENGLONES_COMPUTADOS,
   FORMULAS_LEYENDA,
+  NOTAS_RENGLON,
   computarRenglones,
   normalizarSigno,
+  validarFormulario,
 } from "@/lib/forms/form110-compute";
+import Link from "next/link";
 
 type Renglon = { numero: number; descripcion: string; seccion: string };
 type Valor = { numero: number; valor: number };
@@ -117,8 +120,62 @@ export function DeclaracionEditor({
     };
   }, [numerico]);
 
+  const validaciones = useMemo(
+    () =>
+      validarFormulario(numerico, {
+        tarifaRegimen,
+        impuestoNetoAnterior: parseValor(impAnterior),
+        aniosDeclarando: anios,
+      }),
+    [numerico, tarifaRegimen, impAnterior, anios],
+  );
+
   return (
     <form action={formAction}>
+      {validaciones.length > 0 ? (
+        <section className="mb-8 space-y-2">
+          {validaciones.map((vw, i) => (
+            <div
+              key={i}
+              className={`flex items-start gap-3 rounded-md border px-3 py-2 text-sm ${
+                vw.nivel === "error"
+                  ? "border-destructive/40 bg-destructive/5 text-destructive"
+                  : vw.nivel === "warn"
+                    ? "border-amber-500/40 bg-amber-500/5"
+                    : "border-border bg-muted/30"
+              }`}
+            >
+              <span
+                className={`mt-0.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${
+                  vw.nivel === "error"
+                    ? "bg-destructive"
+                    : vw.nivel === "warn"
+                      ? "bg-amber-500"
+                      : "bg-muted-foreground"
+                }`}
+              />
+              <p>
+                {vw.renglon ? (
+                  <span className="font-mono mr-1">R{vw.renglon}</span>
+                ) : null}
+                {vw.mensaje}
+              </p>
+            </div>
+          ))}
+        </section>
+      ) : null}
+
+      <div className="mb-6 flex justify-end">
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Imprimir / PDF →
+        </Link>
+      </div>
+
       <section className="mb-10 border border-border p-5">
         <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
           Datos para el anticipo · renglón 108
@@ -190,6 +247,7 @@ export function DeclaracionEditor({
                     const valor = isComputado
                       ? numerico.get(r.numero) ?? 0
                       : valores.get(r.numero) ?? "";
+                    const nota = NOTAS_RENGLON[r.numero];
                     return (
                       <tr
                         key={r.numero}
@@ -202,6 +260,9 @@ export function DeclaracionEditor({
                             <span className="ml-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
                               · {FORMULAS_LEYENDA[r.numero] ?? "calculado"}
                             </span>
+                          ) : null}
+                          {nota ? (
+                            <p className="mt-1 max-w-2xl text-xs text-muted-foreground">{nota}</p>
                           ) : null}
                         </td>
                         <td className="px-2 py-1 text-right align-top">
