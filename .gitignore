@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# extraction intermediate (regenerable; only commit final clean catalogs)
+data/extracted/00_inspection.json
+data/extracted/*_raw.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

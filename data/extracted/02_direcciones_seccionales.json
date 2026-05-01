@@ -1,0 +1,210 @@
+[
+  {
+    "codigo": "0",
+    "nombre": "Nivel Central"
+  },
+  {
+    "codigo": "1",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Armenia"
+  },
+  {
+    "codigo": "2",
+    "nombre": "Dirección Seccional de Impuestos de Barranquilla"
+  },
+  {
+    "codigo": "3",
+    "nombre": "Dirección Seccional de Aduanas de Bogotá"
+  },
+  {
+    "codigo": "4",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Bucaramanga"
+  },
+  {
+    "codigo": "5",
+    "nombre": "Dirección Seccional de Impuestos de Cali"
+  },
+  {
+    "codigo": "6",
+    "nombre": "Dirección Seccional de Impuestos de Cartagena"
+  },
+  {
+    "codigo": "7",
+    "nombre": "Dirección Seccional de Impuestos de Cúcuta"
+  },
+  {
+    "codigo": "8",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Girardot"
+  },
+  {
+    "codigo": "9",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Ibagué"
+  },
+  {
+    "codigo": "10",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Manizales"
+  },
+  {
+    "codigo": "11",
+    "nombre": "Dirección Seccional de Impuestos de Medellín"
+  },
+  {
+    "codigo": "12",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Montería"
+  },
+  {
+    "codigo": "13",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Neiva"
+  },
+  {
+    "codigo": "14",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Pasto"
+  },
+  {
+    "codigo": "15",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Palmira"
+  },
+  {
+    "codigo": "16",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Pereira"
+  },
+  {
+    "codigo": "17",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Popayán"
+  },
+  {
+    "codigo": "18",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Quibdó"
+  },
+  {
+    "codigo": "19",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Santa Marta"
+  },
+  {
+    "codigo": "20",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Tunja"
+  },
+  {
+    "codigo": "21",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Tuluá"
+  },
+  {
+    "codigo": "22",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Villavicencio"
+  },
+  {
+    "codigo": "23",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Sincelejo"
+  },
+  {
+    "codigo": "24",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Valledupar"
+  },
+  {
+    "codigo": "25",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Riohacha"
+  },
+  {
+    "codigo": "26",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Sogamoso"
+  },
+  {
+    "codigo": "27",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de San Andrés"
+  },
+  {
+    "codigo": "28",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Florencia"
+  },
+  {
+    "codigo": "29",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Barrancabermeja"
+  },
+  {
+    "codigo": "31",
+    "nombre": "Dirección Seccional de Impuestos de Grandes Contribuyentes"
+  },
+  {
+    "codigo": "32",
+    "nombre": "Dirección Seccional de Impuestos de Bogotá"
+  },
+  {
+    "codigo": "34",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Arauca"
+  },
+  {
+    "codigo": "35",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Buenaventura"
+  },
+  {
+    "codigo": "36",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Cartago"
+  },
+  {
+    "codigo": "37",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Ipiales"
+  },
+  {
+    "codigo": "38",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Leticia"
+  },
+  {
+    "codigo": "39",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Maicao"
+  },
+  {
+    "codigo": "40",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Tumaco"
+  },
+  {
+    "codigo": "41",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Urabá"
+  },
+  {
+    "codigo": "42",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Puerto Carreño"
+  },
+  {
+    "codigo": "43",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Inírida"
+  },
+  {
+    "codigo": "44",
+    "nombre": "Dirección Seccional de Impuestos y Aduanas de Yopal"
+  },
+  {
+    "codigo": "45",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas Mitú"
+  },
+  {
+    "codigo": "46",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Puerto Asís"
+  },
+  {
+    "codigo": "48",
+    "nombre": "Dirección Seccional de Aduanas de Cartagena"
+  },
+  {
+    "codigo": "78",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de San José de Guaviare"
+  },
+  {
+    "codigo": "86",
+    "nombre": "Dirección Seccional Delegada de Impuestos y Aduanas de Pamplona"
+  },
+  {
+    "codigo": "87",
+    "nombre": "Dirección Seccional de Aduanas de Barranquilla"
+  },
+  {
+    "codigo": "88",
+    "nombre": "Dirección Seccional de Aduanas de Cali"
+  },
+  {
+    "codigo": "89",
+    "nombre": "Dirección Seccional de Aduanas de Cúcuta"
+  },
+  {
+    "codigo": "90",
+    "nombre": "Dirección Seccional de Aduanas de Medellín"
+  }
+]

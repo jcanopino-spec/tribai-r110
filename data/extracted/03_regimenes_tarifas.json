@@ -1,0 +1,117 @@
+[
+  {
+    "codigo": "01",
+    "descripcion": "General - Persona jurídica del régimen ordinario (Art. 240 E.T.)",
+    "tarifa": 0.35
+  },
+  {
+    "codigo": "02",
+    "descripcion": "Cooperativas (Art. 19-4 E.T.)",
+    "tarifa": 0.2
+  },
+  {
+    "codigo": "03",
+    "descripcion": "ZESE (Art. 240 E.T. – DUR 1625/2016 art 1.2.1.23.2.5.)",
+    "tarifa": 0.0
+  },
+  {
+    "codigo": "04",
+    "descripcion": "Usuarios de Zona Franca Comercial (Parágrafo 1 Art. 240 - 1 E.T.)",
+    "tarifa": 0.35
+  },
+  {
+    "codigo": "05",
+    "descripcion": "Usuarios de Zona Franca no comercial (Art. 240 - 1 E.T.)",
+    "tarifa": 0.2
+  },
+  {
+    "codigo": "06",
+    "descripcion": "Usuarios de nuevas Zonas Francas no comerciales de Cúcuta creadas entre enero de 2017 y diciembre 2019 (Parágrafo 4 Art. 240 - 1 E.T.)",
+    "tarifa": 0.15
+  },
+  {
+    "codigo": "07",
+    "descripcion": "Personas naturales no residentes (Art. 247 E.T.)",
+    "tarifa": 0.35
+  },
+  {
+    "codigo": "08",
+    "descripcion": "Régimen tributario especial (Art. 356 E.T.)",
+    "tarifa": 0.2
+  },
+  {
+    "codigo": "09",
+    "descripcion": "Numerales 3, 4, y 5 del art. 207-2 E.T. (Parágrafo 1 art. 240 E.T.)",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "10",
+    "descripcion": "Empresas industriales y comerciales del Estado y sociedades de economía mixta del orden departamental, municipal y distrital, con actividades de suerte, azar, licores y alcoholes (Parágrafo 2 art. 240 E.T.)",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "11",
+    "descripcion": "Empresas editoriales (Parágrafo 4 art. 240 E.T.)",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "12",
+    "descripcion": "Literales del Parágrafo 5 art. 240 E.T. (Parágrafo 5 art. 240 E.T.)",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "13",
+    "descripcion": "Dividendos y participaciones gravadas provenientes de distribución de utilidades gravadas conforme con lo dispuesto en parágrafo 2° del artículo 49. (Personas naturales y sucesiones ilíquidas de causantes no residentes). (Numeral 2 del Parágrafo 1 del art. 1.2.1.10.3. – DUR 1625 de 2016.)",
+    "tarifa": 0.33
+  },
+  {
+    "codigo": "14",
+    "descripcion": "La tarifa prevista en el artículo 245 del E.T. antes de la modificación introducida por el artículo 7 de la Ley 1819 del 2016 (DUR 1625/ 2016 - Parágrafo 1, art. 1.2.1.10.3. Numeral 2)",
+    "tarifa": 0.33
+  },
+  {
+    "codigo": "15",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 1",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "16",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 2",
+    "tarifa": 0.09
+  },
+  {
+    "codigo": "17",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 3",
+    "tarifa": 0.145
+  },
+  {
+    "codigo": "18",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 4",
+    "tarifa": 0.2
+  },
+  {
+    "codigo": "19",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 5",
+    "tarifa": 0.255
+  },
+  {
+    "codigo": "20",
+    "descripcion": "Persona jurídica del régimen ordinario de la Ley 1429 de 2010 Año 6 y siguientes",
+    "tarifa": 0.35
+  },
+  {
+    "codigo": "21",
+    "descripcion": "Persona jurídica, micro y pequeñas empresas de las ZOMAC",
+    "tarifa": 0.25
+  },
+  {
+    "codigo": "22",
+    "descripcion": "Persona jurídica, medianas y grandes empresas de las ZOMAC",
+    "tarifa": 0.26249999999999996
+  },
+  {
+    "codigo": "23",
+    "descripcion": "Persona jurídica, declaración de ingresos y patrimonio",
+    "tarifa": 0.0
+  }
+]
