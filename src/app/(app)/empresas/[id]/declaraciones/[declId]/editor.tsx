@@ -129,6 +129,8 @@ export function DeclaracionEditor({
       }),
     [numerico, tarifaRegimen, impAnterior, anios],
   );
+  const errores = validaciones.filter((v) => v.nivel === "error").length;
+  const warns = validaciones.filter((v) => v.nivel === "warn").length;
 
   return (
     <form action={formAction}>
@@ -165,7 +167,22 @@ export function DeclaracionEditor({
         </section>
       ) : null}
 
-      <div className="mb-6 flex justify-end">
+      <div className="mb-6 flex flex-wrap justify-end gap-2">
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
+          className={`inline-flex h-9 items-center justify-center rounded-full border px-4 text-xs ${
+            errores > 0
+              ? "border-destructive/60 bg-destructive/5 text-destructive hover:bg-destructive/10"
+              : warns > 0
+                ? "border-amber-500/60 bg-amber-500/5 hover:bg-amber-500/10"
+                : "border-border-secondary hover:bg-muted"
+          }`}
+        >
+          Validaciones
+          {errores > 0 ? <span className="ml-2 font-mono">· {errores} err</span> : null}
+          {warns > 0 ? <span className="ml-2 font-mono">· {warns} warn</span> : null}
+          {errores === 0 && warns === 0 ? <span className="ml-2 font-mono">· OK</span> : null}
+        </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
           target="_blank"

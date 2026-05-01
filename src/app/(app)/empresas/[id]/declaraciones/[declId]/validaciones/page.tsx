@@ -1,0 +1,224 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+import {
+  computarRenglones,
+  normalizarSigno,
+  validarFormulario,
+  resumenValidaciones,
+  type Validacion,
+} from "@/lib/forms/form110-compute";
+import { FinalizarButton } from "./finalizar-button";
+
+export const metadata = { title: "Validaciones" };
+
+const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+const CATEGORIAS: { key: Validacion["categoria"]; label: string; descripcion: string }[] = [
+  { key: "configuracion", label: "Configuración", descripcion: "Ajustes de empresa y declaración." },
+  { key: "cuadre", label: "Cuadre contable", descripcion: "Activos, pasivos, patrimonio, saldos." },
+  { key: "fiscal", label: "Reglas fiscales", descripcion: "Topes y restricciones del Estatuto Tributario." },
+  { key: "sanidad", label: "Sanidad de datos", descripcion: "Posibles errores de digitación o signo." },
+  { key: "completitud", label: "Completitud", descripcion: "Datos esperados que faltan." },
+];
+
+export default async function ValidacionesPage({
+  params,
+}: {
+  params: Promise<{ id: string; declId: string }>;
+}) {
+  const { id: empresaId, declId } = await params;
+  const supabase = await createClient();
+
+  const { data: declaracion } = await supabase
+    .from("declaraciones")
+    .select(
+      "id, empresa_id, ano_gravable, formato, estado, impuesto_neto_anterior, anios_declarando",
+    )
+    .eq("id", declId)
+    .single();
+  if (!declaracion) notFound();
+
+  const { data: empresa } = await supabase
+    .from("empresas")
+    .select("id, razon_social, regimen_codigo")
+    .eq("id", declaracion.empresa_id)
+    .single();
+  if (!empresa) notFound();
+
+  let tarifaRegimen: number | null = null;
+  if (empresa.regimen_codigo) {
+    const { data: reg } = await supabase
+      .from("regimenes_tarifas")
+      .select("tarifa")
+      .eq("codigo", empresa.regimen_codigo)
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .maybeSingle();
+    tarifaRegimen = reg ? Number(reg.tarifa) : null;
+  }
+
+  const { data: valores } = await supabase
+    .from("form110_valores")
+    .select("numero, valor")
+    .eq("declaracion_id", declId);
+
+  const inputs = new Map<number, number>();
+  for (const v of valores ?? []) inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
+  const numerico = computarRenglones(inputs, {
+    tarifaRegimen: tarifaRegimen ?? undefined,
+    impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
+    aniosDeclarando: declaracion.anios_declarando as
+      | "primero"
+      | "segundo"
+      | "tercero_o_mas"
+      | undefined,
+  });
+
+  const validaciones = validarFormulario(numerico, {
+    tarifaRegimen,
+    impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
+    aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
+  });
+
+  const resumen = resumenValidaciones(validaciones);
+  const porCategoria = new Map<Validacion["categoria"], Validacion[]>();
+  for (const v of validaciones) {
+    const arr = porCategoria.get(v.categoria) ?? [];
+    arr.push(v);
+    porCategoria.set(v.categoria, arr);
+  }
+
+  return (
+    <div>
+      <Link
+        href={`/empresas/${empresaId}/declaraciones/${declId}`}
+        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
+      >
+        ← Volver al editor
+      </Link>
+
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+            {empresa.razon_social} · AG {declaracion.ano_gravable} · {declaracion.estado}
+          </p>
+          <h1 className="mt-2 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
+            Validaciones
+          </h1>
+        </div>
+      </div>
+
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <Stat label="Errores" value={resumen.errores} alert={resumen.errores > 0} />
+        <Stat label="Advertencias" value={resumen.advertencias} warn={resumen.advertencias > 0} />
+        <Stat label="Informativas" value={resumen.informativas} muted />
+      </div>
+
+      <div className="mt-10">
+        <FinalizarButton
+          declId={declId}
+          empresaId={empresaId}
+          estado={declaracion.estado}
+          bloqueado={resumen.bloqueante}
+        />
+        {resumen.bloqueante ? (
+          <p className="mt-3 text-sm text-destructive">
+            Tienes {resumen.errores} error{resumen.errores !== 1 ? "es" : ""} bloqueante{resumen.errores !== 1 ? "s" : ""}. Resuélvelos antes de finalizar.
+          </p>
+        ) : null}
+      </div>
+
+      <div className="mt-12 space-y-10">
+        {CATEGORIAS.map((cat) => {
+          const items = porCategoria.get(cat.key);
+          if (!items || items.length === 0) return null;
+          return (
+            <section key={cat.key}>
+              <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+                {cat.label}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">{cat.descripcion}</p>
+              <div className="mt-4 space-y-2">
+                {items.map((vw, i) => (
+                  <div
+                    key={i}
+                    className={`flex items-start gap-3 rounded-md border px-4 py-3 text-sm ${
+                      vw.nivel === "error"
+                        ? "border-destructive/40 bg-destructive/5"
+                        : vw.nivel === "warn"
+                          ? "border-amber-500/40 bg-amber-500/5"
+                          : "border-border bg-muted/30"
+                    }`}
+                  >
+                    <span
+                      className={`mt-1 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${
+                        vw.nivel === "error"
+                          ? "bg-destructive"
+                          : vw.nivel === "warn"
+                            ? "bg-amber-500"
+                            : "bg-muted-foreground"
+                      }`}
+                    />
+                    <div className="flex-1">
+                      {vw.renglon ? (
+                        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                          Renglón {vw.renglon} ·{" "}
+                          {numerico.get(vw.renglon) !== undefined
+                            ? FMT.format(numerico.get(vw.renglon)!)
+                            : "—"}
+                        </p>
+                      ) : null}
+                      <p className="mt-0.5">{vw.mensaje}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+
+        {validaciones.length === 0 ? (
+          <div className="border border-success/40 bg-success/5 p-8 text-center">
+            <p className="font-serif text-2xl leading-[1.1]">Todo en orden</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              No detectamos errores ni advertencias. Puedes finalizar la declaración.
+            </p>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  alert,
+  warn,
+  muted,
+}: {
+  label: string;
+  value: number;
+  alert?: boolean;
+  warn?: boolean;
+  muted?: boolean;
+}) {
+  const cls = alert
+    ? "border-destructive/40 bg-destructive/5"
+    : warn
+      ? "border-amber-500/40 bg-amber-500/5"
+      : "border-border";
+  const valueCls = alert
+    ? "text-destructive"
+    : warn
+      ? "text-amber-600 dark:text-amber-500"
+      : muted
+        ? "text-muted-foreground"
+        : "";
+  return (
+    <div className={`border p-5 ${cls}`}>
+      <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">{label}</p>
+      <p className={`mt-1 font-serif text-3xl tracking-[-0.02em] ${valueCls}`}>{value}</p>
+    </div>
+  );
+}

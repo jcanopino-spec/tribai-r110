@@ -48,6 +48,21 @@ export async function saveDatosAnticipoAction(
   revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
 }
 
+export async function setEstadoDeclaracionAction(
+  declId: string,
+  empresaId: string,
+  estado: "borrador" | "finalizada",
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("declaraciones")
+    .update({ estado, updated_at: new Date().toISOString() })
+    .eq("id", declId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/validaciones`);
+}
+
 export async function clearModoCargaAction(declId: string, empresaId: string) {
   const supabase = await createClient();
   const { error } = await supabase

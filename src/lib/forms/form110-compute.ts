@@ -254,6 +254,7 @@ export type Validacion = {
   nivel: "info" | "warn" | "error";
   renglon?: number;
   mensaje: string;
+  categoria: "configuracion" | "cuadre" | "sanidad" | "completitud" | "fiscal";
 };
 
 export function validarFormulario(
@@ -263,31 +264,48 @@ export function validarFormulario(
   const get = (n: number) => numerico.get(n) ?? 0;
   const out: Validacion[] = [];
 
+  // Configuración
   if (ctx.tarifaRegimen == null) {
     out.push({
+      categoria: "configuracion",
       nivel: "error",
       mensaje: "Esta empresa no tiene régimen tributario configurado. El renglón 84 quedará en 0.",
     });
   }
 
+  // Cuadre patrimonial
   if (get(44) < get(45)) {
     out.push({
+      categoria: "cuadre",
       nivel: "warn",
       renglon: 46,
       mensaje: "Patrimonio bruto (44) es menor que pasivos (45). El patrimonio líquido queda en 0.",
     });
   }
 
-  if (get(67) > get(58)) {
+  if (get(44) === 0 && get(45) === 0) {
     out.push({
+      categoria: "completitud",
+      nivel: "warn",
+      renglon: 44,
+      mensaje: "No tienes patrimonio bruto ni pasivos. Verifica el balance importado.",
+    });
+  }
+
+  // Cuadre operativo (ingresos / costos / renta)
+  if (get(67) > get(58) && get(58) > 0) {
+    out.push({
+      categoria: "sanidad",
       nivel: "info",
       renglon: 73,
-      mensaje: "Los costos (67) superan los ingresos brutos (58). Probablemente hay pérdida líquida.",
+      mensaje:
+        "Los costos (67) superan los ingresos brutos (58). Probablemente hay pérdida líquida.",
     });
   }
 
   if (get(73) > 0) {
     out.push({
+      categoria: "fiscal",
       nivel: "info",
       renglon: 73,
       mensaje:
@@ -297,22 +315,94 @@ export function validarFormulario(
 
   if (get(72) > 0 && get(74) > get(72)) {
     out.push({
+      categoria: "fiscal",
       nivel: "warn",
       renglon: 74,
-      mensaje: "Compensaciones (74) superan la renta líquida (72). Solo se compensa hasta el monto disponible.",
+      mensaje:
+        "Compensaciones (74) superan la renta líquida (72). Solo se compensa hasta el monto disponible.",
     });
   }
 
+  // Renta exenta no puede superar renta líquida
+  if (get(77) > Math.max(get(75), get(76))) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "error",
+      renglon: 77,
+      mensaje:
+        "Renta exenta (77) supera el mayor entre renta líquida (75) y presuntiva (76). Verifica.",
+    });
+  }
+
+  // Devoluciones razonables vs ingresos
+  if (get(59) > get(58)) {
+    out.push({
+      categoria: "sanidad",
+      nivel: "warn",
+      renglon: 59,
+      mensaje:
+        "Devoluciones, rebajas y descuentos (59) superan los ingresos brutos (58). Verifica el signo y los datos.",
+    });
+  }
+
+  // INCRNGO razonable vs ingresos
+  if (get(60) > get(58)) {
+    out.push({
+      categoria: "sanidad",
+      nivel: "warn",
+      renglon: 60,
+      mensaje:
+        "Ingresos no constitutivos (60) superan los ingresos brutos (58). Verifica el dato.",
+    });
+  }
+
+  // Sin renta gravable
   if (get(79) === 0 && get(76) === 0 && get(72) === 0) {
     out.push({
+      categoria: "completitud",
       nivel: "info",
       renglon: 79,
       mensaje: "No hay renta líquida gravable. El impuesto será 0.",
     });
   }
 
+  // Renta gravable sin tarifa
+  if (get(79) > 0 && (ctx.tarifaRegimen ?? 0) === 0) {
+    out.push({
+      categoria: "configuracion",
+      nivel: "error",
+      renglon: 84,
+      mensaje:
+        "Hay renta líquida gravable pero la tarifa del régimen es 0. Configura el régimen de la empresa.",
+    });
+  }
+
+  // Descuentos > impuesto
+  if (get(93) > get(91)) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "error",
+      renglon: 93,
+      mensaje:
+        "Descuentos tributarios (93) superan el impuesto (91). El impuesto neto no puede ser negativo.",
+    });
+  }
+
+  // Ganancias ocasionales
+  if (get(83) > 0 && get(97) === 0) {
+    out.push({
+      categoria: "completitud",
+      nivel: "info",
+      renglon: 97,
+      mensaje:
+        "Tienes ganancias ocasionales gravables (83) pero el impuesto GO (97) es 0. Verifica el cálculo.",
+    });
+  }
+
+  // Impuesto a cargo sin retenciones / anticipos
   if (get(99) > 0 && get(107) === 0 && get(103) === 0 && get(104) === 0) {
     out.push({
+      categoria: "completitud",
       nivel: "info",
       renglon: 111,
       mensaje:
@@ -320,12 +410,14 @@ export function validarFormulario(
     });
   }
 
+  // Anticipo
   if (
     ctx.aniosDeclarando &&
     ctx.aniosDeclarando !== "primero" &&
     (ctx.impuestoNetoAnterior ?? 0) === 0
   ) {
     out.push({
+      categoria: "completitud",
       nivel: "warn",
       renglon: 108,
       mensaje:
@@ -333,7 +425,39 @@ export function validarFormulario(
     });
   }
 
+  // Anticipo año siguiente sospechosamente alto
+  if (get(108) > get(99) * 2) {
+    out.push({
+      categoria: "sanidad",
+      nivel: "warn",
+      renglon: 108,
+      mensaje:
+        "El anticipo del año siguiente (108) es más del doble del impuesto a cargo (99). Verifica los inputs.",
+    });
+  }
+
+  // Saldo positivo y a favor a la vez (imposible)
+  if (get(112) > 0 && get(114) > 0) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      mensaje: "Hay simultáneamente saldo a pagar y saldo a favor. Es imposible; revisa los datos.",
+    });
+  }
+
   return out;
+}
+
+/**
+ * Resumen de validaciones por nivel.
+ */
+export function resumenValidaciones(v: Validacion[]) {
+  return {
+    errores: v.filter((x) => x.nivel === "error").length,
+    advertencias: v.filter((x) => x.nivel === "warn").length,
+    informativas: v.filter((x) => x.nivel === "info").length,
+    bloqueante: v.some((x) => x.nivel === "error"),
+  };
 }
 
 /**
