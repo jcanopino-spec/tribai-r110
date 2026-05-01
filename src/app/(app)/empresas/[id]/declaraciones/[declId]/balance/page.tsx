@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SECCIONES_MAPEABLES } from "@/lib/forms/form110-2025";
+import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
 import { BalanceView } from "./balance-view";
 
 export const metadata = { title: "Balance cargado" };
@@ -110,7 +111,7 @@ export default async function BalancePage({
         saldo: Number(l.saldo),
         renglon_110: l.renglon_110,
       }))}
-      renglones={renglones ?? []}
+      renglones={(renglones ?? []).filter((r) => !RENGLONES_COMPUTADOS.has(r.numero))}
       totalesPorRenglon={[...totalesPorRenglon.entries()]
         .map(([numero, data]) => ({ numero, ...data }))
         .sort((a, b) => a.numero - b.numero)}

@@ -3,6 +3,7 @@
 import * as XLSX from "xlsx";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
 
 export type CuentaSinMapear = {
   cuenta: string;
@@ -280,7 +281,7 @@ export async function uploadBalanceAction(
   for (const l of lineasPayload) {
     const isAux = l.cuenta.length >= 6;
     if (l.renglon_110 != null) mapeadas++;
-    if (l.renglon_110 != null && isAux) {
+    if (l.renglon_110 != null && isAux && !RENGLONES_COMPUTADOS.has(l.renglon_110)) {
       aggByRenglon.set(
         l.renglon_110,
         (aggByRenglon.get(l.renglon_110) ?? 0) + Number(l.saldo),
@@ -411,7 +412,7 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
       .from("balance_prueba_lineas")
       .update({ renglon_110: renglon })
       .eq("id", l.id);
-    if (renglon != null && l.cuenta.length >= 6) {
+    if (renglon != null && l.cuenta.length >= 6 && !RENGLONES_COMPUTADOS.has(renglon)) {
       aggByRenglon.set(renglon, (aggByRenglon.get(renglon) ?? 0) + Number(l.saldo));
     }
   }

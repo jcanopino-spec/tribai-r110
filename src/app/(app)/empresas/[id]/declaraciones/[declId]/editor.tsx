@@ -3,6 +3,11 @@
 import { useActionState, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { saveValoresAction, type SaveValoresState } from "./actions";
+import {
+  RENGLONES_COMPUTADOS,
+  FORMULAS_LEYENDA,
+  computarRenglones,
+} from "@/lib/forms/form110-compute";
 
 type Renglon = { numero: number; descripcion: string; seccion: string };
 type Valor = { numero: number; valor: number };
@@ -36,9 +41,13 @@ export function DeclaracionEditor({
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
 
+  // Mapa de inputs (excluye computados) — los computados se derivan en cada render.
   const initialMap = useMemo(() => {
     const m = new Map<number, string>();
-    for (const v of valoresIniciales) m.set(v.numero, formatValor(Number(v.valor)));
+    for (const v of valoresIniciales) {
+      if (RENGLONES_COMPUTADOS.has(v.numero)) continue;
+      m.set(v.numero, formatValor(Number(v.valor)));
+    }
     return m;
   }, [valoresIniciales]);
 
@@ -54,16 +63,22 @@ export function DeclaracionEditor({
     return m;
   }, [renglones]);
 
+  // Numérico actual: combina inputs (en string) con derivados (calculados).
+  const numerico = useMemo(() => {
+    const base = new Map<number, number>();
+    for (const [num, str] of valores) base.set(num, parseValor(str));
+    return computarRenglones(base);
+  }, [valores]);
+
   const totales = useMemo(() => {
-    let totalIngresos = 0;
-    let totalCostos = 0;
-    for (const r of renglones) {
-      const v = parseValor(valores.get(r.numero) ?? "");
-      if (r.seccion === "Ingresos") totalIngresos += v;
-      if (r.seccion === "Costos y deducciones") totalCostos += v;
-    }
-    return { totalIngresos, totalCostos };
-  }, [renglones, valores]);
+    return {
+      patrimonioBruto: numerico.get(44) ?? 0,
+      patrimonioLiquido: numerico.get(46) ?? 0,
+      ingresosBrutos: numerico.get(58) ?? 0,
+      ingresosNetos: numerico.get(61) ?? 0,
+      totalCostos: numerico.get(67) ?? 0,
+    };
+  }, [numerico]);
 
   return (
     <form action={formAction}>
@@ -87,29 +102,51 @@ export function DeclaracionEditor({
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((r) => (
-                    <tr key={r.numero} className="border-t border-border">
-                      <td className="px-4 py-1.5 align-top font-mono">{r.numero}</td>
-                      <td className="px-4 py-1.5 align-top">{r.descripcion}</td>
-                      <td className="px-2 py-1 text-right align-top">
-                        <input
-                          name={`v_${r.numero}`}
-                          inputMode="numeric"
-                          value={valores.get(r.numero) ?? ""}
-                          onChange={(e) => {
-                            const raw = e.target.value;
-                            const cleaned = raw.replace(/[^0-9]/g, "");
-                            const n = cleaned === "" ? "" : formatValor(Number(cleaned));
-                            const next = new Map(valores);
-                            next.set(r.numero, n);
-                            setValores(next);
-                          }}
-                          className="h-8 w-full rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
-                          placeholder="0"
-                        />
-                      </td>
-                    </tr>
-                  ))}
+                  {items.map((r) => {
+                    const isComputado = RENGLONES_COMPUTADOS.has(r.numero);
+                    const valor = isComputado
+                      ? numerico.get(r.numero) ?? 0
+                      : valores.get(r.numero) ?? "";
+                    return (
+                      <tr
+                        key={r.numero}
+                        className={`border-t border-border ${isComputado ? "bg-muted/30" : ""}`}
+                      >
+                        <td className="px-4 py-1.5 align-top font-mono">{r.numero}</td>
+                        <td className="px-4 py-1.5 align-top">
+                          {r.descripcion}
+                          {isComputado ? (
+                            <span className="ml-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                              · {FORMULAS_LEYENDA[r.numero] ?? "calculado"}
+                            </span>
+                          ) : null}
+                        </td>
+                        <td className="px-2 py-1 text-right align-top">
+                          {isComputado ? (
+                            <p className="px-2 py-1.5 font-mono font-medium">
+                              {formatValor(Number(valor))}
+                            </p>
+                          ) : (
+                            <input
+                              name={`v_${r.numero}`}
+                              inputMode="numeric"
+                              value={valor as string}
+                              onChange={(e) => {
+                                const raw = e.target.value;
+                                const cleaned = raw.replace(/[^0-9]/g, "");
+                                const n = cleaned === "" ? "" : formatValor(Number(cleaned));
+                                const next = new Map(valores);
+                                next.set(r.numero, n);
+                                setValores(next);
+                              }}
+                              className="h-8 w-full rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
+                              placeholder="0"
+                            />
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -117,20 +154,13 @@ export function DeclaracionEditor({
         ))}
       </div>
 
-      <div className="sticky bottom-0 mt-8 flex items-center justify-between gap-4 border-t border-border bg-background py-4">
-        <div className="flex gap-6 text-sm">
-          <p>
-            <span className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-              Ingresos:
-            </span>{" "}
-            <span className="font-mono">{formatValor(totales.totalIngresos)}</span>
-          </p>
-          <p>
-            <span className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-              Costos:
-            </span>{" "}
-            <span className="font-mono">{formatValor(totales.totalCostos)}</span>
-          </p>
+      <div className="sticky bottom-0 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border bg-background py-4">
+        <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs">
+          <ResumenItem label="Patrimonio bruto" value={totales.patrimonioBruto} />
+          <ResumenItem label="Patrimonio líquido" value={totales.patrimonioLiquido} />
+          <ResumenItem label="Ingresos brutos" value={totales.ingresosBrutos} />
+          <ResumenItem label="Ingresos netos" value={totales.ingresosNetos} />
+          <ResumenItem label="Total costos" value={totales.totalCostos} />
         </div>
 
         <div className="flex items-center gap-3">
@@ -147,5 +177,14 @@ export function DeclaracionEditor({
         </div>
       </div>
     </form>
+  );
+}
+
+function ResumenItem({ label, value }: { label: string; value: number }) {
+  return (
+    <p>
+      <span className="font-mono uppercase tracking-[0.05em] text-muted-foreground">{label}:</span>{" "}
+      <span className="font-mono">{FORMATTER.format(value)}</span>
+    </p>
   );
 }

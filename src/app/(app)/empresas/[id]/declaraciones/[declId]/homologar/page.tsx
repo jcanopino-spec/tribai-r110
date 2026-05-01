@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SECCIONES_MAPEABLES } from "@/lib/forms/form110-2025";
+import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
 import { HomologarForm } from "./homologar-form";
 
 export const metadata = { title: "Homologar cuentas" };
@@ -97,7 +98,7 @@ export default async function HomologarPage({
             empresaId={empresaId}
             declId={declId}
             cuentas={cuentas}
-            renglones={renglones ?? []}
+            renglones={(renglones ?? []).filter((r) => !RENGLONES_COMPUTADOS.has(r.numero))}
             overridesIniciales={Object.fromEntries(
               (overrides ?? []).map((o) => [o.puc, o.renglon_110]),
             )}

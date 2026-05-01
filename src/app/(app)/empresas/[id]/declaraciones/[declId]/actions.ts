@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
 
 export type SaveValoresState = {
   error: string | null;
@@ -57,9 +58,11 @@ export async function saveValoresAction(
   for (const [key, raw] of form.entries()) {
     if (!key.startsWith("v_")) continue;
     const numero = Number(key.slice(2));
+    if (!Number.isInteger(numero)) continue;
+    if (RENGLONES_COMPUTADOS.has(numero)) continue; // los computados no se guardan
     const text = String(raw ?? "").replace(/\./g, "").replace(/,/g, ".");
     const valor = text === "" ? 0 : Number(text);
-    if (!Number.isFinite(valor) || !Number.isInteger(numero)) continue;
+    if (!Number.isFinite(valor)) continue;
     valores.push({ declaracion_id: declId, numero, valor });
   }
 
