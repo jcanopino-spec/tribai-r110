@@ -7,6 +7,8 @@ import { clearModoCargaAction } from "./actions";
 
 export const metadata = { title: "Editor declaración" };
 
+const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
 export default async function DeclaracionEditorPage({
   params,
 }: {
@@ -75,25 +77,32 @@ export default async function DeclaracionEditorPage({
           </p>
           <ModePicker declId={declId} empresaId={empresaId} />
         </>
-      ) : declaracion.modo_carga === "manual" ? (
-        <ManualMode declId={declId} empresaId={empresaId} ano={declaracion.ano_gravable} />
       ) : (
-        <BalanceModeRedirect empresaId={empresaId} declId={declId} />
+        <Workspace
+          declId={declId}
+          empresaId={empresaId}
+          ano={declaracion.ano_gravable}
+          modo={declaracion.modo_carga as "manual" | "balance"}
+        />
       )}
     </div>
   );
 }
 
-async function ManualMode({
+async function Workspace({
   declId,
   empresaId,
   ano,
+  modo,
 }: {
   declId: string;
   empresaId: string;
   ano: number;
+  modo: "manual" | "balance";
 }) {
   const supabase = await createClient();
+
+  // Datos comunes
   const [{ data: renglones }, { data: valores }] = await Promise.all([
     supabase
       .from("form110_renglones")
@@ -106,46 +115,165 @@ async function ManualMode({
       .eq("declaracion_id", declId),
   ]);
 
+  // Si modo es balance, traemos la info del balance
+  let balanceCard: React.ReactNode = null;
+  if (modo === "balance") {
+    const { data: balance } = await supabase
+      .from("balance_pruebas")
+      .select("id, filename, uploaded_at")
+      .eq("declaracion_id", declId)
+      .order("uploaded_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (!balance) {
+      balanceCard = (
+        <div className="mt-12 max-w-2xl border border-dashed border-border p-8">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+            Modo balance · sin archivo cargado
+          </p>
+          <h3 className="mt-3 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+            Sube tu Balance de Prueba
+          </h3>
+          <p className="mt-3 text-muted-foreground">
+            Cuando subas el archivo, Tribai mapea cada cuenta PUC al renglón
+            correspondiente del 110 y rellena los valores automáticamente.
+          </p>
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/importar`}
+            className="mt-6 inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90"
+          >
+            Cargar archivo →
+          </Link>
+        </div>
+      );
+    } else {
+      const [
+        { count: totalLineas },
+        { count: mapeadas },
+        { count: pendientes },
+      ] = await Promise.all([
+        supabase
+          .from("balance_prueba_lineas")
+          .select("*", { count: "exact", head: true })
+          .eq("balance_id", balance.id),
+        supabase
+          .from("balance_prueba_lineas")
+          .select("*", { count: "exact", head: true })
+          .eq("balance_id", balance.id)
+          .not("renglon_110", "is", null),
+        supabase
+          .from("balance_prueba_lineas")
+          .select("*", { count: "exact", head: true })
+          .eq("balance_id", balance.id)
+          .is("renglon_110", null)
+          .like("cuenta", "______%"), // solo auxiliares (6+ chars)
+      ]);
+
+      balanceCard = (
+        <div className="mt-12 border border-border p-6">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                Balance cargado · {new Date(balance.uploaded_at).toLocaleString("es-CO")}
+              </p>
+              <h3 className="mt-2 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+                {balance.filename}
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href={`/empresas/${empresaId}/declaraciones/${declId}/balance`}
+                className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-4 text-xs text-primary-foreground hover:opacity-90"
+              >
+                Ver balance completo →
+              </Link>
+              <Link
+                href={`/empresas/${empresaId}/declaraciones/${declId}/importar`}
+                className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+              >
+                Reemplazar archivo
+              </Link>
+            </div>
+          </div>
+          <div className="mt-5 grid grid-cols-3 gap-3">
+            <Stat label="Líneas" value={totalLineas ?? 0} />
+            <Stat label="Mapeadas" value={mapeadas ?? 0} success={(mapeadas ?? 0) > 0} />
+            <Stat
+              label="Pendientes"
+              value={pendientes ?? 0}
+              alert={(pendientes ?? 0) > 0}
+              muted={(pendientes ?? 0) === 0}
+              href={
+                (pendientes ?? 0) > 0
+                  ? `/empresas/${empresaId}/declaraciones/${declId}/balance?filter=pendientes`
+                  : undefined
+              }
+            />
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
-    <div className="mt-12">
-      <p className="text-sm text-muted-foreground">
-        Digita los valores en cada renglón. Los miles se formatean automáticamente. Recuerda
-        guardar como borrador antes de salir.
-      </p>
-      <div className="mt-8">
-        <DeclaracionEditor
-          declId={declId}
-          empresaId={empresaId}
-          renglones={renglones ?? []}
-          valoresIniciales={(valores ?? []).map((v) => ({
-            numero: v.numero,
-            valor: Number(v.valor),
-          }))}
-        />
+    <>
+      {balanceCard}
+
+      <div className="mt-12">
+        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+          {modo === "balance" ? "Renglones del 110 (ajustes manuales)" : "Renglones del 110"}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {modo === "balance"
+            ? "Los valores vienen del balance importado. Puedes ajustar cualquier renglón manualmente; tu cambio sobreescribe el valor agregado."
+            : "Digita los valores en cada renglón. Los miles se formatean automáticamente."}
+        </p>
+        <div className="mt-6">
+          <DeclaracionEditor
+            declId={declId}
+            empresaId={empresaId}
+            renglones={renglones ?? []}
+            valoresIniciales={(valores ?? []).map((v) => ({
+              numero: v.numero,
+              valor: Number(v.valor),
+            }))}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
-function BalanceModeRedirect({ empresaId, declId }: { empresaId: string; declId: string }) {
-  return (
-    <div className="mt-12 max-w-2xl border border-border p-8">
-      <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-        Modo balance de prueba
+function Stat({
+  label,
+  value,
+  success,
+  alert,
+  muted,
+  href,
+}: {
+  label: string;
+  value: number;
+  success?: boolean;
+  alert?: boolean;
+  muted?: boolean;
+  href?: string;
+}) {
+  const cls = alert
+    ? "border-destructive/40 bg-destructive/5"
+    : success
+      ? "border-success/40 bg-success/5"
+      : "border-border";
+  const valueCls = alert ? "text-destructive" : muted ? "text-muted-foreground" : "";
+
+  const content = (
+    <div className={`border p-4 ${cls}`}>
+      <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">{label}</p>
+      <p className={`mt-1 font-serif text-2xl tracking-[-0.02em] ${valueCls}`}>
+        {FMT.format(value)}
       </p>
-      <h3 className="mt-3 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-        Sube tu archivo
-      </h3>
-      <p className="mt-3 text-muted-foreground">
-        El upload, parseo y mapeo PUC → 110 llegan en Fase 4. Mientras tanto, puedes ir a la
-        pantalla de importación para revisar la estructura esperada del archivo.
-      </p>
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}/importar`}
-        className="mt-6 inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90"
-      >
-        Ir a importar →
-      </Link>
     </div>
   );
+  return href ? <Link href={href}>{content}</Link> : content;
 }
