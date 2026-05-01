@@ -20,7 +20,7 @@ export default async function DeclaracionEditorPage({
   const { data: declaracion } = await supabase
     .from("declaraciones")
     .select(
-      "id, ano_gravable, formato, estado, modo_carga, empresa:empresas(id, razon_social, nit, regimen_codigo)",
+      "id, ano_gravable, formato, estado, modo_carga, impuesto_neto_anterior, anios_declarando, empresa:empresas(id, razon_social, nit, regimen_codigo)",
     )
     .eq("id", declId)
     .single();
@@ -98,6 +98,13 @@ export default async function DeclaracionEditorPage({
           modo={declaracion.modo_carga as "manual" | "balance"}
           tarifaRegimen={tarifaRegimen}
           regimenCodigo={regimenCodigo ?? null}
+          impuestoNetoAnterior={Number(declaracion.impuesto_neto_anterior ?? 0)}
+          aniosDeclarando={
+            (declaracion.anios_declarando ?? "tercero_o_mas") as
+              | "primero"
+              | "segundo"
+              | "tercero_o_mas"
+          }
         />
       )}
     </div>
@@ -111,6 +118,8 @@ async function Workspace({
   modo,
   tarifaRegimen,
   regimenCodigo,
+  impuestoNetoAnterior,
+  aniosDeclarando,
 }: {
   declId: string;
   empresaId: string;
@@ -118,6 +127,8 @@ async function Workspace({
   modo: "manual" | "balance";
   tarifaRegimen: number | null;
   regimenCodigo: string | null;
+  impuestoNetoAnterior: number;
+  aniosDeclarando: "primero" | "segundo" | "tercero_o_mas";
 }) {
   const supabase = await createClient();
 
@@ -270,6 +281,8 @@ async function Workspace({
               valor: Number(v.valor),
             }))}
             tarifaRegimen={tarifaRegimen}
+            impuestoNetoAnterior={impuestoNetoAnterior}
+            aniosDeclarando={aniosDeclarando}
           />
         </div>
       </div>

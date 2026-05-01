@@ -1,8 +1,14 @@
 "use client";
 
-import { useActionState, useMemo, useState } from "react";
+import { useActionState, useMemo, useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { saveValoresAction, type SaveValoresState } from "./actions";
+import { Field } from "@/components/ui/label";
+import { Input, Select } from "@/components/ui/input";
+import {
+  saveValoresAction,
+  saveDatosAnticipoAction,
+  type SaveValoresState,
+} from "./actions";
 import {
   RENGLONES_COMPUTADOS,
   FORMULAS_LEYENDA,
@@ -28,18 +34,24 @@ function parseValor(s: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+type AniosDeclarando = "primero" | "segundo" | "tercero_o_mas";
+
 export function DeclaracionEditor({
   declId,
   empresaId,
   renglones,
   valoresIniciales,
   tarifaRegimen,
+  impuestoNetoAnterior,
+  aniosDeclarando,
 }: {
   declId: string;
   empresaId: string;
   renglones: Renglon[];
   valoresIniciales: Valor[];
   tarifaRegimen: number | null;
+  impuestoNetoAnterior: number;
+  aniosDeclarando: AniosDeclarando;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -68,14 +80,32 @@ export function DeclaracionEditor({
     return m;
   }, [renglones]);
 
+  // Datos del anticipo (renglón 108): año anterior + años declarando.
+  const [impAnterior, setImpAnterior] = useState(formatValor(impuestoNetoAnterior));
+  const [anios, setAnios] = useState<AniosDeclarando>(aniosDeclarando);
+  const [savingAnticipo, startAnticipo] = useTransition();
+  const [anticipoSaved, setAnticipoSaved] = useState<string | null>(null);
+
   // Numérico actual: combina inputs (en string) con derivados (calculados).
   const numerico = useMemo(() => {
     const base = new Map<number, number>();
     for (const [num, str] of valores) base.set(num, parseValor(str));
     return computarRenglones(base, {
       tarifaRegimen: tarifaRegimen ?? undefined,
+      impuestoNetoAnterior: parseValor(impAnterior),
+      aniosDeclarando: anios,
     });
-  }, [valores, tarifaRegimen]);
+  }, [valores, tarifaRegimen, impAnterior, anios]);
+
+  function guardarAnticipo() {
+    startAnticipo(async () => {
+      await saveDatosAnticipoAction(declId, empresaId, {
+        impuestoNetoAnterior: parseValor(impAnterior),
+        aniosDeclarando: anios,
+      });
+      setAnticipoSaved(`Guardado · ${new Date().toLocaleTimeString("es-CO")}`);
+    });
+  }
 
   const totales = useMemo(() => {
     return {
@@ -89,6 +119,52 @@ export function DeclaracionEditor({
 
   return (
     <form action={formAction}>
+      <section className="mb-10 border border-border p-5">
+        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+          Datos para el anticipo · renglón 108
+        </p>
+        <h3 className="mt-2 font-serif text-xl leading-[1.1]">
+          Cómo calcular el anticipo del año siguiente
+        </h3>
+        <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr_auto]">
+          <Field label="Impuesto neto AG anterior (2024)">
+            <Input
+              inputMode="numeric"
+              value={impAnterior}
+              onChange={(e) => {
+                const cleaned = e.target.value.replace(/[^0-9]/g, "");
+                setImpAnterior(cleaned === "" ? "" : formatValor(Number(cleaned)));
+              }}
+              placeholder="0"
+            />
+          </Field>
+          <Field label="Años declarando">
+            <Select value={anios} onChange={(e) => setAnios(e.target.value as AniosDeclarando)}>
+              <option value="primero">Primer año (no aplica anticipo)</option>
+              <option value="segundo">Segundo año (50%)</option>
+              <option value="tercero_o_mas">Tercer año o más (75%)</option>
+            </Select>
+          </Field>
+          <div className="flex items-end gap-3">
+            <button
+              type="button"
+              onClick={guardarAnticipo}
+              disabled={savingAnticipo}
+              className="inline-flex h-10 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted disabled:opacity-50"
+            >
+              {savingAnticipo ? "Guardando…" : "Guardar"}
+            </button>
+            {anticipoSaved ? (
+              <p className="text-xs text-muted-foreground">{anticipoSaved}</p>
+            ) : null}
+          </div>
+        </div>
+        <p className="mt-3 text-xs text-muted-foreground">
+          Anticipo (108) = max(0, ((96 + impuesto AG anterior) / 2 × tarifa) − retenciones).
+          Tarifa: 25% / 50% / 75% según años declarando.
+        </p>
+      </section>
+
       <div className="space-y-12">
         {Array.from(renglonesPorSeccion.entries()).map(([seccion, items]) => (
           <section key={seccion}>

@@ -23,7 +23,8 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Liquidación privada
   84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
-  97, // Impuesto neto de ganancias ocasionales = 83 × 10%
+  97, // Impuesto neto de ganancias ocasionales = 83 × 15%
+  108, // Anticipo año siguiente (Anexo 2 del .xlsm)
   94, // Impuesto neto de renta (sin adicionado) = 91 - 93 (+92 según descrip)
   96, // Impuesto neto de renta (con adicionado) = 94 + 95
   99, // Total impuesto a cargo = 96 + 97 - 98
@@ -60,6 +61,16 @@ export const TARIFA_GANANCIAS_OCASIONALES = 0.15;
 export type ComputeContext = {
   /** Tarifa del régimen del declarante (0..1). Si no se provee, 84 queda en 0. */
   tarifaRegimen?: number;
+  /** Impuesto neto de renta del año gravable anterior (entrada del usuario). */
+  impuestoNetoAnterior?: number;
+  /** Años que la empresa lleva declarando, define la tarifa del anticipo. */
+  aniosDeclarando?: "primero" | "segundo" | "tercero_o_mas";
+};
+
+const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
+  primero: 0.25,
+  segundo: 0.5,
+  tercero_o_mas: 0.75,
 };
 
 /**
@@ -138,6 +149,26 @@ export function computarRenglones(
   // 107 = 105 + 106  (Total retenciones)
   v.set(107, get(105) + get(106));
 
+  // 108 = Anticipo año siguiente (Anexo 2 del .xlsm, método 1 = promedio)
+  //   = max(0, ((impuesto_neto_actual + impuesto_neto_anterior) / 2) × tarifa
+  //          - retenciones)
+  //   Primer año: 0 ("no aplica" según el .xlsm).
+  if (
+    typeof ctx.impuestoNetoAnterior === "number" &&
+    typeof ctx.aniosDeclarando === "string"
+  ) {
+    if (ctx.aniosDeclarando === "primero") {
+      v.set(108, 0);
+    } else {
+      const tarifa = TARIFA_ANTICIPO[ctx.aniosDeclarando];
+      const promedio = (get(96) + ctx.impuestoNetoAnterior) / 2;
+      const tentativo = Math.max(0, promedio * tarifa);
+      v.set(108, Math.max(0, Math.round(tentativo - get(107))));
+    }
+  } else if (!v.has(108)) {
+    v.set(108, 0);
+  }
+
   // 111 = Saldo a pagar por impuesto
   //   = 99 + 108 + 110 - 100 - 101 - 102 - 103 - 104 - 107 - 109
   const restas = get(100) + get(101) + get(102) + get(103) + get(104) + get(107) + get(109);
@@ -176,6 +207,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   96: "94 + 95",
   99: "96 + 97 − 98",
   107: "105 + 106",
+  108: "(96 + impto. AG anterior) / 2 × tarifa años − 107",
   111: "99 + 108 + 110 − 100 − 101 − 102 − 103 − 104 − 107 − 109",
   112: "99 + 108 + 110 + 113 − (restas de 111)",
   114: "Diferencia (saldo a favor) si las restas exceden",

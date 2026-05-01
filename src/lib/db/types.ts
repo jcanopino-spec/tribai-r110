@@ -101,32 +101,38 @@ export type Database = {
       }
       declaraciones: {
         Row: {
+          anios_declarando: string
           ano_gravable: number
           created_at: string
           empresa_id: string
           estado: string
           formato: string
           id: string
+          impuesto_neto_anterior: number
           modo_carga: string | null
           updated_at: string
         }
         Insert: {
+          anios_declarando?: string
           ano_gravable: number
           created_at?: string
           empresa_id: string
           estado?: string
           formato?: string
           id?: string
+          impuesto_neto_anterior?: number
           modo_carga?: string | null
           updated_at?: string
         }
         Update: {
+          anios_declarando?: string
           ano_gravable?: number
           created_at?: string
           empresa_id?: string
           estado?: string
           formato?: string
           id?: string
+          impuesto_neto_anterior?: number
           modo_carga?: string | null
           updated_at?: string
         }

@@ -30,6 +30,24 @@ export async function setModoCargaAction(
   redirect(`/empresas/${empresaId}/declaraciones/${declId}`);
 }
 
+export async function saveDatosAnticipoAction(
+  declId: string,
+  empresaId: string,
+  data: { impuestoNetoAnterior: number; aniosDeclarando: "primero" | "segundo" | "tercero_o_mas" },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("declaraciones")
+    .update({
+      impuesto_neto_anterior: data.impuestoNetoAnterior,
+      anios_declarando: data.aniosDeclarando,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", declId);
+  if (error) throw new Error(error.message);
+  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+}
+
 export async function clearModoCargaAction(declId: string, empresaId: string) {
   const supabase = await createClient();
   const { error } = await supabase
