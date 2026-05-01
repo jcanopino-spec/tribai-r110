@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
 export type SaveValoresState = {
@@ -8,6 +9,37 @@ export type SaveValoresState = {
   saved: number;
   savedAt: string | null;
 };
+
+export async function setModoCargaAction(
+  declId: string,
+  empresaId: string,
+  modo: "manual" | "balance",
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("declaraciones")
+    .update({ modo_carga: modo, updated_at: new Date().toISOString() })
+    .eq("id", declId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  if (modo === "balance") {
+    redirect(`/empresas/${empresaId}/declaraciones/${declId}/importar`);
+  }
+  redirect(`/empresas/${empresaId}/declaraciones/${declId}`);
+}
+
+export async function clearModoCargaAction(declId: string, empresaId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("declaraciones")
+    .update({ modo_carga: null, updated_at: new Date().toISOString() })
+    .eq("id", declId);
+  if (error) throw new Error(error.message);
+
+  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  redirect(`/empresas/${empresaId}/declaraciones/${declId}`);
+}
 
 export async function saveValoresAction(
   declId: string,

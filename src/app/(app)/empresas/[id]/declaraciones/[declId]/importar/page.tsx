@@ -31,14 +31,13 @@ export default async function ImportarBalancePage({
           Próximamente · Fase 4
         </p>
         <p className="mt-3 text-sm text-muted-foreground">
-          El importador automático llega en la siguiente iteración. Por ahora puedes
-          ingresar los valores manualmente en el editor.
+          El parser automático y el mapeo PUC → renglón llegan en la siguiente iteración.
         </p>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}`}
-          className="mt-6 inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90"
+          className="mt-6 inline-flex h-10 items-center justify-center rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
         >
-          Ingresar manualmente
+          ← Volver al editor
         </Link>
       </div>
 

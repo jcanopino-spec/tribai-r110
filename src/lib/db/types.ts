@@ -107,6 +107,7 @@ export type Database = {
           estado: string
           formato: string
           id: string
+          modo_carga: string | null
           updated_at: string
         }
         Insert: {
@@ -116,6 +117,7 @@ export type Database = {
           estado?: string
           formato?: string
           id?: string
+          modo_carga?: string | null
           updated_at?: string
         }
         Update: {
@@ -125,6 +127,7 @@ export type Database = {
           estado?: string
           formato?: string
           id?: string
+          modo_carga?: string | null
           updated_at?: string
         }
         Relationships: [
