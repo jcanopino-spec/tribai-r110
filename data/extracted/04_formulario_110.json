@@ -1,0 +1,794 @@
+[
+  {
+    "numero": 5,
+    "descripcion": "Identificación Tributaria NIT",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D12",
+    "fuente_celda": "B9",
+    "fuente_celda_descripcion": "B8"
+  },
+  {
+    "numero": 6,
+    "descripcion": "DV",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "='Datos Informativos'!D13",
+    "fuente_celda": "F9",
+    "fuente_celda_descripcion": "F8"
+  },
+  {
+    "numero": 7,
+    "descripcion": "Primer Apellido",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D14",
+    "fuente_celda": "B12",
+    "fuente_celda_descripcion": "B11"
+  },
+  {
+    "numero": 8,
+    "descripcion": "Segundo Apellido",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D15",
+    "fuente_celda": "F12",
+    "fuente_celda_descripcion": "F11"
+  },
+  {
+    "numero": 9,
+    "descripcion": "Primer Nombre",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D16",
+    "fuente_celda": "B15",
+    "fuente_celda_descripcion": "B14"
+  },
+  {
+    "numero": 10,
+    "descripcion": "Otros Nombres",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D17",
+    "fuente_celda": "F15",
+    "fuente_celda_descripcion": "F14"
+  },
+  {
+    "numero": 11,
+    "descripcion": "Razón Social",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "='Datos Informativos'!D18",
+    "fuente_celda": "B18",
+    "fuente_celda_descripcion": "B17"
+  },
+  {
+    "numero": 12,
+    "descripcion": "Cod. Dir. Seccional",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!C20",
+    "fuente_celda": "F18",
+    "fuente_celda_descripcion": "F17"
+  },
+  {
+    "numero": 24,
+    "descripcion": "Actividad económica",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!C19",
+    "fuente_celda": "B21",
+    "fuente_celda_descripcion": "B20"
+  },
+  {
+    "numero": 26,
+    "descripcion": "Nro. Formulario anterior",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "29. Fracción año gravable siguiente",
+    "fuente_celda": "B26",
+    "fuente_celda_descripcion": "B23"
+  },
+  {
+    "numero": 29,
+    "descripcion": "Fracción año gravable siguiente",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "32. Pérdidas fiscales acumuladas años anteriores, sin compensar",
+    "fuente_celda": "B29",
+    "fuente_celda_descripcion": "B26"
+  },
+  {
+    "numero": 30,
+    "descripcion": "renuncio a pertenecer al régimen tributario especial",
+    "seccion": "Datos informativos",
+    "formula_xlsm": null,
+    "fuente_celda": null,
+    "fuente_celda_descripcion": "D26"
+  },
+  {
+    "numero": 31,
+    "descripcion": "Vinculado al pago de obras por impuestos",
+    "seccion": "Datos informativos",
+    "formula_xlsm": null,
+    "fuente_celda": null,
+    "fuente_celda_descripcion": "F26"
+  },
+  {
+    "numero": 32,
+    "descripcion": "Pérdidas fiscales acumuladas años anteriores, sin compensar",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D57",
+    "fuente_celda": "B30",
+    "fuente_celda_descripcion": "B29"
+  },
+  {
+    "numero": 33,
+    "descripcion": "Total costos y gastos de nómina",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D58",
+    "fuente_celda": "D36",
+    "fuente_celda_descripcion": "D35"
+  },
+  {
+    "numero": 34,
+    "descripcion": "Aportes al sistema de seguridad social",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D59",
+    "fuente_celda": "D39",
+    "fuente_celda_descripcion": "D38"
+  },
+  {
+    "numero": 35,
+    "descripcion": "Aportes al SENA, ICBF, cajas de compensación",
+    "seccion": "Datos informativos",
+    "formula_xlsm": "=+'Datos Informativos'!D60",
+    "fuente_celda": "D42",
+    "fuente_celda_descripcion": "D41"
+  },
+  {
+    "numero": 36,
+    "descripcion": "Efectivo, bancos, otras inversiones",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H134",
+    "fuente_celda": "D47",
+    "fuente_celda_descripcion": "D46"
+  },
+  {
+    "numero": 37,
+    "descripcion": "Inversiones e instrumentos financieros derivados",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H191",
+    "fuente_celda": "D50",
+    "fuente_celda_descripcion": "D49"
+  },
+  {
+    "numero": 38,
+    "descripcion": "Cuentas, documentos y arrendamientos financieros por cobrar",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H315",
+    "fuente_celda": "D53",
+    "fuente_celda_descripcion": "D52"
+  },
+  {
+    "numero": 39,
+    "descripcion": "Inventarios",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H386",
+    "fuente_celda": "D56",
+    "fuente_celda_descripcion": "D55"
+  },
+  {
+    "numero": 40,
+    "descripcion": "Activos intangibles",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H461",
+    "fuente_celda": "D59",
+    "fuente_celda_descripcion": "D58"
+  },
+  {
+    "numero": 41,
+    "descripcion": "Activos biológicos",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H519",
+    "fuente_celda": "D62",
+    "fuente_celda_descripcion": "D61"
+  },
+  {
+    "numero": 42,
+    "descripcion": "Propiedades, planta y equipo, propiedades de inversión y ANCMV",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H933",
+    "fuente_celda": "D65",
+    "fuente_celda_descripcion": "D64"
+  },
+  {
+    "numero": 43,
+    "descripcion": "Otros activos",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H1033",
+    "fuente_celda": "D68",
+    "fuente_celda_descripcion": "D67"
+  },
+  {
+    "numero": 44,
+    "descripcion": "Total patrimonio bruto (sume 36 a 43)",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "=SUM(D47:F68)",
+    "fuente_celda": "D71",
+    "fuente_celda_descripcion": "D70"
+  },
+  {
+    "numero": 45,
+    "descripcion": "Pasivos",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "='Hoja Sumaria'!H1500",
+    "fuente_celda": "D74",
+    "fuente_celda_descripcion": "D73"
+  },
+  {
+    "numero": 46,
+    "descripcion": "Total patrimonio líquido (44-45)",
+    "seccion": "Patrimonio",
+    "formula_xlsm": "=IF(D71-D74>0,D71-D74,0)",
+    "fuente_celda": "D77",
+    "fuente_celda_descripcion": "D76"
+  },
+  {
+    "numero": 47,
+    "descripcion": "Ingresos brutos de actividades ordinarias",
+    "seccion": "Ingresos",
+    "formula_xlsm": "=ROUND(SUMIFS('Hoja Sumaria'!H:H,'Hoja Sumaria'!C:C,$C82),-3)",
+    "fuente_celda": "D82",
+    "fuente_celda_descripcion": "D81"
+  },
+  {
+    "numero": 48,
+    "descripcion": "Ingresos financieros",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1797",
+    "fuente_celda": "D85",
+    "fuente_celda_descripcion": "D84"
+  },
+  {
+    "numero": 49,
+    "descripcion": "Dividendos y/o participaciones no constitutivos de renta ni ganancia ocasional (incluye capitalizaciones no gravadas)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1800",
+    "fuente_celda": "D88",
+    "fuente_celda_descripcion": "D87"
+  },
+  {
+    "numero": 50,
+    "descripcion": "Dividendos y/o participaciones distribuidos por entidades no residentes en Colombia a una CHC y prima en colocación de acciones",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1801",
+    "fuente_celda": "D91",
+    "fuente_celda_descripcion": "D90"
+  },
+  {
+    "numero": 51,
+    "descripcion": "Dividendos y/o participaciones gravadas a la tarifa general provenientes de sociedades y entidades extranjeras o de sociedades nacionales",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1802",
+    "fuente_celda": "D94",
+    "fuente_celda_descripcion": "D93"
+  },
+  {
+    "numero": 52,
+    "descripcion": "Dividendos y/o participaciones gravadas recibidas por personas naturales sin residencia fiscal (año 2016 y anteriores)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1803",
+    "fuente_celda": "D97",
+    "fuente_celda_descripcion": "D96"
+  },
+  {
+    "numero": 53,
+    "descripcion": "Dividendos y/o participaciones gravadas recibidas por personas naturales sin residencia fiscal (año 2017 y siguientes)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1804",
+    "fuente_celda": "D100",
+    "fuente_celda_descripcion": "D99"
+  },
+  {
+    "numero": 54,
+    "descripcion": "Dividendos y participaciones gravadas a las tarifas de los artículos 245 o 246 E.T.",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1805",
+    "fuente_celda": "D103",
+    "fuente_celda_descripcion": "D102"
+  },
+  {
+    "numero": 55,
+    "descripcion": "Dividendos y/o participaciones gravadas a tarifa general (EP y sociedades extranjeras - utilidades generadas a partir del año 2017)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1806",
+    "fuente_celda": "D106",
+    "fuente_celda_descripcion": "D105"
+  },
+  {
+    "numero": 56,
+    "descripcion": "Dividendos y/o participaciones provenientes de proyectos calificados como megainversión gravadas al 27%",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H1807",
+    "fuente_celda": "D109",
+    "fuente_celda_descripcion": "D108"
+  },
+  {
+    "numero": 57,
+    "descripcion": "Otros Ingresos",
+    "seccion": "Ingresos",
+    "formula_xlsm": "=ROUND(SUMIFS('Hoja Sumaria'!H:H,'Hoja Sumaria'!C:C,$C112),-3)",
+    "fuente_celda": "D112",
+    "fuente_celda_descripcion": "D111"
+  },
+  {
+    "numero": 58,
+    "descripcion": "Total ingresos brutos (sume 47 a 57)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "=SUM(D82:F112)",
+    "fuente_celda": "D115",
+    "fuente_celda_descripcion": "D114"
+  },
+  {
+    "numero": 59,
+    "descripcion": "Devoluciones, rebajas y descuento en ventas",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H2027",
+    "fuente_celda": "D118",
+    "fuente_celda_descripcion": "D117"
+  },
+  {
+    "numero": 60,
+    "descripcion": "Ingresos no constitutivos de renta ni ganancia ocasional",
+    "seccion": "Ingresos",
+    "formula_xlsm": "='Hoja Sumaria'!H2029",
+    "fuente_celda": "D121",
+    "fuente_celda_descripcion": "D120"
+  },
+  {
+    "numero": 61,
+    "descripcion": "Total ingresos netos (58 - 59 - 60)",
+    "seccion": "Ingresos",
+    "formula_xlsm": "=IF(D115-D118-D121>0,D115-D118-D121,0)",
+    "fuente_celda": "D124",
+    "fuente_celda_descripcion": "D123"
+  },
+  {
+    "numero": 62,
+    "descripcion": "Costos",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H2570",
+    "fuente_celda": "D129",
+    "fuente_celda_descripcion": "D128"
+  },
+  {
+    "numero": 63,
+    "descripcion": "Gastos de administración",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H2831",
+    "fuente_celda": "D132",
+    "fuente_celda_descripcion": "D131"
+  },
+  {
+    "numero": 64,
+    "descripcion": "Gastos y distribución de ventas",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H3104",
+    "fuente_celda": "D135",
+    "fuente_celda_descripcion": "D134"
+  },
+  {
+    "numero": 65,
+    "descripcion": "Gastos financieros",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H3128",
+    "fuente_celda": "D138",
+    "fuente_celda_descripcion": "D137"
+  },
+  {
+    "numero": 66,
+    "descripcion": "Otros gastos y deducciones",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H3231",
+    "fuente_celda": "D141",
+    "fuente_celda_descripcion": "D140"
+  },
+  {
+    "numero": 67,
+    "descripcion": "Total costos y gastos deducibles (sume 62 a 66)",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "=SUM(D129:F141)",
+    "fuente_celda": "D144",
+    "fuente_celda_descripcion": "D143"
+  },
+  {
+    "numero": 68,
+    "descripcion": "Inversiones Efectuadas en el año",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H3234",
+    "fuente_celda": "D151",
+    "fuente_celda_descripcion": "D150"
+  },
+  {
+    "numero": 69,
+    "descripcion": "Inversiones liquidadas en periodos gravables anteriores",
+    "seccion": "Costos y deducciones",
+    "formula_xlsm": "='Hoja Sumaria'!H3235",
+    "fuente_celda": "D154",
+    "fuente_celda_descripcion": "D153"
+  },
+  {
+    "numero": 70,
+    "descripcion": "Renta por recuperación de deducciones",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3236",
+    "fuente_celda": "D159",
+    "fuente_celda_descripcion": "D158"
+  },
+  {
+    "numero": 71,
+    "descripcion": "Renta liquida pasiva - Entidades controladoras del exterior sin residencia fiscal en Colombia",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3237",
+    "fuente_celda": "D162",
+    "fuente_celda_descripcion": "D161"
+  },
+  {
+    "numero": 72,
+    "descripcion": "Renta liquida ordinaria del ejercicio (61+ 69 + 70 + 71 - 52 - 53 - 54 - 55 - 56 - 67 - 68)",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3247",
+    "fuente_celda": "D165",
+    "fuente_celda_descripcion": "D164"
+  },
+  {
+    "numero": 73,
+    "descripcion": "Pérdida liquida ordinaria del ejercicio (52 + 53 + 54 + 55 + 56 + 67 + 68 - 61 - 69 - 70 - 71)",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3248",
+    "fuente_celda": "D168",
+    "fuente_celda_descripcion": "D167"
+  },
+  {
+    "numero": 74,
+    "descripcion": "Compensaciones",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3249",
+    "fuente_celda": "D171",
+    "fuente_celda_descripcion": "D170"
+  },
+  {
+    "numero": 75,
+    "descripcion": "Renta liquida (72 - 74)",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3250",
+    "fuente_celda": "D174",
+    "fuente_celda_descripcion": "D173"
+  },
+  {
+    "numero": 76,
+    "descripcion": "Renta presuntiva",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3251",
+    "fuente_celda": "D177",
+    "fuente_celda_descripcion": "D176"
+  },
+  {
+    "numero": 77,
+    "descripcion": "Rentas exenta",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3252",
+    "fuente_celda": "D180",
+    "fuente_celda_descripcion": "D179"
+  },
+  {
+    "numero": 78,
+    "descripcion": "Rentas gravables",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3253",
+    "fuente_celda": "D183",
+    "fuente_celda_descripcion": "D182"
+  },
+  {
+    "numero": 79,
+    "descripcion": "Renta liquida gravable (al mayor valor entre 75 y 76 reste 77 y sume 78)",
+    "seccion": "Renta",
+    "formula_xlsm": "='Hoja Sumaria'!H3261",
+    "fuente_celda": "D186",
+    "fuente_celda_descripcion": "D185"
+  },
+  {
+    "numero": 80,
+    "descripcion": "Ingresos por ganancias ocasionales",
+    "seccion": "Ganancias ocasionales",
+    "formula_xlsm": "='Hoja Sumaria'!H3262",
+    "fuente_celda": "D192",
+    "fuente_celda_descripcion": "D191"
+  },
+  {
+    "numero": 81,
+    "descripcion": "Costos por ganancias ocasionales",
+    "seccion": "Ganancias ocasionales",
+    "formula_xlsm": "='Hoja Sumaria'!H3265",
+    "fuente_celda": "D195",
+    "fuente_celda_descripcion": "D194"
+  },
+  {
+    "numero": 82,
+    "descripcion": "Ganancias ocasionales no gravadas y exentas",
+    "seccion": "Ganancias ocasionales",
+    "formula_xlsm": "='Hoja Sumaria'!H3266",
+    "fuente_celda": "D198",
+    "fuente_celda_descripcion": "D197"
+  },
+  {
+    "numero": 83,
+    "descripcion": "Ganancias ocasionales gravables",
+    "seccion": "Ganancias ocasionales",
+    "formula_xlsm": "='Hoja Sumaria'!H3267",
+    "fuente_celda": "D201",
+    "fuente_celda_descripcion": "D200"
+  },
+  {
+    "numero": 84,
+    "descripcion": "Impuesto sobre la renta líquida gravable",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3269",
+    "fuente_celda": "D206",
+    "fuente_celda_descripcion": "D205"
+  },
+  {
+    "numero": 85,
+    "descripcion": "Sobretasa (Puntos adicionales a la tarifa del impuesto renta)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3270",
+    "fuente_celda": "D209",
+    "fuente_celda_descripcion": "D208"
+  },
+  {
+    "numero": 86,
+    "descripcion": "De dividendos y participaciones gravadas a la tarifa del 10% año 2022 y al 20% año 2023 y siguientes (base casilla 54):",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3271",
+    "fuente_celda": "D212",
+    "fuente_celda_descripcion": "D211"
+  },
+  {
+    "numero": 88,
+    "descripcion": "De dividendos y/o participaciones gravadas a la tarifa del 27% (base casilla 56)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3273",
+    "fuente_celda": "D218",
+    "fuente_celda_descripcion": "D217"
+  },
+  {
+    "numero": 89,
+    "descripcion": "De dividendos y/o participaciones gravadas a la tarifa del artículo 240 ET (base casilla 53)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3274",
+    "fuente_celda": "D221",
+    "fuente_celda_descripcion": "D220"
+  },
+  {
+    "numero": 90,
+    "descripcion": "De dividendos y/o participaciones gravadas a la tarifa del 33% (base casilla 52)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3275",
+    "fuente_celda": "D224",
+    "fuente_celda_descripcion": "D223"
+  },
+  {
+    "numero": 91,
+    "descripcion": "Total impuesto sobre las rentas liquidas gravables (84 + 85 + 86 + 87 + 88 + 89 + 90)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3276",
+    "fuente_celda": "D227",
+    "fuente_celda_descripcion": "D226"
+  },
+  {
+    "numero": 92,
+    "descripcion": "Valor adicional (VAA)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3277",
+    "fuente_celda": "D230",
+    "fuente_celda_descripcion": "D229"
+  },
+  {
+    "numero": 93,
+    "descripcion": "Descuentos tributarios",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3278",
+    "fuente_celda": "D233",
+    "fuente_celda_descripcion": "D232"
+  },
+  {
+    "numero": 94,
+    "descripcion": "Impuesto neto de renta (sin impuesto adicionado) (91 + 92 - 93)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3279",
+    "fuente_celda": "D236",
+    "fuente_celda_descripcion": "D235"
+  },
+  {
+    "numero": 95,
+    "descripcion": "Impuesto a adicionar (IA)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3280",
+    "fuente_celda": "D239",
+    "fuente_celda_descripcion": "D238"
+  },
+  {
+    "numero": 96,
+    "descripcion": "Impuesto neto de renta (con impuesto adicionado) (94 + 95)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3281",
+    "fuente_celda": "D242",
+    "fuente_celda_descripcion": "D241"
+  },
+  {
+    "numero": 97,
+    "descripcion": "Impuesto neto de ganancias ocasionales",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3282",
+    "fuente_celda": "D245",
+    "fuente_celda_descripcion": "D244"
+  },
+  {
+    "numero": 98,
+    "descripcion": "Descuentos pagados en el exterior por ganancias ocasionales",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3283",
+    "fuente_celda": "D248",
+    "fuente_celda_descripcion": "D247"
+  },
+  {
+    "numero": 99,
+    "descripcion": "Total impuesto a cargo (96 + 97 - 98)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3284",
+    "fuente_celda": "D251",
+    "fuente_celda_descripcion": "D250"
+  },
+  {
+    "numero": 100,
+    "descripcion": "Valor inversión obras por impuestos hasta del 50% del valor de la casilla 88 (Modalidad de pago 1)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3285",
+    "fuente_celda": "D254",
+    "fuente_celda_descripcion": "D253"
+  },
+  {
+    "numero": 101,
+    "descripcion": "Descuentos efectivo inversión obras por impuestos (modalidad de pago 2)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3286",
+    "fuente_celda": "D257",
+    "fuente_celda_descripcion": "D256"
+  },
+  {
+    "numero": 102,
+    "descripcion": "Crédito fiscal (artículo 256-1 E.T.)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3287",
+    "fuente_celda": "D260",
+    "fuente_celda_descripcion": "D259"
+  },
+  {
+    "numero": 103,
+    "descripcion": "Anticipo renta liquidado año gravable anterior",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3288",
+    "fuente_celda": "D263",
+    "fuente_celda_descripcion": "D262"
+  },
+  {
+    "numero": 104,
+    "descripcion": "Saldo a favor año gravable anterior sin solicitud de devolución y/o compensación",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3289",
+    "fuente_celda": "D266",
+    "fuente_celda_descripcion": "D265"
+  },
+  {
+    "numero": 105,
+    "descripcion": "Autorretenciones",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3290",
+    "fuente_celda": "D270",
+    "fuente_celda_descripcion": "D269"
+  },
+  {
+    "numero": 106,
+    "descripcion": "Otras Retenciones",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3291",
+    "fuente_celda": "D273",
+    "fuente_celda_descripcion": "D272"
+  },
+  {
+    "numero": 107,
+    "descripcion": "Total retenciones año gravable a declarar(105 + 106)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3292",
+    "fuente_celda": "D276",
+    "fuente_celda_descripcion": "D275"
+  },
+  {
+    "numero": 108,
+    "descripcion": "Anticipo renta para el año gravable siguiente",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3293",
+    "fuente_celda": "D279",
+    "fuente_celda_descripcion": "D278"
+  },
+  {
+    "numero": 109,
+    "descripcion": "Anticipo Puntos adicionales año gravable anterior",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3294",
+    "fuente_celda": "D283",
+    "fuente_celda_descripcion": "D282"
+  },
+  {
+    "numero": 110,
+    "descripcion": "Anticipo Puntos adicionales año gravable siguiente",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3296",
+    "fuente_celda": "D286",
+    "fuente_celda_descripcion": "D285"
+  },
+  {
+    "numero": 111,
+    "descripcion": "Saldo a pagar por impuesto (99 + 108 + 110 - 100 - 101 - 102 - 103 - 104 - 107 - 109)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3297",
+    "fuente_celda": "D290",
+    "fuente_celda_descripcion": "D289"
+  },
+  {
+    "numero": 112,
+    "descripcion": "Sanciones",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3298",
+    "fuente_celda": "D293",
+    "fuente_celda_descripcion": "D292"
+  },
+  {
+    "numero": 113,
+    "descripcion": "Total saldo a pagar (99 + 108 + 110 + 112 - 100 - 101 - 102 - 103 - 104 - 107-109)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3299",
+    "fuente_celda": "D296",
+    "fuente_celda_descripcion": "D295"
+  },
+  {
+    "numero": 114,
+    "descripcion": "Total saldo a favor (100 + 101 + 102 + 103 + 104 + 107 + 109 - 99 - 108 - 110 - 112)",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3300",
+    "fuente_celda": "D299",
+    "fuente_celda_descripcion": "D298"
+  },
+  {
+    "numero": 115,
+    "descripcion": "Valor impuesto exigible por obras por impuestos modalidad de pago 1",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3301",
+    "fuente_celda": "D302",
+    "fuente_celda_descripcion": "D301"
+  },
+  {
+    "numero": 116,
+    "descripcion": "Valor total proyecto obras por impuestos modalidad de pago 2",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3302",
+    "fuente_celda": "D305",
+    "fuente_celda_descripcion": "D304"
+  },
+  {
+    "numero": 117,
+    "descripcion": "Aporte voluntario Art. 244-1 E.T",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": "='Hoja Sumaria'!H3303",
+    "fuente_celda": "D308",
+    "fuente_celda_descripcion": "D307"
+  },
+  {
+    "numero": 994,
+    "descripcion": "Con salvedades",
+    "seccion": "Liquidación privada",
+    "formula_xlsm": null,
+    "fuente_celda": null,
+    "fuente_celda_descripcion": "D312"
+  }
+]
