@@ -96,6 +96,15 @@ export default async function ImprimirDeclaracionPage({
     .filter((r) => r.tipo === "retencion")
     .reduce((s, r) => s + Number(r.retenido), 0);
 
+  const { data: descuentos } = await supabase
+    .from("anexo_descuentos")
+    .select("valor_descuento")
+    .eq("declaracion_id", declId);
+  const totalDescuentosTributarios = (descuentos ?? []).reduce(
+    (s, d) => s + Number(d.valor_descuento),
+    0,
+  );
+
   const { data: uvtRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -140,6 +149,7 @@ export default async function ImprimirDeclaracionPage({
     aportesParaFiscales: Number(declaracion.aportes_para_fiscales ?? 0),
     totalAutorretenciones,
     totalRetenciones,
+    totalDescuentosTributarios,
   });
 
   const porSeccion = new Map<string, typeof renglones>();

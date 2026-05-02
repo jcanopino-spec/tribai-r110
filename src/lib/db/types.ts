@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      anexo_descuentos: {
+        Row: {
+          base: number
+          categoria: string
+          created_at: string
+          declaracion_id: string
+          descripcion: string
+          id: number
+          normatividad: string | null
+          valor_descuento: number
+        }
+        Insert: {
+          base?: number
+          categoria: string
+          created_at?: string
+          declaracion_id: string
+          descripcion: string
+          id?: number
+          normatividad?: string | null
+          valor_descuento?: number
+        }
+        Update: {
+          base?: number
+          categoria?: string
+          created_at?: string
+          declaracion_id?: string
+          descripcion?: string
+          id?: number
+          normatividad?: string | null
+          valor_descuento?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_descuentos_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_retenciones: {
         Row: {
           agente: string | null

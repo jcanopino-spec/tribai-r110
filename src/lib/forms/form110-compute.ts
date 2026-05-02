@@ -28,6 +28,7 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
   85, // Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
+  93, // Descuentos tributarios · viene del Anexo 4
   97, // Impuesto neto de ganancias ocasionales = 83 × 15%
   105, // Autorretenciones · viene del Anexo 3
   106, // Otras retenciones · viene del Anexo 3
@@ -98,6 +99,8 @@ export type ComputeContext = {
   /** Anexo 3 · totales de retenciones y autorretenciones */
   totalAutorretenciones?: number;
   totalRetenciones?: number;
+  /** Anexo 4 · total de descuentos tributarios */
+  totalDescuentosTributarios?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -302,6 +305,13 @@ export function computarRenglones(
   v.set(96, get(94) + get(95));
   // 99 = 96 + 97 - 98  (Total impuesto a cargo)
   v.set(99, get(96) + get(97) - get(98));
+  // 93 = Descuentos tributarios (suma del Anexo 4) sujeto a tope Art. 259 E.T.
+  //   Tope: 75% del impuesto básico de renta (renglón 84)
+  if (typeof ctx.totalDescuentosTributarios === "number") {
+    const tope = Math.max(0, get(84)) * 0.75;
+    v.set(93, Math.min(ctx.totalDescuentosTributarios, tope));
+  }
+
   // 105 = Total autorretenciones (suma del Anexo 3)
   if (typeof ctx.totalAutorretenciones === "number") {
     v.set(105, ctx.totalAutorretenciones);
@@ -432,6 +442,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   84: "79 × tarifa del régimen",
   85: "5% sobre exceso de 79 sobre 120.000 UVT (instituciones financieras)",
   91: "Suma de 84 a 90",
+  93: "Anexo 4 (limitado al 75% del impto. básico, Art. 259 E.T.)",
   97: "83 × 15% (tarifa GO)",
   94: "91 + 92 − 93",
   96: "94 + 95",

@@ -89,6 +89,16 @@ export default async function DeclaracionEditorPage({
       .filter((r) => r.tipo === "retencion")
       .reduce((s, r) => s + Number(r.retenido), 0);
 
+  // Total Anexo 4 · Descuentos tributarios → renglón 93
+  const { data: descuentos } = await supabase
+    .from("anexo_descuentos")
+    .select("valor_descuento")
+    .eq("declaracion_id", declId);
+  const totalDescuentosTributarios = (descuentos ?? []).reduce(
+    (s, d) => s + Number(d.valor_descuento),
+    0,
+  );
+
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
   return (
@@ -178,6 +188,7 @@ export default async function DeclaracionEditorPage({
           beneficioAuditoria6m={!!declaracion.beneficio_auditoria_6m}
           totalAutorretenciones={totalAutorretenciones}
           totalRetenciones={totalRetenciones}
+          totalDescuentosTributarios={totalDescuentosTributarios}
         />
       )}
     </div>
@@ -209,6 +220,7 @@ async function Workspace({
   beneficioAuditoria6m,
   totalAutorretenciones,
   totalRetenciones,
+  totalDescuentosTributarios,
 }: {
   declId: string;
   empresaId: string;
@@ -234,6 +246,7 @@ async function Workspace({
   beneficioAuditoria6m: boolean;
   totalAutorretenciones: number;
   totalRetenciones: number;
+  totalDescuentosTributarios: number;
 }) {
   const supabase = await createClient();
 
@@ -404,6 +417,7 @@ async function Workspace({
             beneficioAuditoria6m={beneficioAuditoria6m}
             totalAutorretenciones={totalAutorretenciones}
             totalRetenciones={totalRetenciones}
+            totalDescuentosTributarios={totalDescuentosTributarios}
           />
         </div>
       </div>

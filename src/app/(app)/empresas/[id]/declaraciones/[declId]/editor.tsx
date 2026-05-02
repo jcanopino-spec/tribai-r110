@@ -63,6 +63,7 @@ export function DeclaracionEditor({
   beneficioAuditoria6m,
   totalAutorretenciones,
   totalRetenciones,
+  totalDescuentosTributarios,
 }: {
   declId: string;
   empresaId: string;
@@ -87,6 +88,7 @@ export function DeclaracionEditor({
   beneficioAuditoria6m: boolean;
   totalAutorretenciones: number;
   totalRetenciones: number;
+  totalDescuentosTributarios: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -137,6 +139,7 @@ export function DeclaracionEditor({
       aportesParaFiscales,
       totalAutorretenciones,
       totalRetenciones,
+      totalDescuentosTributarios,
     });
   }, [
     valores,
@@ -157,6 +160,7 @@ export function DeclaracionEditor({
     aportesParaFiscales,
     totalAutorretenciones,
     totalRetenciones,
+    totalDescuentosTributarios,
   ]);
 
   const totales = useMemo(() => {
@@ -234,7 +238,13 @@ export function DeclaracionEditor({
           href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/retenciones`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
-          Anexo 3 · Retenciones
+          Retenciones
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/descuentos`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Descuentos
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
