@@ -1,0 +1,256 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
+
+export const metadata = { title: "Anexos" };
+
+const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+type AnexoCard = {
+  numero: string;
+  titulo: string;
+  href: string;
+  renglones: number[];
+  total: number;
+  items: number;
+  descripcion: string;
+};
+
+export default async function AnexosHubPage({
+  params,
+}: {
+  params: Promise<{ id: string; declId: string }>;
+}) {
+  const { id: empresaId, declId } = await params;
+  const supabase = await createClient();
+
+  const { data: declaracion } = await supabase
+    .from("declaraciones")
+    .select("id, ano_gravable")
+    .eq("id", declId)
+    .single();
+  if (!declaracion) notFound();
+
+  // Cargar totales de cada anexo en paralelo
+  const [
+    retenciones,
+    descuentos,
+    go,
+    rentasExentas,
+    compensaciones,
+    recuperaciones,
+    dividendos,
+    incrngo,
+  ] = await Promise.all([
+    supabase
+      .from("anexo_retenciones")
+      .select("retenido, tipo")
+      .eq("declaracion_id", declId),
+    supabase.from("anexo_descuentos").select("valor_descuento").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_ganancia_ocasional")
+      .select("precio_venta, costo_fiscal, no_gravada")
+      .eq("declaracion_id", declId),
+    supabase.from("anexo_rentas_exentas").select("valor_fiscal").eq("declaracion_id", declId),
+    supabase.from("anexo_compensaciones").select("compensar").eq("declaracion_id", declId),
+    supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
+    supabase.from("anexo_dividendos").select("*").eq("declaracion_id", declId),
+    supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
+  ]);
+
+  const totalRet =
+    (retenciones.data ?? []).reduce((s, r) => s + Number(r.retenido), 0);
+  const totalDesc =
+    (descuentos.data ?? []).reduce((s, d) => s + Number(d.valor_descuento), 0);
+  const goItems = go.data ?? [];
+  const totalGoBruto = goItems.reduce((s, g) => s + Number(g.precio_venta), 0);
+  const totalRE =
+    (rentasExentas.data ?? []).reduce((s, r) => s + Number(r.valor_fiscal), 0);
+  const totalComp =
+    (compensaciones.data ?? []).reduce((s, c) => s + Number(c.compensar), 0);
+  const totalRec =
+    (recuperaciones.data ?? []).reduce((s, r) => s + Number(r.valor), 0);
+  const totalDiv = (dividendos.data ?? []).reduce(
+    (s, d) =>
+      s +
+      Number(d.no_constitutivos) +
+      Number(d.distribuidos_no_residentes) +
+      Number(d.gravados_tarifa_general) +
+      Number(d.gravados_persona_natural_dos) +
+      Number(d.gravados_personas_extranjeras) +
+      Number(d.gravados_art_245) +
+      Number(d.gravados_tarifa_l1819) +
+      Number(d.gravados_proyectos),
+    0,
+  );
+  const totalIncr =
+    (incrngo.data ?? []).reduce((s, i) => s + Number(i.valor), 0);
+
+  const cards: AnexoCard[] = [
+    {
+      numero: "1",
+      titulo: "Renta Presuntiva",
+      href: "renta-presuntiva",
+      renglones: [76],
+      total: 0, // calculada en el editor; mostraremos 0 aquí
+      items: 0,
+      descripcion: "Patrimonio líquido AG anterior × tarifa (0% en AG 2025).",
+    },
+    {
+      numero: "3",
+      titulo: "Retenciones y Autorretenciones",
+      href: "retenciones",
+      renglones: [105, 106],
+      total: totalRet,
+      items: retenciones.data?.length ?? 0,
+      descripcion: "Lista de retenciones y autorretenciones del año.",
+    },
+    {
+      numero: "4",
+      titulo: "Descuentos Tributarios",
+      href: "descuentos",
+      renglones: [93],
+      total: totalDesc,
+      items: descuentos.data?.length ?? 0,
+      descripcion: "Impuestos exterior, donaciones, ICA 50%, otros.",
+    },
+    {
+      numero: "8",
+      titulo: "Ganancias Ocasionales",
+      href: "ganancia-ocasional",
+      renglones: [80, 81, 82],
+      total: totalGoBruto,
+      items: goItems.length,
+      descripcion: "Activos fijos, rifas, herencias, liquidaciones, etc.",
+    },
+    {
+      numero: "17",
+      titulo: "Recuperación de Deducciones",
+      href: "recuperaciones",
+      renglones: [70],
+      total: totalRec,
+      items: recuperaciones.data?.length ?? 0,
+      descripcion: "Reversiones de partidas que disminuyeron rentas anteriores.",
+    },
+    {
+      numero: "18",
+      titulo: "Ingresos por Dividendos",
+      href: "dividendos",
+      renglones: [49, 50, 51, 52, 53, 54, 55, 56],
+      total: totalDiv,
+      items: dividendos.data?.length ?? 0,
+      descripcion: "Dividendos por categoría tributaria y tercero.",
+    },
+    {
+      numero: "19",
+      titulo: "Rentas Exentas",
+      href: "rentas-exentas",
+      renglones: [77],
+      total: totalRE,
+      items: rentasExentas.data?.length ?? 0,
+      descripcion: "Art. 235-2 ET y otras categorías exentas.",
+    },
+    {
+      numero: "20",
+      titulo: "Compensación de Pérdidas",
+      href: "compensaciones",
+      renglones: [74],
+      total: totalComp,
+      items: compensaciones.data?.length ?? 0,
+      descripcion: "Pérdidas (12 años) y excesos de RP (5 años).",
+    },
+    {
+      numero: "26",
+      titulo: "INCRNGO",
+      href: "incrngo",
+      renglones: [60],
+      total: totalIncr,
+      items: incrngo.data?.length ?? 0,
+      descripcion: "Ingresos no constitutivos de renta ni ganancia ocasional.",
+    },
+  ];
+
+  return (
+    <div className="max-w-5xl">
+      <Link
+        href={`/empresas/${empresaId}/declaraciones/${declId}`}
+        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
+      >
+        ← Volver al editor
+      </Link>
+
+      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
+        Anexos
+      </h1>
+      <p className="mt-3 max-w-3xl text-muted-foreground">
+        Cada anexo alimenta uno o varios renglones del Formulario 110. Los totales
+        se reflejan automáticamente al guardar.
+      </p>
+
+      <div className="mt-10 grid gap-4 md:grid-cols-2">
+        {cards.map((c) => (
+          <Link
+            key={c.numero}
+            href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/${c.href}`}
+            className="group block border border-border p-5 transition-colors hover:border-foreground"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                  Anexo {c.numero}
+                  {" · "}
+                  Renglones{" "}
+                  <span className="font-medium text-foreground">
+                    {c.renglones.join(", ")}
+                  </span>
+                </p>
+                <h3 className="mt-2 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+                  {c.titulo}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{c.descripcion}</p>
+              </div>
+              <div className="text-right">
+                <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                  Total
+                </p>
+                <p className="mt-1 font-serif text-2xl tracking-[-0.02em]">
+                  {FMT.format(c.total)}
+                </p>
+                <p className="mt-1 font-mono text-xs text-muted-foreground">
+                  {c.items} {c.items === 1 ? "ítem" : "ítems"}
+                </p>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <div className="mt-12 border border-dashed border-border p-6">
+        <h3 className="font-serif text-xl">Anexos pendientes de implementar</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Anexos del .xlsm modelo que aún no están integrados. Su funcionalidad
+          puede manejarse desde el Balance Fiscal mediante ajustes débito/crédito.
+        </p>
+        <ul className="mt-4 grid gap-2 text-sm md:grid-cols-2">
+          {[
+            "5 · Venta AF (cubierto parcialmente en Anexo 8)",
+            "9 · ICA (descuento ICA cubierto en Anexo 4)",
+            "10 · GMF",
+            "11 · Predial",
+            "12 · Deterioro de Cartera",
+            "13 · Deducción IVA Bienes Capital",
+            "14 · Interés Presuntivo",
+            "15 · Subcapitalización",
+            "21 · Pagos Seguridad Social",
+            "22 · Diferencia en Cambio",
+            "25 · Cálculo de Dividendos",
+          ].map((a, i) => (
+            <li key={i} className="font-mono text-xs text-muted-foreground">
+              ◦ Anexo {a}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}

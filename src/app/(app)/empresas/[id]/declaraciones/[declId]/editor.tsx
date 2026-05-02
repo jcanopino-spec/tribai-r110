@@ -274,58 +274,10 @@ export function DeclaracionEditor({
 
       <div className="mb-6 flex flex-wrap justify-end gap-2">
         <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/retenciones`}
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
-          Retenciones
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/descuentos`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Descuentos
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/ganancia-ocasional`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Ganancia ocasional
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/rentas-exentas`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Rentas exentas
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/compensaciones`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Compensaciones
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/recuperaciones`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Recuperaciones
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/renta-presuntiva`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Renta presuntiva
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/dividendos`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Dividendos
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/incrngo`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          INCRNGO
+          Anexos
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
