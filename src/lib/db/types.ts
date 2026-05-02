@@ -857,7 +857,6 @@ export type Database = {
           calcula_anticipo: boolean
           calcula_sancion_correccion: boolean
           calcula_sancion_extemporaneidad: boolean
-          cf_utilidad_contable: number
           created_at: string
           dc_cartera_0_90: number
           dc_cartera_181_360: number
@@ -912,7 +911,6 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
-          cf_utilidad_contable?: number
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
@@ -967,7 +965,6 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
-          cf_utilidad_contable?: number
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
@@ -1439,4 +1436,3 @@ export const Constants = {
     Enums: {},
   },
 } as const
-

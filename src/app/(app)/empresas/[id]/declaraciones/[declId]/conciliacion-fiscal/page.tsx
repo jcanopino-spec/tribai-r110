@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { UtilidadForm } from "./utilidad-form";
 import { PartidaForm } from "./partida-form";
 import { PartidasList } from "./list";
 
@@ -24,7 +23,14 @@ export default async function ConciliacionPage({
     .single();
   if (!declaracion) notFound();
 
-  // Cargar partidas manuales + anexos relevantes en paralelo
+  // Cargar balance fiscal de esta declaración
+  const { data: balanceMeta } = await supabase
+    .from("balance_pruebas")
+    .select("id")
+    .eq("declaracion_id", declId)
+    .maybeSingle();
+
+  // Cargar partidas manuales + anexos + balance en paralelo
   const [
     partidasRes,
     icaRes,
@@ -34,6 +40,7 @@ export default async function ConciliacionPage({
     trmRes,
     tasaIntRes,
     r72Res,
+    balanceLineasRes,
   ] = await Promise.all([
     supabase
       .from("conciliacion_partidas")
@@ -68,6 +75,13 @@ export default async function ConciliacionPage({
       .eq("declaracion_id", declId)
       .eq("numero", 72)
       .maybeSingle(),
+    balanceMeta
+      ? supabase
+          .from("balance_prueba_lineas")
+          .select("cuenta, nombre, ajuste_debito, ajuste_credito")
+          .eq("balance_id", balanceMeta.id)
+          .or("ajuste_debito.gt.0,ajuste_credito.gt.0")
+      : Promise.resolve({ data: [] }),
   ]);
 
   const partidasManuales = (partidasRes.data ?? []).map((p) => ({
@@ -84,7 +98,10 @@ export default async function ConciliacionPage({
   const trmFinal = trmRes.data ? Number(trmRes.data.valor) : 0;
   const tasaIntPres = tasaIntRes.data ? Number(tasaIntRes.data.valor) : 0;
 
-  const utilidadContable = Number(declaracion.cf_utilidad_contable ?? 0);
+  // Utilidad contable proviene de /configuracion (cuentas 3605/3610)
+  const utilidadCont = Number(declaracion.utilidad_contable ?? 0);
+  const perdidaCont = Number(declaracion.perdida_contable ?? 0);
+  const utilidadContable = utilidadCont - perdidaCont;
 
   // ─── Partidas derivadas automáticamente ─────────────────────────────────
   type Auto = {
@@ -228,6 +245,37 @@ export default async function ConciliacionPage({
     });
   }
 
+  // Balance Fiscal · ajustes en cuentas P&L (4xxx ingresos, 5/6/7xxx costos/gastos)
+  // Convención del sistema: ajuste_credito en costo/gasto reduce el costo fiscal
+  // (suma a la utilidad fiscal); ajuste_debito en costo lo aumenta (resta).
+  // Ingresos al revés: credito aumenta ingreso fiscal (suma); debito lo reduce (resta).
+  for (const l of balanceLineasRes.data ?? []) {
+    const cuenta = String(l.cuenta);
+    const primer = cuenta.charAt(0);
+    if (!["4", "5", "6", "7"].includes(primer)) continue;
+    const ajDeb = Number(l.ajuste_debito ?? 0);
+    const ajCre = Number(l.ajuste_credito ?? 0);
+    if (ajDeb === 0 && ajCre === 0) continue;
+    const esIngreso = primer === "4";
+    // Efecto en utilidad fiscal:
+    //   Ingreso (4): +credito −debito
+    //   Costo/gasto (5/6/7): +credito −debito (porque crédito reduce costo)
+    const efecto = ajCre - ajDeb;
+    if (Math.abs(efecto) < 0.01) continue;
+    partidasAuto.push({
+      id: `auto-bal-${l.cuenta}`,
+      tipo: "permanente",
+      signo: efecto > 0 ? "mas" : "menos",
+      concepto: `Ajuste fiscal · ${l.cuenta} ${l.nombre ?? ""}`.trim(),
+      valor: Math.abs(efecto),
+      observacion: esIngreso
+        ? `Ajuste sobre ingreso (cuenta ${primer}xxx).`
+        : `Ajuste sobre costo/gasto (cuenta ${primer}xxx).`,
+      origen: "auto",
+      fuente: "Balance Fiscal",
+    });
+  }
+
   const todas = [...partidasAuto, ...partidasManuales];
 
   const sumaMasPerm = todas
@@ -274,9 +322,8 @@ export default async function ConciliacionPage({
         <p className="mt-2 max-w-3xl text-xs text-muted-foreground">
           Las partidas marcadas{" "}
           <span className="font-mono uppercase">auto</span> se derivan
-          automáticamente de los anexos (ICA, GMF, deterioro de cartera,
-          interés presuntivo, subcapitalización, diferencia en cambio).
-          Para modificarlas, vuelve al anexo correspondiente.
+          automáticamente de los anexos y del Balance Fiscal. Para modificarlas,
+          vuelve al anexo o al balance.
         </p>
       ) : null}
 
@@ -286,12 +333,20 @@ export default async function ConciliacionPage({
           Punto de partida
         </h2>
         <p className="mt-1 text-xs text-muted-foreground">
-          Utilidad (o pérdida) contable antes del impuesto sobre la renta. Tomar
-          del Estado de Resultados.
+          Utilidad (o pérdida) contable antes del impuesto sobre la renta.
+          Se toma de Configuración (cuentas 3605/3610).
         </p>
-        <div className="mt-4 max-w-md">
-          <UtilidadForm declId={declId} empresaId={empresaId} initialValue={utilidadContable} />
+        <div className="mt-4 grid max-w-md gap-3 sm:grid-cols-3">
+          <Stat label="Utilidad contable" value={utilidadCont} />
+          <Stat label="Pérdida contable" value={perdidaCont} />
+          <Stat label="Neto" value={utilidadContable} emphasis />
         </div>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+          className="mt-3 inline-block font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
+        >
+          Editar en Configuración →
+        </Link>
       </section>
 
       {/* Resumen visual de la conciliación */}

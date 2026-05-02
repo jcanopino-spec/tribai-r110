@@ -10,27 +10,6 @@ function parseNum(s: string): number {
   return Number.isFinite(n) ? n : 0;
 }
 
-export async function saveUtilidadContableAction(
-  declId: string,
-  empresaId: string,
-  _prev: State,
-  form: FormData,
-): Promise<State> {
-  const supabase = await createClient();
-  const cf_utilidad_contable = parseNum(String(form.get("cf_utilidad_contable") ?? ""));
-
-  const { error } = await supabase
-    .from("declaraciones")
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    .update({ cf_utilidad_contable, updated_at: new Date().toISOString() } as any)
-    .eq("id", declId);
-  if (error) return { error: error.message, ok: false };
-
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`);
-  return { error: null, ok: true };
-}
-
 export async function addPartidaAction(
   declId: string,
   empresaId: string,
