@@ -25,6 +25,7 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
   97, // Impuesto neto de ganancias ocasionales = 83 × 15%
   108, // Anticipo año siguiente (Anexo 2 del .xlsm)
+  113, // Sanción por extemporaneidad (Arts. 641/642 E.T.)
   94, // Impuesto neto de renta (sin adicionado) = 91 - 93 (+92 según descrip)
   96, // Impuesto neto de renta (con adicionado) = 94 + 95
   99, // Total impuesto a cargo = 96 + 97 - 98
@@ -69,6 +70,14 @@ export type ComputeContext = {
   presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
   /** Flag de sanción extemporaneidad activado por el usuario */
   calculaSancionExtemporaneidad?: boolean;
+  /** ¿Existe emplazamiento previo? Cambia las tarifas del Art. 641 → 642 E.T. */
+  existeEmplazamiento?: boolean;
+  /** Reducción del Art. 640 E.T.: '0' | '50' | '75' */
+  reduccionSancion?: "0" | "50" | "75";
+  /** UVT vigente para la liquidación de la sanción (año de presentación). */
+  uvtVigente?: number;
+  /** Patrimonio líquido año gravable anterior (para sanción cuando no hay impuesto/ingresos). */
+  patrimonioLiquidoAnterior?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -76,6 +85,79 @@ const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, nu
   segundo: 0.5,
   tercero_o_mas: 0.75,
 };
+
+// Sanción mínima: 10 UVT (Art. 639 E.T.)
+const SANCION_MINIMA_UVT = 10;
+
+/**
+ * Calcula la sanción por extemporaneidad según Art. 641 (sin emplazamiento)
+ * o Art. 642 E.T. (con emplazamiento). Aplica reducción del Art. 640 si procede.
+ *
+ * Cuando hay impuesto a cargo: % por mes/fracción sobre el impuesto, con tope.
+ * Si no hay impuesto pero sí ingresos: % sobre ingresos brutos.
+ * Si no hay ingresos: % sobre patrimonio líquido del año anterior.
+ *
+ * Sanción mínima 10 UVT (Art. 639 E.T.) cuando supera 0.
+ */
+export function calcularSancionExtemporaneidad(args: {
+  meses: number;
+  impuestoCargo: number;
+  ingresosBrutos: number;
+  patrimonioLiquidoAnterior: number;
+  uvt: number;
+  existeEmplazamiento: boolean;
+  reduccion: "0" | "50" | "75";
+}): number {
+  const { meses, impuestoCargo, ingresosBrutos, patrimonioLiquidoAnterior, uvt, existeEmplazamiento, reduccion } = args;
+  if (meses <= 0 || uvt <= 0) return 0;
+
+  let base = 0;
+  if (existeEmplazamiento) {
+    // Art. 642 E.T.
+    if (impuestoCargo > 0) {
+      base = Math.min(0.10 * meses * impuestoCargo, 2 * impuestoCargo);
+    } else if (ingresosBrutos > 0) {
+      base = Math.min(
+        0.01 * meses * ingresosBrutos,
+        0.10 * ingresosBrutos,
+        10000 * uvt,
+      );
+    } else if (patrimonioLiquidoAnterior > 0) {
+      base = Math.min(
+        0.02 * meses * patrimonioLiquidoAnterior,
+        0.20 * patrimonioLiquidoAnterior,
+        5000 * uvt,
+      );
+    }
+  } else {
+    // Art. 641 E.T.
+    if (impuestoCargo > 0) {
+      base = Math.min(0.05 * meses * impuestoCargo, impuestoCargo);
+    } else if (ingresosBrutos > 0) {
+      base = Math.min(
+        0.005 * meses * ingresosBrutos,
+        0.05 * ingresosBrutos,
+        5000 * uvt,
+      );
+    } else if (patrimonioLiquidoAnterior > 0) {
+      base = Math.min(
+        0.01 * meses * patrimonioLiquidoAnterior,
+        0.01 * patrimonioLiquidoAnterior,
+        2500 * uvt,
+      );
+    }
+  }
+
+  if (base <= 0) return 0;
+
+  // Reducción Art. 640 E.T.
+  const factorReduccion = 1 - Number(reduccion) / 100;
+  const conReduccion = base * factorReduccion;
+
+  // Sanción mínima 10 UVT
+  const minima = SANCION_MINIMA_UVT * uvt;
+  return Math.round(Math.max(minima, conReduccion));
+}
 
 /**
  * Calcula los valores derivados a partir de los inputs.
@@ -152,6 +234,29 @@ export function computarRenglones(
   v.set(99, get(96) + get(97) - get(98));
   // 107 = 105 + 106  (Total retenciones)
   v.set(107, get(105) + get(106));
+
+  // 113 = Sanción por extemporaneidad (Arts. 641/642 E.T.)
+  // Solo si el usuario activó el flag y la presentación es extemporánea.
+  if (
+    ctx.calculaSancionExtemporaneidad &&
+    ctx.presentacion?.estado === "extemporanea" &&
+    typeof ctx.uvtVigente === "number"
+  ) {
+    v.set(
+      113,
+      calcularSancionExtemporaneidad({
+        meses: ctx.presentacion.mesesExtemporanea ?? 0,
+        impuestoCargo: Math.max(0, get(99)),
+        ingresosBrutos: get(58),
+        patrimonioLiquidoAnterior: ctx.patrimonioLiquidoAnterior ?? 0,
+        uvt: ctx.uvtVigente,
+        existeEmplazamiento: !!ctx.existeEmplazamiento,
+        reduccion: ctx.reduccionSancion ?? "0",
+      }),
+    );
+  } else {
+    v.set(113, 0);
+  }
 
   // 108 = Anticipo año siguiente (Anexo 2 del .xlsm, método 1 = promedio)
   //   = max(0, ((impuesto_neto_actual + impuesto_neto_anterior) / 2) × tarifa
@@ -245,6 +350,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   99: "96 + 97 − 98",
   107: "105 + 106",
   108: "(96 + impto. AG anterior) / 2 × tarifa años − 107",
+  113: "Sanción extemporaneidad Arts. 641/642 E.T.",
   111: "99 + 108 + 110 − 100 − 101 − 102 − 103 − 104 − 107 − 109",
   112: "99 + 108 + 110 + 113 − (restas de 111)",
   114: "Diferencia (saldo a favor) si las restas exceden",

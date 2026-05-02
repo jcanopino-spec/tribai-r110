@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
 
 export const metadata = { title: "Editor declaración" };
 
@@ -19,9 +20,7 @@ export default async function DeclaracionEditorPage({
 
   const { data: declaracion } = await supabase
     .from("declaraciones")
-    .select(
-      "id, ano_gravable, formato, estado, modo_carga, impuesto_neto_anterior, anios_declarando, empresa:empresas(id, razon_social, nit, regimen_codigo)",
-    )
+    .select("*, empresa:empresas(id, razon_social, nit, regimen_codigo)")
     .eq("id", declId)
     .single();
 
@@ -39,6 +38,42 @@ export default async function DeclaracionEditorPage({
       .maybeSingle();
     tarifaRegimen = reg ? Number(reg.tarifa) : null;
   }
+
+  // UVT del año de presentación (año gravable + 1) para sanciones
+  const anoPresentacion = declaracion.ano_gravable + 1;
+  const { data: uvtRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", anoPresentacion)
+    .eq("codigo", "uvt")
+    .maybeSingle();
+  const uvtVigente = uvtRow ? Number(uvtRow.valor) : null;
+
+  // Resolver vencimiento por NIT (auto)
+  const tipoContribuyente = declaracion.es_gran_contribuyente
+    ? "gran_contribuyente"
+    : "persona_juridica";
+  const digito = ultimoDigitoNit(declaracion.empresa?.nit ?? null);
+  let vencimientoSugerido: string | null = null;
+  if (digito !== null) {
+    const { data: venc } = await supabase
+      .from("vencimientos_form110")
+      .select("fecha_vencimiento")
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .eq("tipo_contribuyente", tipoContribuyente)
+      .eq("ultimo_digito", digito)
+      .maybeSingle();
+    vencimientoSugerido = venc?.fecha_vencimiento ?? null;
+  }
+  const fechaVencimientoEfectiva = declaracion.fecha_vencimiento ?? vencimientoSugerido;
+  const evaluacion = evaluarPresentacion(
+    fechaVencimientoEfectiva,
+    declaracion.fecha_presentacion,
+  );
+
+  const patrimonioLiquidoAnterior =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
 
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
@@ -105,6 +140,20 @@ export default async function DeclaracionEditorPage({
               | "segundo"
               | "tercero_o_mas"
           }
+          presentacion={
+            evaluacion.estado === "extemporanea"
+              ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
+              : evaluacion.estado === "oportuna"
+                ? { estado: "oportuna" }
+                : { estado: "no_presentada" }
+          }
+          calculaSancionExtemporaneidad={!!declaracion.calcula_sancion_extemporaneidad}
+          existeEmplazamiento={!!declaracion.existe_emplazamiento}
+          reduccionSancion={
+            (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75"
+          }
+          uvtVigente={uvtVigente}
+          patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
         />
       )}
     </div>
@@ -120,6 +169,12 @@ async function Workspace({
   regimenCodigo,
   impuestoNetoAnterior,
   aniosDeclarando,
+  presentacion,
+  calculaSancionExtemporaneidad,
+  existeEmplazamiento,
+  reduccionSancion,
+  uvtVigente,
+  patrimonioLiquidoAnterior,
 }: {
   declId: string;
   empresaId: string;
@@ -129,6 +184,12 @@ async function Workspace({
   regimenCodigo: string | null;
   impuestoNetoAnterior: number;
   aniosDeclarando: "primero" | "segundo" | "tercero_o_mas";
+  presentacion: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
+  calculaSancionExtemporaneidad: boolean;
+  existeEmplazamiento: boolean;
+  reduccionSancion: "0" | "50" | "75";
+  uvtVigente: number | null;
+  patrimonioLiquidoAnterior: number;
 }) {
   const supabase = await createClient();
 
@@ -283,6 +344,12 @@ async function Workspace({
             tarifaRegimen={tarifaRegimen}
             impuestoNetoAnterior={impuestoNetoAnterior}
             aniosDeclarando={aniosDeclarando}
+            presentacion={presentacion}
+            calculaSancionExtemporaneidad={calculaSancionExtemporaneidad}
+            existeEmplazamiento={existeEmplazamiento}
+            reduccionSancion={reduccionSancion}
+            uvtVigente={uvtVigente}
+            patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
           />
         </div>
       </div>

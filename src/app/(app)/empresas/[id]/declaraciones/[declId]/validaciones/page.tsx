@@ -84,6 +84,25 @@ export default async function ValidacionesPage({
     .select("numero, valor")
     .eq("declaracion_id", declId);
 
+  const { data: uvtRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable + 1)
+    .eq("codigo", "uvt")
+    .maybeSingle();
+  const uvtVigente = uvtRow ? Number(uvtRow.valor) : null;
+
+  const patrimonioLiquidoAnterior =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
+
+  const presentacion =
+    evaluacion.estado === "extemporanea"
+      ? { estado: "extemporanea" as const, mesesExtemporanea: evaluacion.mesesExtemporanea }
+      : evaluacion.estado === "oportuna"
+        ? { estado: "oportuna" as const }
+        : { estado: "no_presentada" as const };
+
   const inputs = new Map<number, number>();
   for (const v of valores ?? []) inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
   const numerico = computarRenglones(inputs, {
@@ -94,18 +113,19 @@ export default async function ValidacionesPage({
       | "segundo"
       | "tercero_o_mas"
       | undefined,
+    presentacion,
+    calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    existeEmplazamiento: !!declaracion.existe_emplazamiento,
+    reduccionSancion: (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75",
+    uvtVigente: uvtVigente ?? undefined,
+    patrimonioLiquidoAnterior,
   });
 
   const validaciones = validarFormulario(numerico, {
     tarifaRegimen,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
-    presentacion:
-      evaluacion.estado === "extemporanea"
-        ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
-        : evaluacion.estado === "oportuna"
-          ? { estado: "oportuna" }
-          : { estado: "no_presentada" },
+    presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
   });
 

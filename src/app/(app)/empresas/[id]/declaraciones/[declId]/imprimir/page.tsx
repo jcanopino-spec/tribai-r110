@@ -6,6 +6,7 @@ import {
   computarRenglones,
   normalizarSigno,
 } from "@/lib/forms/form110-compute";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
 import { PrintButton } from "./print-button";
 
 export const metadata = {
@@ -24,9 +25,7 @@ export default async function ImprimirDeclaracionPage({
 
   const { data: declaracion } = await supabase
     .from("declaraciones")
-    .select(
-      "id, empresa_id, ano_gravable, formato, estado, modo_carga, impuesto_neto_anterior, anios_declarando",
-    )
+    .select("*")
     .eq("id", declId)
     .single();
   if (!declaracion) notFound();
@@ -63,6 +62,41 @@ export default async function ImprimirDeclaracionPage({
       .eq("declaracion_id", declId),
   ]);
 
+  // Resolver vencimiento auto + UVT vigente para sanción
+  const tipoContribuyente = declaracion.es_gran_contribuyente
+    ? "gran_contribuyente"
+    : "persona_juridica";
+  const digito = ultimoDigitoNit(empresa.nit);
+  let vencimientoSugerido: string | null = null;
+  if (digito !== null) {
+    const { data: venc } = await supabase
+      .from("vencimientos_form110")
+      .select("fecha_vencimiento")
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .eq("tipo_contribuyente", tipoContribuyente)
+      .eq("ultimo_digito", digito)
+      .maybeSingle();
+    vencimientoSugerido = venc?.fecha_vencimiento ?? null;
+  }
+  const fechaVencimientoEfectiva =
+    declaracion.fecha_vencimiento ?? vencimientoSugerido;
+  const evaluacion = evaluarPresentacion(
+    fechaVencimientoEfectiva,
+    declaracion.fecha_presentacion,
+  );
+
+  const { data: uvtRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable + 1)
+    .eq("codigo", "uvt")
+    .maybeSingle();
+  const uvtVigente = uvtRow ? Number(uvtRow.valor) : null;
+
+  const patrimonioLiquidoAnterior =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
+
   // Normaliza y computa
   const inputs = new Map<number, number>();
   for (const v of valores ?? []) {
@@ -76,6 +110,17 @@ export default async function ImprimirDeclaracionPage({
       | "segundo"
       | "tercero_o_mas"
       | undefined,
+    presentacion:
+      evaluacion.estado === "extemporanea"
+        ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
+        : evaluacion.estado === "oportuna"
+          ? { estado: "oportuna" }
+          : { estado: "no_presentada" },
+    calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    existeEmplazamiento: !!declaracion.existe_emplazamiento,
+    reduccionSancion: (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75",
+    uvtVigente: uvtVigente ?? undefined,
+    patrimonioLiquidoAnterior,
   });
 
   const porSeccion = new Map<string, typeof renglones>();

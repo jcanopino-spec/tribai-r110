@@ -47,6 +47,12 @@ export function DeclaracionEditor({
   tarifaRegimen,
   impuestoNetoAnterior,
   aniosDeclarando,
+  presentacion,
+  calculaSancionExtemporaneidad,
+  existeEmplazamiento,
+  reduccionSancion,
+  uvtVigente,
+  patrimonioLiquidoAnterior,
 }: {
   declId: string;
   empresaId: string;
@@ -55,6 +61,12 @@ export function DeclaracionEditor({
   tarifaRegimen: number | null;
   impuestoNetoAnterior: number;
   aniosDeclarando: AniosDeclarando;
+  presentacion: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
+  calculaSancionExtemporaneidad: boolean;
+  existeEmplazamiento: boolean;
+  reduccionSancion: "0" | "50" | "75";
+  uvtVigente: number | null;
+  patrimonioLiquidoAnterior: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -91,8 +103,25 @@ export function DeclaracionEditor({
       tarifaRegimen: tarifaRegimen ?? undefined,
       impuestoNetoAnterior,
       aniosDeclarando,
+      presentacion,
+      calculaSancionExtemporaneidad,
+      existeEmplazamiento,
+      reduccionSancion,
+      uvtVigente: uvtVigente ?? undefined,
+      patrimonioLiquidoAnterior,
     });
-  }, [valores, tarifaRegimen, impuestoNetoAnterior, aniosDeclarando]);
+  }, [
+    valores,
+    tarifaRegimen,
+    impuestoNetoAnterior,
+    aniosDeclarando,
+    presentacion,
+    calculaSancionExtemporaneidad,
+    existeEmplazamiento,
+    reduccionSancion,
+    uvtVigente,
+    patrimonioLiquidoAnterior,
+  ]);
 
   const totales = useMemo(() => {
     return {
@@ -110,8 +139,17 @@ export function DeclaracionEditor({
         tarifaRegimen,
         impuestoNetoAnterior,
         aniosDeclarando,
+        presentacion,
+        calculaSancionExtemporaneidad,
       }),
-    [numerico, tarifaRegimen, impuestoNetoAnterior, aniosDeclarando],
+    [
+      numerico,
+      tarifaRegimen,
+      impuestoNetoAnterior,
+      aniosDeclarando,
+      presentacion,
+      calculaSancionExtemporaneidad,
+    ],
   );
   const errores = validaciones.filter((v) => v.nivel === "error").length;
   const warns = validaciones.filter((v) => v.nivel === "warn").length;
