@@ -67,6 +67,8 @@ export function DeclaracionEditor({
   goIngresos,
   goCostos,
   goNoGravada,
+  totalRentasExentas,
+  totalCompensaciones,
 }: {
   declId: string;
   empresaId: string;
@@ -95,6 +97,8 @@ export function DeclaracionEditor({
   goIngresos: number;
   goCostos: number;
   goNoGravada: number;
+  totalRentasExentas: number;
+  totalCompensaciones: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -149,6 +153,8 @@ export function DeclaracionEditor({
       goIngresos,
       goCostos,
       goNoGravada,
+      totalRentasExentas,
+      totalCompensaciones,
     });
   }, [
     valores,
@@ -173,6 +179,8 @@ export function DeclaracionEditor({
     goIngresos,
     goCostos,
     goNoGravada,
+    totalRentasExentas,
+    totalCompensaciones,
   ]);
 
   const totales = useMemo(() => {
@@ -263,6 +271,18 @@ export function DeclaracionEditor({
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
           Ganancia ocasional
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/rentas-exentas`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Rentas exentas
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/compensaciones`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Compensaciones
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}

@@ -114,6 +114,24 @@ export default async function ValidacionesPage({
   const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
   const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
 
+  const { data: rentasExentas } = await supabase
+    .from("anexo_rentas_exentas")
+    .select("valor_fiscal")
+    .eq("declaracion_id", declId);
+  const totalRentasExentas = (rentasExentas ?? []).reduce(
+    (s, r) => s + Number(r.valor_fiscal),
+    0,
+  );
+
+  const { data: compensaciones } = await supabase
+    .from("anexo_compensaciones")
+    .select("compensar")
+    .eq("declaracion_id", declId);
+  const totalCompensaciones = (compensaciones ?? []).reduce(
+    (s, c) => s + Number(c.compensar),
+    0,
+  );
+
   const { data: uvtRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -161,6 +179,8 @@ export default async function ValidacionesPage({
     goIngresos,
     goCostos,
     goNoGravada,
+    totalRentasExentas,
+    totalCompensaciones,
   });
 
   const validaciones = validarFormulario(numerico, {

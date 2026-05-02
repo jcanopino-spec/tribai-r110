@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      anexo_compensaciones: {
+        Row: {
+          ano_origen: number
+          compensar: number
+          created_at: string
+          declaracion_id: string
+          id: number
+          observacion: string | null
+          perdida_original: number
+          tipo: string
+        }
+        Insert: {
+          ano_origen: number
+          compensar?: number
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          observacion?: string | null
+          perdida_original?: number
+          tipo: string
+        }
+        Update: {
+          ano_origen?: number
+          compensar?: number
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          observacion?: string | null
+          perdida_original?: number
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_compensaciones_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_descuentos: {
         Row: {
           base: number
@@ -92,6 +133,41 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "anexo_ganancia_ocasional_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_rentas_exentas: {
+        Row: {
+          created_at: string
+          declaracion_id: string
+          descripcion: string
+          id: number
+          normatividad: string | null
+          valor_fiscal: number
+        }
+        Insert: {
+          created_at?: string
+          declaracion_id: string
+          descripcion: string
+          id?: number
+          normatividad?: string | null
+          valor_fiscal?: number
+        }
+        Update: {
+          created_at?: string
+          declaracion_id?: string
+          descripcion?: string
+          id?: number
+          normatividad?: string | null
+          valor_fiscal?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_rentas_exentas_declaracion_id_fkey"
             columns: ["declaracion_id"]
             isOneToOne: false
             referencedRelation: "declaraciones"

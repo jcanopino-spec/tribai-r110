@@ -20,7 +20,9 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Renta
   72, // Renta líquida ordinaria = max(0, 61 + 69 + 70 + 71 - 52..56 - 67 - 68)
   73, // Pérdida líquida ordinaria (espejo de 72)
+  74, // Compensaciones · viene del Anexo 20
   75, // Renta líquida = max(0, 72 - 74)
+  77, // Rentas exentas · viene del Anexo 19
   79, // Renta líquida gravable = max(75, 76) - 77 + 78
   // Ganancias ocasionales
   80, // Ingresos por GO · viene del Anexo 8
@@ -108,6 +110,10 @@ export type ComputeContext = {
   goIngresos?: number;
   goCostos?: number;
   goNoGravada?: number;
+  /** Anexo 19 · total rentas exentas → R77 */
+  totalRentasExentas?: number;
+  /** Anexo 20 · total compensaciones → R74 */
+  totalCompensaciones?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -268,6 +274,14 @@ export function computarRenglones(
   v.set(73, Math.max(0, -baseRenta));
 
   // --- Renta líquida ---
+  // 74 = Compensaciones (Anexo 20). Limitada al monto de la renta líquida (R72)
+  if (typeof ctx.totalCompensaciones === "number") {
+    v.set(74, Math.min(ctx.totalCompensaciones, get(72)));
+  }
+  // 77 = Rentas exentas (Anexo 19)
+  if (typeof ctx.totalRentasExentas === "number") {
+    v.set(77, ctx.totalRentasExentas);
+  }
   // 75 = max(0, 72 - 74)
   v.set(75, Math.max(0, get(72) - get(74)));
   // 79 = max(75, 76) - 77 + 78  (Renta líquida gravable)
@@ -446,7 +460,9 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   67: "Suma de 62 a 66",
   72: "61 + 69 + 70 + 71 − (52..56) − 67 − 68 (si positivo)",
   73: "Espejo de 72 (si la base es negativa)",
+  74: "Anexo 20 (limitado a la renta líquida 72)",
   75: "72 − 74 (si positivo)",
+  77: "Suma del Anexo 19",
   79: "max(75, 76) − 77 + 78",
   80: "Suma precios de venta del Anexo 8",
   81: "Suma costos fiscales del Anexo 8",
