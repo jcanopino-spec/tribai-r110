@@ -103,38 +103,113 @@ export type Database = {
         Row: {
           anios_declarando: string
           ano_gravable: number
+          anticipo_para_actual: number
+          anticipo_puntos_adicionales: number
+          aportes_para_fiscales: number
+          aportes_seg_social: number
+          beneficio_auditoria_12m: boolean
+          beneficio_auditoria_6m: boolean
+          calcula_anticipo: boolean
+          calcula_sancion_correccion: boolean
+          calcula_sancion_extemporaneidad: boolean
           created_at: string
           empresa_id: string
+          es_gran_contribuyente: boolean
+          es_institucion_financiera: boolean
           estado: string
+          existe_emplazamiento: boolean
+          fecha_presentacion: string | null
+          fecha_vencimiento: string | null
           formato: string
+          ica_como_descuento: boolean
           id: string
           impuesto_neto_anterior: number
           modo_carga: string | null
+          pasivos_anterior: number
+          patrimonio_bruto_anterior: number
+          perdida_contable: number
+          perdidas_fiscales_acumuladas: number
+          reduccion_sancion: string
+          saldo_favor_anterior: number
+          saldo_pagar_anterior: number
+          tiene_justificacion_patrimonial: boolean
+          total_nomina: number
           updated_at: string
+          utilidad_contable: number
         }
         Insert: {
           anios_declarando?: string
           ano_gravable: number
+          anticipo_para_actual?: number
+          anticipo_puntos_adicionales?: number
+          aportes_para_fiscales?: number
+          aportes_seg_social?: number
+          beneficio_auditoria_12m?: boolean
+          beneficio_auditoria_6m?: boolean
+          calcula_anticipo?: boolean
+          calcula_sancion_correccion?: boolean
+          calcula_sancion_extemporaneidad?: boolean
           created_at?: string
           empresa_id: string
+          es_gran_contribuyente?: boolean
+          es_institucion_financiera?: boolean
           estado?: string
+          existe_emplazamiento?: boolean
+          fecha_presentacion?: string | null
+          fecha_vencimiento?: string | null
           formato?: string
+          ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
           modo_carga?: string | null
+          pasivos_anterior?: number
+          patrimonio_bruto_anterior?: number
+          perdida_contable?: number
+          perdidas_fiscales_acumuladas?: number
+          reduccion_sancion?: string
+          saldo_favor_anterior?: number
+          saldo_pagar_anterior?: number
+          tiene_justificacion_patrimonial?: boolean
+          total_nomina?: number
           updated_at?: string
+          utilidad_contable?: number
         }
         Update: {
           anios_declarando?: string
           ano_gravable?: number
+          anticipo_para_actual?: number
+          anticipo_puntos_adicionales?: number
+          aportes_para_fiscales?: number
+          aportes_seg_social?: number
+          beneficio_auditoria_12m?: boolean
+          beneficio_auditoria_6m?: boolean
+          calcula_anticipo?: boolean
+          calcula_sancion_correccion?: boolean
+          calcula_sancion_extemporaneidad?: boolean
           created_at?: string
           empresa_id?: string
+          es_gran_contribuyente?: boolean
+          es_institucion_financiera?: boolean
           estado?: string
+          existe_emplazamiento?: boolean
+          fecha_presentacion?: string | null
+          fecha_vencimiento?: string | null
           formato?: string
+          ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
           modo_carga?: string | null
+          pasivos_anterior?: number
+          patrimonio_bruto_anterior?: number
+          perdida_contable?: number
+          perdidas_fiscales_acumuladas?: number
+          reduccion_sancion?: string
+          saldo_favor_anterior?: number
+          saldo_pagar_anterior?: number
+          tiene_justificacion_patrimonial?: boolean
+          total_nomina?: number
           updated_at?: string
+          utilidad_contable?: number
         }
         Relationships: [
           {
@@ -274,6 +349,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      parametros_anuales: {
+        Row: {
+          ano_gravable: number
+          codigo: string
+          descripcion: string | null
+          valor: number
+        }
+        Insert: {
+          ano_gravable: number
+          codigo: string
+          descripcion?: string | null
+          valor: number
+        }
+        Update: {
+          ano_gravable?: number
+          codigo?: string
+          descripcion?: string | null
+          valor?: number
+        }
+        Relationships: []
       }
       profiles: {
         Row: {

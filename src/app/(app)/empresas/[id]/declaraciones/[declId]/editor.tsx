@@ -83,32 +83,16 @@ export function DeclaracionEditor({
     return m;
   }, [renglones]);
 
-  // Datos del anticipo (renglón 108): año anterior + años declarando.
-  const [impAnterior, setImpAnterior] = useState(formatValor(impuestoNetoAnterior));
-  const [anios, setAnios] = useState<AniosDeclarando>(aniosDeclarando);
-  const [savingAnticipo, startAnticipo] = useTransition();
-  const [anticipoSaved, setAnticipoSaved] = useState<string | null>(null);
-
   // Numérico actual: combina inputs (en string) con derivados (calculados).
   const numerico = useMemo(() => {
     const base = new Map<number, number>();
     for (const [num, str] of valores) base.set(num, parseValor(str));
     return computarRenglones(base, {
       tarifaRegimen: tarifaRegimen ?? undefined,
-      impuestoNetoAnterior: parseValor(impAnterior),
-      aniosDeclarando: anios,
+      impuestoNetoAnterior,
+      aniosDeclarando,
     });
-  }, [valores, tarifaRegimen, impAnterior, anios]);
-
-  function guardarAnticipo() {
-    startAnticipo(async () => {
-      await saveDatosAnticipoAction(declId, empresaId, {
-        impuestoNetoAnterior: parseValor(impAnterior),
-        aniosDeclarando: anios,
-      });
-      setAnticipoSaved(`Guardado · ${new Date().toLocaleTimeString("es-CO")}`);
-    });
-  }
+  }, [valores, tarifaRegimen, impuestoNetoAnterior, aniosDeclarando]);
 
   const totales = useMemo(() => {
     return {
@@ -124,10 +108,10 @@ export function DeclaracionEditor({
     () =>
       validarFormulario(numerico, {
         tarifaRegimen,
-        impuestoNetoAnterior: parseValor(impAnterior),
-        aniosDeclarando: anios,
+        impuestoNetoAnterior,
+        aniosDeclarando,
       }),
-    [numerico, tarifaRegimen, impAnterior, anios],
+    [numerico, tarifaRegimen, impuestoNetoAnterior, aniosDeclarando],
   );
   const errores = validaciones.filter((v) => v.nivel === "error").length;
   const warns = validaciones.filter((v) => v.nivel === "warn").length;
@@ -169,6 +153,12 @@ export function DeclaracionEditor({
 
       <div className="mb-6 flex flex-wrap justify-end gap-2">
         <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Configuración
+        </Link>
+        <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
           className={`inline-flex h-9 items-center justify-center rounded-full border px-4 text-xs ${
             errores > 0
@@ -193,50 +183,30 @@ export function DeclaracionEditor({
         </Link>
       </div>
 
-      <section className="mb-10 border border-border p-5">
-        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-          Datos para el anticipo · renglón 108
-        </p>
-        <h3 className="mt-2 font-serif text-xl leading-[1.1]">
-          Cómo calcular el anticipo del año siguiente
-        </h3>
-        <div className="mt-5 grid gap-4 md:grid-cols-[1fr_1fr_auto]">
-          <Field label="Impuesto neto AG anterior (2024)">
-            <Input
-              inputMode="numeric"
-              value={impAnterior}
-              onChange={(e) => {
-                const cleaned = e.target.value.replace(/[^0-9]/g, "");
-                setImpAnterior(cleaned === "" ? "" : formatValor(Number(cleaned)));
-              }}
-              placeholder="0"
-            />
-          </Field>
-          <Field label="Años declarando">
-            <Select value={anios} onChange={(e) => setAnios(e.target.value as AniosDeclarando)}>
-              <option value="primero">Primer año (no aplica anticipo)</option>
-              <option value="segundo">Segundo año (50%)</option>
-              <option value="tercero_o_mas">Tercer año o más (75%)</option>
-            </Select>
-          </Field>
-          <div className="flex items-end gap-3">
-            <button
-              type="button"
-              onClick={guardarAnticipo}
-              disabled={savingAnticipo}
-              className="inline-flex h-10 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted disabled:opacity-50"
-            >
-              {savingAnticipo ? "Guardando…" : "Guardar"}
-            </button>
-            {anticipoSaved ? (
-              <p className="text-xs text-muted-foreground">{anticipoSaved}</p>
-            ) : null}
-          </div>
+      <section className="mb-10 flex flex-wrap items-center gap-4 border border-border p-4">
+        <div className="flex-1 min-w-[200px]">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+            Configuración aplicada
+          </p>
+          <p className="mt-1 text-sm">
+            Impuesto AG anterior:{" "}
+            <span className="font-mono">{formatValor(impuestoNetoAnterior) || "0"}</span>
+            {" · "}Años declarando:{" "}
+            <span className="font-mono">
+              {aniosDeclarando === "primero"
+                ? "primero"
+                : aniosDeclarando === "segundo"
+                  ? "segundo"
+                  : "tercero o más"}
+            </span>
+          </p>
         </div>
-        <p className="mt-3 text-xs text-muted-foreground">
-          Anticipo (108) = max(0, ((96 + impuesto AG anterior) / 2 × tarifa) − retenciones).
-          Tarifa: 25% / 50% / 75% según años declarando.
-        </p>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+          className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-4 text-xs text-primary-foreground hover:opacity-90"
+        >
+          Editar configuración →
+        </Link>
       </section>
 
       <div className="space-y-12">
