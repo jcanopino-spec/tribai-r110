@@ -115,10 +115,13 @@ export default async function ValidacionesPage({
       | undefined,
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
+    mayorValorCorreccion: Number(declaracion.mayor_valor_correccion ?? 0),
     existeEmplazamiento: !!declaracion.existe_emplazamiento,
     reduccionSancion: (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75",
     uvtVigente: uvtVigente ?? undefined,
     patrimonioLiquidoAnterior,
+    esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
   });
 
   const validaciones = validarFormulario(numerico, {

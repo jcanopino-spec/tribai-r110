@@ -353,6 +353,20 @@ function TabSanciones({
           </Select>
         </Field>
       </div>
+
+      <h3 className="mt-6 font-serif text-lg">Datos para sanción por corrección</h3>
+      <p className="text-xs text-muted-foreground">
+        Solo aplica si activaste &ldquo;Calcular sanción por corrección&rdquo;.
+        El mayor valor a pagar / menor saldo a favor es la diferencia entre lo
+        liquidado en la declaración corregida y la original.
+      </p>
+      <div className="grid gap-5 md:grid-cols-2">
+        <NumField
+          name="mayor_valor_correccion"
+          label="Mayor valor a pagar / menor saldo a favor"
+          defaultValue={d.mayor_valor_correccion}
+        />
+      </div>
     </div>
   );
 }

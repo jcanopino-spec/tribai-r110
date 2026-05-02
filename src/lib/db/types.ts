@@ -124,6 +124,7 @@ export type Database = {
           ica_como_descuento: boolean
           id: string
           impuesto_neto_anterior: number
+          mayor_valor_correccion: number
           modo_carga: string | null
           pasivos_anterior: number
           patrimonio_bruto_anterior: number
@@ -161,6 +162,7 @@ export type Database = {
           ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
+          mayor_valor_correccion?: number
           modo_carga?: string | null
           pasivos_anterior?: number
           patrimonio_bruto_anterior?: number
@@ -198,6 +200,7 @@ export type Database = {
           ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
+          mayor_valor_correccion?: number
           modo_carga?: string | null
           pasivos_anterior?: number
           patrimonio_bruto_anterior?: number

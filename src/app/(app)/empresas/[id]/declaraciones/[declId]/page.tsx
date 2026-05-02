@@ -148,12 +148,15 @@ export default async function DeclaracionEditorPage({
                 : { estado: "no_presentada" }
           }
           calculaSancionExtemporaneidad={!!declaracion.calcula_sancion_extemporaneidad}
+          calculaSancionCorreccion={!!declaracion.calcula_sancion_correccion}
+          mayorValorCorreccion={Number(declaracion.mayor_valor_correccion ?? 0)}
           existeEmplazamiento={!!declaracion.existe_emplazamiento}
           reduccionSancion={
             (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75"
           }
           uvtVigente={uvtVigente}
           patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
+          esInstitucionFinanciera={!!declaracion.es_institucion_financiera}
         />
       )}
     </div>
@@ -171,10 +174,13 @@ async function Workspace({
   aniosDeclarando,
   presentacion,
   calculaSancionExtemporaneidad,
+  calculaSancionCorreccion,
+  mayorValorCorreccion,
   existeEmplazamiento,
   reduccionSancion,
   uvtVigente,
   patrimonioLiquidoAnterior,
+  esInstitucionFinanciera,
 }: {
   declId: string;
   empresaId: string;
@@ -186,10 +192,13 @@ async function Workspace({
   aniosDeclarando: "primero" | "segundo" | "tercero_o_mas";
   presentacion: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
   calculaSancionExtemporaneidad: boolean;
+  calculaSancionCorreccion: boolean;
+  mayorValorCorreccion: number;
   existeEmplazamiento: boolean;
   reduccionSancion: "0" | "50" | "75";
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
+  esInstitucionFinanciera: boolean;
 }) {
   const supabase = await createClient();
 
@@ -346,10 +355,13 @@ async function Workspace({
             aniosDeclarando={aniosDeclarando}
             presentacion={presentacion}
             calculaSancionExtemporaneidad={calculaSancionExtemporaneidad}
+            calculaSancionCorreccion={calculaSancionCorreccion}
+            mayorValorCorreccion={mayorValorCorreccion}
             existeEmplazamiento={existeEmplazamiento}
             reduccionSancion={reduccionSancion}
             uvtVigente={uvtVigente}
             patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
+            esInstitucionFinanciera={esInstitucionFinanciera}
           />
         </div>
       </div>

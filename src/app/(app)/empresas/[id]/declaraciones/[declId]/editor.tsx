@@ -49,10 +49,13 @@ export function DeclaracionEditor({
   aniosDeclarando,
   presentacion,
   calculaSancionExtemporaneidad,
+  calculaSancionCorreccion,
+  mayorValorCorreccion,
   existeEmplazamiento,
   reduccionSancion,
   uvtVigente,
   patrimonioLiquidoAnterior,
+  esInstitucionFinanciera,
 }: {
   declId: string;
   empresaId: string;
@@ -63,10 +66,13 @@ export function DeclaracionEditor({
   aniosDeclarando: AniosDeclarando;
   presentacion: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
   calculaSancionExtemporaneidad: boolean;
+  calculaSancionCorreccion: boolean;
+  mayorValorCorreccion: number;
   existeEmplazamiento: boolean;
   reduccionSancion: "0" | "50" | "75";
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
+  esInstitucionFinanciera: boolean;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -105,10 +111,13 @@ export function DeclaracionEditor({
       aniosDeclarando,
       presentacion,
       calculaSancionExtemporaneidad,
+      calculaSancionCorreccion,
+      mayorValorCorreccion,
       existeEmplazamiento,
       reduccionSancion,
       uvtVigente: uvtVigente ?? undefined,
       patrimonioLiquidoAnterior,
+      esInstitucionFinanciera,
     });
   }, [
     valores,
@@ -117,10 +126,13 @@ export function DeclaracionEditor({
     aniosDeclarando,
     presentacion,
     calculaSancionExtemporaneidad,
+    calculaSancionCorreccion,
+    mayorValorCorreccion,
     existeEmplazamiento,
     reduccionSancion,
     uvtVigente,
     patrimonioLiquidoAnterior,
+    esInstitucionFinanciera,
   ]);
 
   const totales = useMemo(() => {

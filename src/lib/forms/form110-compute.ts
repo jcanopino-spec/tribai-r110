@@ -22,6 +22,7 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   83, // Ganancias ocasionales gravables = max(0, 80 - 81 - 82)
   // Liquidación privada
   84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
+  85, // Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
   97, // Impuesto neto de ganancias ocasionales = 83 × 15%
   108, // Anticipo año siguiente (Anexo 2 del .xlsm)
@@ -70,6 +71,10 @@ export type ComputeContext = {
   presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
   /** Flag de sanción extemporaneidad activado por el usuario */
   calculaSancionExtemporaneidad?: boolean;
+  /** Flag de sanción por corrección activado */
+  calculaSancionCorreccion?: boolean;
+  /** Mayor valor a pagar / menor saldo a favor por la corrección */
+  mayorValorCorreccion?: number;
   /** ¿Existe emplazamiento previo? Cambia las tarifas del Art. 641 → 642 E.T. */
   existeEmplazamiento?: boolean;
   /** Reducción del Art. 640 E.T.: '0' | '50' | '75' */
@@ -78,6 +83,8 @@ export type ComputeContext = {
   uvtVigente?: number;
   /** Patrimonio líquido año gravable anterior (para sanción cuando no hay impuesto/ingresos). */
   patrimonioLiquidoAnterior?: number;
+  /** ¿Es institución financiera/aseguradora/hidroeléctrica/extractora? Activa sobretasa. */
+  esInstitucionFinanciera?: boolean;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -88,6 +95,11 @@ const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, nu
 
 // Sanción mínima: 10 UVT (Art. 639 E.T.)
 const SANCION_MINIMA_UVT = 10;
+
+// Umbral en UVT para aplicar sobretasa de instituciones financieras
+// (Par. 1° Art. 240 E.T., 5 puntos adicionales sobre el exceso)
+const UMBRAL_SOBRETASA_UVT = 120000;
+const PUNTOS_SOBRETASA = 0.05;
 
 /**
  * Calcula la sanción por extemporaneidad según Art. 641 (sin emplazamiento)
@@ -160,6 +172,30 @@ export function calcularSancionExtemporaneidad(args: {
 }
 
 /**
+ * Sanción por corrección (Art. 644 E.T.):
+ * - Sin emplazamiento: 10% del mayor valor a pagar o menor saldo a favor
+ * - Con emplazamiento: 20% del mayor valor
+ * - Reducción Art. 640 (0/50/75)
+ * - Sanción mínima 10 UVT
+ */
+export function calcularSancionCorreccion(args: {
+  mayorValor: number;
+  uvt: number;
+  existeEmplazamiento: boolean;
+  reduccion: "0" | "50" | "75";
+}): number {
+  const { mayorValor, uvt, existeEmplazamiento, reduccion } = args;
+  if (mayorValor <= 0 || uvt <= 0) return 0;
+
+  const tarifa = existeEmplazamiento ? 0.20 : 0.10;
+  const base = mayorValor * tarifa;
+  const factorReduccion = 1 - Number(reduccion) / 100;
+  const conReduccion = base * factorReduccion;
+  const minima = SANCION_MINIMA_UVT * uvt;
+  return Math.round(Math.max(minima, conReduccion));
+}
+
+/**
  * Calcula los valores derivados a partir de los inputs.
  * No muta el mapa original. Devuelve un nuevo mapa con los computados aplicados.
  *
@@ -222,6 +258,22 @@ export function computarRenglones(
   } else if (!v.has(84)) {
     v.set(84, 0);
   }
+
+  // 85 = Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
+  //   5 puntos porcentuales adicionales sobre la renta líquida gravable
+  //   que exceda 120.000 UVT.
+  if (
+    ctx.esInstitucionFinanciera &&
+    typeof ctx.uvtVigente === "number" &&
+    ctx.uvtVigente > 0
+  ) {
+    const rentaGravable = Math.max(0, get(79));
+    const umbral = UMBRAL_SOBRETASA_UVT * ctx.uvtVigente;
+    const exceso = Math.max(0, rentaGravable - umbral);
+    v.set(85, Math.round(exceso * PUNTOS_SOBRETASA));
+  } else {
+    v.set(85, 0);
+  }
   // 97 = Ganancias ocasionales gravables × 15% (tarifa fija AG 2025)
   v.set(97, Math.round(Math.max(0, get(83)) * TARIFA_GANANCIAS_OCASIONALES));
   // 91 = sum(84..90)  (Total impuesto sobre rentas líquidas gravables)
@@ -235,28 +287,37 @@ export function computarRenglones(
   // 107 = 105 + 106  (Total retenciones)
   v.set(107, get(105) + get(106));
 
-  // 113 = Sanción por extemporaneidad (Arts. 641/642 E.T.)
-  // Solo si el usuario activó el flag y la presentación es extemporánea.
+  // 113 = Sanción total = extemporaneidad + corrección
+  let sancionExt = 0;
   if (
     ctx.calculaSancionExtemporaneidad &&
     ctx.presentacion?.estado === "extemporanea" &&
     typeof ctx.uvtVigente === "number"
   ) {
-    v.set(
-      113,
-      calcularSancionExtemporaneidad({
-        meses: ctx.presentacion.mesesExtemporanea ?? 0,
-        impuestoCargo: Math.max(0, get(99)),
-        ingresosBrutos: get(58),
-        patrimonioLiquidoAnterior: ctx.patrimonioLiquidoAnterior ?? 0,
-        uvt: ctx.uvtVigente,
-        existeEmplazamiento: !!ctx.existeEmplazamiento,
-        reduccion: ctx.reduccionSancion ?? "0",
-      }),
-    );
-  } else {
-    v.set(113, 0);
+    sancionExt = calcularSancionExtemporaneidad({
+      meses: ctx.presentacion.mesesExtemporanea ?? 0,
+      impuestoCargo: Math.max(0, get(99)),
+      ingresosBrutos: get(58),
+      patrimonioLiquidoAnterior: ctx.patrimonioLiquidoAnterior ?? 0,
+      uvt: ctx.uvtVigente,
+      existeEmplazamiento: !!ctx.existeEmplazamiento,
+      reduccion: ctx.reduccionSancion ?? "0",
+    });
   }
+  let sancionCorr = 0;
+  if (
+    ctx.calculaSancionCorreccion &&
+    typeof ctx.uvtVigente === "number" &&
+    typeof ctx.mayorValorCorreccion === "number"
+  ) {
+    sancionCorr = calcularSancionCorreccion({
+      mayorValor: ctx.mayorValorCorreccion,
+      uvt: ctx.uvtVigente,
+      existeEmplazamiento: !!ctx.existeEmplazamiento,
+      reduccion: ctx.reduccionSancion ?? "0",
+    });
+  }
+  v.set(113, sancionExt + sancionCorr);
 
   // 108 = Anticipo año siguiente (Anexo 2 del .xlsm, método 1 = promedio)
   //   = max(0, ((impuesto_neto_actual + impuesto_neto_anterior) / 2) × tarifa
@@ -343,6 +404,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   79: "max(75, 76) − 77 + 78",
   83: "80 − 81 − 82 (si positivo)",
   84: "79 × tarifa del régimen",
+  85: "5% sobre exceso de 79 sobre 120.000 UVT (instituciones financieras)",
   91: "Suma de 84 a 90",
   97: "83 × 15% (tarifa GO)",
   94: "91 + 92 − 93",
@@ -350,7 +412,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   99: "96 + 97 − 98",
   107: "105 + 106",
   108: "(96 + impto. AG anterior) / 2 × tarifa años − 107",
-  113: "Sanción extemporaneidad Arts. 641/642 E.T.",
+  113: "Sanciones (extemporaneidad + corrección, Arts. 641/642/644)",
   111: "99 + 108 + 110 − 100 − 101 − 102 − 103 − 104 − 107 − 109",
   112: "99 + 108 + 110 + 113 − (restas de 111)",
   114: "Diferencia (saldo a favor) si las restas exceden",
