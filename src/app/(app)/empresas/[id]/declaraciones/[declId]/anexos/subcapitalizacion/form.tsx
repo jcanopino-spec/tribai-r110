@@ -39,7 +39,9 @@ export function SubForm({ declId, empresaId, declaracion }: any) {
     Boolean(declaracion.sub_es_vinculado),
   );
 
-  const patrimonioLiq = Number(declaracion.r41 ?? 0);
+  const patrimonioLiq =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
   const deudaNum = parseNum(deuda);
   const interesesNum = parseNum(intereses);
 
@@ -97,7 +99,7 @@ export function SubForm({ declId, empresaId, declaracion }: any) {
 
         <div className="mt-3 inline-block border border-border bg-muted/30 px-4 py-3 text-sm">
           <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Patrimonio líquido AG anterior (R41)
+            Patrimonio líquido AG anterior
           </p>
           <p className="mt-1 font-serif text-xl">{FMT.format(patrimonioLiq)}</p>
         </div>

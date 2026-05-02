@@ -7,12 +7,14 @@ import { deletePartidaAction } from "./actions";
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
 type Item = {
-  id: number;
+  id: number | string;
   tipo: string;
   signo: string;
   concepto: string;
   valor: number;
   observacion: string | null;
+  origen?: "manual" | "auto";
+  fuente?: string;
 };
 
 export function PartidasList({
@@ -135,10 +137,21 @@ function Row({
   const router = useRouter();
   const [pending, start] = useTransition();
   const positivo = item.signo === "mas";
+  const isAuto = item.origen === "auto";
   return (
-    <tr className="border-t border-border">
+    <tr className={`border-t border-border ${isAuto ? "bg-muted/20" : ""}`}>
       <td className="px-3 py-2">
-        <p className="font-medium">{item.concepto}</p>
+        <div className="flex items-center gap-2">
+          <p className="font-medium">{item.concepto}</p>
+          {isAuto ? (
+            <span
+              className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground"
+              title={item.fuente ? `Origen: ${item.fuente}` : "Derivado automáticamente"}
+            >
+              auto
+            </span>
+          ) : null}
+        </div>
         {item.observacion ? (
           <p className="text-xs text-muted-foreground">{item.observacion}</p>
         ) : null}
@@ -152,19 +165,23 @@ function Row({
       </td>
       <td className="px-3 py-2 text-right font-mono">{FMT.format(Number(item.valor))}</td>
       <td className="px-3 py-2 text-right">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => {
-            start(async () => {
-              await deletePartidaAction(item.id, declId, empresaId);
-              router.refresh();
-            });
-          }}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {pending ? "…" : "Eliminar"}
-        </button>
+        {isAuto ? (
+          <span className="text-xs text-muted-foreground">—</span>
+        ) : (
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => {
+              start(async () => {
+                await deletePartidaAction(Number(item.id), declId, empresaId);
+                router.refresh();
+              });
+            }}
+            className="text-xs text-destructive hover:underline disabled:opacity-50"
+          >
+            {pending ? "…" : "Eliminar"}
+          </button>
+        )}
       </td>
     </tr>
   );

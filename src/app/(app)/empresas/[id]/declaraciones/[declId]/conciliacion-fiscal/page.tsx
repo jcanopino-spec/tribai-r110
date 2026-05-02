@@ -24,27 +24,211 @@ export default async function ConciliacionPage({
     .single();
   if (!declaracion) notFound();
 
-  const { data: partidas } = await supabase
-    .from("conciliacion_partidas")
-    .select("id, tipo, signo, concepto, valor, observacion")
-    .eq("declaracion_id", declId)
-    .order("created_at");
+  // Cargar partidas manuales + anexos relevantes en paralelo
+  const [
+    partidasRes,
+    icaRes,
+    gmfRes,
+    intPresRes,
+    difCambioRes,
+    trmRes,
+    tasaIntRes,
+    r72Res,
+  ] = await Promise.all([
+    supabase
+      .from("conciliacion_partidas")
+      .select("id, tipo, signo, concepto, valor, observacion")
+      .eq("declaracion_id", declId)
+      .order("created_at"),
+    supabase.from("anexo_ica").select("valor_pagado").eq("declaracion_id", declId),
+    supabase.from("anexo_gmf").select("valor_gmf").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_intereses_presuntivos")
+      .select("saldo_promedio, dias, interes_registrado")
+      .eq("declaracion_id", declId),
+    supabase
+      .from("anexo_diferencia_cambio")
+      .select("tipo, valor_usd, trm_inicial")
+      .eq("declaracion_id", declId),
+    supabase
+      .from("parametros_anuales")
+      .select("valor")
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .eq("codigo", "trm_promedio")
+      .maybeSingle(),
+    supabase
+      .from("parametros_anuales")
+      .select("valor")
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .eq("codigo", "tasa_interes_presuntivo")
+      .maybeSingle(),
+    supabase
+      .from("form110_valores")
+      .select("valor")
+      .eq("declaracion_id", declId)
+      .eq("numero", 72)
+      .maybeSingle(),
+  ]);
 
-  const todas = (partidas ?? []).map((p) => ({
-    ...p,
+  const partidasManuales = (partidasRes.data ?? []).map((p) => ({
+    id: p.id,
+    tipo: p.tipo as "permanente" | "temporal",
+    signo: p.signo as "mas" | "menos",
+    concepto: p.concepto,
     valor: Number(p.valor),
+    observacion: p.observacion,
+    origen: "manual" as const,
   }));
+
+  const r72 = r72Res.data ? Number(r72Res.data.valor) : 0;
+  const trmFinal = trmRes.data ? Number(trmRes.data.valor) : 0;
+  const tasaIntPres = tasaIntRes.data ? Number(tasaIntRes.data.valor) : 0;
 
   const utilidadContable = Number(declaracion.cf_utilidad_contable ?? 0);
 
-  // Renta líquida fiscal del formulario (R72)
-  const { data: r72Row } = await supabase
-    .from("form110_valores")
-    .select("valor")
-    .eq("declaracion_id", declId)
-    .eq("numero", 72)
-    .maybeSingle();
-  const r72 = r72Row ? Number(r72Row.valor) : 0;
+  // ─── Partidas derivadas automáticamente ─────────────────────────────────
+  type Auto = {
+    id: string;
+    tipo: "permanente" | "temporal";
+    signo: "mas" | "menos";
+    concepto: string;
+    valor: number;
+    observacion: string | null;
+    origen: "auto";
+    fuente: string;
+  };
+  const partidasAuto: Auto[] = [];
+
+  // Anexo 9 · ICA: 50% pagado se asume tomado como descuento → no deducible
+  const totalIca = (icaRes.data ?? []).reduce((s, r) => s + Number(r.valor_pagado), 0);
+  if (totalIca > 0) {
+    partidasAuto.push({
+      id: "auto-ica-50",
+      tipo: "permanente",
+      signo: "mas",
+      concepto: "50% ICA pagado (tomado como descuento Anexo 4)",
+      valor: totalIca * 0.5,
+      observacion: "Si no tomaste el descuento, elimina esta partida desde el Anexo 9.",
+      origen: "auto",
+      fuente: "Anexo 9 · ICA",
+    });
+  }
+
+  // Anexo 10 · GMF: 50% no deducible (Art. 115 E.T.)
+  const totalGmf = (gmfRes.data ?? []).reduce((s, r) => s + Number(r.valor_gmf), 0);
+  if (totalGmf > 0) {
+    partidasAuto.push({
+      id: "auto-gmf-50",
+      tipo: "permanente",
+      signo: "mas",
+      concepto: "50% GMF no deducible",
+      valor: totalGmf * 0.5,
+      observacion: null,
+      origen: "auto",
+      fuente: "Anexo 10 · GMF",
+    });
+  }
+
+  // Anexo 12 · Deterioro de cartera: provisión fiscal vs contable
+  const dcMetodo = (declaracion.dc_metodo ?? "general") as
+    | "general"
+    | "individual"
+    | "combinado";
+  const dc0_90 = Number(declaracion.dc_cartera_0_90 ?? 0);
+  const dc91 = Number(declaracion.dc_cartera_91_180 ?? 0);
+  const dc181 = Number(declaracion.dc_cartera_181_360 ?? 0);
+  const dc360 = Number(declaracion.dc_cartera_360_mas ?? 0);
+  const dcSaldoCont = Number(declaracion.dc_saldo_contable ?? 0);
+  const provGen = dc0_90 * 0 + dc91 * 0.05 + dc181 * 0.10 + dc360 * 0.15;
+  const provInd = dc360 * 0.33;
+  const provCombo = Math.max(provGen, provInd);
+  const provFiscal =
+    dcMetodo === "general" ? provGen : dcMetodo === "individual" ? provInd : provCombo;
+  const ajusteDc = provFiscal - dcSaldoCont;
+  if (Math.abs(ajusteDc) > 0.01) {
+    partidasAuto.push({
+      id: "auto-deterioro",
+      tipo: "temporal",
+      signo: ajusteDc > 0 ? "menos" : "mas",
+      concepto:
+        ajusteDc > 0
+          ? "Mayor provisión fiscal cartera vs. contable"
+          : "Menor provisión fiscal cartera vs. contable (reverso)",
+      valor: Math.abs(ajusteDc),
+      observacion: `Método: ${dcMetodo}. Provisión fiscal ${FMT.format(provFiscal)} vs. saldo contable ${FMT.format(dcSaldoCont)}.`,
+      origen: "auto",
+      fuente: "Anexo 12 · Deterioro de Cartera",
+    });
+  }
+
+  // Anexo 14 · Interés presuntivo (Art. 35 E.T.)
+  const totalIntPresunto = (intPresRes.data ?? []).reduce((s, p) => {
+    const presunto =
+      Number(p.saldo_promedio) * tasaIntPres * (Number(p.dias) / 360);
+    return s + Math.max(0, presunto - Number(p.interes_registrado));
+  }, 0);
+  if (totalIntPresunto > 0) {
+    partidasAuto.push({
+      id: "auto-int-presuntivo",
+      tipo: "permanente",
+      signo: "mas",
+      concepto: "Interés presuntivo a socios (Art. 35 E.T.)",
+      valor: totalIntPresunto,
+      observacion: null,
+      origen: "auto",
+      fuente: "Anexo 14 · Interés Presuntivo",
+    });
+  }
+
+  // Anexo 15 · Subcapitalización (intereses no deducibles)
+  if (declaracion.sub_es_vinculado) {
+    const deuda = Number(declaracion.sub_deuda_promedio ?? 0);
+    const intereses = Number(declaracion.sub_intereses ?? 0);
+    const patrimonioLiqAnterior =
+      Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+      Number(declaracion.pasivos_anterior ?? 0);
+    const limite = patrimonioLiqAnterior * 2;
+    const exceso = Math.max(0, deuda - limite);
+    const propExc = deuda > 0 ? exceso / deuda : 0;
+    const intNoDed = intereses * propExc;
+    if (intNoDed > 0.01) {
+      partidasAuto.push({
+        id: "auto-subcap",
+        tipo: "permanente",
+        signo: "mas",
+        concepto: "Intereses no deducibles por subcapitalización (Art. 118-1 E.T.)",
+        valor: intNoDed,
+        observacion: `Exceso: ${FMT.format(exceso)} / deuda ${FMT.format(deuda)} (${(propExc * 100).toFixed(2)}%).`,
+        origen: "auto",
+        fuente: "Anexo 15 · Subcapitalización",
+      });
+    }
+  }
+
+  // Anexo 22 · Diferencia en cambio neta (no realizada → temporal)
+  const totalDifCambio = (difCambioRes.data ?? []).reduce((s, d) => {
+    const valIni = Number(d.valor_usd) * Number(d.trm_inicial);
+    const valFin = Number(d.valor_usd) * trmFinal;
+    const dif = valFin - valIni;
+    return s + (d.tipo === "pasivo" ? -dif : dif);
+  }, 0);
+  if (Math.abs(totalDifCambio) > 0.01) {
+    partidasAuto.push({
+      id: "auto-dif-cambio",
+      tipo: "temporal",
+      signo: totalDifCambio > 0 ? "mas" : "menos",
+      concepto:
+        totalDifCambio > 0
+          ? "Diferencia en cambio · ingreso fiscal"
+          : "Diferencia en cambio · gasto fiscal",
+      valor: Math.abs(totalDifCambio),
+      observacion: "Causación fiscal por TRM final del año.",
+      origen: "auto",
+      fuente: "Anexo 22 · Diferencia en Cambio",
+    });
+  }
+
+  const todas = [...partidasAuto, ...partidasManuales];
 
   const sumaMasPerm = todas
     .filter((p) => p.tipo === "permanente" && p.signo === "mas")
@@ -86,6 +270,15 @@ export default async function ConciliacionPage({
         y la renta líquida fiscal por concepto. Las diferencias permanentes no
         se revierten; las temporales generan impuesto diferido.
       </p>
+      {partidasAuto.length > 0 ? (
+        <p className="mt-2 max-w-3xl text-xs text-muted-foreground">
+          Las partidas marcadas{" "}
+          <span className="font-mono uppercase">auto</span> se derivan
+          automáticamente de los anexos (ICA, GMF, deterioro de cartera,
+          interés presuntivo, subcapitalización, diferencia en cambio).
+          Para modificarlas, vuelve al anexo correspondiente.
+        </p>
+      ) : null}
 
       {/* Punto de partida */}
       <section className="mt-10">
