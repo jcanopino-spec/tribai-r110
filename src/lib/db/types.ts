@@ -96,6 +96,56 @@ export type Database = {
           },
         ]
       }
+      anexo_diferencia_cambio: {
+        Row: {
+          created_at: string
+          cuenta: string | null
+          declaracion_id: string
+          fecha_transaccion: string | null
+          id: number
+          nit: string | null
+          observacion: string | null
+          tercero: string
+          tipo: string
+          trm_inicial: number
+          valor_usd: number
+        }
+        Insert: {
+          created_at?: string
+          cuenta?: string | null
+          declaracion_id: string
+          fecha_transaccion?: string | null
+          id?: number
+          nit?: string | null
+          observacion?: string | null
+          tercero: string
+          tipo: string
+          trm_inicial?: number
+          valor_usd?: number
+        }
+        Update: {
+          created_at?: string
+          cuenta?: string | null
+          declaracion_id?: string
+          fecha_transaccion?: string | null
+          id?: number
+          nit?: string | null
+          observacion?: string | null
+          tercero?: string
+          tipo?: string
+          trm_inicial?: number
+          valor_usd?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_diferencia_cambio_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_dividendos: {
         Row: {
           created_at: string

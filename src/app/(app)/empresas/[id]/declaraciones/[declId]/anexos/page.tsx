@@ -40,6 +40,14 @@ export default async function AnexosHubPage({
     .maybeSingle();
   const tasaInteresPresuntivo = tasaRow ? Number(tasaRow.valor) : 0;
 
+  const { data: trmRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable)
+    .eq("codigo", "trm_promedio")
+    .maybeSingle();
+  const trmFinal = trmRow ? Number(trmRow.valor) : 0;
+
   const [
     retenciones,
     descuentos,
@@ -50,6 +58,7 @@ export default async function AnexosHubPage({
     dividendos,
     incrngo,
     intereses,
+    difCambio,
   ] = await Promise.all([
     supabase
       .from("anexo_retenciones")
@@ -68,6 +77,10 @@ export default async function AnexosHubPage({
     supabase
       .from("anexo_intereses_presuntivos")
       .select("saldo_promedio, dias, interes_registrado")
+      .eq("declaracion_id", declId),
+    supabase
+      .from("anexo_diferencia_cambio")
+      .select("tipo, valor_usd, trm_inicial")
       .eq("declaracion_id", declId),
   ]);
 
@@ -102,6 +115,13 @@ export default async function AnexosHubPage({
     const presunto =
       Number(p.saldo_promedio) * tasaInteresPresuntivo * (Number(p.dias) / 360);
     return s + Math.max(0, presunto - Number(p.interes_registrado));
+  }, 0);
+
+  const totalDifCambio = (difCambio.data ?? []).reduce((s, d) => {
+    const valorIni = Number(d.valor_usd) * Number(d.trm_inicial);
+    const valorFin = Number(d.valor_usd) * trmFinal;
+    const dif = valorFin - valorIni;
+    return s + (d.tipo === "pasivo" ? -dif : dif);
   }, 0);
 
   const cards: AnexoCard[] = [
@@ -196,6 +216,16 @@ export default async function AnexosHubPage({
       descripcion:
         "Préstamos a socios (Art. 35 E.T.). Diferencia entre interés presunto e interés registrado.",
     },
+    {
+      numero: "22",
+      titulo: "Diferencia en Cambio",
+      href: "diferencia-cambio",
+      renglones: [48, 65],
+      total: totalDifCambio,
+      items: difCambio.data?.length ?? 0,
+      descripcion:
+        "Cuentas en USD. Diferencia entre TRM inicial y final del año (no realizada).",
+    },
   ];
 
   return (
@@ -269,7 +299,6 @@ export default async function AnexosHubPage({
             "13 · Deducción IVA Bienes Capital",
             "15 · Subcapitalización",
             "21 · Pagos Seguridad Social",
-            "22 · Diferencia en Cambio",
             "25 · Cálculo de Dividendos",
           ].map((a, i) => (
             <li key={i} className="font-mono text-xs text-muted-foreground">
