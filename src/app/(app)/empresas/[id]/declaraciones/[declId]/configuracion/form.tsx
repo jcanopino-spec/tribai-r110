@@ -333,12 +333,27 @@ function TabSanciones({
         Configura si aplica sanción por extemporaneidad o corrección. Tribai usa el UVT
         del año y los Arts. 641, 642, 644 E.T.
       </p>
+      {evaluacion.estado === "oportuna" ? (
+        <p className="text-xs text-muted-foreground">
+          Tu declaración es <span className="font-medium text-foreground">oportuna</span>:
+          la sanción por extemporaneidad no aplica aunque actives el flag (renglón 113 = 0
+          por esa causal).
+        </p>
+      ) : null}
 
       <div className="grid gap-5 md:grid-cols-2">
         <CheckField
           name="calcula_sancion_extemporaneidad"
           label="Calcular sanción por extemporaneidad (Arts. 641, 642 E.T.)"
           defaultChecked={d.calcula_sancion_extemporaneidad}
+          disabled={evaluacion.estado !== "extemporanea"}
+          help={
+            evaluacion.estado === "oportuna"
+              ? "Solo se habilita cuando la presentación es extemporánea."
+              : evaluacion.estado === "no_presentada"
+                ? "Configura primero la fecha de presentación."
+                : undefined
+          }
         />
         <CheckField
           name="calcula_sancion_correccion"
@@ -407,19 +422,26 @@ function CheckField({
   label,
   defaultChecked,
   help,
+  disabled,
 }: {
   name: string;
   label: string;
   defaultChecked?: boolean;
   help?: string;
+  disabled?: boolean;
 }) {
   return (
-    <label className="flex cursor-pointer items-start gap-3 rounded-md border border-border p-3 hover:bg-muted/30">
+    <label
+      className={`flex items-start gap-3 rounded-md border border-border p-3 ${
+        disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer hover:bg-muted/30"
+      }`}
+    >
       <input
         type="checkbox"
         name={name}
         defaultChecked={defaultChecked}
-        className="mt-0.5 h-4 w-4 cursor-pointer accent-foreground"
+        disabled={disabled}
+        className="mt-0.5 h-4 w-4 accent-foreground"
       />
       <div>
         <span className="text-sm">{label}</span>

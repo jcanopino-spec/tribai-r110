@@ -63,7 +63,7 @@ export default async function BalancePage({
   const [{ data: lineas }, { data: renglones }] = await Promise.all([
     supabase
       .from("balance_prueba_lineas")
-      .select("id, cuenta, nombre, saldo, renglon_110")
+      .select("id, cuenta, nombre, saldo, renglon_110, ajuste_debito, ajuste_credito, observacion")
       .eq("balance_id", balance.id)
       .order("cuenta"),
     supabase
@@ -80,17 +80,19 @@ export default async function BalancePage({
   const pendientes = auxiliares.filter((l) => l.renglon_110 == null);
 
   // Total agregado por renglón (solo auxiliares para evitar duplicar con mayores)
+  // El total usa el SALDO FISCAL = saldo + ajuste_debito - ajuste_credito.
   const totalesPorRenglon = new Map<number, { total: number; descripcion: string; seccion: string; conteo: number }>();
   for (const l of mapeadas) {
     const r = renglones?.find((x) => x.numero === l.renglon_110);
     if (!r) continue;
+    const saldoFiscal = Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);
     const prev = totalesPorRenglon.get(l.renglon_110!) ?? {
       total: 0,
       descripcion: r.descripcion,
       seccion: r.seccion,
       conteo: 0,
     };
-    prev.total += Number(l.saldo);
+    prev.total += saldoFiscal;
     prev.conteo += 1;
     totalesPorRenglon.set(l.renglon_110!, prev);
   }
@@ -110,6 +112,9 @@ export default async function BalancePage({
         nombre: l.nombre,
         saldo: Number(l.saldo),
         renglon_110: l.renglon_110,
+        ajuste_debito: Number(l.ajuste_debito ?? 0),
+        ajuste_credito: Number(l.ajuste_credito ?? 0),
+        observacion: l.observacion ?? null,
       }))}
       renglones={(renglones ?? []).filter((r) => !RENGLONES_COMPUTADOS.has(r.numero))}
       totalesPorRenglon={[...totalesPorRenglon.entries()]

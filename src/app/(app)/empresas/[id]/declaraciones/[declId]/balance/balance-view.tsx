@@ -3,15 +3,32 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { saveOverridesAction } from "../importar/actions";
+import { saveOverridesAction, saveAjustesFiscalesAction } from "../importar/actions";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+function parseValor(s: string): number {
+  if (!s) return 0;
+  const cleaned = s.replace(/\./g, "").replace(/,/g, ".");
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function formatInput(s: string): string {
+  const cleaned = s.replace(/[^0-9-]/g, "");
+  if (!cleaned || cleaned === "-") return cleaned;
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? FMT.format(n) : "";
+}
 
 type Linea = {
   cuenta: string;
   nombre: string | null;
   saldo: number;
   renglon_110: number | null;
+  ajuste_debito: number;
+  ajuste_credito: number;
+  observacion: string | null;
 };
 
 type Renglon = { numero: number; descripcion: string; seccion: string };
@@ -46,7 +63,58 @@ export function BalanceView({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [edits, setEdits] = useState<Map<string, string>>(new Map());
+  // Ajustes fiscales editables: cuenta → { debito, credito, observacion }
+  const [ajustes, setAjustes] = useState<Map<string, { debito: string; credito: string; observacion: string }>>(
+    new Map(),
+  );
   const [saved, setSaved] = useState<string | null>(null);
+
+  function setAjuste(
+    cuenta: string,
+    field: "debito" | "credito" | "observacion",
+    value: string,
+  ) {
+    const next = new Map(ajustes);
+    const prev = next.get(cuenta) ?? { debito: "", credito: "", observacion: "" };
+    next.set(cuenta, { ...prev, [field]: value });
+    setAjustes(next);
+  }
+
+  function ajusteValor(l: Linea, field: "debito" | "credito"): string {
+    const e = ajustes.get(l.cuenta);
+    if (e !== undefined) return e[field];
+    const v = field === "debito" ? l.ajuste_debito : l.ajuste_credito;
+    return v === 0 ? "" : FMT.format(v);
+  }
+
+  function ajusteObs(l: Linea): string {
+    const e = ajustes.get(l.cuenta);
+    if (e !== undefined) return e.observacion;
+    return l.observacion ?? "";
+  }
+
+  function saldoFiscal(l: Linea): number {
+    const e = ajustes.get(l.cuenta);
+    const debito = e ? parseValor(e.debito) : l.ajuste_debito;
+    const credito = e ? parseValor(e.credito) : l.ajuste_credito;
+    return l.saldo + debito - credito;
+  }
+
+  async function guardarAjustes() {
+    if (ajustes.size === 0) return;
+    startTransition(async () => {
+      const fd = new FormData();
+      for (const [cuenta, data] of ajustes.entries()) {
+        fd.set(`d_${cuenta}`, String(parseValor(data.debito)));
+        fd.set(`c_${cuenta}`, String(parseValor(data.credito)));
+        fd.set(`o_${cuenta}`, data.observacion);
+      }
+      await saveAjustesFiscalesAction(empresaId, declId, fd);
+      setAjustes(new Map());
+      setSaved(`Ajustes fiscales guardados · ${new Date().toLocaleTimeString("es-CO")}`);
+      router.refresh();
+    });
+  }
 
   const grouped = new Map<string, Renglon[]>();
   for (const r of renglones) {
@@ -106,8 +174,13 @@ export function BalanceView({
             Cargado {new Date(balance.uploaded_at).toLocaleString("es-CO")} · {balance.filename}
           </p>
           <h1 className="mt-2 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-            Balance cargado
+            Balance fiscal
           </h1>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+            Saldo contable del balance de prueba más ajustes fiscales (débito/crédito) =
+            <span className="font-medium"> Saldo fiscal</span>, que es el valor que se
+            agrega al renglón del Formulario 110.
+          </p>
         </div>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/importar`}
@@ -149,20 +222,29 @@ export function BalanceView({
         })}
       </nav>
 
-      <div className="mt-6 overflow-hidden border border-border">
-        <table className="w-full text-sm">
+      <div className="mt-6 overflow-x-auto border border-border">
+        <table className="w-full min-w-[1100px] text-sm">
           <thead className="bg-muted text-left">
             <tr>
-              <th className="px-4 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+              <th className="px-3 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
                 PUC
               </th>
-              <th className="px-4 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+              <th className="px-3 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
                 Nombre
               </th>
-              <th className="px-4 py-2 text-right font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-                Saldo
+              <th className="px-3 py-2 text-right font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                Saldo contable
               </th>
-              <th className="px-4 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+              <th className="px-3 py-2 text-right font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                Aj. débito
+              </th>
+              <th className="px-3 py-2 text-right font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                Aj. crédito
+              </th>
+              <th className="px-3 py-2 text-right font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                Saldo fiscal
+              </th>
+              <th className="px-3 py-2 font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
                 Renglón 110
               </th>
             </tr>
@@ -170,14 +252,15 @@ export function BalanceView({
           <tbody>
             {lineas.length === 0 ? (
               <tr>
-                <td colSpan={4} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={7} className="px-4 py-10 text-center text-muted-foreground">
                   No hay líneas que cumplan el filtro.
                 </td>
               </tr>
             ) : (
               lineas.map((l) => {
                 const isAux = l.cuenta.length >= 6;
-                const isEdited = edits.has(l.cuenta);
+                const isEdited = edits.has(l.cuenta) || ajustes.has(l.cuenta);
+                const sf = saldoFiscal(l);
                 return (
                   <tr
                     key={l.cuenta}
@@ -185,10 +268,39 @@ export function BalanceView({
                       !isAux ? "text-muted-foreground" : ""
                     }`}
                   >
-                    <td className="px-4 py-1.5 align-top font-mono">{l.cuenta}</td>
-                    <td className="px-4 py-1.5 align-top">{l.nombre ?? "—"}</td>
-                    <td className="px-4 py-1.5 text-right align-top font-mono">
+                    <td className="px-3 py-1.5 align-top font-mono">{l.cuenta}</td>
+                    <td className="px-3 py-1.5 align-top">{l.nombre ?? "—"}</td>
+                    <td className="px-3 py-1.5 text-right align-top font-mono">
                       {FMT.format(l.saldo)}
+                    </td>
+                    <td className="px-1 py-1 text-right align-top">
+                      {isAux ? (
+                        <input
+                          inputMode="numeric"
+                          value={ajusteValor(l, "debito")}
+                          onChange={(e) => setAjuste(l.cuenta, "debito", formatInput(e.target.value))}
+                          className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
+                          placeholder="0"
+                        />
+                      ) : (
+                        <span className="px-2 text-xs italic">—</span>
+                      )}
+                    </td>
+                    <td className="px-1 py-1 text-right align-top">
+                      {isAux ? (
+                        <input
+                          inputMode="numeric"
+                          value={ajusteValor(l, "credito")}
+                          onChange={(e) => setAjuste(l.cuenta, "credito", formatInput(e.target.value))}
+                          className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
+                          placeholder="0"
+                        />
+                      ) : (
+                        <span className="px-2 text-xs italic">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-1.5 text-right align-top font-mono font-medium">
+                      {FMT.format(sf)}
                     </td>
                     <td className="px-2 py-1 align-top">
                       {isAux ? (
@@ -220,15 +332,25 @@ export function BalanceView({
         </table>
       </div>
 
-      <div className="sticky bottom-0 mt-6 flex items-center justify-between gap-4 border-t border-border bg-background py-4">
+      <div className="sticky bottom-0 mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border bg-background py-4">
         <p className="text-sm">
           <span className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Suma del listado:
+            Suma saldo contable:
           </span>{" "}
           <span className="font-mono">{FMT.format(totalSaldo)}</span>
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {saved ? <p className="text-sm text-muted-foreground">{saved}</p> : null}
+          {ajustes.size > 0 ? (
+            <button
+              type="button"
+              onClick={guardarAjustes}
+              disabled={pending}
+              className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90 disabled:opacity-50"
+            >
+              {pending ? "Guardando…" : `Guardar ${ajustes.size} ajuste${ajustes.size === 1 ? "" : "s"} fiscal${ajustes.size === 1 ? "" : "es"}`}
+            </button>
+          ) : null}
           {editsCount > 0 ? (
             <button
               type="button"
@@ -236,7 +358,7 @@ export function BalanceView({
               disabled={pending}
               className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90 disabled:opacity-50"
             >
-              {pending ? "Guardando…" : `Guardar ${editsCount} cambio${editsCount === 1 ? "" : "s"}`}
+              {pending ? "Guardando…" : `Guardar ${editsCount} mapeo${editsCount === 1 ? "" : "s"}`}
             </button>
           ) : null}
         </div>

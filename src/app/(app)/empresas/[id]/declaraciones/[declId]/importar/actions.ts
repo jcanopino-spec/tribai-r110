@@ -343,6 +343,78 @@ export async function uploadBalanceAction(
 
 // ---------- Re-procesar el balance actual con nuevas overrides ----------
 
+/**
+ * Guarda ajustes fiscales (débito / crédito / observación) por cuenta y
+ * re-agrega los renglones del 110 usando el saldo fiscal.
+ */
+export async function saveAjustesFiscalesAction(
+  empresaId: string,
+  declId: string,
+  formData: FormData,
+) {
+  const supabase = await createClient();
+
+  const { data: balance } = await supabase
+    .from("balance_pruebas")
+    .select("id")
+    .eq("declaracion_id", declId)
+    .order("uploaded_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (!balance) return;
+
+  // Recolectar ajustes por cuenta del FormData (d_<cuenta>, c_<cuenta>, o_<cuenta>)
+  const updates = new Map<
+    string,
+    { ajuste_debito: number; ajuste_credito: number; observacion: string | null }
+  >();
+  for (const [k, raw] of formData.entries()) {
+    const v = String(raw ?? "");
+    if (k.startsWith("d_")) {
+      const cuenta = k.slice(2);
+      const prev = updates.get(cuenta) ?? {
+        ajuste_debito: 0,
+        ajuste_credito: 0,
+        observacion: null,
+      };
+      prev.ajuste_debito = Number(v) || 0;
+      updates.set(cuenta, prev);
+    } else if (k.startsWith("c_")) {
+      const cuenta = k.slice(2);
+      const prev = updates.get(cuenta) ?? {
+        ajuste_debito: 0,
+        ajuste_credito: 0,
+        observacion: null,
+      };
+      prev.ajuste_credito = Number(v) || 0;
+      updates.set(cuenta, prev);
+    } else if (k.startsWith("o_")) {
+      const cuenta = k.slice(2);
+      const prev = updates.get(cuenta) ?? {
+        ajuste_debito: 0,
+        ajuste_credito: 0,
+        observacion: null,
+      };
+      prev.observacion = v || null;
+      updates.set(cuenta, prev);
+    }
+  }
+
+  for (const [cuenta, vals] of updates.entries()) {
+    await supabase
+      .from("balance_prueba_lineas")
+      .update({
+        ajuste_debito: vals.ajuste_debito,
+        ajuste_credito: vals.ajuste_credito,
+        observacion: vals.observacion,
+      })
+      .eq("balance_id", balance.id)
+      .eq("cuenta", cuenta);
+  }
+
+  await reaggregateBalanceAction(declId, empresaId);
+}
+
 export async function reaggregateBalanceAction(declId: string, empresaId: string) {
   const supabase = await createClient();
 
@@ -357,7 +429,7 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
 
   const { data: lineas } = await supabase
     .from("balance_prueba_lineas")
-    .select("id, cuenta, saldo")
+    .select("id, cuenta, saldo, ajuste_debito, ajuste_credito")
     .eq("balance_id", balance.id);
   if (!lineas || lineas.length === 0) return;
 
@@ -404,7 +476,8 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
     return null;
   }
 
-  // Update each line's renglon_110
+  // Update each line's renglon_110 and aggregate using SALDO FISCAL
+  // (saldo contable + ajuste_debito - ajuste_credito).
   const aggByRenglon = new Map<number, number>();
   for (const l of lineas) {
     const renglon = resolveRenglon(l.cuenta);
@@ -413,7 +486,9 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
       .update({ renglon_110: renglon })
       .eq("id", l.id);
     if (renglon != null && l.cuenta.length >= 6 && !RENGLONES_COMPUTADOS.has(renglon)) {
-      aggByRenglon.set(renglon, (aggByRenglon.get(renglon) ?? 0) + Number(l.saldo));
+      const saldoFiscal =
+        Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);
+      aggByRenglon.set(renglon, (aggByRenglon.get(renglon) ?? 0) + saldoFiscal);
     }
   }
 

@@ -16,32 +16,41 @@ export type Database = {
     Tables: {
       balance_prueba_lineas: {
         Row: {
+          ajuste_credito: number
+          ajuste_debito: number
           anexo: string | null
           balance_id: string
           cuenta: string
           f2516: string | null
           id: number
           nombre: string | null
+          observacion: string | null
           renglon_110: number | null
           saldo: number
         }
         Insert: {
+          ajuste_credito?: number
+          ajuste_debito?: number
           anexo?: string | null
           balance_id: string
           cuenta: string
           f2516?: string | null
           id?: number
           nombre?: string | null
+          observacion?: string | null
           renglon_110?: number | null
           saldo?: number
         }
         Update: {
+          ajuste_credito?: number
+          ajuste_debito?: number
           anexo?: string | null
           balance_id?: string
           cuenta?: string
           f2516?: string | null
           id?: number
           nombre?: string | null
+          observacion?: string | null
           renglon_110?: number | null
           saldo?: number
         }
