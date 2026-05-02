@@ -137,6 +137,29 @@ export default async function ImprimirDeclaracionPage({
     .eq("declaracion_id", declId);
   const totalRecuperaciones = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
 
+  const { data: incrngos } = await supabase
+    .from("anexo_incrngo")
+    .select("valor")
+    .eq("declaracion_id", declId);
+  const totalIncrngo = (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0);
+
+  const { data: divs } = await supabase
+    .from("anexo_dividendos")
+    .select(
+      "no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos",
+    )
+    .eq("declaracion_id", declId);
+  const dividendos = {
+    r49: (divs ?? []).reduce((s, d) => s + Number(d.no_constitutivos), 0),
+    r50: (divs ?? []).reduce((s, d) => s + Number(d.distribuidos_no_residentes), 0),
+    r51: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_general), 0),
+    r52: (divs ?? []).reduce((s, d) => s + Number(d.gravados_persona_natural_dos), 0),
+    r53: (divs ?? []).reduce((s, d) => s + Number(d.gravados_personas_extranjeras), 0),
+    r54: (divs ?? []).reduce((s, d) => s + Number(d.gravados_art_245), 0),
+    r55: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_l1819), 0),
+    r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
+  };
+
   const { data: tarifaRpRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -210,6 +233,8 @@ export default async function ImprimirDeclaracionPage({
     totalCompensaciones,
     totalRecuperaciones,
     rentaPresuntiva,
+    totalIncrngo,
+    dividendos,
   });
 
   const porSeccion = new Map<string, typeof renglones>();

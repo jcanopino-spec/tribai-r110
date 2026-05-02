@@ -72,6 +72,7 @@ export function DeclaracionEditor({
   totalRecuperaciones,
   rentaPresuntiva,
   dividendos,
+  totalIncrngo,
 }: {
   declId: string;
   empresaId: string;
@@ -108,6 +109,7 @@ export function DeclaracionEditor({
     r49: number; r50: number; r51: number; r52: number;
     r53: number; r54: number; r55: number; r56: number;
   };
+  totalIncrngo: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -167,6 +169,7 @@ export function DeclaracionEditor({
       totalRecuperaciones,
       rentaPresuntiva,
       dividendos,
+      totalIncrngo,
     });
   }, [
     valores,
@@ -196,6 +199,7 @@ export function DeclaracionEditor({
     totalRecuperaciones,
     rentaPresuntiva,
     dividendos,
+    totalIncrngo,
   ]);
 
   const totales = useMemo(() => {
@@ -316,6 +320,12 @@ export function DeclaracionEditor({
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
           Dividendos
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/incrngo`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          INCRNGO
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}

@@ -146,6 +146,13 @@ export default async function DeclaracionEditorPage({
     r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
   };
 
+  // Anexo 26 · INCRNGO → R60
+  const { data: incrngos } = await supabase
+    .from("anexo_incrngo")
+    .select("valor")
+    .eq("declaracion_id", declId);
+  const totalIncrngo = (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0);
+
   // Anexo 17 · Recuperación de deducciones → R70
   const { data: recups } = await supabase
     .from("anexo_recuperaciones")
@@ -273,6 +280,7 @@ export default async function DeclaracionEditorPage({
           totalRecuperaciones={totalRecuperaciones}
           rentaPresuntiva={rentaPresuntiva}
           dividendos={dividendos}
+          totalIncrngo={totalIncrngo}
         />
       )}
     </div>
@@ -313,6 +321,7 @@ async function Workspace({
   totalRecuperaciones,
   rentaPresuntiva,
   dividendos,
+  totalIncrngo,
 }: {
   declId: string;
   empresaId: string;
@@ -350,6 +359,7 @@ async function Workspace({
     r49: number; r50: number; r51: number; r52: number;
     r53: number; r54: number; r55: number; r56: number;
   };
+  totalIncrngo: number;
 }) {
   const supabase = await createClient();
 
@@ -529,6 +539,7 @@ async function Workspace({
             totalRecuperaciones={totalRecuperaciones}
             rentaPresuntiva={rentaPresuntiva}
             dividendos={dividendos}
+            totalIncrngo={totalIncrngo}
           />
         </div>
       </div>

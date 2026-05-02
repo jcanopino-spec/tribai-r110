@@ -16,6 +16,7 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   49, 50, 51, 52, 53, 54, 55, 56,
   // Ingresos
   58, // Total ingresos brutos = sum(47..57)
+  60, // INCRNGO · viene del Anexo 26
   61, // Total ingresos netos = max(0, 58 - 59 - 60)
   // Costos
   67, // Total costos y gastos deducibles = sum(62..66)
@@ -133,6 +134,8 @@ export type ComputeContext = {
     r55?: number;
     r56?: number;
   };
+  /** Anexo 26 · INCRNGO total → R60 */
+  totalIncrngo?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -265,6 +268,11 @@ export function computarRenglones(
   if (typeof ctx.totalNomina === "number") v.set(33, ctx.totalNomina);
   if (typeof ctx.aportesSegSocial === "number") v.set(34, ctx.aportesSegSocial);
   if (typeof ctx.aportesParaFiscales === "number") v.set(35, ctx.aportesParaFiscales);
+
+  // --- INCRNGO (Anexo 26) → R60 ---
+  if (typeof ctx.totalIncrngo === "number") {
+    v.set(60, ctx.totalIncrngo);
+  }
 
   // --- Ingresos por dividendos (Anexo 18) ---
   if (ctx.dividendos) {
@@ -506,6 +514,7 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   54: "Anexo 18 · Art. 245",
   55: "Anexo 18 · Ley 1819",
   56: "Anexo 18 · Proyectos calificados",
+  60: "Suma del Anexo 26 (INCRNGO)",
   70: "Suma del Anexo 17 (recuperaciones)",
   73: "Espejo de 72 (si la base es negativa)",
   74: "Anexo 20 (limitado a la renta líquida 72)",

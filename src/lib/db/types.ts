@@ -196,6 +196,41 @@ export type Database = {
           },
         ]
       }
+      anexo_incrngo: {
+        Row: {
+          concepto: string
+          created_at: string
+          declaracion_id: string
+          id: number
+          normatividad: string | null
+          valor: number
+        }
+        Insert: {
+          concepto: string
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          normatividad?: string | null
+          valor?: number
+        }
+        Update: {
+          concepto?: string
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          normatividad?: string | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_incrngo_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_recuperaciones: {
         Row: {
           concepto: string
