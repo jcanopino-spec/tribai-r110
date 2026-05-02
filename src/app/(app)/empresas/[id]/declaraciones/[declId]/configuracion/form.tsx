@@ -80,19 +80,25 @@ export function ConfiguracionForm({
         ))}
       </nav>
 
+      {/*
+        Renderizamos TODAS las pestañas siempre y solo ocultamos las inactivas
+        con `hidden`. Esto mantiene los inputs en el DOM, así el form envía
+        todos los campos y los booleanos de otras pestañas no se reinician
+        a false al guardar.
+      */}
       <div className="mt-8 space-y-6">
-        {tab === "general" ? <TabGeneral d={d} /> : null}
-        {tab === "auditoria" ? <TabAuditoria d={d} /> : null}
-        {tab === "anterior" ? <TabAnterior d={d} /> : null}
-        {tab === "sanciones" ? (
+        <div hidden={tab !== "general"}><TabGeneral d={d} /></div>
+        <div hidden={tab !== "auditoria"}><TabAuditoria d={d} /></div>
+        <div hidden={tab !== "anterior"}><TabAnterior d={d} /></div>
+        <div hidden={tab !== "sanciones"}>
           <TabSanciones
             d={d}
             vencimientoSugerido={vencimientoSugerido}
             evaluacion={evaluacion}
             ultimoDigitoNit={ultimoDigitoNit}
           />
-        ) : null}
-        {tab === "otros" ? <TabOtros d={d} /> : null}
+        </div>
+        <div hidden={tab !== "otros"}><TabOtros d={d} /></div>
       </div>
 
       <div className="sticky bottom-0 mt-10 flex items-center justify-between gap-4 border-t border-border bg-background py-4">
