@@ -550,6 +550,12 @@ export type Database = {
           calcula_sancion_correccion: boolean
           calcula_sancion_extemporaneidad: boolean
           created_at: string
+          dc_cartera_0_90: number
+          dc_cartera_181_360: number
+          dc_cartera_360_mas: number
+          dc_cartera_91_180: number
+          dc_metodo: string
+          dc_saldo_contable: number
           empresa_id: string
           es_gran_contribuyente: boolean
           es_institucion_financiera: boolean
@@ -595,6 +601,12 @@ export type Database = {
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
           created_at?: string
+          dc_cartera_0_90?: number
+          dc_cartera_181_360?: number
+          dc_cartera_360_mas?: number
+          dc_cartera_91_180?: number
+          dc_metodo?: string
+          dc_saldo_contable?: number
           empresa_id: string
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean
@@ -640,6 +652,12 @@ export type Database = {
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
           created_at?: string
+          dc_cartera_0_90?: number
+          dc_cartera_181_360?: number
+          dc_cartera_360_mas?: number
+          dc_cartera_91_180?: number
+          dc_metodo?: string
+          dc_saldo_contable?: number
           empresa_id?: string
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean

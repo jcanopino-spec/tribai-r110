@@ -26,7 +26,7 @@ export default async function AnexosHubPage({
 
   const { data: declaracion } = await supabase
     .from("declaraciones")
-    .select("id, ano_gravable")
+    .select("*")
     .eq("id", declId)
     .single();
   if (!declaracion) notFound();
@@ -226,6 +226,22 @@ export default async function AnexosHubPage({
       descripcion:
         "Cuentas en USD. Diferencia entre TRM inicial y final del año (no realizada).",
     },
+    {
+      numero: "12",
+      titulo: "Deterioro de Cartera",
+      href: "deterioro-cartera",
+      renglones: [],
+      total: 0,
+      items:
+        Number(declaracion.dc_cartera_0_90 ?? 0) +
+          Number(declaracion.dc_cartera_91_180 ?? 0) +
+          Number(declaracion.dc_cartera_181_360 ?? 0) +
+          Number(declaracion.dc_cartera_360_mas ?? 0) >
+        0
+          ? 1
+          : 0,
+      descripcion: "Provisión fiscal por antigüedad (Art. 145 E.T.). General/Individual/Combinado.",
+    },
   ];
 
   return (
@@ -295,7 +311,6 @@ export default async function AnexosHubPage({
             "9 · ICA (descuento ICA cubierto en Anexo 4)",
             "10 · GMF",
             "11 · Predial",
-            "12 · Deterioro de Cartera",
             "13 · Deducción IVA Bienes Capital",
             "15 · Subcapitalización",
             "21 · Pagos Seguridad Social",
