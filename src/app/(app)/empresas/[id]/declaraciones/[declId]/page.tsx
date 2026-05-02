@@ -75,6 +75,20 @@ export default async function DeclaracionEditorPage({
     Number(declaracion.patrimonio_bruto_anterior ?? 0) -
     Number(declaracion.pasivos_anterior ?? 0);
 
+  // Totales del Anexo 3 (renglones 105 y 106)
+  const { data: retenciones } = await supabase
+    .from("anexo_retenciones")
+    .select("tipo, retenido")
+    .eq("declaracion_id", declId);
+  const totalAutorretenciones =
+    (retenciones ?? [])
+      .filter((r) => r.tipo === "autorretencion")
+      .reduce((s, r) => s + Number(r.retenido), 0);
+  const totalRetenciones =
+    (retenciones ?? [])
+      .filter((r) => r.tipo === "retencion")
+      .reduce((s, r) => s + Number(r.retenido), 0);
+
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
   return (
@@ -162,6 +176,8 @@ export default async function DeclaracionEditorPage({
           aportesParaFiscales={Number(declaracion.aportes_para_fiscales ?? 0)}
           beneficioAuditoria12m={!!declaracion.beneficio_auditoria_12m}
           beneficioAuditoria6m={!!declaracion.beneficio_auditoria_6m}
+          totalAutorretenciones={totalAutorretenciones}
+          totalRetenciones={totalRetenciones}
         />
       )}
     </div>
@@ -191,6 +207,8 @@ async function Workspace({
   aportesParaFiscales,
   beneficioAuditoria12m,
   beneficioAuditoria6m,
+  totalAutorretenciones,
+  totalRetenciones,
 }: {
   declId: string;
   empresaId: string;
@@ -214,6 +232,8 @@ async function Workspace({
   aportesParaFiscales: number;
   beneficioAuditoria12m: boolean;
   beneficioAuditoria6m: boolean;
+  totalAutorretenciones: number;
+  totalRetenciones: number;
 }) {
   const supabase = await createClient();
 
@@ -382,6 +402,8 @@ async function Workspace({
             aportesParaFiscales={aportesParaFiscales}
             beneficioAuditoria12m={beneficioAuditoria12m}
             beneficioAuditoria6m={beneficioAuditoria6m}
+            totalAutorretenciones={totalAutorretenciones}
+            totalRetenciones={totalRetenciones}
           />
         </div>
       </div>

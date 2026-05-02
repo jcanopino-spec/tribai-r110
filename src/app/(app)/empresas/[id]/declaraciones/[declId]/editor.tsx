@@ -61,6 +61,8 @@ export function DeclaracionEditor({
   aportesParaFiscales,
   beneficioAuditoria12m,
   beneficioAuditoria6m,
+  totalAutorretenciones,
+  totalRetenciones,
 }: {
   declId: string;
   empresaId: string;
@@ -83,6 +85,8 @@ export function DeclaracionEditor({
   aportesParaFiscales: number;
   beneficioAuditoria12m: boolean;
   beneficioAuditoria6m: boolean;
+  totalAutorretenciones: number;
+  totalRetenciones: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -131,6 +135,8 @@ export function DeclaracionEditor({
       totalNomina,
       aportesSegSocial,
       aportesParaFiscales,
+      totalAutorretenciones,
+      totalRetenciones,
     });
   }, [
     valores,
@@ -149,6 +155,8 @@ export function DeclaracionEditor({
     totalNomina,
     aportesSegSocial,
     aportesParaFiscales,
+    totalAutorretenciones,
+    totalRetenciones,
   ]);
 
   const totales = useMemo(() => {
@@ -222,6 +230,12 @@ export function DeclaracionEditor({
       ) : null}
 
       <div className="mb-6 flex flex-wrap justify-end gap-2">
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/retenciones`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Anexo 3 · Retenciones
+        </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"

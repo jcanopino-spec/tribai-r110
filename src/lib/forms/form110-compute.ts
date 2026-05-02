@@ -29,6 +29,8 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   85, // Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
   97, // Impuesto neto de ganancias ocasionales = 83 × 15%
+  105, // Autorretenciones · viene del Anexo 3
+  106, // Otras retenciones · viene del Anexo 3
   108, // Anticipo año siguiente (Anexo 2 del .xlsm)
   113, // Sanción por extemporaneidad (Arts. 641/642 E.T.)
   94, // Impuesto neto de renta (sin adicionado) = 91 - 93 (+92 según descrip)
@@ -93,6 +95,9 @@ export type ComputeContext = {
   totalNomina?: number;
   aportesSegSocial?: number;
   aportesParaFiscales?: number;
+  /** Anexo 3 · totales de retenciones y autorretenciones */
+  totalAutorretenciones?: number;
+  totalRetenciones?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -297,6 +302,14 @@ export function computarRenglones(
   v.set(96, get(94) + get(95));
   // 99 = 96 + 97 - 98  (Total impuesto a cargo)
   v.set(99, get(96) + get(97) - get(98));
+  // 105 = Total autorretenciones (suma del Anexo 3)
+  if (typeof ctx.totalAutorretenciones === "number") {
+    v.set(105, ctx.totalAutorretenciones);
+  }
+  // 106 = Total retenciones (suma del Anexo 3)
+  if (typeof ctx.totalRetenciones === "number") {
+    v.set(106, ctx.totalRetenciones);
+  }
   // 107 = 105 + 106  (Total retenciones)
   v.set(107, get(105) + get(106));
 
@@ -423,6 +436,8 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   94: "91 + 92 − 93",
   96: "94 + 95",
   99: "96 + 97 − 98",
+  105: "Suma de autorretenciones (Anexo 3)",
+  106: "Suma de retenciones (Anexo 3)",
   107: "105 + 106",
   108: "(96 + impto. AG anterior) / 2 × tarifa años − 107",
   113: "Sanciones (extemporaneidad + corrección, Arts. 641/642/644)",

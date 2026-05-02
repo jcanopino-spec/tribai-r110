@@ -14,6 +14,50 @@ export type Database = {
   }
   public: {
     Tables: {
+      anexo_retenciones: {
+        Row: {
+          agente: string | null
+          base: number
+          concepto: string
+          created_at: string
+          declaracion_id: string
+          id: number
+          nit: string | null
+          retenido: number
+          tipo: string
+        }
+        Insert: {
+          agente?: string | null
+          base?: number
+          concepto: string
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          nit?: string | null
+          retenido?: number
+          tipo: string
+        }
+        Update: {
+          agente?: string | null
+          base?: number
+          concepto?: string
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          nit?: string | null
+          retenido?: number
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_retenciones_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       balance_prueba_lineas: {
         Row: {
           ajuste_credito: number

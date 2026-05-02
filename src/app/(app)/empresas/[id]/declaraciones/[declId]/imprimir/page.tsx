@@ -85,6 +85,17 @@ export default async function ImprimirDeclaracionPage({
     declaracion.fecha_presentacion,
   );
 
+  const { data: retenciones } = await supabase
+    .from("anexo_retenciones")
+    .select("tipo, retenido")
+    .eq("declaracion_id", declId);
+  const totalAutorretenciones = (retenciones ?? [])
+    .filter((r) => r.tipo === "autorretencion")
+    .reduce((s, r) => s + Number(r.retenido), 0);
+  const totalRetenciones = (retenciones ?? [])
+    .filter((r) => r.tipo === "retencion")
+    .reduce((s, r) => s + Number(r.retenido), 0);
+
   const { data: uvtRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -127,6 +138,8 @@ export default async function ImprimirDeclaracionPage({
     totalNomina: Number(declaracion.total_nomina ?? 0),
     aportesSegSocial: Number(declaracion.aportes_seg_social ?? 0),
     aportesParaFiscales: Number(declaracion.aportes_para_fiscales ?? 0),
+    totalAutorretenciones,
+    totalRetenciones,
   });
 
   const porSeccion = new Map<string, typeof renglones>();
