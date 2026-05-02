@@ -8,6 +8,7 @@ import {
   resumenValidaciones,
   type Validacion,
 } from "@/lib/forms/form110-compute";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
 import { FinalizarButton } from "./finalizar-button";
 
 export const metadata = { title: "Validaciones" };
@@ -32,16 +33,14 @@ export default async function ValidacionesPage({
 
   const { data: declaracion } = await supabase
     .from("declaraciones")
-    .select(
-      "id, empresa_id, ano_gravable, formato, estado, impuesto_neto_anterior, anios_declarando",
-    )
+    .select("*")
     .eq("id", declId)
     .single();
   if (!declaracion) notFound();
 
   const { data: empresa } = await supabase
     .from("empresas")
-    .select("id, razon_social, regimen_codigo")
+    .select("id, razon_social, regimen_codigo, nit")
     .eq("id", declaracion.empresa_id)
     .single();
   if (!empresa) notFound();
@@ -56,6 +55,29 @@ export default async function ValidacionesPage({
       .maybeSingle();
     tarifaRegimen = reg ? Number(reg.tarifa) : null;
   }
+
+  // Resolver vencimiento auto si no hay override
+  const tipoContribuyente = declaracion.es_gran_contribuyente
+    ? "gran_contribuyente"
+    : "persona_juridica";
+  const digito = ultimoDigitoNit(empresa.nit);
+  let vencimientoSugerido: string | null = null;
+  if (digito !== null) {
+    const { data: venc } = await supabase
+      .from("vencimientos_form110")
+      .select("fecha_vencimiento")
+      .eq("ano_gravable", declaracion.ano_gravable)
+      .eq("tipo_contribuyente", tipoContribuyente)
+      .eq("ultimo_digito", digito)
+      .maybeSingle();
+    vencimientoSugerido = venc?.fecha_vencimiento ?? null;
+  }
+  const fechaVencimientoEfectiva =
+    declaracion.fecha_vencimiento ?? vencimientoSugerido;
+  const evaluacion = evaluarPresentacion(
+    fechaVencimientoEfectiva,
+    declaracion.fecha_presentacion,
+  );
 
   const { data: valores } = await supabase
     .from("form110_valores")
@@ -78,6 +100,13 @@ export default async function ValidacionesPage({
     tarifaRegimen,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
+    presentacion:
+      evaluacion.estado === "extemporanea"
+        ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
+        : evaluacion.estado === "oportuna"
+          ? { estado: "oportuna" }
+          : { estado: "no_presentada" },
+    calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
   });
 
   const resumen = resumenValidaciones(validaciones);

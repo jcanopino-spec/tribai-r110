@@ -65,6 +65,10 @@ export type ComputeContext = {
   impuestoNetoAnterior?: number;
   /** Años que la empresa lleva declarando, define la tarifa del anticipo. */
   aniosDeclarando?: "primero" | "segundo" | "tercero_o_mas";
+  /** Estado de presentación calculado en /lib/forms/vencimientos.ts */
+  presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
+  /** Flag de sanción extemporaneidad activado por el usuario */
+  calculaSancionExtemporaneidad?: boolean;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -259,7 +263,13 @@ export type Validacion = {
 
 export function validarFormulario(
   numerico: Map<number, number>,
-  ctx: { tarifaRegimen?: number | null; impuestoNetoAnterior?: number; aniosDeclarando?: string } = {},
+  ctx: {
+    tarifaRegimen?: number | null;
+    impuestoNetoAnterior?: number;
+    aniosDeclarando?: string;
+    presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
+    calculaSancionExtemporaneidad?: boolean;
+  } = {},
 ): Validacion[] {
   const get = (n: number) => numerico.get(n) ?? 0;
   const out: Validacion[] = [];
@@ -442,6 +452,36 @@ export function validarFormulario(
       categoria: "cuadre",
       nivel: "error",
       mensaje: "Hay simultáneamente saldo a pagar y saldo a favor. Es imposible; revisa los datos.",
+    });
+  }
+
+  // Vencimiento / extemporaneidad
+  if (ctx.presentacion?.estado === "extemporanea") {
+    const meses = ctx.presentacion.mesesExtemporanea ?? 0;
+    if (!ctx.calculaSancionExtemporaneidad) {
+      out.push({
+        categoria: "fiscal",
+        nivel: "error",
+        mensaje:
+          `La declaración se presentó ${meses} mes${meses !== 1 ? "es" : ""} después del vencimiento. ` +
+          "Activa 'Calcular sanción por extemporaneidad' en /configuracion para liquidar la sanción correspondiente.",
+      });
+    } else {
+      out.push({
+        categoria: "fiscal",
+        nivel: "warn",
+        mensaje:
+          `Declaración extemporánea: ${meses} mes${meses !== 1 ? "es" : ""} de retraso. La sanción del Art. 641 E.T. se calcula sobre el impuesto a cargo o ingresos brutos.`,
+      });
+    }
+  }
+
+  if (ctx.presentacion?.estado === "no_presentada") {
+    out.push({
+      categoria: "completitud",
+      nivel: "info",
+      mensaje:
+        "Sin fecha de presentación registrada. Configúrala en /configuracion (tab Sanciones) para evaluar oportunidad.",
     });
   }
 

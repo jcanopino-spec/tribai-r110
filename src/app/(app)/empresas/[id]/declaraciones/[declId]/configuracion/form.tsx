@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { saveConfiguracionAction, type ConfigState } from "./actions";
+import type { EstadoPresentacion } from "@/lib/forms/vencimientos";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -36,12 +37,18 @@ export function ConfiguracionForm({
   razonSocial,
   regimenCodigo,
   declaracion,
+  vencimientoSugerido,
+  evaluacion,
+  ultimoDigitoNit,
 }: {
   declId: string;
   empresaId: string;
   razonSocial: string;
   regimenCodigo: string | null;
   declaracion: Decl;
+  vencimientoSugerido: string | null;
+  evaluacion: EstadoPresentacion;
+  ultimoDigitoNit: number | null;
 }) {
   const action = saveConfiguracionAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -77,7 +84,14 @@ export function ConfiguracionForm({
         {tab === "general" ? <TabGeneral d={d} /> : null}
         {tab === "auditoria" ? <TabAuditoria d={d} /> : null}
         {tab === "anterior" ? <TabAnterior d={d} /> : null}
-        {tab === "sanciones" ? <TabSanciones d={d} /> : null}
+        {tab === "sanciones" ? (
+          <TabSanciones
+            d={d}
+            vencimientoSugerido={vencimientoSugerido}
+            evaluacion={evaluacion}
+            ultimoDigitoNit={ultimoDigitoNit}
+          />
+        ) : null}
         {tab === "otros" ? <TabOtros d={d} /> : null}
       </div>
 
@@ -212,10 +226,103 @@ function TabAnterior({ d }: { d: Decl }) {
 // ============================================================
 // Tab 4: Sanciones
 // ============================================================
-function TabSanciones({ d }: { d: Decl }) {
+function TabSanciones({
+  d,
+  vencimientoSugerido,
+  evaluacion,
+  ultimoDigitoNit,
+}: {
+  d: Decl;
+  vencimientoSugerido: string | null;
+  evaluacion: EstadoPresentacion;
+  ultimoDigitoNit: number | null;
+}) {
   return (
-    <div className="space-y-5">
-      <h2 className="font-serif text-xl">Sanciones</h2>
+    <div className="space-y-6">
+      <h2 className="font-serif text-xl">Vencimiento y presentación</h2>
+
+      {/* Bloque calendario auto */}
+      <div className="border border-border bg-muted/30 p-4">
+        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+          Calendario DIAN · Decreto 2229/2024
+        </p>
+        <p className="mt-1 text-sm">
+          Último dígito del NIT:{" "}
+          <span className="font-mono">
+            {ultimoDigitoNit !== null ? ultimoDigitoNit : "—"}
+          </span>
+          {" · "}Tipo:{" "}
+          <span className="font-mono">
+            {d.es_gran_contribuyente ? "Gran Contribuyente" : "Persona Jurídica"}
+          </span>
+        </p>
+        <p className="mt-2 text-sm">
+          Vencimiento sugerido:{" "}
+          <span className="font-medium">
+            {vencimientoSugerido ?? "no disponible para el AG seleccionado"}
+          </span>
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Si tu empresa cambia de tipo, los vencimientos se recalculan al guardar.
+        </p>
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        <Field label="Fecha de vencimiento (override manual, opcional)">
+          <Input
+            name="fecha_vencimiento"
+            type="date"
+            defaultValue={d.fecha_vencimiento ?? ""}
+            placeholder={vencimientoSugerido ?? ""}
+          />
+        </Field>
+        <Field label="Fecha de presentación">
+          <Input
+            name="fecha_presentacion"
+            type="date"
+            defaultValue={d.fecha_presentacion ?? ""}
+          />
+        </Field>
+      </div>
+
+      {/* Resultado de la evaluación */}
+      {evaluacion.estado === "oportuna" ? (
+        <div className="border border-success/40 bg-success/5 p-4 text-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+            Estado de la presentación
+          </p>
+          <p className="mt-1 font-serif text-xl">Oportuna ✓</p>
+          <p className="mt-1 text-muted-foreground">
+            Presentada el {evaluacion.presentacion} · vence {evaluacion.vencimiento}.
+          </p>
+        </div>
+      ) : evaluacion.estado === "extemporanea" ? (
+        <div className="border border-destructive/40 bg-destructive/5 p-4 text-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-destructive">
+            Estado de la presentación
+          </p>
+          <p className="mt-1 font-serif text-xl">Extemporánea</p>
+          <p className="mt-1">
+            Presentada {evaluacion.diasDiferencia} día
+            {evaluacion.diasDiferencia !== 1 ? "s" : ""} después del vencimiento (
+            {evaluacion.mesesExtemporanea} mes{evaluacion.mesesExtemporanea !== 1 ? "es" : ""}{" "}
+            de extemporaneidad para cálculo de sanción).
+          </p>
+          <p className="mt-1 text-muted-foreground">
+            Activa "Calcular sanción por extemporaneidad" abajo para liquidar la sanción
+            según el Art. 641/642 E.T.
+          </p>
+        </div>
+      ) : (
+        <div className="border border-border bg-muted/30 p-4 text-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+            Estado de la presentación
+          </p>
+          <p className="mt-1">Aún no registras fecha de presentación.</p>
+        </div>
+      )}
+
+      <h2 className="mt-8 font-serif text-xl">Sanciones</h2>
       <p className="text-sm text-muted-foreground">
         Configura si aplica sanción por extemporaneidad o corrección. Tribai usa el UVT
         del año y los Arts. 641, 642, 644 E.T.
@@ -244,20 +351,6 @@ function TabSanciones({ d }: { d: Decl }) {
             <option value="50">50% (Art. 640 E.T.)</option>
             <option value="75">75% (Art. 640 E.T.)</option>
           </Select>
-        </Field>
-        <Field label="Fecha de vencimiento">
-          <Input
-            name="fecha_vencimiento"
-            type="date"
-            defaultValue={d.fecha_vencimiento ?? ""}
-          />
-        </Field>
-        <Field label="Fecha de presentación">
-          <Input
-            name="fecha_presentacion"
-            type="date"
-            defaultValue={d.fecha_presentacion ?? ""}
-          />
         </Field>
       </div>
     </div>

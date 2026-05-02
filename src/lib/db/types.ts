@@ -481,6 +481,27 @@ export type Database = {
         }
         Relationships: []
       }
+      vencimientos_form110: {
+        Row: {
+          ano_gravable: number
+          fecha_vencimiento: string
+          tipo_contribuyente: string
+          ultimo_digito: number
+        }
+        Insert: {
+          ano_gravable: number
+          fecha_vencimiento: string
+          tipo_contribuyente: string
+          ultimo_digito: number
+        }
+        Update: {
+          ano_gravable?: number
+          fecha_vencimiento?: string
+          tipo_contribuyente?: string
+          ultimo_digito?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
