@@ -59,6 +59,12 @@ export default async function AnexosHubPage({
     incrngo,
     intereses,
     difCambio,
+    ica,
+    gmf,
+    predial,
+    ivaCapital,
+    segSocial,
+    divDist,
   ] = await Promise.all([
     supabase
       .from("anexo_retenciones")
@@ -81,6 +87,18 @@ export default async function AnexosHubPage({
     supabase
       .from("anexo_diferencia_cambio")
       .select("tipo, valor_usd, trm_inicial")
+      .eq("declaracion_id", declId),
+    supabase.from("anexo_ica").select("valor_pagado").eq("declaracion_id", declId),
+    supabase.from("anexo_gmf").select("valor_gmf").eq("declaracion_id", declId),
+    supabase.from("anexo_predial").select("valor_pagado").eq("declaracion_id", declId),
+    supabase.from("anexo_iva_capital").select("iva_pagado").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_seg_social")
+      .select("aporte_salud, aporte_pension, aporte_arl, aporte_parafiscales")
+      .eq("declaracion_id", declId),
+    supabase
+      .from("anexo_dividendos_distribuir")
+      .select("dividendo_no_gravado, dividendo_gravado")
       .eq("declaracion_id", declId),
   ]);
 
@@ -123,6 +141,26 @@ export default async function AnexosHubPage({
     const dif = valorFin - valorIni;
     return s + (d.tipo === "pasivo" ? -dif : dif);
   }, 0);
+
+  const totalIca = (ica.data ?? []).reduce((s, i) => s + Number(i.valor_pagado), 0);
+  const totalGmf = (gmf.data ?? []).reduce((s, i) => s + Number(i.valor_gmf), 0);
+  const totalPredial = (predial.data ?? []).reduce((s, i) => s + Number(i.valor_pagado), 0);
+  const totalIvaCap = (ivaCapital.data ?? []).reduce((s, i) => s + Number(i.iva_pagado), 0);
+  const totalSegSocial = (segSocial.data ?? []).reduce(
+    (s, i) =>
+      s +
+      Number(i.aporte_salud) +
+      Number(i.aporte_pension) +
+      Number(i.aporte_arl) +
+      Number(i.aporte_parafiscales),
+    0,
+  );
+  const totalDivDist = (divDist.data ?? []).reduce(
+    (s, i) => s + Number(i.dividendo_no_gravado) + Number(i.dividendo_gravado),
+    0,
+  );
+  const subActivo = Boolean(declaracion.sub_es_vinculado);
+  const subIntereses = Number(declaracion.sub_intereses ?? 0);
 
   const cards: AnexoCard[] = [
     {
@@ -242,6 +280,69 @@ export default async function AnexosHubPage({
           : 0,
       descripcion: "Provisión fiscal por antigüedad (Art. 145 E.T.). General/Individual/Combinado.",
     },
+    {
+      numero: "9",
+      titulo: "ICA",
+      href: "ica",
+      renglones: [93],
+      total: totalIca,
+      items: ica.data?.length ?? 0,
+      descripcion: "Pagos de Industria y Comercio por municipio. 50% como descuento (Anexo 4).",
+    },
+    {
+      numero: "10",
+      titulo: "GMF (4×1000)",
+      href: "gmf",
+      renglones: [],
+      total: totalGmf,
+      items: gmf.data?.length ?? 0,
+      descripcion: "Gravamen a Movimientos Financieros. 50% deducible (Art. 115 E.T.).",
+    },
+    {
+      numero: "11",
+      titulo: "Predial",
+      href: "predial",
+      renglones: [],
+      total: totalPredial,
+      items: predial.data?.length ?? 0,
+      descripcion: "Impuesto Predial Unificado. Deducible si hay relación de causalidad.",
+    },
+    {
+      numero: "13",
+      titulo: "IVA Bienes de Capital",
+      href: "iva-capital",
+      renglones: [93],
+      total: totalIvaCap,
+      items: ivaCapital.data?.length ?? 0,
+      descripcion: "IVA pagado en bienes de capital. Descuento (Art. 258-1 E.T.).",
+    },
+    {
+      numero: "15",
+      titulo: "Subcapitalización",
+      href: "subcapitalizacion",
+      renglones: [],
+      total: subActivo ? subIntereses : 0,
+      items: subActivo ? 1 : 0,
+      descripcion: "Limitación de intereses con vinculados (Art. 118-1 E.T.). 2× patrimonio líquido.",
+    },
+    {
+      numero: "21",
+      titulo: "Seguridad Social",
+      href: "seguridad-social",
+      renglones: [],
+      total: totalSegSocial,
+      items: segSocial.data?.length ?? 0,
+      descripcion: "Aportes salud, pensión, ARL y parafiscales. Requisito Art. 108 E.T.",
+    },
+    {
+      numero: "25",
+      titulo: "Dividendos a Distribuir",
+      href: "dividendos-distribuir",
+      renglones: [],
+      total: totalDivDist,
+      items: divDist.data?.length ?? 0,
+      descripcion: "Distribución a socios: gravado vs. no gravado (Art. 49 E.T.).",
+    },
   ];
 
   return (
@@ -300,21 +401,19 @@ export default async function AnexosHubPage({
       </div>
 
       <div className="mt-12 border border-dashed border-border p-6">
-        <h3 className="font-serif text-xl">Anexos pendientes de implementar</h3>
+        <h3 className="font-serif text-xl">Anexos no implementados</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          Anexos del .xlsm modelo que aún no están integrados. Su funcionalidad
-          puede manejarse desde el Balance Fiscal mediante ajustes débito/crédito.
+          Anexos del .xlsm modelo que se manejan desde el Balance Fiscal con
+          ajustes débito/crédito en lugar de tener su propia interfaz.
         </p>
         <ul className="mt-4 grid gap-2 text-sm md:grid-cols-2">
           {[
-            "5 · Venta AF (cubierto parcialmente en Anexo 8)",
-            "9 · ICA (descuento ICA cubierto en Anexo 4)",
-            "10 · GMF",
-            "11 · Predial",
-            "13 · Deducción IVA Bienes Capital",
-            "15 · Subcapitalización",
-            "21 · Pagos Seguridad Social",
-            "25 · Cálculo de Dividendos",
+            "5 · Venta de Activos Fijos (cubierto parcialmente en Anexo 8)",
+            "6 · Inventarios y Costo de Ventas",
+            "7 · Conciliación Contable / Fiscal (cubierto en Balance Fiscal)",
+            "16 · Activos Biológicos",
+            "23 · Componente Inflacionario (derogado)",
+            "24 · Reservas",
           ].map((a, i) => (
             <li key={i} className="font-mono text-xs text-muted-foreground">
               ◦ Anexo {a}

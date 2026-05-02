@@ -202,6 +202,53 @@ export type Database = {
           },
         ]
       }
+      anexo_dividendos_distribuir: {
+        Row: {
+          created_at: string
+          declaracion_id: string
+          dividendo_gravado: number
+          dividendo_no_gravado: number
+          id: number
+          nit: string | null
+          observacion: string | null
+          participacion_pct: number
+          retencion_aplicable: number
+          socio: string
+        }
+        Insert: {
+          created_at?: string
+          declaracion_id: string
+          dividendo_gravado?: number
+          dividendo_no_gravado?: number
+          id?: number
+          nit?: string | null
+          observacion?: string | null
+          participacion_pct?: number
+          retencion_aplicable?: number
+          socio: string
+        }
+        Update: {
+          created_at?: string
+          declaracion_id?: string
+          dividendo_gravado?: number
+          dividendo_no_gravado?: number
+          id?: number
+          nit?: string | null
+          observacion?: string | null
+          participacion_pct?: number
+          retencion_aplicable?: number
+          socio?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_dividendos_distribuir_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_ganancia_ocasional: {
         Row: {
           categoria: string
@@ -239,6 +286,85 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "anexo_ganancia_ocasional_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_gmf: {
+        Row: {
+          created_at: string
+          declaracion_id: string
+          entidad: string
+          id: number
+          observacion: string | null
+          periodo: string | null
+          valor_gmf: number
+        }
+        Insert: {
+          created_at?: string
+          declaracion_id: string
+          entidad: string
+          id?: number
+          observacion?: string | null
+          periodo?: string | null
+          valor_gmf?: number
+        }
+        Update: {
+          created_at?: string
+          declaracion_id?: string
+          entidad?: string
+          id?: number
+          observacion?: string | null
+          periodo?: string | null
+          valor_gmf?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_gmf_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_ica: {
+        Row: {
+          base_gravable: number
+          created_at: string
+          declaracion_id: string
+          id: number
+          municipio: string
+          observacion: string | null
+          tarifa_milaje: number
+          valor_pagado: number
+        }
+        Insert: {
+          base_gravable?: number
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          municipio: string
+          observacion?: string | null
+          tarifa_milaje?: number
+          valor_pagado?: number
+        }
+        Update: {
+          base_gravable?: number
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          municipio?: string
+          observacion?: string | null
+          tarifa_milaje?: number
+          valor_pagado?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_ica_declaracion_id_fkey"
             columns: ["declaracion_id"]
             isOneToOne: false
             referencedRelation: "declaraciones"
@@ -318,6 +444,97 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "anexo_intereses_presuntivos_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_iva_capital: {
+        Row: {
+          base: number
+          bien: string
+          created_at: string
+          declaracion_id: string
+          factura: string | null
+          fecha: string | null
+          id: number
+          iva_pagado: number
+          observacion: string | null
+          proveedor: string | null
+        }
+        Insert: {
+          base?: number
+          bien: string
+          created_at?: string
+          declaracion_id: string
+          factura?: string | null
+          fecha?: string | null
+          id?: number
+          iva_pagado?: number
+          observacion?: string | null
+          proveedor?: string | null
+        }
+        Update: {
+          base?: number
+          bien?: string
+          created_at?: string
+          declaracion_id?: string
+          factura?: string | null
+          fecha?: string | null
+          id?: number
+          iva_pagado?: number
+          observacion?: string | null
+          proveedor?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_iva_capital_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_predial: {
+        Row: {
+          avaluo: number
+          created_at: string
+          declaracion_id: string
+          direccion: string | null
+          id: number
+          matricula: string | null
+          observacion: string | null
+          predio: string
+          valor_pagado: number
+        }
+        Insert: {
+          avaluo?: number
+          created_at?: string
+          declaracion_id: string
+          direccion?: string | null
+          id?: number
+          matricula?: string | null
+          observacion?: string | null
+          predio: string
+          valor_pagado?: number
+        }
+        Update: {
+          avaluo?: number
+          created_at?: string
+          declaracion_id?: string
+          direccion?: string | null
+          id?: number
+          matricula?: string | null
+          observacion?: string | null
+          predio?: string
+          valor_pagado?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_predial_declaracion_id_fkey"
             columns: ["declaracion_id"]
             isOneToOne: false
             referencedRelation: "declaraciones"
@@ -435,6 +652,56 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "anexo_retenciones_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      anexo_seg_social: {
+        Row: {
+          aporte_arl: number
+          aporte_parafiscales: number
+          aporte_pension: number
+          aporte_salud: number
+          cedula: string | null
+          created_at: string
+          declaracion_id: string
+          empleado: string
+          id: number
+          observacion: string | null
+          salario: number
+        }
+        Insert: {
+          aporte_arl?: number
+          aporte_parafiscales?: number
+          aporte_pension?: number
+          aporte_salud?: number
+          cedula?: string | null
+          created_at?: string
+          declaracion_id: string
+          empleado: string
+          id?: number
+          observacion?: string | null
+          salario?: number
+        }
+        Update: {
+          aporte_arl?: number
+          aporte_parafiscales?: number
+          aporte_pension?: number
+          aporte_salud?: number
+          cedula?: string | null
+          created_at?: string
+          declaracion_id?: string
+          empleado?: string
+          id?: number
+          observacion?: string | null
+          salario?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_seg_social_declaracion_id_fkey"
             columns: ["declaracion_id"]
             isOneToOne: false
             referencedRelation: "declaraciones"
@@ -583,6 +850,9 @@ export type Database = {
           rp_renta_gravada_bienes_excluidos: number
           saldo_favor_anterior: number
           saldo_pagar_anterior: number
+          sub_deuda_promedio: number
+          sub_es_vinculado: boolean
+          sub_intereses: number
           tiene_justificacion_patrimonial: boolean
           total_nomina: number
           updated_at: string
@@ -634,6 +904,9 @@ export type Database = {
           rp_renta_gravada_bienes_excluidos?: number
           saldo_favor_anterior?: number
           saldo_pagar_anterior?: number
+          sub_deuda_promedio?: number
+          sub_es_vinculado?: boolean
+          sub_intereses?: number
           tiene_justificacion_patrimonial?: boolean
           total_nomina?: number
           updated_at?: string
@@ -685,6 +958,9 @@ export type Database = {
           rp_renta_gravada_bienes_excluidos?: number
           saldo_favor_anterior?: number
           saldo_pagar_anterior?: number
+          sub_deuda_promedio?: number
+          sub_es_vinculado?: boolean
+          sub_intereses?: number
           tiene_justificacion_patrimonial?: boolean
           total_nomina?: number
           updated_at?: string
