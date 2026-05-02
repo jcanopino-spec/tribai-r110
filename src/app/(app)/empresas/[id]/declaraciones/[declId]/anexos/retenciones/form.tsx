@@ -1,15 +1,15 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
+import { addRetencionAction } from "./actions";
 import {
-  addRetencionAction,
   CONCEPTOS_RETENCION,
   CONCEPTOS_AUTORRETENCION,
   type RetencionState,
-} from "./actions";
+} from "./consts";
 
 const initial: RetencionState = { error: null, ok: false };
 
@@ -36,70 +36,77 @@ export function RetencionForm({
   const [retenido, setRetenido] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  if (state.ok && formRef.current) {
-    // Reset form fields after successful save
-    setTimeout(() => {
+  // Reset campos numéricos cuando el guardado fue exitoso (en useEffect, no
+  // durante render, para evitar bucle de re-renders).
+  useEffect(() => {
+    if (state.ok) {
       formRef.current?.reset();
       setBase("");
       setRetenido("");
-    }, 0);
-  }
+    }
+  }, [state.ok]);
 
   const conceptos = tipo === "retencion" ? CONCEPTOS_RETENCION : CONCEPTOS_AUTORRETENCION;
 
   return (
     <div className="border border-border p-5">
       <h2 className="font-serif text-xl">Agregar nueva línea</h2>
-      <form ref={formRef} action={formAction} className="mt-5 grid gap-4 md:grid-cols-[150px_1fr_1fr_140px_140px_auto]">
-        <Field label="Tipo">
-          <Select
-            name="tipo"
-            value={tipo}
-            onChange={(e) => setTipo(e.target.value as "retencion" | "autorretencion")}
-          >
-            <option value="retencion">Retención</option>
-            <option value="autorretencion">Autorretención</option>
-          </Select>
-        </Field>
-        <Field label="Concepto">
-          <Select name="concepto" defaultValue={conceptos[0]}>
-            {conceptos.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </Select>
-        </Field>
-        <Field label="Agente retenedor (opcional)">
-          <Input name="agente" />
-        </Field>
-        <Field label="Base">
-          <Input
-            name="base"
-            inputMode="numeric"
-            value={base}
-            onChange={(e) => setBase(fmt(e.target.value))}
-          />
-        </Field>
-        <Field label="Retenido">
-          <Input
-            name="retenido"
-            inputMode="numeric"
-            value={retenido}
-            onChange={(e) => setRetenido(fmt(e.target.value))}
-            required
-          />
-        </Field>
-        <div className="flex items-end">
-          <Button type="submit" disabled={pending}>
-            {pending ? "…" : "Agregar"}
-          </Button>
+      <form ref={formRef} action={formAction} className="mt-5 space-y-4">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Field label="Tipo">
+            <Select
+              name="tipo"
+              value={tipo}
+              onChange={(e) => setTipo(e.target.value as "retencion" | "autorretencion")}
+            >
+              <option value="retencion">Retención</option>
+              <option value="autorretencion">Autorretención</option>
+            </Select>
+          </Field>
+          <Field label="Concepto">
+            <Select name="concepto" defaultValue={conceptos[0]}>
+              {conceptos.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </Select>
+          </Field>
         </div>
+        <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
+          <Field label="Agente retenedor (opcional)">
+            <Input name="agente" />
+          </Field>
+          <Field label="NIT del agente (opcional)">
+            <Input name="nit" />
+          </Field>
+        </div>
+        <div className="grid gap-4 md:grid-cols-[1fr_1fr_auto] md:items-end">
+          <Field label="Base">
+            <Input
+              name="base"
+              inputMode="numeric"
+              value={base}
+              onChange={(e) => setBase(fmt(e.target.value))}
+            />
+          </Field>
+          <Field label="Retenido">
+            <Input
+              name="retenido"
+              inputMode="numeric"
+              value={retenido}
+              onChange={(e) => setRetenido(fmt(e.target.value))}
+              required
+            />
+          </Field>
+          <div>
+            <Button type="submit" disabled={pending} className="w-full md:w-auto">
+              {pending ? "Guardando…" : "Agregar"}
+            </Button>
+          </div>
+        </div>
+        {state.error ? <p className="text-sm text-destructive">{state.error}</p> : null}
       </form>
-      <Field label="NIT del agente (opcional)" className="mt-4 max-w-xs">
-        <Input name="nit" form="" />
-      </Field>
-      {state.error ? <p className="mt-3 text-sm text-destructive">{state.error}</p> : null}
     </div>
   );
 }

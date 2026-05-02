@@ -2,26 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-
-export type RetencionState = { error: string | null; ok: boolean };
-
-export const CONCEPTOS_RETENCION = [
-  "Por ventas",
-  "Por servicios",
-  "Por honorarios y comisiones",
-  "Por rendimientos financieros",
-  "Por dividendos y participaciones",
-  "Retenciones Ganancias Ocasionales",
-  "Otras retenciones",
-] as const;
-
-export const CONCEPTOS_AUTORRETENCION = [
-  "Autorretención Decreto 2201 del 2016",
-  "Por ventas",
-  "Por servicios",
-  "Por honorarios y comisiones",
-  "Otras autorretenciones",
-] as const;
+import type { RetencionState } from "./consts";
 
 function parseNumeric(s: string): number {
   const cleaned = String(s ?? "").replace(/\./g, "").replace(/,/g, ".");
