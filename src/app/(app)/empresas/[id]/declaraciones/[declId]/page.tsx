@@ -99,6 +99,15 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
+  // Anexo 8 · Ganancia Ocasional → renglones 80, 81, 82
+  const { data: gos } = await supabase
+    .from("anexo_ganancia_ocasional")
+    .select("precio_venta, costo_fiscal, no_gravada")
+    .eq("declaracion_id", declId);
+  const goIngresos = (gos ?? []).reduce((s, g) => s + Number(g.precio_venta), 0);
+  const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
+  const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
+
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
   return (
@@ -189,6 +198,9 @@ export default async function DeclaracionEditorPage({
           totalAutorretenciones={totalAutorretenciones}
           totalRetenciones={totalRetenciones}
           totalDescuentosTributarios={totalDescuentosTributarios}
+          goIngresos={goIngresos}
+          goCostos={goCostos}
+          goNoGravada={goNoGravada}
         />
       )}
     </div>
@@ -221,6 +233,9 @@ async function Workspace({
   totalAutorretenciones,
   totalRetenciones,
   totalDescuentosTributarios,
+  goIngresos,
+  goCostos,
+  goNoGravada,
 }: {
   declId: string;
   empresaId: string;
@@ -247,6 +262,9 @@ async function Workspace({
   totalAutorretenciones: number;
   totalRetenciones: number;
   totalDescuentosTributarios: number;
+  goIngresos: number;
+  goCostos: number;
+  goNoGravada: number;
 }) {
   const supabase = await createClient();
 
@@ -418,6 +436,9 @@ async function Workspace({
             totalAutorretenciones={totalAutorretenciones}
             totalRetenciones={totalRetenciones}
             totalDescuentosTributarios={totalDescuentosTributarios}
+            goIngresos={goIngresos}
+            goCostos={goCostos}
+            goNoGravada={goNoGravada}
           />
         </div>
       </div>

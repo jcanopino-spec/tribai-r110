@@ -106,6 +106,14 @@ export default async function ValidacionesPage({
     0,
   );
 
+  const { data: gos } = await supabase
+    .from("anexo_ganancia_ocasional")
+    .select("precio_venta, costo_fiscal, no_gravada")
+    .eq("declaracion_id", declId);
+  const goIngresos = (gos ?? []).reduce((s, g) => s + Number(g.precio_venta), 0);
+  const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
+  const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
+
   const { data: uvtRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -150,6 +158,9 @@ export default async function ValidacionesPage({
     totalAutorretenciones,
     totalRetenciones,
     totalDescuentosTributarios,
+    goIngresos,
+    goCostos,
+    goNoGravada,
   });
 
   const validaciones = validarFormulario(numerico, {

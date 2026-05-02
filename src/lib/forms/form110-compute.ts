@@ -23,6 +23,9 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   75, // Renta líquida = max(0, 72 - 74)
   79, // Renta líquida gravable = max(75, 76) - 77 + 78
   // Ganancias ocasionales
+  80, // Ingresos por GO · viene del Anexo 8
+  81, // Costos por GO · viene del Anexo 8
+  82, // GO no gravadas y exentas · viene del Anexo 8
   83, // Ganancias ocasionales gravables = max(0, 80 - 81 - 82)
   // Liquidación privada
   84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
@@ -101,6 +104,10 @@ export type ComputeContext = {
   totalRetenciones?: number;
   /** Anexo 4 · total de descuentos tributarios */
   totalDescuentosTributarios?: number;
+  /** Anexo 8 · totales de ganancia ocasional */
+  goIngresos?: number;
+  goCostos?: number;
+  goNoGravada?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -267,7 +274,10 @@ export function computarRenglones(
   //   "al mayor valor entre 75 y 76 reste 77 y sume 78"
   v.set(79, Math.max(get(75), get(76)) - get(77) + get(78));
 
-  // --- Ganancias ocasionales ---
+  // --- Ganancias ocasionales (vienen del Anexo 8) ---
+  if (typeof ctx.goIngresos === "number") v.set(80, ctx.goIngresos);
+  if (typeof ctx.goCostos === "number") v.set(81, ctx.goCostos);
+  if (typeof ctx.goNoGravada === "number") v.set(82, ctx.goNoGravada);
   // 83 = max(0, 80 - 81 - 82)
   v.set(83, Math.max(0, get(80) - get(81) - get(82)));
 
@@ -438,6 +448,9 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   73: "Espejo de 72 (si la base es negativa)",
   75: "72 − 74 (si positivo)",
   79: "max(75, 76) − 77 + 78",
+  80: "Suma precios de venta del Anexo 8",
+  81: "Suma costos fiscales del Anexo 8",
+  82: "Suma no gravadas/exentas del Anexo 8",
   83: "80 − 81 − 82 (si positivo)",
   84: "79 × tarifa del régimen",
   85: "5% sobre exceso de 79 sobre 120.000 UVT (instituciones financieras)",

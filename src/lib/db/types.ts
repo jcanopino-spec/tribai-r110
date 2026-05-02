@@ -55,6 +55,50 @@ export type Database = {
           },
         ]
       }
+      anexo_ganancia_ocasional: {
+        Row: {
+          categoria: string
+          concepto: string
+          costo_fiscal: number
+          created_at: string
+          declaracion_id: string
+          id: number
+          no_gravada: number
+          precio_venta: number
+          recuperacion_depreciacion: number
+        }
+        Insert: {
+          categoria: string
+          concepto: string
+          costo_fiscal?: number
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          no_gravada?: number
+          precio_venta?: number
+          recuperacion_depreciacion?: number
+        }
+        Update: {
+          categoria?: string
+          concepto?: string
+          costo_fiscal?: number
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          no_gravada?: number
+          precio_venta?: number
+          recuperacion_depreciacion?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_ganancia_ocasional_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_retenciones: {
         Row: {
           agente: string | null
