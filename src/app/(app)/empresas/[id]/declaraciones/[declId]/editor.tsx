@@ -280,6 +280,12 @@ export function DeclaracionEditor({
           Anexos
         </Link>
         <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Conciliación Fiscal
+        </Link>
+        <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >

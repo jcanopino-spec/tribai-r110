@@ -803,6 +803,47 @@ export type Database = {
         }
         Relationships: []
       }
+      conciliacion_partidas: {
+        Row: {
+          concepto: string
+          created_at: string
+          declaracion_id: string
+          id: number
+          observacion: string | null
+          signo: string
+          tipo: string
+          valor: number
+        }
+        Insert: {
+          concepto: string
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          observacion?: string | null
+          signo: string
+          tipo: string
+          valor?: number
+        }
+        Update: {
+          concepto?: string
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          observacion?: string | null
+          signo?: string
+          tipo?: string
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conciliacion_partidas_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       declaraciones: {
         Row: {
           anios_declarando: string
@@ -816,6 +857,7 @@ export type Database = {
           calcula_anticipo: boolean
           calcula_sancion_correccion: boolean
           calcula_sancion_extemporaneidad: boolean
+          cf_utilidad_contable: number
           created_at: string
           dc_cartera_0_90: number
           dc_cartera_181_360: number
@@ -870,6 +912,7 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
+          cf_utilidad_contable?: number
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
@@ -924,6 +967,7 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
+          cf_utilidad_contable?: number
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
