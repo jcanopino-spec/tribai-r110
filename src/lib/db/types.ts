@@ -231,6 +231,50 @@ export type Database = {
           },
         ]
       }
+      anexo_intereses_presuntivos: {
+        Row: {
+          created_at: string
+          cuenta: string | null
+          declaracion_id: string
+          dias: number
+          id: number
+          interes_registrado: number
+          observacion: string | null
+          saldo_promedio: number
+          socio: string
+        }
+        Insert: {
+          created_at?: string
+          cuenta?: string | null
+          declaracion_id: string
+          dias?: number
+          id?: number
+          interes_registrado?: number
+          observacion?: string | null
+          saldo_promedio?: number
+          socio: string
+        }
+        Update: {
+          created_at?: string
+          cuenta?: string | null
+          declaracion_id?: string
+          dias?: number
+          id?: number
+          interes_registrado?: number
+          observacion?: string | null
+          saldo_promedio?: number
+          socio?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_intereses_presuntivos_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_recuperaciones: {
         Row: {
           concepto: string

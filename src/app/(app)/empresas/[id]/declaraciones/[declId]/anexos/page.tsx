@@ -32,6 +32,14 @@ export default async function AnexosHubPage({
   if (!declaracion) notFound();
 
   // Cargar totales de cada anexo en paralelo
+  const { data: tasaRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable)
+    .eq("codigo", "tasa_interes_presuntivo")
+    .maybeSingle();
+  const tasaInteresPresuntivo = tasaRow ? Number(tasaRow.valor) : 0;
+
   const [
     retenciones,
     descuentos,
@@ -41,6 +49,7 @@ export default async function AnexosHubPage({
     recuperaciones,
     dividendos,
     incrngo,
+    intereses,
   ] = await Promise.all([
     supabase
       .from("anexo_retenciones")
@@ -56,6 +65,10 @@ export default async function AnexosHubPage({
     supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
     supabase.from("anexo_dividendos").select("*").eq("declaracion_id", declId),
     supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_intereses_presuntivos")
+      .select("saldo_promedio, dias, interes_registrado")
+      .eq("declaracion_id", declId),
   ]);
 
   const totalRet =
@@ -85,6 +98,11 @@ export default async function AnexosHubPage({
   );
   const totalIncr =
     (incrngo.data ?? []).reduce((s, i) => s + Number(i.valor), 0);
+  const totalDifInteres = (intereses.data ?? []).reduce((s, p) => {
+    const presunto =
+      Number(p.saldo_promedio) * tasaInteresPresuntivo * (Number(p.dias) / 360);
+    return s + Math.max(0, presunto - Number(p.interes_registrado));
+  }, 0);
 
   const cards: AnexoCard[] = [
     {
@@ -168,6 +186,16 @@ export default async function AnexosHubPage({
       items: incrngo.data?.length ?? 0,
       descripcion: "Ingresos no constitutivos de renta ni ganancia ocasional.",
     },
+    {
+      numero: "14",
+      titulo: "Interés Presuntivo",
+      href: "intereses-presuntivos",
+      renglones: [48],
+      total: totalDifInteres,
+      items: intereses.data?.length ?? 0,
+      descripcion:
+        "Préstamos a socios (Art. 35 E.T.). Diferencia entre interés presunto e interés registrado.",
+    },
   ];
 
   return (
@@ -239,7 +267,6 @@ export default async function AnexosHubPage({
             "11 · Predial",
             "12 · Deterioro de Cartera",
             "13 · Deducción IVA Bienes Capital",
-            "14 · Interés Presuntivo",
             "15 · Subcapitalización",
             "21 · Pagos Seguridad Social",
             "22 · Diferencia en Cambio",
