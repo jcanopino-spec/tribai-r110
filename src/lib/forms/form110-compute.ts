@@ -12,6 +12,8 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Patrimonio
   44, // Total patrimonio bruto = sum(36..43)
   46, // Total patrimonio líquido = max(0, 44 - 45)
+  // Ingresos · dividendos (vienen del Anexo 18)
+  49, 50, 51, 52, 53, 54, 55, 56,
   // Ingresos
   58, // Total ingresos brutos = sum(47..57)
   61, // Total ingresos netos = max(0, 58 - 59 - 60)
@@ -120,6 +122,17 @@ export type ComputeContext = {
   totalRecuperaciones?: number;
   /** Anexo 1 · renta presuntiva calculada → R76 */
   rentaPresuntiva?: number;
+  /** Anexo 18 · dividendos por categoría (R49..R56) */
+  dividendos?: {
+    r49?: number;
+    r50?: number;
+    r51?: number;
+    r52?: number;
+    r53?: number;
+    r54?: number;
+    r55?: number;
+    r56?: number;
+  };
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -252,6 +265,18 @@ export function computarRenglones(
   if (typeof ctx.totalNomina === "number") v.set(33, ctx.totalNomina);
   if (typeof ctx.aportesSegSocial === "number") v.set(34, ctx.aportesSegSocial);
   if (typeof ctx.aportesParaFiscales === "number") v.set(35, ctx.aportesParaFiscales);
+
+  // --- Ingresos por dividendos (Anexo 18) ---
+  if (ctx.dividendos) {
+    if (typeof ctx.dividendos.r49 === "number") v.set(49, ctx.dividendos.r49);
+    if (typeof ctx.dividendos.r50 === "number") v.set(50, ctx.dividendos.r50);
+    if (typeof ctx.dividendos.r51 === "number") v.set(51, ctx.dividendos.r51);
+    if (typeof ctx.dividendos.r52 === "number") v.set(52, ctx.dividendos.r52);
+    if (typeof ctx.dividendos.r53 === "number") v.set(53, ctx.dividendos.r53);
+    if (typeof ctx.dividendos.r54 === "number") v.set(54, ctx.dividendos.r54);
+    if (typeof ctx.dividendos.r55 === "number") v.set(55, ctx.dividendos.r55);
+    if (typeof ctx.dividendos.r56 === "number") v.set(56, ctx.dividendos.r56);
+  }
 
   // --- Patrimonio ---
   const r44 = sum(v, 36, 43);
@@ -473,6 +498,14 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   61: "58 − 59 − 60 (si positivo)",
   67: "Suma de 62 a 66",
   72: "61 + 69 + 70 + 71 − (52..56) − 67 − 68 (si positivo)",
+  49: "Anexo 18 · No constitutivos",
+  50: "Anexo 18 · Distribuidos no residentes",
+  51: "Anexo 18 · Tarifa general",
+  52: "Anexo 18 · Persona natural residente",
+  53: "Anexo 18 · No residentes (PN)",
+  54: "Anexo 18 · Art. 245",
+  55: "Anexo 18 · Ley 1819",
+  56: "Anexo 18 · Proyectos calificados",
   70: "Suma del Anexo 17 (recuperaciones)",
   73: "Espejo de 72 (si la base es negativa)",
   74: "Anexo 20 (limitado a la renta líquida 72)",

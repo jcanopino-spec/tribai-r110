@@ -96,6 +96,62 @@ export type Database = {
           },
         ]
       }
+      anexo_dividendos: {
+        Row: {
+          created_at: string
+          declaracion_id: string
+          distribuidos_no_residentes: number
+          gravados_art_245: number
+          gravados_persona_natural_dos: number
+          gravados_personas_extranjeras: number
+          gravados_proyectos: number
+          gravados_tarifa_general: number
+          gravados_tarifa_l1819: number
+          id: number
+          nit: string | null
+          no_constitutivos: number
+          tercero: string
+        }
+        Insert: {
+          created_at?: string
+          declaracion_id: string
+          distribuidos_no_residentes?: number
+          gravados_art_245?: number
+          gravados_persona_natural_dos?: number
+          gravados_personas_extranjeras?: number
+          gravados_proyectos?: number
+          gravados_tarifa_general?: number
+          gravados_tarifa_l1819?: number
+          id?: number
+          nit?: string | null
+          no_constitutivos?: number
+          tercero: string
+        }
+        Update: {
+          created_at?: string
+          declaracion_id?: string
+          distribuidos_no_residentes?: number
+          gravados_art_245?: number
+          gravados_persona_natural_dos?: number
+          gravados_personas_extranjeras?: number
+          gravados_proyectos?: number
+          gravados_tarifa_general?: number
+          gravados_tarifa_l1819?: number
+          id?: number
+          nit?: string | null
+          no_constitutivos?: number
+          tercero?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_dividendos_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_ganancia_ocasional: {
         Row: {
           categoria: string

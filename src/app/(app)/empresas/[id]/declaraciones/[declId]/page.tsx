@@ -128,6 +128,24 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
+  // Anexo 18 · Dividendos → R49..R56
+  const { data: divs } = await supabase
+    .from("anexo_dividendos")
+    .select(
+      "no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos",
+    )
+    .eq("declaracion_id", declId);
+  const dividendos = {
+    r49: (divs ?? []).reduce((s, d) => s + Number(d.no_constitutivos), 0),
+    r50: (divs ?? []).reduce((s, d) => s + Number(d.distribuidos_no_residentes), 0),
+    r51: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_general), 0),
+    r52: (divs ?? []).reduce((s, d) => s + Number(d.gravados_persona_natural_dos), 0),
+    r53: (divs ?? []).reduce((s, d) => s + Number(d.gravados_personas_extranjeras), 0),
+    r54: (divs ?? []).reduce((s, d) => s + Number(d.gravados_art_245), 0),
+    r55: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_l1819), 0),
+    r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
+  };
+
   // Anexo 17 · Recuperación de deducciones → R70
   const { data: recups } = await supabase
     .from("anexo_recuperaciones")
@@ -254,6 +272,7 @@ export default async function DeclaracionEditorPage({
           totalCompensaciones={totalCompensaciones}
           totalRecuperaciones={totalRecuperaciones}
           rentaPresuntiva={rentaPresuntiva}
+          dividendos={dividendos}
         />
       )}
     </div>
@@ -293,6 +312,7 @@ async function Workspace({
   totalCompensaciones,
   totalRecuperaciones,
   rentaPresuntiva,
+  dividendos,
 }: {
   declId: string;
   empresaId: string;
@@ -326,6 +346,10 @@ async function Workspace({
   totalCompensaciones: number;
   totalRecuperaciones: number;
   rentaPresuntiva: number;
+  dividendos: {
+    r49: number; r50: number; r51: number; r52: number;
+    r53: number; r54: number; r55: number; r56: number;
+  };
 }) {
   const supabase = await createClient();
 
@@ -504,6 +528,7 @@ async function Workspace({
             totalCompensaciones={totalCompensaciones}
             totalRecuperaciones={totalRecuperaciones}
             rentaPresuntiva={rentaPresuntiva}
+            dividendos={dividendos}
           />
         </div>
       </div>

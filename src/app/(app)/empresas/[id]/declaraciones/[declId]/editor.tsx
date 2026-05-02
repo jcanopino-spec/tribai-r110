@@ -71,6 +71,7 @@ export function DeclaracionEditor({
   totalCompensaciones,
   totalRecuperaciones,
   rentaPresuntiva,
+  dividendos,
 }: {
   declId: string;
   empresaId: string;
@@ -103,6 +104,10 @@ export function DeclaracionEditor({
   totalCompensaciones: number;
   totalRecuperaciones: number;
   rentaPresuntiva: number;
+  dividendos: {
+    r49: number; r50: number; r51: number; r52: number;
+    r53: number; r54: number; r55: number; r56: number;
+  };
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -161,6 +166,7 @@ export function DeclaracionEditor({
       totalCompensaciones,
       totalRecuperaciones,
       rentaPresuntiva,
+      dividendos,
     });
   }, [
     valores,
@@ -189,6 +195,7 @@ export function DeclaracionEditor({
     totalCompensaciones,
     totalRecuperaciones,
     rentaPresuntiva,
+    dividendos,
   ]);
 
   const totales = useMemo(() => {
@@ -291,6 +298,24 @@ export function DeclaracionEditor({
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
           Compensaciones
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/recuperaciones`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Recuperaciones
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/renta-presuntiva`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Renta presuntiva
+        </Link>
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/dividendos`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Dividendos
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
