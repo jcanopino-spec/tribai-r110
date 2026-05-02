@@ -140,6 +140,44 @@ export type Database = {
           },
         ]
       }
+      anexo_recuperaciones: {
+        Row: {
+          concepto: string
+          created_at: string
+          declaracion_id: string
+          descripcion: string
+          id: number
+          observacion: string | null
+          valor: number
+        }
+        Insert: {
+          concepto: string
+          created_at?: string
+          declaracion_id: string
+          descripcion: string
+          id?: number
+          observacion?: string | null
+          valor?: number
+        }
+        Update: {
+          concepto?: string
+          created_at?: string
+          declaracion_id?: string
+          descripcion?: string
+          id?: number
+          observacion?: string | null
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_recuperaciones_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_rentas_exentas: {
         Row: {
           created_at: string
@@ -345,6 +383,13 @@ export type Database = {
           perdida_contable: number
           perdidas_fiscales_acumuladas: number
           reduccion_sancion: string
+          rp_acciones_sociedades_nacionales: number
+          rp_bienes_actividades_improductivas: number
+          rp_bienes_fuerza_mayor: number
+          rp_bienes_mineria: number
+          rp_bienes_periodo_improductivo: number
+          rp_primeros_19000_uvt_vivienda: number
+          rp_renta_gravada_bienes_excluidos: number
           saldo_favor_anterior: number
           saldo_pagar_anterior: number
           tiene_justificacion_patrimonial: boolean
@@ -383,6 +428,13 @@ export type Database = {
           perdida_contable?: number
           perdidas_fiscales_acumuladas?: number
           reduccion_sancion?: string
+          rp_acciones_sociedades_nacionales?: number
+          rp_bienes_actividades_improductivas?: number
+          rp_bienes_fuerza_mayor?: number
+          rp_bienes_mineria?: number
+          rp_bienes_periodo_improductivo?: number
+          rp_primeros_19000_uvt_vivienda?: number
+          rp_renta_gravada_bienes_excluidos?: number
           saldo_favor_anterior?: number
           saldo_pagar_anterior?: number
           tiene_justificacion_patrimonial?: boolean
@@ -421,6 +473,13 @@ export type Database = {
           perdida_contable?: number
           perdidas_fiscales_acumuladas?: number
           reduccion_sancion?: string
+          rp_acciones_sociedades_nacionales?: number
+          rp_bienes_actividades_improductivas?: number
+          rp_bienes_fuerza_mayor?: number
+          rp_bienes_mineria?: number
+          rp_bienes_periodo_improductivo?: number
+          rp_primeros_19000_uvt_vivienda?: number
+          rp_renta_gravada_bienes_excluidos?: number
           saldo_favor_anterior?: number
           saldo_pagar_anterior?: number
           tiene_justificacion_patrimonial?: boolean

@@ -18,10 +18,12 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Costos
   67, // Total costos y gastos deducibles = sum(62..66)
   // Renta
+  70, // Renta por recuperación de deducciones · viene del Anexo 17
   72, // Renta líquida ordinaria = max(0, 61 + 69 + 70 + 71 - 52..56 - 67 - 68)
   73, // Pérdida líquida ordinaria (espejo de 72)
   74, // Compensaciones · viene del Anexo 20
   75, // Renta líquida = max(0, 72 - 74)
+  76, // Renta presuntiva · viene del Anexo 1
   77, // Rentas exentas · viene del Anexo 19
   79, // Renta líquida gravable = max(75, 76) - 77 + 78
   // Ganancias ocasionales
@@ -114,6 +116,10 @@ export type ComputeContext = {
   totalRentasExentas?: number;
   /** Anexo 20 · total compensaciones → R74 */
   totalCompensaciones?: number;
+  /** Anexo 17 · total recuperación de deducciones → R70 */
+  totalRecuperaciones?: number;
+  /** Anexo 1 · renta presuntiva calculada → R76 */
+  rentaPresuntiva?: number;
 };
 
 const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, number> = {
@@ -274,6 +280,14 @@ export function computarRenglones(
   v.set(73, Math.max(0, -baseRenta));
 
   // --- Renta líquida ---
+  // 70 = Renta por recuperación de deducciones (Anexo 17)
+  if (typeof ctx.totalRecuperaciones === "number") {
+    v.set(70, ctx.totalRecuperaciones);
+  }
+  // 76 = Renta presuntiva (Anexo 1)
+  if (typeof ctx.rentaPresuntiva === "number") {
+    v.set(76, ctx.rentaPresuntiva);
+  }
   // 74 = Compensaciones (Anexo 20). Limitada al monto de la renta líquida (R72)
   if (typeof ctx.totalCompensaciones === "number") {
     v.set(74, Math.min(ctx.totalCompensaciones, get(72)));
@@ -459,9 +473,11 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   61: "58 − 59 − 60 (si positivo)",
   67: "Suma de 62 a 66",
   72: "61 + 69 + 70 + 71 − (52..56) − 67 − 68 (si positivo)",
+  70: "Suma del Anexo 17 (recuperaciones)",
   73: "Espejo de 72 (si la base es negativa)",
   74: "Anexo 20 (limitado a la renta líquida 72)",
   75: "72 − 74 (si positivo)",
+  76: "Anexo 1 · Renta Presuntiva",
   77: "Suma del Anexo 19",
   79: "max(75, 76) − 77 + 78",
   80: "Suma precios de venta del Anexo 8",

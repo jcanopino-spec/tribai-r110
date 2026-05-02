@@ -132,6 +132,33 @@ export default async function ValidacionesPage({
     0,
   );
 
+  const { data: recups } = await supabase
+    .from("anexo_recuperaciones")
+    .select("valor")
+    .eq("declaracion_id", declId);
+  const totalRecuperaciones = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
+
+  const { data: tarifaRpRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable)
+    .eq("codigo", "tarifa_renta_presuntiva")
+    .maybeSingle();
+  const tarifaRP = tarifaRpRow ? Number(tarifaRpRow.valor) : 0;
+  const plAnt =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
+  const depRP =
+    Number(declaracion.rp_acciones_sociedades_nacionales ?? 0) +
+    Number(declaracion.rp_bienes_actividades_improductivas ?? 0) +
+    Number(declaracion.rp_bienes_fuerza_mayor ?? 0) +
+    Number(declaracion.rp_bienes_periodo_improductivo ?? 0) +
+    Number(declaracion.rp_bienes_mineria ?? 0) +
+    Number(declaracion.rp_primeros_19000_uvt_vivienda ?? 0);
+  const rentaPresuntiva =
+    Math.max(0, plAnt - depRP) * tarifaRP +
+    Number(declaracion.rp_renta_gravada_bienes_excluidos ?? 0);
+
   const { data: uvtRow } = await supabase
     .from("parametros_anuales")
     .select("valor")
@@ -181,6 +208,8 @@ export default async function ValidacionesPage({
     goNoGravada,
     totalRentasExentas,
     totalCompensaciones,
+    totalRecuperaciones,
+    rentaPresuntiva,
   });
 
   const validaciones = validarFormulario(numerico, {

@@ -128,6 +128,35 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
+  // Anexo 17 · Recuperación de deducciones → R70
+  const { data: recups } = await supabase
+    .from("anexo_recuperaciones")
+    .select("valor")
+    .eq("declaracion_id", declId);
+  const totalRecuperaciones = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
+
+  // Anexo 1 · Renta Presuntiva → R76
+  const { data: tarifaRpRow } = await supabase
+    .from("parametros_anuales")
+    .select("valor")
+    .eq("ano_gravable", declaracion.ano_gravable)
+    .eq("codigo", "tarifa_renta_presuntiva")
+    .maybeSingle();
+  const tarifaRP = tarifaRpRow ? Number(tarifaRpRow.valor) : 0;
+  const plAnterior =
+    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
+    Number(declaracion.pasivos_anterior ?? 0);
+  const depuraciones =
+    Number(declaracion.rp_acciones_sociedades_nacionales ?? 0) +
+    Number(declaracion.rp_bienes_actividades_improductivas ?? 0) +
+    Number(declaracion.rp_bienes_fuerza_mayor ?? 0) +
+    Number(declaracion.rp_bienes_periodo_improductivo ?? 0) +
+    Number(declaracion.rp_bienes_mineria ?? 0) +
+    Number(declaracion.rp_primeros_19000_uvt_vivienda ?? 0);
+  const baseRP = Math.max(0, plAnterior - depuraciones);
+  const rentaPresuntiva =
+    baseRP * tarifaRP + Number(declaracion.rp_renta_gravada_bienes_excluidos ?? 0);
+
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
   return (
@@ -223,6 +252,8 @@ export default async function DeclaracionEditorPage({
           goNoGravada={goNoGravada}
           totalRentasExentas={totalRentasExentas}
           totalCompensaciones={totalCompensaciones}
+          totalRecuperaciones={totalRecuperaciones}
+          rentaPresuntiva={rentaPresuntiva}
         />
       )}
     </div>
@@ -260,6 +291,8 @@ async function Workspace({
   goNoGravada,
   totalRentasExentas,
   totalCompensaciones,
+  totalRecuperaciones,
+  rentaPresuntiva,
 }: {
   declId: string;
   empresaId: string;
@@ -291,6 +324,8 @@ async function Workspace({
   goNoGravada: number;
   totalRentasExentas: number;
   totalCompensaciones: number;
+  totalRecuperaciones: number;
+  rentaPresuntiva: number;
 }) {
   const supabase = await createClient();
 
@@ -467,6 +502,8 @@ async function Workspace({
             goNoGravada={goNoGravada}
             totalRentasExentas={totalRentasExentas}
             totalCompensaciones={totalCompensaciones}
+            totalRecuperaciones={totalRecuperaciones}
+            rentaPresuntiva={rentaPresuntiva}
           />
         </div>
       </div>

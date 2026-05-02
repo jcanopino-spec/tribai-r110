@@ -69,6 +69,8 @@ export function DeclaracionEditor({
   goNoGravada,
   totalRentasExentas,
   totalCompensaciones,
+  totalRecuperaciones,
+  rentaPresuntiva,
 }: {
   declId: string;
   empresaId: string;
@@ -99,6 +101,8 @@ export function DeclaracionEditor({
   goNoGravada: number;
   totalRentasExentas: number;
   totalCompensaciones: number;
+  totalRecuperaciones: number;
+  rentaPresuntiva: number;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -155,6 +159,8 @@ export function DeclaracionEditor({
       goNoGravada,
       totalRentasExentas,
       totalCompensaciones,
+      totalRecuperaciones,
+      rentaPresuntiva,
     });
   }, [
     valores,
@@ -181,6 +187,8 @@ export function DeclaracionEditor({
     goNoGravada,
     totalRentasExentas,
     totalCompensaciones,
+    totalRecuperaciones,
+    rentaPresuntiva,
   ]);
 
   const totales = useMemo(() => {
