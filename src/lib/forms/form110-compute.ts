@@ -195,17 +195,20 @@ export function calcularSancionExtemporaneidad(args: {
   } else {
     // Art. 641 E.T.
     if (impuestoCargo > 0) {
+      // 5% por mes/fracción, sin exceder del 100% del impuesto
       base = Math.min(0.05 * meses * impuestoCargo, impuestoCargo);
     } else if (ingresosBrutos > 0) {
+      // 0.5% por mes, tope: 5% de ingresos o 2.500 UVT (cuando no hay saldo a favor)
       base = Math.min(
         0.005 * meses * ingresosBrutos,
         0.05 * ingresosBrutos,
-        5000 * uvt,
+        2500 * uvt,
       );
     } else if (patrimonioLiquidoAnterior > 0) {
+      // 1% por mes, tope: 10% del patrimonio o 2.500 UVT
       base = Math.min(
         0.01 * meses * patrimonioLiquidoAnterior,
-        0.01 * patrimonioLiquidoAnterior,
+        0.10 * patrimonioLiquidoAnterior,
         2500 * uvt,
       );
     }
@@ -768,14 +771,14 @@ export function validarFormulario(
     });
   }
 
-  // Descuentos > impuesto
-  if (get(93) > get(91)) {
+  // Descuentos > impuesto bruto (91 + 92 = base de la fórmula 94 = 91+92-93)
+  if (get(93) > get(91) + get(92)) {
     out.push({
       categoria: "fiscal",
       nivel: "error",
       renglon: 93,
       mensaje:
-        "Descuentos tributarios (93) superan el impuesto (91). El impuesto neto no puede ser negativo.",
+        "Descuentos tributarios (93) superan el impuesto bruto (91 + 92). El impuesto neto no puede ser negativo.",
     });
   }
 
@@ -812,7 +815,7 @@ export function validarFormulario(
       nivel: "warn",
       renglon: 108,
       mensaje:
-        "El impuesto neto del año gravable anterior está en 0. El anticipo se calcula como 50% del impuesto actual / 2; verifica si es correcto.",
+        "El impuesto neto del año gravable anterior está en 0. El anticipo (R108) se calcula sólo sobre el impuesto actual × tarifa según años declarando; verifica si es correcto.",
     });
   }
 
