@@ -157,6 +157,11 @@ export default async function DeclaracionEditorPage({
           uvtVigente={uvtVigente}
           patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
           esInstitucionFinanciera={!!declaracion.es_institucion_financiera}
+          totalNomina={Number(declaracion.total_nomina ?? 0)}
+          aportesSegSocial={Number(declaracion.aportes_seg_social ?? 0)}
+          aportesParaFiscales={Number(declaracion.aportes_para_fiscales ?? 0)}
+          beneficioAuditoria12m={!!declaracion.beneficio_auditoria_12m}
+          beneficioAuditoria6m={!!declaracion.beneficio_auditoria_6m}
         />
       )}
     </div>
@@ -181,6 +186,11 @@ async function Workspace({
   uvtVigente,
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
+  totalNomina,
+  aportesSegSocial,
+  aportesParaFiscales,
+  beneficioAuditoria12m,
+  beneficioAuditoria6m,
 }: {
   declId: string;
   empresaId: string;
@@ -199,6 +209,11 @@ async function Workspace({
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
+  totalNomina: number;
+  aportesSegSocial: number;
+  aportesParaFiscales: number;
+  beneficioAuditoria12m: boolean;
+  beneficioAuditoria6m: boolean;
 }) {
   const supabase = await createClient();
 
@@ -362,6 +377,11 @@ async function Workspace({
             uvtVigente={uvtVigente}
             patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
             esInstitucionFinanciera={esInstitucionFinanciera}
+            totalNomina={totalNomina}
+            aportesSegSocial={aportesSegSocial}
+            aportesParaFiscales={aportesParaFiscales}
+            beneficioAuditoria12m={beneficioAuditoria12m}
+            beneficioAuditoria6m={beneficioAuditoria6m}
           />
         </div>
       </div>

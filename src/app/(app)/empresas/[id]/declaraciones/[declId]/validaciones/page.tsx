@@ -122,6 +122,9 @@ export default async function ValidacionesPage({
     uvtVigente: uvtVigente ?? undefined,
     patrimonioLiquidoAnterior,
     esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
+    totalNomina: Number(declaracion.total_nomina ?? 0),
+    aportesSegSocial: Number(declaracion.aportes_seg_social ?? 0),
+    aportesParaFiscales: Number(declaracion.aportes_para_fiscales ?? 0),
   });
 
   const validaciones = validarFormulario(numerico, {
@@ -130,6 +133,8 @@ export default async function ValidacionesPage({
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    beneficioAuditoria12m: !!declaracion.beneficio_auditoria_12m,
+    beneficioAuditoria6m: !!declaracion.beneficio_auditoria_6m,
   });
 
   const resumen = resumenValidaciones(validaciones);

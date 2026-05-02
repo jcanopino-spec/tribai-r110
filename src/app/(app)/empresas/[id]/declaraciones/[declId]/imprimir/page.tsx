@@ -124,6 +124,9 @@ export default async function ImprimirDeclaracionPage({
     uvtVigente: uvtVigente ?? undefined,
     patrimonioLiquidoAnterior,
     esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
+    totalNomina: Number(declaracion.total_nomina ?? 0),
+    aportesSegSocial: Number(declaracion.aportes_seg_social ?? 0),
+    aportesParaFiscales: Number(declaracion.aportes_para_fiscales ?? 0),
   });
 
   const porSeccion = new Map<string, typeof renglones>();

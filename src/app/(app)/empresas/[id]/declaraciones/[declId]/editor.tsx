@@ -56,6 +56,11 @@ export function DeclaracionEditor({
   uvtVigente,
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
+  totalNomina,
+  aportesSegSocial,
+  aportesParaFiscales,
+  beneficioAuditoria12m,
+  beneficioAuditoria6m,
 }: {
   declId: string;
   empresaId: string;
@@ -73,6 +78,11 @@ export function DeclaracionEditor({
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
+  totalNomina: number;
+  aportesSegSocial: number;
+  aportesParaFiscales: number;
+  beneficioAuditoria12m: boolean;
+  beneficioAuditoria6m: boolean;
 }) {
   const action = saveValoresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
@@ -118,6 +128,9 @@ export function DeclaracionEditor({
       uvtVigente: uvtVigente ?? undefined,
       patrimonioLiquidoAnterior,
       esInstitucionFinanciera,
+      totalNomina,
+      aportesSegSocial,
+      aportesParaFiscales,
     });
   }, [
     valores,
@@ -133,6 +146,9 @@ export function DeclaracionEditor({
     uvtVigente,
     patrimonioLiquidoAnterior,
     esInstitucionFinanciera,
+    totalNomina,
+    aportesSegSocial,
+    aportesParaFiscales,
   ]);
 
   const totales = useMemo(() => {
@@ -153,6 +169,8 @@ export function DeclaracionEditor({
         aniosDeclarando,
         presentacion,
         calculaSancionExtemporaneidad,
+        beneficioAuditoria12m,
+        beneficioAuditoria6m,
       }),
     [
       numerico,
@@ -161,6 +179,8 @@ export function DeclaracionEditor({
       aniosDeclarando,
       presentacion,
       calculaSancionExtemporaneidad,
+      beneficioAuditoria12m,
+      beneficioAuditoria6m,
     ],
   );
   const errores = validaciones.filter((v) => v.nivel === "error").length;
