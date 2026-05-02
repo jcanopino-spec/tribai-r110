@@ -336,7 +336,7 @@ function TabSanciones({
       {evaluacion.estado === "oportuna" ? (
         <p className="text-xs text-muted-foreground">
           Tu declaración es <span className="font-medium text-foreground">oportuna</span>:
-          la sanción por extemporaneidad no aplica aunque actives el flag (renglón 113 = 0
+          la sanción por extemporaneidad no aplica aunque actives el flag (renglón 112 = 0
           por esa causal).
         </p>
       ) : null}

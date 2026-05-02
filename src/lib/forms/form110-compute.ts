@@ -43,14 +43,14 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   105, // Autorretenciones · viene del Anexo 3
   106, // Otras retenciones · viene del Anexo 3
   108, // Anticipo año siguiente (Anexo 2 del .xlsm)
-  113, // Sanción por extemporaneidad (Arts. 641/642 E.T.)
-  94, // Impuesto neto de renta (sin adicionado) = 91 - 93 (+92 según descrip)
+  112, // Sanciones (extemporaneidad + corrección, Arts. 641/642/644 E.T.)
+  94, // Impuesto neto de renta (sin adicionado) = 91 + 92 - 93
   96, // Impuesto neto de renta (con adicionado) = 94 + 95
   99, // Total impuesto a cargo = 96 + 97 - 98
   107, // Total retenciones = 105 + 106
   111, // Saldo a pagar por impuesto = 99 + 108 + 110 - 100..104 - 107 - 109
-  112, // Total saldo a pagar = 99 + 108 + 110 + 113 - 100..104 - 107 - 109
-  114, // Total saldo a favor = 100 + 101 + 102 + 103 + 104 + 107 + 109 - 99 - 108 - 110
+  113, // Total saldo a pagar = 99 + 108 + 110 + 112 - 100..104 - 107 - 109
+  114, // Total saldo a favor = 100..104 + 107 + 109 - 99 - 108 - 110 - 112
 ]);
 
 // Renglones que en el formulario 110 deben mostrarse siempre en valor
@@ -370,18 +370,19 @@ export function computarRenglones(
   v.set(97, Math.round(Math.max(0, get(83)) * TARIFA_GANANCIAS_OCASIONALES));
   // 91 = sum(84..90)  (Total impuesto sobre rentas líquidas gravables)
   v.set(91, sum(v, 84, 90));
-  // 94 = 91 + 92 - 93  (descripción: "91 + 92 - 93")
-  v.set(94, get(91) + get(92) - get(93));
-  // 96 = 94 + 95
-  v.set(96, get(94) + get(95));
-  // 99 = 96 + 97 - 98  (Total impuesto a cargo)
-  v.set(99, get(96) + get(97) - get(98));
   // 93 = Descuentos tributarios (suma del Anexo 4) sujeto a tope Art. 259 E.T.
-  //   Tope: 75% del impuesto básico de renta (renglón 84)
+  //   Tope: 75% del impuesto básico de renta (renglón 84). Se calcula ANTES
+  //   de R94 para que el tope aplique a la fórmula 91 + 92 - 93.
   if (typeof ctx.totalDescuentosTributarios === "number") {
     const tope = Math.max(0, get(84)) * 0.75;
     v.set(93, Math.min(ctx.totalDescuentosTributarios, tope));
   }
+  // 94 = 91 + 92 - 93  (Impuesto neto de renta sin impuesto adicionado)
+  v.set(94, get(91) + get(92) - get(93));
+  // 96 = 94 + 95  (Impuesto neto de renta con impuesto adicionado)
+  v.set(96, get(94) + get(95));
+  // 99 = 96 + 97 - 98  (Total impuesto a cargo)
+  v.set(99, get(96) + get(97) - get(98));
 
   // 105 = Total autorretenciones (suma del Anexo 3)
   if (typeof ctx.totalAutorretenciones === "number") {
@@ -394,7 +395,7 @@ export function computarRenglones(
   // 107 = 105 + 106  (Total retenciones)
   v.set(107, get(105) + get(106));
 
-  // 113 = Sanción total = extemporaneidad + corrección
+  // 112 = Sanción total = extemporaneidad + corrección (Arts. 641/642/644 E.T.)
   let sancionExt = 0;
   if (
     ctx.calculaSancionExtemporaneidad &&
@@ -424,7 +425,7 @@ export function computarRenglones(
       reduccion: ctx.reduccionSancion ?? "0",
     });
   }
-  v.set(113, sancionExt + sancionCorr);
+  v.set(112, sancionExt + sancionCorr);
 
   // 108 = Anticipo año siguiente (Anexo 2 del .xlsm, método 1 = promedio)
   //   = max(0, ((impuesto_neto_actual + impuesto_neto_anterior) / 2) × tarifa
@@ -452,13 +453,13 @@ export function computarRenglones(
   const r111 = get(99) + get(108) + get(110) - restas;
   v.set(111, Math.max(0, r111));
 
-  // 112 = Total saldo a pagar
-  //   = 99 + 108 + 110 + 113 - (mismo conjunto de restas)
-  const r112 = get(99) + get(108) + get(110) + get(113) - restas;
-  v.set(112, Math.max(0, r112));
+  // 113 = Total saldo a pagar
+  //   = 99 + 108 + 110 + 112 - (mismo conjunto de restas)
+  const r113 = get(99) + get(108) + get(110) + get(112) - restas;
+  v.set(113, Math.max(0, r113));
 
-  // 114 = Total saldo a favor (espejo de 112: si las restas exceden, hay saldo a favor)
-  v.set(114, Math.max(0, restas - (get(99) + get(108) + get(110) + get(113))));
+  // 114 = Total saldo a favor (espejo de 113: si las restas exceden, hay saldo a favor)
+  v.set(114, Math.max(0, restas - (get(99) + get(108) + get(110) + get(112))));
 
   return v;
 }
@@ -538,9 +539,9 @@ export const FORMULAS_LEYENDA: Record<number, string> = {
   106: "Suma de retenciones (Anexo 3)",
   107: "105 + 106",
   108: "(96 + impto. AG anterior) / 2 × tarifa años − 107",
-  113: "Sanciones (extemporaneidad + corrección, Arts. 641/642/644)",
+  112: "Sanciones (extemporaneidad + corrección, Arts. 641/642/644 E.T.)",
   111: "99 + 108 + 110 − 100 − 101 − 102 − 103 − 104 − 107 − 109",
-  112: "99 + 108 + 110 + 113 − (restas de 111)",
+  113: "99 + 108 + 110 + 112 − (restas de 111)",
   114: "Diferencia (saldo a favor) si las restas exceden",
 };
 
@@ -827,7 +828,7 @@ export function validarFormulario(
   }
 
   // Saldo positivo y a favor a la vez (imposible)
-  if (get(112) > 0 && get(114) > 0) {
+  if (get(113) > 0 && get(114) > 0) {
     out.push({
       categoria: "cuadre",
       nivel: "error",
