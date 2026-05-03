@@ -857,6 +857,10 @@ export type Database = {
           calcula_anticipo: boolean
           calcula_sancion_correccion: boolean
           calcula_sancion_extemporaneidad: boolean
+          cf_utilidad_contable: number
+          cod_contador_rf: string | null
+          cod_representacion: string | null
+          con_salvedades: boolean
           created_at: string
           dc_cartera_0_90: number
           dc_cartera_181_360: number
@@ -872,16 +876,19 @@ export type Database = {
           fecha_presentacion: string | null
           fecha_vencimiento: string | null
           formato: string
+          fraccion_ano_siguiente: boolean
           ica_como_descuento: boolean
           id: string
           impuesto_neto_anterior: number
           mayor_valor_correccion: number
           modo_carga: string | null
+          numero_formulario_anterior: string | null
           pasivos_anterior: number
           patrimonio_bruto_anterior: number
           perdida_contable: number
           perdidas_fiscales_acumuladas: number
           reduccion_sancion: string
+          renuncio_regimen_especial: boolean
           rp_acciones_sociedades_nacionales: number
           rp_bienes_actividades_improductivas: number
           rp_bienes_fuerza_mayor: number
@@ -894,10 +901,12 @@ export type Database = {
           sub_deuda_promedio: number
           sub_es_vinculado: boolean
           sub_intereses: number
+          tarjeta_profesional: string | null
           tiene_justificacion_patrimonial: boolean
           total_nomina: number
           updated_at: string
           utilidad_contable: number
+          vinculado_obras_impuestos: boolean
         }
         Insert: {
           anios_declarando?: string
@@ -911,6 +920,10 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
+          cf_utilidad_contable?: number
+          cod_contador_rf?: string | null
+          cod_representacion?: string | null
+          con_salvedades?: boolean
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
@@ -926,16 +939,19 @@ export type Database = {
           fecha_presentacion?: string | null
           fecha_vencimiento?: string | null
           formato?: string
+          fraccion_ano_siguiente?: boolean
           ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
           mayor_valor_correccion?: number
           modo_carga?: string | null
+          numero_formulario_anterior?: string | null
           pasivos_anterior?: number
           patrimonio_bruto_anterior?: number
           perdida_contable?: number
           perdidas_fiscales_acumuladas?: number
           reduccion_sancion?: string
+          renuncio_regimen_especial?: boolean
           rp_acciones_sociedades_nacionales?: number
           rp_bienes_actividades_improductivas?: number
           rp_bienes_fuerza_mayor?: number
@@ -948,10 +964,12 @@ export type Database = {
           sub_deuda_promedio?: number
           sub_es_vinculado?: boolean
           sub_intereses?: number
+          tarjeta_profesional?: string | null
           tiene_justificacion_patrimonial?: boolean
           total_nomina?: number
           updated_at?: string
           utilidad_contable?: number
+          vinculado_obras_impuestos?: boolean
         }
         Update: {
           anios_declarando?: string
@@ -965,6 +983,10 @@ export type Database = {
           calcula_anticipo?: boolean
           calcula_sancion_correccion?: boolean
           calcula_sancion_extemporaneidad?: boolean
+          cf_utilidad_contable?: number
+          cod_contador_rf?: string | null
+          cod_representacion?: string | null
+          con_salvedades?: boolean
           created_at?: string
           dc_cartera_0_90?: number
           dc_cartera_181_360?: number
@@ -980,16 +1002,19 @@ export type Database = {
           fecha_presentacion?: string | null
           fecha_vencimiento?: string | null
           formato?: string
+          fraccion_ano_siguiente?: boolean
           ica_como_descuento?: boolean
           id?: string
           impuesto_neto_anterior?: number
           mayor_valor_correccion?: number
           modo_carga?: string | null
+          numero_formulario_anterior?: string | null
           pasivos_anterior?: number
           patrimonio_bruto_anterior?: number
           perdida_contable?: number
           perdidas_fiscales_acumuladas?: number
           reduccion_sancion?: string
+          renuncio_regimen_especial?: boolean
           rp_acciones_sociedades_nacionales?: number
           rp_bienes_actividades_improductivas?: number
           rp_bienes_fuerza_mayor?: number
@@ -1002,10 +1027,12 @@ export type Database = {
           sub_deuda_promedio?: number
           sub_es_vinculado?: boolean
           sub_intereses?: number
+          tarjeta_profesional?: string | null
           tiene_justificacion_patrimonial?: boolean
           total_nomina?: number
           updated_at?: string
           utilidad_contable?: number
+          vinculado_obras_impuestos?: boolean
         }
         Relationships: [
           {

@@ -32,9 +32,24 @@ const BOOL_FIELDS = new Set([
   "calcula_sancion_extemporaneidad",
   "calcula_sancion_correccion",
   "existe_emplazamiento",
+  // Datos de presentación (Formulario 110, casillas 29, 30, 31, 994)
+  "fraccion_ano_siguiente",
+  "renuncio_regimen_especial",
+  "vinculado_obras_impuestos",
+  "con_salvedades",
 ]);
 
 const TEXT_FIELDS = new Set(["reduccion_sancion", "anios_declarando"]);
+
+// Texto libre que admite vaciar (null cuando viene vacío). Distinto a TEXT_FIELDS
+// que sólo aceptan valores predefinidos y por seguridad ignoran string vacío.
+const NULLABLE_TEXT_FIELDS = new Set([
+  "numero_formulario_anterior", // R26
+  "cod_representacion",         // R981
+  "cod_contador_rf",            // R982
+  "tarjeta_profesional",        // R983
+]);
+
 const DATE_FIELDS = new Set(["fecha_vencimiento", "fecha_presentacion"]);
 
 function parseNumeric(s: string): number {
@@ -60,6 +75,8 @@ export async function saveConfiguracionAction(
       update[key] = v === "on" || v === "true" || v === "1";
     } else if (TEXT_FIELDS.has(key)) {
       if (v) update[key] = v;
+    } else if (NULLABLE_TEXT_FIELDS.has(key)) {
+      update[key] = v.trim() || null;
     } else if (DATE_FIELDS.has(key)) {
       update[key] = v || null;
     }

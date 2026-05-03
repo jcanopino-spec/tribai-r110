@@ -400,30 +400,27 @@ export default async function Formulario110Page({
           <CasillaText
             num="26"
             label="Nro. formulario anterior"
-            value=""
+            value={declaracion.numero_formulario_anterior ?? ""}
             colSpan={3}
-            placeholder="Por configurar"
+            placeholder="—"
           />
           <CasillaText
             num="29"
             label="Fracción año gravable siguiente"
-            value=""
+            value={declaracion.fraccion_ano_siguiente ? "Sí" : "No"}
             colSpan={2}
-            placeholder="Por configurar"
           />
           <CasillaText
             num="30"
             label="Renunció a régimen tributario especial"
-            value=""
+            value={declaracion.renuncio_regimen_especial ? "Sí" : "No"}
             colSpan={2}
-            placeholder="Por configurar"
           />
           <CasillaText
             num="31"
             label="Vinculado a obras por impuestos"
-            value=""
+            value={declaracion.vinculado_obras_impuestos ? "Sí" : "No"}
             colSpan={2}
-            placeholder="Por configurar"
           />
         </div>
       </section>
@@ -490,10 +487,33 @@ export default async function Formulario110Page({
       <section className="border-x border-b border-foreground">
         <SectionTitle>Firma del declarante / Revisor fiscal o Contador</SectionTitle>
         <div className="grid grid-cols-12 gap-px bg-border text-xs">
-          <CasillaText num="981" label="Cód. representación" value="" colSpan={3} placeholder="Por configurar" />
-          <CasillaText num="982" label="Cód. contador / RF" value="" colSpan={3} placeholder="Por configurar" />
-          <CasillaText num="994" label="Con salvedades" value="" colSpan={3} placeholder="Por configurar" />
-          <CasillaText num="983" label="No. tarjeta profesional" value="" colSpan={3} placeholder="Por configurar" />
+          <CasillaText
+            num="981"
+            label="Cód. representación"
+            value={declaracion.cod_representacion ?? ""}
+            colSpan={3}
+            placeholder="—"
+          />
+          <CasillaText
+            num="982"
+            label="Cód. contador / RF"
+            value={declaracion.cod_contador_rf ?? ""}
+            colSpan={3}
+            placeholder="—"
+          />
+          <CasillaText
+            num="994"
+            label="Con salvedades"
+            value={declaracion.con_salvedades ? "Sí" : "No"}
+            colSpan={3}
+          />
+          <CasillaText
+            num="983"
+            label="No. tarjeta profesional"
+            value={declaracion.tarjeta_profesional ?? ""}
+            colSpan={3}
+            placeholder="—"
+          />
         </div>
       </section>
 

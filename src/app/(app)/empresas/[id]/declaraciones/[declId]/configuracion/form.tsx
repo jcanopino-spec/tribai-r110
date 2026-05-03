@@ -22,6 +22,7 @@ const TABS = [
   { id: "auditoria", label: "Beneficio auditoría" },
   { id: "anterior", label: "Año anterior" },
   { id: "sanciones", label: "Sanciones" },
+  { id: "presentacion", label: "Presentación y firma" },
   { id: "otros", label: "Otros" },
 ] as const;
 
@@ -98,6 +99,7 @@ export function ConfiguracionForm({
             ultimoDigitoNit={ultimoDigitoNit}
           />
         </div>
+        <div hidden={tab !== "presentacion"}><TabPresentacion d={d} /></div>
         <div hidden={tab !== "otros"}><TabOtros d={d} /></div>
       </div>
 
@@ -394,6 +396,88 @@ function TabSanciones({
 // ============================================================
 // Tab 5: Otros (información contable + datos nómina)
 // ============================================================
+function TabPresentacion({ d }: { d: Decl }) {
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="font-serif text-xl">Identificación adicional</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Casillas oficiales del Formulario 110 que aparecen en la cabecera y
+          al pie. Se llenan al cierre, antes de imprimir o exportar a MUISCA.
+        </p>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          <Field label="R26 · Nro. formulario anterior (sólo si es corrección)">
+            <Input
+              name="numero_formulario_anterior"
+              defaultValue={d.numero_formulario_anterior ?? ""}
+              placeholder="1100600000000"
+            />
+          </Field>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-serif text-xl">Flags de presentación</h2>
+        <div className="mt-5 grid gap-3 md:grid-cols-2">
+          <CheckField
+            name="fraccion_ano_siguiente"
+            label="R29 · Fracción año gravable siguiente"
+            defaultChecked={!!d.fraccion_ano_siguiente}
+            help="Marcar sólo si presenta declaración por el año gravable siguiente (fracción)."
+          />
+          <CheckField
+            name="renuncio_regimen_especial"
+            label="R30 · Renunció al régimen tributario especial"
+            defaultChecked={!!d.renuncio_regimen_especial}
+          />
+          <CheckField
+            name="vinculado_obras_impuestos"
+            label="R31 · Vinculado al pago de obras por impuestos"
+            defaultChecked={!!d.vinculado_obras_impuestos}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-serif text-xl">Firma del declarante / contador</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Datos del representante legal y del contador o revisor fiscal que
+          firma la declaración. Aparecen al pie del Formulario 110.
+        </p>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          <Field label="R981 · Cód. representación">
+            <Input
+              name="cod_representacion"
+              defaultValue={d.cod_representacion ?? ""}
+              placeholder="01 = Representante legal"
+            />
+          </Field>
+          <Field label="R982 · Cód. contador / RF">
+            <Input
+              name="cod_contador_rf"
+              defaultValue={d.cod_contador_rf ?? ""}
+              placeholder="1 = Contador, 2 = Revisor fiscal"
+            />
+          </Field>
+          <Field label="R983 · Nro. tarjeta profesional">
+            <Input
+              name="tarjeta_profesional"
+              defaultValue={d.tarjeta_profesional ?? ""}
+              placeholder="123456-T"
+            />
+          </Field>
+          <CheckField
+            name="con_salvedades"
+            label="R994 · Firma con salvedades"
+            defaultChecked={!!d.con_salvedades}
+            help="Marcar si el contador o revisor fiscal firma con salvedades."
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TabOtros({ d }: { d: Decl }) {
   return (
     <div className="space-y-5">
