@@ -3,7 +3,7 @@
 // `ComputeContext` y devuelve el mapa numérico con todos los renglones
 // derivados. No muta el mapa de entrada.
 
-import { normalizarSigno, sumRango } from "./utils";
+import { normalizarSigno, sumRango, redondearDIAN } from "./utils";
 import {
   calcularSancionExtemporaneidad,
   calcularSancionCorreccion,
@@ -240,8 +240,9 @@ export function computarRenglones(
   }
 
   // 85 = Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
-  //   5 puntos porcentuales adicionales sobre la renta líquida gravable
-  //   que exceda 120.000 UVT.
+  //   5 puntos porcentuales sobre la renta líquida gravable COMPLETA cuando
+  //   ésta supera 120.000 UVT. Replica la fórmula del Liquidador oficial:
+  //   IF(D24="SI"; IF(R79 >= 120000*UVT; R79*5%; 0); 0)
   if (
     ctx.esInstitucionFinanciera &&
     typeof ctx.uvtVigente === "number" &&
@@ -249,8 +250,11 @@ export function computarRenglones(
   ) {
     const rentaGravable = Math.max(0, get(79));
     const umbral = UMBRAL_SOBRETASA_UVT * ctx.uvtVigente;
-    const exceso = Math.max(0, rentaGravable - umbral);
-    v.set(85, Math.round(exceso * PUNTOS_SOBRETASA));
+    if (rentaGravable >= umbral) {
+      v.set(85, Math.round(rentaGravable * PUNTOS_SOBRETASA));
+    } else {
+      v.set(85, 0);
+    }
   } else {
     v.set(85, 0);
   }
@@ -265,12 +269,15 @@ export function computarRenglones(
     const tope = Math.max(0, get(84)) * 0.75;
     v.set(93, Math.min(ctx.totalDescuentosTributarios, tope));
   }
-  // 94 = 91 + 92 - 93  (Impuesto neto de renta sin impuesto adicionado)
-  v.set(94, get(91) + get(92) - get(93));
+  // 94 = max(0, 91 + 92 - 93)  (Impuesto neto de renta sin impuesto adicionado)
+  //   El Liquidador oficial fuerza ≥0: si los descuentos exceden el impuesto
+  //   bruto, el neto queda en 0 (no puede ser negativo).
+  v.set(94, Math.max(0, get(91) + get(92) - get(93)));
   // 96 = 94 + 95  (Impuesto neto de renta con impuesto adicionado)
   v.set(96, get(94) + get(95));
-  // 99 = 96 + 97 - 98  (Total impuesto a cargo)
-  v.set(99, get(96) + get(97) - get(98));
+  // 99 = max(0, 96 + 97 - 98)  (Total impuesto a cargo)
+  //   También forzado ≥0 en el Liquidador oficial.
+  v.set(99, Math.max(0, get(96) + get(97) - get(98)));
 
   // 105 = Total autorretenciones (suma del Anexo 3)
   if (typeof ctx.totalAutorretenciones === "number") {
@@ -315,10 +322,12 @@ export function computarRenglones(
   }
   v.set(112, sancionExt + sancionCorr);
 
-  // 108 = Anticipo año siguiente (Anexo 2 del .xlsm, método 1 = promedio)
-  //   = max(0, ((impuesto_neto_actual + impuesto_neto_anterior) / 2) × tarifa
-  //          - retenciones)
-  //   Primer año: 0 ("no aplica" según el .xlsm).
+  // 108 = Anticipo año siguiente (Art. 807 E.T.)
+  //   El Liquidador oficial implementa los DOS métodos del Anexo 2 y toma
+  //   el MENOR (más favorable al contribuyente):
+  //     Método 1 (F18) = ((impuesto_neto_actual + impuesto_neto_ant) / 2) × tarifa − R107
+  //     Método 2 (G18) = impuesto_neto_actual × tarifa − R107
+  //   Primer año: 0 (no aplica). En años posteriores: max(0, MIN(metodo1, metodo2)).
   if (
     typeof ctx.impuestoNetoAnterior === "number" &&
     typeof ctx.aniosDeclarando === "string"
@@ -327,9 +336,11 @@ export function computarRenglones(
       v.set(108, 0);
     } else {
       const tarifa = TARIFA_ANTICIPO[ctx.aniosDeclarando];
+      const retenciones = get(107);
       const promedio = (get(96) + ctx.impuestoNetoAnterior) / 2;
-      const tentativo = Math.max(0, promedio * tarifa);
-      v.set(108, Math.max(0, Math.round(tentativo - get(107))));
+      const metodo1 = Math.max(0, promedio * tarifa - retenciones);
+      const metodo2 = Math.max(0, get(96) * tarifa - retenciones);
+      v.set(108, Math.round(Math.min(metodo1, metodo2)));
     }
   } else if (!v.has(108)) {
     v.set(108, 0);
@@ -348,6 +359,17 @@ export function computarRenglones(
 
   // 114 = Total saldo a favor (espejo de 113: si las restas exceden, hay saldo a favor)
   v.set(114, Math.max(0, restas - (get(99) + get(108) + get(110) + get(112))));
+
+  // Redondeo DIAN: el Liquidador oficial aplica ROUND(x, -3) a todos los
+  // renglones a nivel de Hoja Sumaria (cada renglón individual está
+  // redondeado a múltiplos de 1.000 antes de sumar). Replicamos eso aquí:
+  // todos los valores monetarios de la salida son múltiplos de 1.000.
+  //
+  // Los datos del usuario en DB mantienen su precisión original — el
+  // redondeo es sólo para la SALIDA computada que se presenta/exporta.
+  for (const [n, val] of v) {
+    v.set(n, redondearDIAN(val));
+  }
 
   return v;
 }

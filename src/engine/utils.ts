@@ -41,3 +41,13 @@ export function sumRango(
   for (let n = from; n <= to; n++) s += values.get(n) ?? 0;
   return s;
 }
+
+/**
+ * Redondeo DIAN: equivalente a ROUND(n, -3) en Excel — redondea al múltiplo
+ * de 1.000 más cercano. Aplicado por el Liquidador oficial DIAN AG 2025 a
+ * casi todos los renglones derivados (Hoja Sumaria) para que los valores
+ * presentados al MUISCA sean siempre múltiplos de mil.
+ */
+export function redondearDIAN(n: number): number {
+  return Math.round(n / 1000) * 1000;
+}
