@@ -147,10 +147,7 @@ function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaI
           <button
             type="button"
             onClick={() => setEditing(true)}
-            className="text-xs text-muted-foreground hover:text-foreground"
-          >
-            Modificar
-          </button>
+            className="text-base text-muted-foreground hover:text-foreground" title="Modificar">✏️</button>
           <button
             type="button"
             disabled={pending}

@@ -114,7 +114,7 @@ function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaI
       </td>
       <td className="px-3 py-2 text-right">
         <div className="flex justify-end gap-3">
-          <button type="button" onClick={() => setEditing(true)} className="text-xs text-muted-foreground hover:text-foreground">Modificar</button>
+          <button type="button" onClick={() => setEditing(true)} className="text-base text-muted-foreground hover:text-foreground" title="Modificar">✏️</button>
           <button type="button" disabled={pending} onClick={() => start(async () => { await deletePredialAction(item.id, declId, empresaId); router.refresh(); })} className="text-xs text-destructive hover:underline disabled:opacity-50">{pending ? "…" : "Eliminar"}</button>
         </div>
       </td>

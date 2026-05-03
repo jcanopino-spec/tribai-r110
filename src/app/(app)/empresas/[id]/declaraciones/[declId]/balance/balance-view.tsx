@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { saveOverridesAction, saveAjustesFiscalesAction } from "../importar/actions";
 
@@ -68,6 +68,13 @@ export function BalanceView({
     new Map(),
   );
   const [saved, setSaved] = useState<string | null>(null);
+  // Filas que están siendo auto-guardadas (cuenta) o ya guardadas exitosamente
+  const [savingRows, setSavingRows] = useState<Set<string>>(new Set());
+  const [savedRows, setSavedRows] = useState<Set<string>>(new Set());
+  const ajustesRef = useRef(ajustes);
+  useEffect(() => {
+    ajustesRef.current = ajustes;
+  }, [ajustes]);
 
   function setAjuste(
     cuenta: string,
@@ -78,6 +85,51 @@ export function BalanceView({
     const prev = next.get(cuenta) ?? { debito: "", credito: "", observacion: "" };
     next.set(cuenta, { ...prev, [field]: value });
     setAjustes(next);
+    // Si la fila tenía marca de "guardado", la quita al volver a editar
+    setSavedRows((s) => {
+      if (!s.has(cuenta)) return s;
+      const next = new Set(s);
+      next.delete(cuenta);
+      return next;
+    });
+  }
+
+  // Auto-guardar SOLO la fila que pierde foco (no toda la tabla, para que
+  // el usuario pueda seguir editando otras filas sin race conditions).
+  async function autoSaveRow(cuenta: string) {
+    const data = ajustesRef.current.get(cuenta);
+    if (!data) return;
+    setSavingRows((s) => new Set(s).add(cuenta));
+    try {
+      const fd = new FormData();
+      fd.set(`d_${cuenta}`, String(parseValor(data.debito)));
+      fd.set(`c_${cuenta}`, String(parseValor(data.credito)));
+      fd.set(`o_${cuenta}`, data.observacion);
+      await saveAjustesFiscalesAction(empresaId, declId, fd);
+      // Quita la fila de ajustes pendientes y marca como guardada.
+      setAjustes((prev) => {
+        const next = new Map(prev);
+        next.delete(cuenta);
+        return next;
+      });
+      setSavedRows((s) => new Set(s).add(cuenta));
+      router.refresh();
+      // Limpia el badge "guardado" después de 2.5s
+      setTimeout(() => {
+        setSavedRows((s) => {
+          if (!s.has(cuenta)) return s;
+          const next = new Set(s);
+          next.delete(cuenta);
+          return next;
+        });
+      }, 2500);
+    } finally {
+      setSavingRows((s) => {
+        const next = new Set(s);
+        next.delete(cuenta);
+        return next;
+      });
+    }
   }
 
   function ajusteValor(l: Linea, field: "debito" | "credito"): string {
@@ -92,22 +144,6 @@ export function BalanceView({
     const debito = e ? parseValor(e.debito) : l.ajuste_debito;
     const credito = e ? parseValor(e.credito) : l.ajuste_credito;
     return l.saldo + debito - credito;
-  }
-
-  async function guardarAjustes() {
-    if (ajustes.size === 0) return;
-    startTransition(async () => {
-      const fd = new FormData();
-      for (const [cuenta, data] of ajustes.entries()) {
-        fd.set(`d_${cuenta}`, String(parseValor(data.debito)));
-        fd.set(`c_${cuenta}`, String(parseValor(data.credito)));
-        fd.set(`o_${cuenta}`, data.observacion);
-      }
-      await saveAjustesFiscalesAction(empresaId, declId, fd);
-      setAjustes(new Map());
-      setSaved(`Ajustes fiscales guardados · ${new Date().toLocaleTimeString("es-CO")}`);
-      router.refresh();
-    });
   }
 
   const grouped = new Map<string, Renglon[]>();
@@ -254,15 +290,32 @@ export function BalanceView({
               lineas.map((l) => {
                 const isAux = l.cuenta.length >= 6;
                 const isEdited = edits.has(l.cuenta) || ajustes.has(l.cuenta);
+                const isSaving = savingRows.has(l.cuenta);
+                const justSaved = savedRows.has(l.cuenta);
                 const sf = saldoFiscal(l);
                 return (
                   <tr
                     key={l.cuenta}
-                    className={`border-t border-border ${isEdited ? "bg-success/5" : ""} ${
-                      !isAux ? "text-muted-foreground" : ""
-                    }`}
+                    className={`border-t border-border ${
+                      isSaving
+                        ? "bg-amber-500/5"
+                        : justSaved
+                          ? "bg-success/10"
+                          : isEdited
+                            ? "bg-success/5"
+                            : ""
+                    } ${!isAux ? "text-muted-foreground" : ""}`}
                   >
-                    <td className="px-3 py-1.5 align-top font-mono">{l.cuenta}</td>
+                    <td className="px-3 py-1.5 align-top font-mono">
+                      <span className="inline-flex items-center gap-1.5">
+                        {l.cuenta}
+                        {isSaving ? (
+                          <span className="text-[9px] text-amber-600">⟳</span>
+                        ) : justSaved ? (
+                          <span className="text-[10px] text-success" title="Guardado">✓</span>
+                        ) : null}
+                      </span>
+                    </td>
                     <td className="px-3 py-1.5 align-top">{l.nombre ?? "—"}</td>
                     <td className="px-3 py-1.5 text-right align-top font-mono">
                       {FMT.format(l.saldo)}
@@ -273,6 +326,9 @@ export function BalanceView({
                           inputMode="numeric"
                           value={ajusteValor(l, "debito")}
                           onChange={(e) => setAjuste(l.cuenta, "debito", formatInput(e.target.value))}
+                          onBlur={() => {
+                            if (ajustes.has(l.cuenta)) autoSaveRow(l.cuenta);
+                          }}
                           className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
                           placeholder="0"
                         />
@@ -286,6 +342,9 @@ export function BalanceView({
                           inputMode="numeric"
                           value={ajusteValor(l, "credito")}
                           onChange={(e) => setAjuste(l.cuenta, "credito", formatInput(e.target.value))}
+                          onBlur={() => {
+                            if (ajustes.has(l.cuenta)) autoSaveRow(l.cuenta);
+                          }}
                           className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
                           placeholder="0"
                         />
@@ -327,23 +386,25 @@ export function BalanceView({
       </div>
 
       <div className="sticky bottom-0 mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-border bg-background py-4">
-        <p className="text-sm">
-          <span className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Suma saldo contable:
-          </span>{" "}
-          <span className="font-mono">{FMT.format(totalSaldo)}</span>
-        </p>
+        <div>
+          <p className="text-sm">
+            <span className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+              Suma saldo contable:
+            </span>{" "}
+            <span className="font-mono">{FMT.format(totalSaldo)}</span>
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Los ajustes débito/crédito se guardan automáticamente al salir de
+            la celda. Indicadores: <span className="text-amber-600">⟳</span>{" "}
+            guardando · <span className="text-success">✓</span> guardado.
+          </p>
+        </div>
         <div className="flex flex-wrap items-center gap-3">
           {saved ? <p className="text-sm text-muted-foreground">{saved}</p> : null}
-          {ajustes.size > 0 ? (
-            <button
-              type="button"
-              onClick={guardarAjustes}
-              disabled={pending}
-              className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90 disabled:opacity-50"
-            >
-              {pending ? "Guardando…" : `Guardar ${ajustes.size} ajuste${ajustes.size === 1 ? "" : "s"} fiscal${ajustes.size === 1 ? "" : "es"}`}
-            </button>
+          {savingRows.size > 0 ? (
+            <p className="text-sm text-amber-600">
+              Guardando {savingRows.size} ajuste{savingRows.size === 1 ? "" : "s"}…
+            </p>
           ) : null}
           {editsCount > 0 ? (
             <button
