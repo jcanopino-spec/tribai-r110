@@ -55,3 +55,34 @@ export async function deleteIvaCapitalAction(id: number, declId: string, empresa
   await supabase.from("anexo_iva_capital").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateIvaCapitalAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    factura: string | null;
+    fecha: string | null;
+    bien: string;
+    proveedor: string | null;
+    base: number;
+    iva_pagado: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_iva_capital")
+    .update({
+      factura: data.factura?.trim() || null,
+      fecha: data.fecha || null,
+      bien: data.bien.trim(),
+      proveedor: data.proveedor?.trim() || null,
+      base: data.base,
+      iva_pagado: data.iva_pagado,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

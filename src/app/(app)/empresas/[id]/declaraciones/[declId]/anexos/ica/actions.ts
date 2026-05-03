@@ -50,3 +50,30 @@ export async function deleteIcaAction(id: number, declId: string, empresaId: str
   await supabase.from("anexo_ica").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateIcaAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    municipio: string;
+    base_gravable: number;
+    tarifa_milaje: number;
+    valor_pagado: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_ica")
+    .update({
+      municipio: data.municipio.trim(),
+      base_gravable: data.base_gravable,
+      tarifa_milaje: data.tarifa_milaje,
+      valor_pagado: data.valor_pagado,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

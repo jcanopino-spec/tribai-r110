@@ -52,3 +52,32 @@ export async function deletePredialAction(id: number, declId: string, empresaId:
   await supabase.from("anexo_predial").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updatePredialAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    predio: string;
+    direccion: string | null;
+    matricula: string | null;
+    avaluo: number;
+    valor_pagado: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_predial")
+    .update({
+      predio: data.predio.trim(),
+      direccion: data.direccion?.trim() || null,
+      matricula: data.matricula?.trim() || null,
+      avaluo: data.avaluo,
+      valor_pagado: data.valor_pagado,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

@@ -59,3 +59,30 @@ export async function deleteCompensacionAction(
   await supabase.from("anexo_compensaciones").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateCompensacionAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    tipo: Tipo;
+    ano_origen: number;
+    perdida_original: number;
+    compensar: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_compensaciones")
+    .update({
+      tipo: data.tipo,
+      ano_origen: data.ano_origen,
+      perdida_original: data.perdida_original,
+      compensar: data.compensar,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

@@ -48,3 +48,28 @@ export async function deleteGmfAction(id: number, declId: string, empresaId: str
   await supabase.from("anexo_gmf").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateGmfAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    entidad: string;
+    periodo: string | null;
+    valor_gmf: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_gmf")
+    .update({
+      entidad: data.entidad.trim(),
+      periodo: data.periodo?.trim() || null,
+      valor_gmf: data.valor_gmf,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}
