@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteGoAction } from "./actions";
-import { CATEGORIAS, type Categoria } from "./consts";
+import { CATEGORIAS } from "./consts";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 

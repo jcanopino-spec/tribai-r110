@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { CATEGORIAS, type Categoria } from "./consts";
 import { GoForm } from "./form";
 import { GoList } from "./list";
 

@@ -36,15 +36,17 @@ export function RetencionForm({
   const [retenido, setRetenido] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Reset campos numéricos cuando el guardado fue exitoso (en useEffect, no
-  // durante render, para evitar bucle de re-renders).
-  useEffect(() => {
+  const [lastSeen, setLastSeen] = useState(state);
+  if (state !== lastSeen) {
+    setLastSeen(state);
     if (state.ok) {
-      formRef.current?.reset();
       setBase("");
       setRetenido("");
     }
-  }, [state.ok]);
+  }
+  useEffect(() => {
+    if (state.ok) formRef.current?.reset();
+  }, [state]);
 
   const conceptos = tipo === "retencion" ? CONCEPTOS_RETENCION : CONCEPTOS_AUTORRETENCION;
 

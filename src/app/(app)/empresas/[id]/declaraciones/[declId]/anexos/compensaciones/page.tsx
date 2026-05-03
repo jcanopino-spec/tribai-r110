@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { TIPOS, type Tipo } from "./consts";
 import { CompensacionForm } from "./form";
 import { CompensacionList } from "./list";
 

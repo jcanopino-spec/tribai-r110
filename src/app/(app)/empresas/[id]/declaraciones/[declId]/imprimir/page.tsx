@@ -20,7 +20,7 @@ export default async function ImprimirDeclaracionPage({
 }: {
   params: Promise<{ id: string; declId: string }>;
 }) {
-  const { id: empresaId, declId } = await params;
+  const { declId } = await params;
   const supabase = await createClient();
 
   const { data: declaracion } = await supabase

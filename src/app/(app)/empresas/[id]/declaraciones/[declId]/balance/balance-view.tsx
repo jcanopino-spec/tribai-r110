@@ -87,12 +87,6 @@ export function BalanceView({
     return v === 0 ? "" : FMT.format(v);
   }
 
-  function ajusteObs(l: Linea): string {
-    const e = ajustes.get(l.cuenta);
-    if (e !== undefined) return e.observacion;
-    return l.observacion ?? "";
-  }
-
   function saldoFiscal(l: Linea): number {
     const e = ajustes.get(l.cuenta);
     const debito = e ? parseValor(e.debito) : l.ajuste_debito;

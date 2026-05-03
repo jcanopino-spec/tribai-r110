@@ -33,15 +33,19 @@ export function GoForm({
   const [recDep, setRecDep] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
+  const [lastSeen, setLastSeen] = useState(state);
+  if (state !== lastSeen) {
+    setLastSeen(state);
     if (state.ok) {
-      formRef.current?.reset();
       setPrecio("");
       setCosto("");
       setNoGravada("");
       setRecDep("");
     }
-  }, [state.ok]);
+  }
+  useEffect(() => {
+    if (state.ok) formRef.current?.reset();
+  }, [state]);
 
   const requiereCosto = pideCostoFiscal(categoria);
   const cat = CATEGORIAS.find((c) => c.id === categoria);

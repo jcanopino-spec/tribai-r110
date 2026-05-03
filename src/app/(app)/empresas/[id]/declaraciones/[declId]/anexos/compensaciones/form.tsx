@@ -33,13 +33,17 @@ export function CompensacionForm({
   const [comp, setComp] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
+  const [lastSeen, setLastSeen] = useState(state);
+  if (state !== lastSeen) {
+    setLastSeen(state);
     if (state.ok) {
-      formRef.current?.reset();
       setOriginal("");
       setComp("");
     }
-  }, [state.ok]);
+  }
+  useEffect(() => {
+    if (state.ok) formRef.current?.reset();
+  }, [state]);
 
   const tipoConfig = TIPOS.find((t) => t.id === tipo);
 

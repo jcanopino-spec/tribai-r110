@@ -30,14 +30,18 @@ export function IncrngoForm({
   const [valor, setValor] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
+  const [lastSeen, setLastSeen] = useState(state);
+  if (state !== lastSeen) {
+    setLastSeen(state);
     if (state.ok) {
-      formRef.current?.reset();
       setConcepto("");
       setNormatividad("");
       setValor("");
     }
-  }, [state.ok]);
+  }
+  useEffect(() => {
+    if (state.ok) formRef.current?.reset();
+  }, [state]);
 
   function aplicar(idx: number) {
     const p = PLANTILLAS[idx];

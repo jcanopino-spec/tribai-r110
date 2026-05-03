@@ -29,13 +29,17 @@ export function InteresForm({
   const [registrado, setRegistrado] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
+  const [lastSeen, setLastSeen] = useState(state);
+  if (state !== lastSeen) {
+    setLastSeen(state);
     if (state.ok) {
-      formRef.current?.reset();
       setSaldo("");
       setRegistrado("");
     }
-  }, [state.ok]);
+  }
+  useEffect(() => {
+    if (state.ok) formRef.current?.reset();
+  }, [state]);
 
   return (
     <div className="border border-border p-5">

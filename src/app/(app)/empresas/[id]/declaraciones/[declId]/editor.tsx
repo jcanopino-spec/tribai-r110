@@ -1,14 +1,8 @@
 "use client";
 
-import { useActionState, useMemo, useState, useTransition } from "react";
+import { useActionState, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Field } from "@/components/ui/label";
-import { Input, Select } from "@/components/ui/input";
-import {
-  saveValoresAction,
-  saveDatosAnticipoAction,
-  type SaveValoresState,
-} from "./actions";
+import { saveValoresAction, type SaveValoresState } from "./actions";
 import {
   RENGLONES_COMPUTADOS,
   FORMULAS_LEYENDA,

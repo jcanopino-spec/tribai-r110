@@ -315,7 +315,7 @@ function TabSanciones({
             de extemporaneidad para cálculo de sanción).
           </p>
           <p className="mt-1 text-muted-foreground">
-            Activa "Calcular sanción por extemporaneidad" abajo para liquidar la sanción
+            Activa &ldquo;Calcular sanción por extemporaneidad&rdquo; abajo para liquidar la sanción
             según el Art. 641/642 E.T.
           </p>
         </div>
