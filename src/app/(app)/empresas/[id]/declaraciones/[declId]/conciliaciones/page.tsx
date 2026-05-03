@@ -62,25 +62,23 @@ export default async function ConciliacionesHubPage({
       <div className="mt-10 grid gap-5 md:grid-cols-2">
         <ConciliacionCard
           href={`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`}
-          numero="A"
           titulo="Conciliación de utilidad"
-          descripcion="Utilidad contable → Renta líquida fiscal. Explica diferencias permanentes y temporales."
+          descripcion="Utilidad contable → Renta líquida fiscal. Explica diferencias permanentes y temporales que distorsionan la base gravable."
           puntoPartida="Utilidad contable"
-          puntoFinal="Renta líquida fiscal (R72/R75/R79)"
+          puntoFinal="Renta líquida fiscal"
           valorInicio={Number(declaracion.utilidad_contable ?? 0)}
           partidasManuales={utilidadCount ?? 0}
-          referenciaXlsm="Anexo 17 / Hoja H7"
+          baseLegal="Decreto Único Reglamentario · Art. 28-1 ET"
         />
         <ConciliacionCard
           href={`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-patrimonial`}
-          numero="B"
           titulo="Conciliación patrimonial"
-          descripcion="Patrimonio líquido AG anterior → Patrimonio líquido AG actual. Justifica la variación."
-          puntoPartida="PL fiscal AG anterior"
-          puntoFinal="PL fiscal AG actual (R46)"
+          descripcion="Verifica que el aumento del patrimonio se explique por las rentas declaradas. Si no, hay renta presumida."
+          puntoPartida="Diferencia patrimonial entre años"
+          puntoFinal="Renta por comparación patrimonial"
           valorInicio={plAnterior}
           partidasManuales={patrimonialCount ?? 0}
-          referenciaXlsm="Anexo 16 / Anexo 24"
+          baseLegal="Arts. 236 a 239 E.T."
         />
       </div>
 
@@ -115,24 +113,22 @@ export default async function ConciliacionesHubPage({
 
 function ConciliacionCard({
   href,
-  numero,
   titulo,
   descripcion,
   puntoPartida,
   puntoFinal,
   valorInicio,
   partidasManuales,
-  referenciaXlsm,
+  baseLegal,
 }: {
   href: string;
-  numero: string;
   titulo: string;
   descripcion: string;
   puntoPartida: string;
   puntoFinal: string;
   valorInicio: number;
   partidasManuales: number;
-  referenciaXlsm: string;
+  baseLegal: string;
 }) {
   return (
     <Link
@@ -140,14 +136,9 @@ function ConciliacionCard({
       className="group block border border-border p-5 transition-colors hover:border-foreground"
     >
       <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Conciliación {numero}
-          </p>
-          <h3 className="mt-2 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-            {titulo}
-          </h3>
-        </div>
+        <h3 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+          {titulo}
+        </h3>
         <span className="font-mono text-xs text-muted-foreground transition-colors group-hover:text-foreground">
           →
         </span>
@@ -178,7 +169,7 @@ function ConciliacionCard({
           Partidas manuales:{" "}
           <span className="font-mono text-foreground">{partidasManuales}</span>
         </span>
-        <span className="font-mono">{referenciaXlsm}</span>
+        <span className="font-mono">{baseLegal}</span>
       </div>
     </Link>
   );

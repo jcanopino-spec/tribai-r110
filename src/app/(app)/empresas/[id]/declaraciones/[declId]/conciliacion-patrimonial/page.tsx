@@ -79,7 +79,7 @@ export default async function ConciliacionPatrimonialPage({
   const [{ data: valores }, { data: retenciones }, { data: descuentos },
     { data: gos }, { data: rentasExentas }, { data: compensaciones },
     { data: recups }, { data: incrngos }, { data: divs },
-    { data: dividendosDistribuir }, { data: manualPartidas },
+    { data: manualPartidas },
   ] = await Promise.all([
     supabase.from("form110_valores").select("numero, valor").eq("declaracion_id", declId),
     supabase.from("anexo_retenciones").select("tipo, retenido").eq("declaracion_id", declId),
@@ -90,7 +90,6 @@ export default async function ConciliacionPatrimonialPage({
     supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
     supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
     supabase.from("anexo_dividendos").select("no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos").eq("declaracion_id", declId),
-    supabase.from("anexo_dividendos_distribuir").select("dividendo_no_gravado, dividendo_gravado").eq("declaracion_id", declId),
     supabase.from("conciliacion_patrimonial_partidas").select("*").eq("declaracion_id", declId).order("created_at"),
   ]);
 
@@ -177,119 +176,62 @@ export default async function ConciliacionPatrimonialPage({
   });
   const v = (n: number) => numerico.get(n) ?? 0;
 
-  // ========== AUTO PARTIDAS ==========
-  // (+) Renta líquida del ejercicio (R75)
-  // (+) Renta exenta (R77) — fiscalmente exenta, aumenta PL
-  // (+) INCRNGO (R60) — no constituye renta, aumenta PL
-  // (+) Ganancia ocasional gravable (R83)
-  // (+) Dividendos no constitutivos recibidos (R49)
-  // (−) Pérdida líquida (R73)
-  // (−) Total impuesto a cargo (R99)
-  // (−) Sanciones (R112)
-  // (−) Anticipo año siguiente (R108)
-  // (−) Dividendos a distribuir a socios (Anexo 25)
-  const totalDividendosADistribuir = (dividendosDistribuir ?? []).reduce(
-    (s, d) => s + Number(d.dividendo_no_gravado) + Number(d.dividendo_gravado),
+  // ========== ART. 236 COMPARACIÓN PATRIMONIAL ==========
+  // El usuario agrega partidas MANUALES con conceptos especiales:
+  //   - "Valorizaciones" (signo menos) · restan a la diferencia patrimonial
+  //   - "Desvalorizaciones" (signo más) · suman a la diferencia
+  //   - "Normalización tributaria" (signo más) · suma a las rentas ajustadas
+  //   - Otras partidas explicativas
+  const manuales = manualPartidas ?? [];
+  const valorizaciones = manuales
+    .filter((p) => p.concepto.toLowerCase().includes("valorizaci") && p.signo === "menos")
+    .reduce((s, p) => s + Number(p.valor), 0);
+  const desvalorizaciones = manuales
+    .filter((p) => p.concepto.toLowerCase().includes("desvalorizaci") && p.signo === "mas")
+    .reduce((s, p) => s + Number(p.valor), 0);
+  const normalizacionTributaria = manuales
+    .filter((p) => p.concepto.toLowerCase().includes("normalizaci") && p.signo === "mas")
+    .reduce((s, p) => s + Number(p.valor), 0);
+
+  // Otras partidas explicativas (informativas para el cuadre)
+  const otrasManuales: PartidaItem[] = manuales
+    .filter((p) => {
+      const lc = p.concepto.toLowerCase();
+      return !lc.includes("valorizaci") && !lc.includes("normalizaci");
+    })
+    .map((p) => ({
+      id: p.id,
+      origen: "manual" as const,
+      signo: p.signo as "mas" | "menos",
+      concepto: p.concepto,
+      valor: Number(p.valor),
+      observacion: p.observacion,
+    }));
+
+  const plReal = v(46);
+
+  // 1 · Diferencia patrimonial (Art. 236 E.T.)
+  //   = max(0, PL_actual + desvalorizaciones − valorizaciones − PL_anterior)
+  const diferenciaPatrimonial = Math.max(
     0,
+    plReal + desvalorizaciones - valorizaciones - plAnt,
   );
 
-  const autoPartidas: PartidaItem[] = [
-    {
-      id: "auto-r75",
-      origen: "auto", fuente: "F110 R75",
-      signo: "mas",
-      concepto: "Renta líquida del ejercicio (R75)",
-      valor: v(75),
-      observacion: "Utilidad fiscal generada en el año (después de compensaciones).",
-    },
-    {
-      id: "auto-r77",
-      origen: "auto", fuente: "F110 R77",
-      signo: "mas",
-      concepto: "Renta exenta (R77)",
-      valor: v(77),
-      observacion: "Rentas exentas que sí aumentan el patrimonio aunque no tributen.",
-    },
-    {
-      id: "auto-r60",
-      origen: "auto", fuente: "F110 R60",
-      signo: "mas",
-      concepto: "Ingresos no constitutivos de renta ni GO (R60)",
-      valor: v(60),
-      observacion: "INCRNGO: aumentan PL aunque no constituyan renta fiscal.",
-    },
-    {
-      id: "auto-r83",
-      origen: "auto", fuente: "F110 R83",
-      signo: "mas",
-      concepto: "Ganancias ocasionales gravables (R83)",
-      valor: v(83),
-      observacion: "Ganancias por activos fijos, herencias, rifas, etc.",
-    },
-    {
-      id: "auto-r49",
-      origen: "auto", fuente: "F110 R49",
-      signo: "mas",
-      concepto: "Dividendos no constitutivos recibidos (R49)",
-      valor: v(49),
-    },
-    {
-      id: "auto-r73",
-      origen: "auto", fuente: "F110 R73",
-      signo: "menos",
-      concepto: "Pérdida líquida del ejercicio (R73)",
-      valor: v(73),
-      observacion: "Si hay pérdida fiscal, reduce el patrimonio líquido.",
-    },
-    {
-      id: "auto-r99",
-      origen: "auto", fuente: "F110 R99",
-      signo: "menos",
-      concepto: "Total impuesto a cargo (R99)",
-      valor: v(99),
-      observacion: "Impuesto causado del año, consume patrimonio.",
-    },
-    {
-      id: "auto-r112",
-      origen: "auto", fuente: "F110 R112",
-      signo: "menos",
-      concepto: "Sanciones (R112)",
-      valor: v(112),
-    },
-    {
-      id: "auto-r108",
-      origen: "auto", fuente: "F110 R108",
-      signo: "menos",
-      concepto: "Anticipo renta para el año siguiente (R108)",
-      valor: v(108),
-      observacion: "Anticipo causado, se pagará pero ya reduce PL fiscal.",
-    },
-    {
-      id: "auto-anexo25",
-      origen: "auto", fuente: "Anexo 25",
-      signo: "menos",
-      concepto: "Distribución de dividendos a socios (Anexo 25)",
-      valor: totalDividendosADistribuir,
-      observacion: "Repartos a accionistas reducen el patrimonio.",
-    },
-  ].filter((p) => p.valor > 0) as PartidaItem[];
+  // 2 · Rentas ajustadas
+  //   = R75 + R77 + R60 + R83 + normalización − saldo pagar AG anterior − R107
+  const rentasAjustadas = Math.max(
+    0,
+    v(75) + v(77) + v(60) + v(83) + normalizacionTributaria
+      - Number(declaracion.saldo_pagar_anterior ?? 0) - v(107),
+  );
 
-  const manuales: PartidaItem[] = (manualPartidas ?? []).map((p) => ({
-    id: p.id,
-    origen: "manual" as const,
-    signo: p.signo as "mas" | "menos",
-    concepto: p.concepto,
-    valor: Number(p.valor),
-    observacion: p.observacion,
-  }));
-
-  const todas = [...autoPartidas, ...manuales];
-  const sumaMas = todas.filter((p) => p.signo === "mas").reduce((s, p) => s + p.valor, 0);
-  const sumaMenos = todas.filter((p) => p.signo === "menos").reduce((s, p) => s + p.valor, 0);
-  const plFinalEsperado = plAnt + sumaMas - sumaMenos;
-  const plReal = v(46);
-  const diferencia = plReal - plFinalEsperado;
-  const cuadre = Math.abs(diferencia) < 1000; // tolerancia de redondeo DIAN
+  // 3 · Renta por comparación patrimonial
+  //   = max(0, diferencia − rentas ajustadas)
+  //   Excepto si es primera vez declarando → 0 (Art. 237 E.T. no aplica)
+  const esPrimeraVez = declaracion.anios_declarando === "primero";
+  const rentaPorComparacion = esPrimeraVez
+    ? 0
+    : Math.max(0, diferenciaPatrimonial - rentasAjustadas);
 
   return (
     <div className="max-w-5xl">
@@ -304,81 +246,187 @@ export default async function ConciliacionPatrimonialPage({
         Conciliación Patrimonial
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
-        Justifica la variación del <span className="font-medium">patrimonio líquido fiscal</span>
-        entre el año anterior y el año actual. Las partidas se alimentan automáticamente
-        del Formulario 110 y los anexos. Agrega manualmente solo aquello que no se deriva
-        (capitalizaciones, valorizaciones, distribuciones extraordinarias).
+        Verifica que el aumento del patrimonio líquido fiscal entre el año anterior
+        y el actual se explique por las rentas declaradas. Si no se explica, la DIAN
+        presume <span className="font-medium">renta por comparación patrimonial</span>{" "}
+        (Arts. 236-239 E.T.) que se grava como renta líquida adicional.
       </p>
 
-      {/* Cuadro de cuadre */}
-      <section className="mt-8 grid gap-4 md:grid-cols-4">
-        <Stat label="PL inicial (AG anterior)" value={plAnt} muted />
-        <Stat label="(+) Aumentos" value={sumaMas} success={sumaMas > 0} />
-        <Stat label="(−) Disminuciones" value={-sumaMenos} alert={sumaMenos > 0} />
-        <Stat label="PL final esperado" value={plFinalEsperado} emphasis />
-      </section>
-
-      <section className="mt-6 border border-border p-5">
-        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-          Cuadre vs Formulario 110 · Renglón 46
-        </p>
-        <div className="mt-3 grid gap-3 md:grid-cols-3">
-          <div>
-            <p className="text-xs text-muted-foreground">PL final esperado</p>
-            <p className="mt-1 font-mono text-lg tabular-nums">{FMT.format(plFinalEsperado)}</p>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground">PL fiscal real (R46)</p>
-            <p className="mt-1 font-mono text-lg tabular-nums">{FMT.format(plReal)}</p>
-          </div>
-          <div>
-            <p className="text-xs text-muted-foreground">Diferencia</p>
-            <p
-              className={`mt-1 font-mono text-lg tabular-nums ${
-                cuadre ? "text-success" : "text-destructive"
-              }`}
-            >
-              {diferencia >= 0 ? "+" : ""}{FMT.format(diferencia)}
-            </p>
-          </div>
-        </div>
-        {cuadre ? (
-          <div className="mt-4 border border-success/40 bg-success/5 p-3 text-sm">
-            ✓ La conciliación cuadra (diferencia menor a $1.000, dentro de la tolerancia
-            de redondeo DIAN).
-          </div>
-        ) : (
-          <div className="mt-4 border border-amber-500/40 bg-amber-500/5 p-3 text-sm">
-            ⚠ Hay una diferencia de{" "}
-            <span className="font-mono">${FMT.format(Math.abs(diferencia))}</span> sin
-            justificar. Agrega partidas manuales abajo (capitalizaciones,
-            valorizaciones, otros) hasta que la diferencia sea cero o explicada.
-          </div>
-        )}
-      </section>
-
-      {/* Partidas */}
-      <section className="mt-12">
+      {/* === COMPARACIÓN PATRIMONIAL · Art. 236 E.T. === */}
+      <section className="mt-10">
         <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-          Partidas conciliatorias
+          1 · Diferencia patrimonial
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Las marcadas <span className="font-mono text-xs">auto</span> se calculan en
-          tiempo real al modificar ingresos, costos, anexos o configuración. Las
-          manuales se editan abajo.
+          Variación del patrimonio líquido entre años, ajustada por
+          desvalorizaciones y valorizaciones manuales.
         </p>
-        <div className="mt-6">
-          <PartidasPatrimonialList
-            items={todas}
-            declId={declId}
-            empresaId={empresaId}
+        <div className="mt-4 border border-border">
+          <RowSimple label="Patrimonio líquido a 31-dic AG actual (R46)" value={plReal} />
+          <RowSimple
+            label="Más: Desvalorizaciones"
+            value={desvalorizaciones}
+            origen="manual"
+          />
+          <RowSimple
+            label="Menos: Valorizaciones"
+            value={-valorizaciones}
+            origen="manual"
+          />
+          <RowSimple
+            label="Menos: Patrimonio líquido a 31-dic AG anterior"
+            value={-plAnt}
+          />
+          <RowSimple
+            label="Diferencia patrimonial"
+            value={Math.max(0, diferenciaPatrimonial)}
+            bold
           />
         </div>
       </section>
 
-      <section className="mt-12">
-        <PartidaPatrimonialForm declId={declId} empresaId={empresaId} />
+      {/* === CONCILIACIÓN DE RENTAS === */}
+      <section className="mt-10">
+        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+          2 · Rentas ajustadas
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Suma de rentas declaradas, exentas, INCRNGO y ganancias ocasionales,
+          menos impuestos pagados y retenciones practicadas en el año. Se
+          alimenta automáticamente del Formulario 110.
+        </p>
+        <div className="mt-4 border border-border">
+          <RowSimple label="Renta líquida fiscal del ejercicio (R75)" value={v(75)} />
+          <RowSimple label="Más: Rentas exentas (R77)" value={v(77)} />
+          <RowSimple
+            label="Más: Ingresos no constitutivos de renta ni GO (R60)"
+            value={v(60)}
+          />
+          <RowSimple label="Más: Ganancia ocasional gravable (R83)" value={v(83)} />
+          <RowSimple
+            label="Más: Normalización tributaria del año"
+            value={normalizacionTributaria}
+            origen="manual"
+          />
+          <RowSimple
+            label="Menos: Saldo a pagar AG anterior (impuestos del año anterior pagados)"
+            value={-Number(declaracion.saldo_pagar_anterior ?? 0)}
+          />
+          <RowSimple label="Menos: Retenciones practicadas (R107)" value={-v(107)} />
+          <RowSimple label="Rentas ajustadas" value={Math.max(0, rentasAjustadas)} bold />
+        </div>
       </section>
+
+      {/* === RESULTADO === */}
+      <section className="mt-10">
+        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+          3 · Renta por comparación patrimonial
+        </h2>
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          <Stat
+            label="Diferencia patrimonial"
+            value={Math.max(0, diferenciaPatrimonial)}
+            muted
+          />
+          <Stat label="Rentas ajustadas" value={Math.max(0, rentasAjustadas)} muted />
+          <Stat
+            label="Renta por comparación"
+            value={rentaPorComparacion}
+            emphasis={rentaPorComparacion > 0}
+            alert={rentaPorComparacion > 0}
+          />
+        </div>
+        {rentaPorComparacion > 0 ? (
+          <div className="mt-4 border border-amber-500/40 bg-amber-500/5 p-4 text-sm">
+            <p className="font-medium text-amber-700 dark:text-amber-500">
+              ⚠ Hay {FMT.format(rentaPorComparacion)} de renta presumida por DIAN
+            </p>
+            <p className="mt-2">
+              El patrimonio aumentó más de lo que las rentas declaradas justifican.
+              La DIAN puede presumir esa diferencia como renta líquida adicional
+              (Art. 236 E.T.). Agrega partidas manuales abajo
+              (valorizaciones, normalización tributaria, capitalizaciones)
+              hasta que la diferencia se explique.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-4 border border-success/40 bg-success/5 p-4 text-sm">
+            ✓ El aumento patrimonial está plenamente justificado por las rentas
+            declaradas. No hay renta por comparación patrimonial.
+          </div>
+        )}
+      </section>
+
+      {/* Otras partidas manuales explicativas */}
+      {otrasManuales.length > 0 ? (
+        <section className="mt-10">
+          <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+            Otras partidas explicativas
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Conceptos manuales adicionales registrados pero no clasificados como
+            valorizaciones ni normalización tributaria.
+          </p>
+          <div className="mt-4">
+            <PartidasPatrimonialList
+              items={otrasManuales}
+              declId={declId}
+              empresaId={empresaId}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="mt-10">
+        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+          Agregar partida manual
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Para que la conciliación patrimonial no genere renta presumida, registra
+          aquí los conceptos que la justifican: <strong>valorizaciones</strong> de
+          activos, <strong>desvalorizaciones</strong>, <strong>normalización
+          tributaria</strong> del año (Ley 2277/2022), capitalizaciones, etc.
+        </p>
+        <div className="mt-4">
+          <PartidaPatrimonialForm declId={declId} empresaId={empresaId} />
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function RowSimple({
+  label,
+  value,
+  bold,
+  origen,
+}: {
+  label: string;
+  value: number;
+  bold?: boolean;
+  origen?: "manual" | "auto";
+}) {
+  return (
+    <div
+      className={`flex items-center justify-between border-b border-border px-4 py-2.5 last:border-b-0 text-sm ${
+        bold ? "bg-muted/40" : ""
+      }`}
+    >
+      <p className={`flex items-center gap-2 ${bold ? "font-semibold" : ""}`}>
+        {label}
+        {origen ? (
+          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+            {origen}
+          </span>
+        ) : null}
+      </p>
+      <p
+        className={`font-mono tabular-nums ${bold ? "font-semibold text-base" : ""} ${
+          value < 0 ? "text-destructive" : ""
+        }`}
+      >
+        {value === 0 ? "—" : FMT.format(value)}
+      </p>
     </div>
   );
 }
