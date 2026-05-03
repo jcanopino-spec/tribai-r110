@@ -1,11 +1,22 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteGoAction } from "./actions";
-import { CATEGORIAS } from "./consts";
+import { Input } from "@/components/ui/input";
+import { deleteGoAction, updateGoAction } from "./actions";
+import { CATEGORIAS, type Categoria } from "./consts";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+function fmtInput(s: string): string {
+  const c = s.replace(/[^0-9]/g, "");
+  return c ? FMT.format(Number(c)) : "";
+}
+function parseNum(s: string): number {
+  const c = String(s ?? "").replace(/[^0-9]/g, "");
+  const n = Number(c);
+  return Number.isFinite(n) ? n : 0;
+}
 
 type Item = {
   id: number;
@@ -127,7 +138,37 @@ function Row({
   empresaId: string;
 }) {
   const router = useRouter();
+  const [editing, setEditing] = useState(false);
   const [pending, start] = useTransition();
+  const [concepto, setConcepto] = useState(item.concepto);
+  const [precio, setPrecio] = useState(item.precio_venta ? FMT.format(item.precio_venta) : "");
+  const [costo, setCosto] = useState(item.costo_fiscal ? FMT.format(item.costo_fiscal) : "");
+  const [noGrav, setNoGrav] = useState(item.no_gravada ? FMT.format(item.no_gravada) : "");
+  const [recDep, setRecDep] = useState(item.recuperacion_depreciacion ? FMT.format(item.recuperacion_depreciacion) : "");
+
+  if (editing) {
+    return (
+      <tr className="border-t border-border bg-muted/30">
+        <td className="px-3 py-2">
+          <Input value={concepto} onChange={(e) => setConcepto(e.target.value)} className="text-xs" />
+          <Input value={recDep} onChange={(e) => setRecDep(fmtInput(e.target.value))} placeholder="Rec. depreciación" inputMode="numeric" className="mt-1 font-mono text-xs" />
+        </td>
+        <td className="px-3 py-2"><Input value={precio} onChange={(e) => setPrecio(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={costo} onChange={(e) => setCosto(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={noGrav} onChange={(e) => setNoGrav(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2 text-right">
+          <div className="flex flex-col gap-1">
+            <button type="button" disabled={pending} onClick={() => start(async () => {
+              await updateGoAction(item.id, declId, empresaId, { categoria: item.categoria as Categoria, concepto, precio_venta: parseNum(precio), costo_fiscal: parseNum(costo), no_gravada: parseNum(noGrav), recuperacion_depreciacion: parseNum(recDep) });
+              setEditing(false); router.refresh();
+            })} className="rounded-full bg-foreground px-3 py-1 text-xs text-background hover:opacity-90 disabled:opacity-50">{pending ? "…" : "Guardar"}</button>
+            <button type="button" onClick={() => { setConcepto(item.concepto); setPrecio(item.precio_venta ? FMT.format(item.precio_venta) : ""); setCosto(item.costo_fiscal ? FMT.format(item.costo_fiscal) : ""); setNoGrav(item.no_gravada ? FMT.format(item.no_gravada) : ""); setRecDep(item.recuperacion_depreciacion ? FMT.format(item.recuperacion_depreciacion) : ""); setEditing(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancelar</button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <tr className="border-t border-border">
       <td className="px-3 py-2">
@@ -142,19 +183,10 @@ function Row({
       <td className="px-3 py-2 text-right font-mono">{FMT.format(item.costo_fiscal)}</td>
       <td className="px-3 py-2 text-right font-mono">{FMT.format(item.no_gravada)}</td>
       <td className="px-3 py-2 text-right">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => {
-            start(async () => {
-              await deleteGoAction(item.id, declId, empresaId);
-              router.refresh();
-            });
-          }}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {pending ? "…" : "Eliminar"}
-        </button>
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={() => setEditing(true)} className="text-xs text-muted-foreground hover:text-foreground">Modificar</button>
+          <button type="button" disabled={pending} onClick={() => start(async () => { await deleteGoAction(item.id, declId, empresaId); router.refresh(); })} className="text-xs text-destructive hover:underline disabled:opacity-50">{pending ? "…" : "Eliminar"}</button>
+        </div>
       </td>
     </tr>
   );

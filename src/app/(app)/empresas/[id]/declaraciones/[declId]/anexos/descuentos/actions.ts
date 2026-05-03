@@ -56,3 +56,30 @@ export async function deleteDescuentoAction(
   await supabase.from("anexo_descuentos").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateDescuentoAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    categoria: Categoria;
+    descripcion: string;
+    normatividad: string | null;
+    base: number;
+    valor_descuento: number;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_descuentos")
+    .update({
+      categoria: data.categoria,
+      descripcion: data.descripcion.trim(),
+      normatividad: data.normatividad?.trim() || null,
+      base: data.base,
+      valor_descuento: data.valor_descuento,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

@@ -60,3 +60,32 @@ export async function deleteGoAction(
   await supabase.from("anexo_ganancia_ocasional").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateGoAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    categoria: Categoria;
+    concepto: string;
+    precio_venta: number;
+    costo_fiscal: number;
+    no_gravada: number;
+    recuperacion_depreciacion: number;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_ganancia_ocasional")
+    .update({
+      categoria: data.categoria,
+      concepto: data.concepto.trim(),
+      precio_venta: data.precio_venta,
+      costo_fiscal: data.costo_fiscal,
+      no_gravada: data.no_gravada,
+      recuperacion_depreciacion: data.recuperacion_depreciacion,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}
