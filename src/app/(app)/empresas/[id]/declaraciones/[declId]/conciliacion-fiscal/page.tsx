@@ -41,6 +41,9 @@ export default async function ConciliacionPage({
     tasaIntRes,
     r72Res,
     balanceLineasRes,
+    incrngoRes,
+    recupRes,
+    donacionesRes,
   ] = await Promise.all([
     supabase
       .from("conciliacion_partidas")
@@ -82,6 +85,12 @@ export default async function ConciliacionPage({
           .eq("balance_id", balanceMeta.id)
           .or("ajuste_debito.gt.0,ajuste_credito.gt.0")
       : Promise.resolve({ data: [] }),
+    supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
+    supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_descuentos")
+      .select("categoria, valor_descuento")
+      .eq("declaracion_id", declId),
   ]);
 
   const partidasManuales = (partidasRes.data ?? []).map((p) => ({
@@ -116,20 +125,86 @@ export default async function ConciliacionPage({
   };
   const partidasAuto: Auto[] = [];
 
-  // Anexo 9 · ICA: 50% pagado se asume tomado como descuento → no deducible
+  // ICA: 50% pagado se asume tomado como descuento → no deducible
   const totalIca = (icaRes.data ?? []).reduce((s, r) => s + Number(r.valor_pagado), 0);
-  if (totalIca > 0) {
+  if (totalIca > 0 && declaracion.ica_como_descuento) {
     partidasAuto.push({
       id: "auto-ica-50",
       tipo: "permanente",
       signo: "mas",
-      concepto: "50% ICA pagado (tomado como descuento Anexo 4)",
+      concepto: "50% ICA pagado (tomado como descuento tributario)",
       valor: totalIca * 0.5,
-      observacion: "Si no tomaste el descuento, elimina esta partida desde el Anexo 9.",
+      observacion: "Art. 115 E.T.: solo el 50% es deducible cuando se toma como descuento.",
       origen: "auto",
-      fuente: "Anexo 9 · ICA",
+      fuente: "ICA pagado",
     });
   }
+
+  // INCRNGO · ingresos no constitutivos de renta ni GO (R141 xlsm)
+  // Son ingresos contables que NO son fiscales → restan a la utilidad fiscal.
+  const totalIncrngo = (incrngoRes.data ?? []).reduce(
+    (s, r) => s + Number(r.valor),
+    0,
+  );
+  if (totalIncrngo > 0) {
+    partidasAuto.push({
+      id: "auto-incrngo",
+      tipo: "permanente",
+      signo: "menos",
+      concepto: "Ingresos no constitutivos de renta ni ganancia ocasional",
+      valor: totalIncrngo,
+      observacion:
+        "Ingresos contables que la ley excluye de la base gravable (Arts. 36 a 57-2 E.T.). Se restan de la utilidad para llegar a la renta fiscal.",
+      origen: "auto",
+      fuente: "INCRNGO",
+    });
+  }
+
+  // Recuperación de deducciones (R149/R188 xlsm) · Art. 195 E.T.
+  // Renta fiscal adicional que no aparece en la utilidad contable estándar.
+  const totalRecup = (recupRes.data ?? []).reduce((s, r) => s + Number(r.valor), 0);
+  if (totalRecup > 0) {
+    partidasAuto.push({
+      id: "auto-recuperacion",
+      tipo: "permanente",
+      signo: "mas",
+      concepto: "Renta líquida por recuperación de deducciones",
+      valor: totalRecup,
+      observacion:
+        "Reversiones de partidas que disminuyeron rentas líquidas anteriores (Art. 195 E.T.). Suman a la renta fiscal aunque ya estén en utilidad contable.",
+      origen: "auto",
+      fuente: "Recuperación deducciones",
+    });
+  }
+
+  // Donaciones tomadas como descuento tributario (Art. 257 E.T.)
+  // Si están en Anexo 4 con categoría "donacion", el valor donado en sí
+  // se considera no deducible como gasto (porque ya está en R93).
+  const donacionesDescuento = (donacionesRes.data ?? [])
+    .filter((d) => String(d.categoria).toLowerCase().includes("donaci"))
+    .reduce((s, d) => s + Number(d.valor_descuento), 0);
+  if (donacionesDescuento > 0) {
+    partidasAuto.push({
+      id: "auto-donaciones",
+      tipo: "permanente",
+      signo: "mas",
+      concepto: "Donaciones tomadas como descuento (no deducibles como gasto)",
+      valor: donacionesDescuento * 4, // descuento ~25% → gasto base ~4x
+      observacion:
+        "Las donaciones tomadas como descuento del 25% (Art. 257 E.T.) NO son deducibles como gasto. La utilidad contable las trataba como gasto.",
+      origen: "auto",
+      fuente: "Descuentos tributarios",
+    });
+  }
+
+  // Sanciones causadas en el año · multas, intereses moratorios DIAN (R173 xlsm)
+  // No son deducibles (Art. 105 E.T.).
+  // Si se calcula sanción extemporaneidad o corrección, el valor estimado
+  // puede provisionarse contablemente y debe sumarse fiscalmente como no
+  // deducible.
+  // Por ahora dejamos esto MANUAL — el usuario sabe si tiene sanciones DIAN
+  // adicionales en su PyG. La sanción del 110 misma se descuenta del saldo,
+  // no entra a la conciliación de utilidad.
 
   // Anexo 10 · GMF: 50% no deducible (Art. 115 E.T.)
   const totalGmf = (gmfRes.data ?? []).reduce((s, r) => s + Number(r.valor_gmf), 0);
