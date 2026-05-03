@@ -19,6 +19,7 @@ const NUMERIC_FIELDS = new Set([
   "aportes_seg_social",
   "aportes_para_fiscales",
   "impuesto_neto_anterior",
+  "mayor_valor_correccion", // Base para sanción por corrección (Art. 644 E.T.)
 ]);
 
 const BOOL_FIELDS = new Set([
@@ -79,6 +80,14 @@ export async function saveConfiguracionAction(
       update[key] = v.trim() || null;
     } else if (DATE_FIELDS.has(key)) {
       update[key] = v || null;
+    } else if (key !== "$ACTION_REF_1" && !key.startsWith("$ACTION_")) {
+      // Safety net: cualquier campo del form que no esté en ningún set queda
+      // SIN GUARDAR. Logueamos para detectar regresiones tipo
+      // mayor_valor_correccion (que tardó meses en aparecer).
+      // Excluimos los `$ACTION_*` que Next.js inyecta en server actions.
+      console.warn(
+        `[saveConfiguracionAction] Campo no manejado en ningún FIELDS set: "${key}". Agrégalo a NUMERIC/BOOL/TEXT/NULLABLE_TEXT/DATE.`,
+      );
     }
   }
 
