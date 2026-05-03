@@ -362,51 +362,50 @@ export async function saveAjustesFiscalesAction(
     .maybeSingle();
   if (!balance) return;
 
-  // Recolectar ajustes por cuenta del FormData (d_<cuenta>, c_<cuenta>, o_<cuenta>)
-  const updates = new Map<
-    string,
-    { ajuste_debito: number; ajuste_credito: number; observacion: string | null }
-  >();
+  // Recolectar ajustes PARCIALES por cuenta. Solo se actualizan las columnas
+  // que vienen en el FormData — no sobreescribimos ajuste_debito con 0
+  // cuando el cliente sólo está guardando el ajuste_credito (o viceversa).
+  // Prefijos:
+  //   d_<cuenta>  → ajuste_debito
+  //   c_<cuenta>  → ajuste_credito
+  //   o_<cuenta>  → observacion (string vacío → null)
+  type PartialUpdate = {
+    ajuste_debito?: number;
+    ajuste_credito?: number;
+    observacion?: string | null;
+  };
+  const updates = new Map<string, PartialUpdate>();
   for (const [k, raw] of formData.entries()) {
     const v = String(raw ?? "");
+    let cuenta: string | null = null;
+    let field: keyof PartialUpdate | null = null;
+    let value: number | string | null = null;
     if (k.startsWith("d_")) {
-      const cuenta = k.slice(2);
-      const prev = updates.get(cuenta) ?? {
-        ajuste_debito: 0,
-        ajuste_credito: 0,
-        observacion: null,
-      };
-      prev.ajuste_debito = Number(v) || 0;
-      updates.set(cuenta, prev);
+      cuenta = k.slice(2);
+      field = "ajuste_debito";
+      value = Number(v) || 0;
     } else if (k.startsWith("c_")) {
-      const cuenta = k.slice(2);
-      const prev = updates.get(cuenta) ?? {
-        ajuste_debito: 0,
-        ajuste_credito: 0,
-        observacion: null,
-      };
-      prev.ajuste_credito = Number(v) || 0;
-      updates.set(cuenta, prev);
+      cuenta = k.slice(2);
+      field = "ajuste_credito";
+      value = Number(v) || 0;
     } else if (k.startsWith("o_")) {
-      const cuenta = k.slice(2);
-      const prev = updates.get(cuenta) ?? {
-        ajuste_debito: 0,
-        ajuste_credito: 0,
-        observacion: null,
-      };
-      prev.observacion = v || null;
+      cuenta = k.slice(2);
+      field = "observacion";
+      value = v || null;
+    }
+    if (cuenta && field) {
+      const prev = updates.get(cuenta) ?? {};
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (prev as any)[field] = value;
       updates.set(cuenta, prev);
     }
   }
 
   for (const [cuenta, vals] of updates.entries()) {
+    if (Object.keys(vals).length === 0) continue;
     await supabase
       .from("balance_prueba_lineas")
-      .update({
-        ajuste_debito: vals.ajuste_debito,
-        ajuste_credito: vals.ajuste_credito,
-        observacion: vals.observacion,
-      })
+      .update(vals)
       .eq("balance_id", balance.id)
       .eq("cuenta", cuenta);
   }

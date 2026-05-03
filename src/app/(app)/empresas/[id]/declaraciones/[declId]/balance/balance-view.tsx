@@ -94,27 +94,40 @@ export function BalanceView({
     });
   }
 
-  // Auto-guardar SOLO la fila que pierde foco (no toda la tabla, para que
-  // el usuario pueda seguir editando otras filas sin race conditions).
-  async function autoSaveRow(cuenta: string) {
+  // Auto-guardar SOLO el campo que pierde foco (débito o crédito) para que
+  // un campo no sobreescriba al otro y el usuario pueda editar ambos en
+  // secuencia sin perder datos.
+  async function autoSaveRow(cuenta: string, field: "debito" | "credito") {
     const data = ajustesRef.current.get(cuenta);
     if (!data) return;
     setSavingRows((s) => new Set(s).add(cuenta));
     try {
       const fd = new FormData();
-      fd.set(`d_${cuenta}`, String(parseValor(data.debito)));
-      fd.set(`c_${cuenta}`, String(parseValor(data.credito)));
-      fd.set(`o_${cuenta}`, data.observacion);
+      // Solo envía el campo que se está guardando — el server hace UPDATE
+      // parcial y no toca las columnas no enviadas.
+      if (field === "debito") {
+        fd.set(`d_${cuenta}`, String(parseValor(data.debito)));
+      } else {
+        fd.set(`c_${cuenta}`, String(parseValor(data.credito)));
+      }
       await saveAjustesFiscalesAction(empresaId, declId, fd);
-      // Quita la fila de ajustes pendientes y marca como guardada.
+      // Quita SOLO el campo recién guardado de la fila local; los otros
+      // campos (si los hay) siguen pendientes hasta su propio blur.
       setAjustes((prev) => {
         const next = new Map(prev);
-        next.delete(cuenta);
+        const row = next.get(cuenta);
+        if (!row) return next;
+        const updated = { ...row, [field]: "" };
+        // Si quedan los dos en blanco y observacion vacía, sacamos la fila.
+        if (!updated.debito && !updated.credito && !updated.observacion) {
+          next.delete(cuenta);
+        } else {
+          next.set(cuenta, updated);
+        }
         return next;
       });
       setSavedRows((s) => new Set(s).add(cuenta));
       router.refresh();
-      // Limpia el badge "guardado" después de 2.5s
       setTimeout(() => {
         setSavedRows((s) => {
           if (!s.has(cuenta)) return s;
@@ -327,7 +340,8 @@ export function BalanceView({
                           value={ajusteValor(l, "debito")}
                           onChange={(e) => setAjuste(l.cuenta, "debito", formatInput(e.target.value))}
                           onBlur={() => {
-                            if (ajustes.has(l.cuenta)) autoSaveRow(l.cuenta);
+                            const row = ajustes.get(l.cuenta);
+                            if (row && row.debito !== "") autoSaveRow(l.cuenta, "debito");
                           }}
                           className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
                           placeholder="0"
@@ -343,7 +357,8 @@ export function BalanceView({
                           value={ajusteValor(l, "credito")}
                           onChange={(e) => setAjuste(l.cuenta, "credito", formatInput(e.target.value))}
                           onBlur={() => {
-                            if (ajustes.has(l.cuenta)) autoSaveRow(l.cuenta);
+                            const row = ajustes.get(l.cuenta);
+                            if (row && row.credito !== "") autoSaveRow(l.cuenta, "credito");
                           }}
                           className="h-8 w-32 rounded border border-transparent bg-transparent px-2 text-right font-mono hover:border-border focus:border-ring focus:bg-card focus:outline-none"
                           placeholder="0"
