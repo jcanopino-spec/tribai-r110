@@ -301,12 +301,20 @@ export function DeclaracionEditor({
           {errores === 0 && warns === 0 ? <span className="ml-2 font-mono">· OK</span> : null}
         </Link>
         <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/formulario-110`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
+        >
+          Formulario 110 →
+        </Link>
+        <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
-          Imprimir / PDF →
+          Vista plana →
         </Link>
       </div>
 
