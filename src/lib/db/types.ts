@@ -844,6 +844,44 @@ export type Database = {
           },
         ]
       }
+      conciliacion_patrimonial_partidas: {
+        Row: {
+          concepto: string
+          created_at: string
+          declaracion_id: string
+          id: number
+          observacion: string | null
+          signo: string
+          valor: number
+        }
+        Insert: {
+          concepto: string
+          created_at?: string
+          declaracion_id: string
+          id?: number
+          observacion?: string | null
+          signo: string
+          valor?: number
+        }
+        Update: {
+          concepto?: string
+          created_at?: string
+          declaracion_id?: string
+          id?: number
+          observacion?: string | null
+          signo?: string
+          valor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conciliacion_patrimonial_partidas_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       declaraciones: {
         Row: {
           anios_declarando: string

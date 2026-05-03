@@ -304,14 +304,14 @@ export default async function ConciliacionPage({
   return (
     <div className="max-w-5xl">
       <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
+        href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
         className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
       >
-        ← Volver al editor
+        ← Volver a Conciliaciones
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Conciliación Fiscal
+        Conciliación de Utilidad
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Explica las diferencias entre la utilidad contable antes de impuestos

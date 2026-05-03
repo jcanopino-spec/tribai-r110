@@ -1,0 +1,56 @@
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
+import { revalidateDeclaracion } from "@/lib/revalidate";
+import type { State, Signo } from "./consts";
+
+function parseNum(s: string): number {
+  const cleaned = String(s ?? "").replace(/\./g, "").replace(/,/g, ".");
+  const n = Number(cleaned);
+  return Number.isFinite(n) ? n : 0;
+}
+
+export async function addPartidaPatrimonialAction(
+  declId: string,
+  empresaId: string,
+  _prev: State,
+  form: FormData,
+): Promise<State> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { error: "Sesión expirada.", ok: false };
+
+  const signo = String(form.get("signo") ?? "mas") as Signo;
+  const concepto = String(form.get("concepto") ?? "").trim();
+  const valor = parseNum(String(form.get("valor") ?? ""));
+  const observacion = String(form.get("observacion") ?? "").trim() || null;
+
+  if (!concepto) return { error: "Concepto es obligatorio.", ok: false };
+  if (valor <= 0) return { error: "El valor debe ser mayor a cero.", ok: false };
+
+  const { error } = await supabase
+    .from("conciliacion_patrimonial_partidas")
+    .insert({
+      declaracion_id: declId,
+      signo,
+      concepto,
+      valor,
+      observacion,
+    });
+  if (error) return { error: error.message, ok: false };
+
+  revalidateDeclaracion(empresaId, declId);
+  return { error: null, ok: true };
+}
+
+export async function deletePartidaPatrimonialAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+) {
+  const supabase = await createClient();
+  await supabase.from("conciliacion_patrimonial_partidas").delete().eq("id", id);
+  revalidateDeclaracion(empresaId, declId);
+}

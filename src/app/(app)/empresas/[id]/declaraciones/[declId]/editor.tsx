@@ -274,10 +274,10 @@ export function DeclaracionEditor({
           Anexos
         </Link>
         <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`}
+          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
-          Conciliación Fiscal
+          Conciliaciones
         </Link>
         <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
