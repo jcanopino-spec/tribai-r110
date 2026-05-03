@@ -70,3 +70,40 @@ export async function deleteDividendoAction(
   await supabase.from("anexo_dividendos").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateDividendoAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    nit: string | null;
+    tercero: string;
+    no_constitutivos: number;
+    distribuidos_no_residentes: number;
+    gravados_tarifa_general: number;
+    gravados_persona_natural_dos: number;
+    gravados_personas_extranjeras: number;
+    gravados_art_245: number;
+    gravados_tarifa_l1819: number;
+    gravados_proyectos: number;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_dividendos")
+    .update({
+      nit: data.nit?.trim() || null,
+      tercero: data.tercero.trim(),
+      no_constitutivos: data.no_constitutivos,
+      distribuidos_no_residentes: data.distribuidos_no_residentes,
+      gravados_tarifa_general: data.gravados_tarifa_general,
+      gravados_persona_natural_dos: data.gravados_persona_natural_dos,
+      gravados_personas_extranjeras: data.gravados_personas_extranjeras,
+      gravados_art_245: data.gravados_art_245,
+      gravados_tarifa_l1819: data.gravados_tarifa_l1819,
+      gravados_proyectos: data.gravados_proyectos,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

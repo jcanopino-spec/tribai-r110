@@ -55,3 +55,36 @@ export async function deleteSegSocialAction(id: number, declId: string, empresaI
   await supabase.from("anexo_seg_social").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateSegSocialAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    empleado: string;
+    cedula: string | null;
+    salario: number;
+    aporte_salud: number;
+    aporte_pension: number;
+    aporte_arl: number;
+    aporte_parafiscales: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_seg_social")
+    .update({
+      empleado: data.empleado.trim(),
+      cedula: data.cedula?.trim() || null,
+      salario: data.salario,
+      aporte_salud: data.aporte_salud,
+      aporte_pension: data.aporte_pension,
+      aporte_arl: data.aporte_arl,
+      aporte_parafiscales: data.aporte_parafiscales,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

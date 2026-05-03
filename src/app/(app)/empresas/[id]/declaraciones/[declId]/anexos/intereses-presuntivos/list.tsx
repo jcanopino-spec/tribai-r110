@@ -1,10 +1,21 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteInteresAction } from "./actions";
+import { Input } from "@/components/ui/input";
+import { deleteInteresAction, updateInteresAction } from "./actions";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+function fmtInput(s: string): string {
+  const c = s.replace(/[^0-9]/g, "");
+  return c ? FMT.format(Number(c)) : "";
+}
+function parseNum(s: string): number {
+  const c = String(s ?? "").replace(/[^0-9]/g, "");
+  const n = Number(c);
+  return Number.isFinite(n) ? n : 0;
+}
 
 type Item = {
   id: number;
@@ -69,7 +80,39 @@ export function InteresList({
 
 function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaId: string }) {
   const router = useRouter();
+  const [editing, setEditing] = useState(false);
   const [pending, start] = useTransition();
+  const [socio, setSocio] = useState(item.socio);
+  const [cuenta, setCuenta] = useState(item.cuenta ?? "");
+  const [saldo, setSaldo] = useState(item.saldo_promedio ? FMT.format(item.saldo_promedio) : "");
+  const [dias, setDias] = useState(String(item.dias));
+  const [registrado, setRegistrado] = useState(item.interes_registrado ? FMT.format(item.interes_registrado) : "");
+
+  if (editing) {
+    return (
+      <tr className="border-t border-border bg-muted/30">
+        <td className="px-3 py-2">
+          <Input value={socio} onChange={(e) => setSocio(e.target.value)} className="text-xs" />
+          <Input value={cuenta} onChange={(e) => setCuenta(e.target.value)} placeholder="Cuenta PUC" className="mt-1 font-mono text-xs" />
+        </td>
+        <td className="px-3 py-2"><Input value={saldo} onChange={(e) => setSaldo(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={dias} onChange={(e) => setDias(e.target.value)} type="number" min="1" max="365" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2 text-right font-mono text-xs text-muted-foreground">{FMT.format(item.interesPresunto)}</td>
+        <td className="px-3 py-2"><Input value={registrado} onChange={(e) => setRegistrado(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2 text-right text-xs text-muted-foreground">—</td>
+        <td className="px-3 py-2 text-right">
+          <div className="flex flex-col gap-1">
+            <button type="button" disabled={pending} onClick={() => start(async () => {
+              await updateInteresAction(item.id, declId, empresaId, { socio, cuenta: cuenta || null, saldo_promedio: parseNum(saldo), dias: Number(dias) || 360, interes_registrado: parseNum(registrado), observacion: item.observacion });
+              setEditing(false); router.refresh();
+            })} className="rounded-full bg-foreground px-3 py-1 text-xs text-background hover:opacity-90 disabled:opacity-50">{pending ? "…" : "Guardar"}</button>
+            <button type="button" onClick={() => { setSocio(item.socio); setCuenta(item.cuenta ?? ""); setSaldo(item.saldo_promedio ? FMT.format(item.saldo_promedio) : ""); setDias(String(item.dias)); setRegistrado(item.interes_registrado ? FMT.format(item.interes_registrado) : ""); setEditing(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancelar</button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <tr className="border-t border-border">
       <td className="px-3 py-2">
@@ -92,19 +135,10 @@ function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaI
         {FMT.format(item.diferencia)}
       </td>
       <td className="px-3 py-2 text-right">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => {
-            start(async () => {
-              await deleteInteresAction(item.id, declId, empresaId);
-              router.refresh();
-            });
-          }}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {pending ? "…" : "Eliminar"}
-        </button>
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={() => setEditing(true)} className="text-xs text-muted-foreground hover:text-foreground">Modificar</button>
+          <button type="button" disabled={pending} onClick={() => start(async () => { await deleteInteresAction(item.id, declId, empresaId); router.refresh(); })} className="text-xs text-destructive hover:underline disabled:opacity-50">{pending ? "…" : "Eliminar"}</button>
+        </div>
       </td>
     </tr>
   );

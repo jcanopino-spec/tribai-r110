@@ -55,3 +55,34 @@ export async function deleteDivDistAction(id: number, declId: string, empresaId:
   await supabase.from("anexo_dividendos_distribuir").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateDivDistAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    socio: string;
+    nit: string | null;
+    participacion_pct: number;
+    dividendo_no_gravado: number;
+    dividendo_gravado: number;
+    retencion_aplicable: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_dividendos_distribuir")
+    .update({
+      socio: data.socio.trim(),
+      nit: data.nit?.trim() || null,
+      participacion_pct: data.participacion_pct,
+      dividendo_no_gravado: data.dividendo_no_gravado,
+      dividendo_gravado: data.dividendo_gravado,
+      retencion_aplicable: data.retencion_aplicable,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

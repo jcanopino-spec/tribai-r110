@@ -62,3 +62,34 @@ export async function deleteDifCambioAction(
   await supabase.from("anexo_diferencia_cambio").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateDifCambioAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    tipo: Tipo;
+    cuenta: string | null;
+    nit: string | null;
+    tercero: string;
+    valor_usd: number;
+    trm_inicial: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_diferencia_cambio")
+    .update({
+      tipo: data.tipo,
+      cuenta: data.cuenta?.trim() || null,
+      nit: data.nit?.trim() || null,
+      tercero: data.tercero.trim(),
+      valor_usd: data.valor_usd,
+      trm_inicial: data.trm_inicial,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

@@ -1,10 +1,21 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteDivDistAction } from "./actions";
+import { Input } from "@/components/ui/input";
+import { deleteDivDistAction, updateDivDistAction } from "./actions";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+function fmtInput(s: string): string {
+  const c = s.replace(/[^0-9]/g, "");
+  return c ? FMT.format(Number(c)) : "";
+}
+function parseNum(s: string): number {
+  const c = String(s ?? "").replace(/[^0-9]/g, "");
+  const n = Number(c);
+  return Number.isFinite(n) ? n : 0;
+}
 
 type Item = {
   id: number;
@@ -64,7 +75,39 @@ export function DivDistList({
 
 function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaId: string }) {
   const router = useRouter();
+  const [editing, setEditing] = useState(false);
   const [pending, start] = useTransition();
+  const [socio, setSocio] = useState(item.socio);
+  const [nit, setNit] = useState(item.nit ?? "");
+  const [pct, setPct] = useState(String(item.participacion_pct ?? ""));
+  const [noGrav, setNoGrav] = useState(item.dividendo_no_gravado ? FMT.format(item.dividendo_no_gravado) : "");
+  const [grav, setGrav] = useState(item.dividendo_gravado ? FMT.format(item.dividendo_gravado) : "");
+  const [ret, setRet] = useState(item.retencion_aplicable ? FMT.format(item.retencion_aplicable) : "");
+
+  if (editing) {
+    return (
+      <tr className="border-t border-border bg-muted/30">
+        <td className="px-3 py-2">
+          <Input value={socio} onChange={(e) => setSocio(e.target.value)} className="text-xs" />
+          <Input value={nit} onChange={(e) => setNit(e.target.value)} placeholder="NIT" className="mt-1 font-mono text-xs" />
+        </td>
+        <td className="px-3 py-2"><Input value={pct} onChange={(e) => setPct(e.target.value)} type="number" inputMode="decimal" min="0" max="100" step="0.01" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={noGrav} onChange={(e) => setNoGrav(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={grav} onChange={(e) => setGrav(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={ret} onChange={(e) => setRet(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2 text-right">
+          <div className="flex flex-col gap-1">
+            <button type="button" disabled={pending} onClick={() => start(async () => {
+              await updateDivDistAction(item.id, declId, empresaId, { socio, nit: nit || null, participacion_pct: Number(pct) || 0, dividendo_no_gravado: parseNum(noGrav), dividendo_gravado: parseNum(grav), retencion_aplicable: parseNum(ret), observacion: item.observacion });
+              setEditing(false); router.refresh();
+            })} className="rounded-full bg-foreground px-3 py-1 text-xs text-background hover:opacity-90 disabled:opacity-50">{pending ? "…" : "Guardar"}</button>
+            <button type="button" onClick={() => { setSocio(item.socio); setNit(item.nit ?? ""); setPct(String(item.participacion_pct ?? "")); setNoGrav(item.dividendo_no_gravado ? FMT.format(item.dividendo_no_gravado) : ""); setGrav(item.dividendo_gravado ? FMT.format(item.dividendo_gravado) : ""); setRet(item.retencion_aplicable ? FMT.format(item.retencion_aplicable) : ""); setEditing(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancelar</button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <tr className="border-t border-border">
       <td className="px-3 py-2">
@@ -84,19 +127,10 @@ function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaI
         {FMT.format(item.retencion_aplicable)}
       </td>
       <td className="px-3 py-2 text-right">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => {
-            start(async () => {
-              await deleteDivDistAction(item.id, declId, empresaId);
-              router.refresh();
-            });
-          }}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {pending ? "…" : "Eliminar"}
-        </button>
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={() => setEditing(true)} className="text-xs text-muted-foreground hover:text-foreground">Modificar</button>
+          <button type="button" disabled={pending} onClick={() => start(async () => { await deleteDivDistAction(item.id, declId, empresaId); router.refresh(); })} className="text-xs text-destructive hover:underline disabled:opacity-50">{pending ? "…" : "Eliminar"}</button>
+        </div>
       </td>
     </tr>
   );

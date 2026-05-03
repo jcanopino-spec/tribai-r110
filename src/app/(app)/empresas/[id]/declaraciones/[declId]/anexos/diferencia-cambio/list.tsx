@@ -1,10 +1,22 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteDifCambioAction } from "./actions";
+import { Input } from "@/components/ui/input";
+import { deleteDifCambioAction, updateDifCambioAction } from "./actions";
+import type { Tipo } from "./consts";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+
+function fmtInput(s: string): string {
+  const c = s.replace(/[^0-9]/g, "");
+  return c ? FMT.format(Number(c)) : "";
+}
+function parseNum(s: string): number {
+  const c = String(s ?? "").replace(/[^0-9]/g, "");
+  const n = Number(c);
+  return Number.isFinite(n) ? n : 0;
+}
 
 type Item = {
   id: number;
@@ -98,7 +110,40 @@ function Section({
 
 function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaId: string }) {
   const router = useRouter();
+  const [editing, setEditing] = useState(false);
   const [pending, start] = useTransition();
+  const [tercero, setTercero] = useState(item.tercero);
+  const [cuenta, setCuenta] = useState(item.cuenta ?? "");
+  const [nit, setNit] = useState(item.nit ?? "");
+  const [usd, setUsd] = useState(item.valor_usd ? FMT.format(item.valor_usd) : "");
+  const [trm, setTrm] = useState(String(item.trm_inicial ?? ""));
+
+  if (editing) {
+    return (
+      <tr className="border-t border-border bg-muted/30">
+        <td className="px-3 py-2">
+          <Input value={tercero} onChange={(e) => setTercero(e.target.value)} className="text-xs" />
+          <Input value={cuenta} onChange={(e) => setCuenta(e.target.value)} placeholder="Cuenta" className="mt-1 font-mono text-xs" />
+          <Input value={nit} onChange={(e) => setNit(e.target.value)} placeholder="NIT" className="mt-1 font-mono text-xs" />
+        </td>
+        <td className="px-3 py-2"><Input value={usd} onChange={(e) => setUsd(fmtInput(e.target.value))} inputMode="numeric" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2"><Input value={trm} onChange={(e) => setTrm(e.target.value)} inputMode="decimal" className="text-right font-mono text-xs" /></td>
+        <td className="px-3 py-2 text-right font-mono text-xs text-muted-foreground">{FMT.format(item.valorInicial)}</td>
+        <td className="px-3 py-2 text-right font-mono text-xs text-muted-foreground">{FMT.format(item.valorFinal)}</td>
+        <td className="px-3 py-2 text-right text-xs text-muted-foreground">—</td>
+        <td className="px-3 py-2 text-right">
+          <div className="flex flex-col gap-1">
+            <button type="button" disabled={pending} onClick={() => start(async () => {
+              await updateDifCambioAction(item.id, declId, empresaId, { tipo: item.tipo as Tipo, cuenta: cuenta || null, nit: nit || null, tercero, valor_usd: parseNum(usd), trm_inicial: Number(trm) || 0, observacion: null });
+              setEditing(false); router.refresh();
+            })} className="rounded-full bg-foreground px-3 py-1 text-xs text-background hover:opacity-90 disabled:opacity-50">{pending ? "…" : "Guardar"}</button>
+            <button type="button" onClick={() => { setTercero(item.tercero); setCuenta(item.cuenta ?? ""); setNit(item.nit ?? ""); setUsd(item.valor_usd ? FMT.format(item.valor_usd) : ""); setTrm(String(item.trm_inicial ?? "")); setEditing(false); }} className="text-xs text-muted-foreground hover:text-foreground">Cancelar</button>
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <tr className="border-t border-border">
       <td className="px-3 py-2">
@@ -124,19 +169,10 @@ function Row({ item, declId, empresaId }: { item: Item; declId: string; empresaI
         {FMT.format(item.diferencia)}
       </td>
       <td className="px-3 py-2 text-right">
-        <button
-          type="button"
-          disabled={pending}
-          onClick={() => {
-            start(async () => {
-              await deleteDifCambioAction(item.id, declId, empresaId);
-              router.refresh();
-            });
-          }}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {pending ? "…" : "Eliminar"}
-        </button>
+        <div className="flex justify-end gap-3">
+          <button type="button" onClick={() => setEditing(true)} className="text-xs text-muted-foreground hover:text-foreground">Modificar</button>
+          <button type="button" disabled={pending} onClick={() => start(async () => { await deleteDifCambioAction(item.id, declId, empresaId); router.refresh(); })} className="text-xs text-destructive hover:underline disabled:opacity-50">{pending ? "…" : "Eliminar"}</button>
+        </div>
       </td>
     </tr>
   );

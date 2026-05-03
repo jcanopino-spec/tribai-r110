@@ -58,3 +58,32 @@ export async function deleteInteresAction(
   await supabase.from("anexo_intereses_presuntivos").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateInteresAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    socio: string;
+    cuenta: string | null;
+    saldo_promedio: number;
+    dias: number;
+    interes_registrado: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_intereses_presuntivos")
+    .update({
+      socio: data.socio.trim(),
+      cuenta: data.cuenta?.trim() || null,
+      saldo_promedio: data.saldo_promedio,
+      dias: data.dias,
+      interes_registrado: data.interes_registrado,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}
