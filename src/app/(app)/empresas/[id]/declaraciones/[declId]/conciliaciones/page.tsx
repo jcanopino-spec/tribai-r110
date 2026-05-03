@@ -17,7 +17,7 @@ export default async function ConciliacionesHubPage({
   const { data: declaracion } = await supabase
     .from("declaraciones")
     .select(
-      "ano_gravable, estado, cf_utilidad_contable, patrimonio_bruto_anterior, pasivos_anterior",
+      "ano_gravable, estado, utilidad_contable, patrimonio_bruto_anterior, pasivos_anterior",
     )
     .eq("id", declId)
     .single();
@@ -67,7 +67,7 @@ export default async function ConciliacionesHubPage({
           descripcion="Utilidad contable → Renta líquida fiscal. Explica diferencias permanentes y temporales."
           puntoPartida="Utilidad contable"
           puntoFinal="Renta líquida fiscal (R72/R75/R79)"
-          valorInicio={Number(declaracion.cf_utilidad_contable ?? 0)}
+          valorInicio={Number(declaracion.utilidad_contable ?? 0)}
           partidasManuales={utilidadCount ?? 0}
           referenciaXlsm="Anexo 17 / Hoja H7"
         />
