@@ -71,6 +71,8 @@ export function BalanceView({
   // Filas que están siendo auto-guardadas (cuenta) o ya guardadas exitosamente
   const [savingRows, setSavingRows] = useState<Set<string>>(new Set());
   const [savedRows, setSavedRows] = useState<Set<string>>(new Set());
+  // Filas con mapeo ya configurado pero desbloqueadas para editar (click ✏️)
+  const [unlockedMapping, setUnlockedMapping] = useState<Set<string>>(new Set());
   const ajustesRef = useRef(ajustes);
   useEffect(() => {
     ajustesRef.current = ajustes;
@@ -193,6 +195,8 @@ export function BalanceView({
       }
       await saveOverridesAction(empresaId, declId, fd);
       setEdits(new Map());
+      // Re-bloquea las filas desbloqueadas tras guardar (vuelven a modo lectura).
+      setUnlockedMapping(new Set());
       setSaved(`Guardado ${count} mapeo${count === 1 ? "" : "s"}. Renglones reagrupados.`);
       router.refresh();
     });
@@ -371,11 +375,39 @@ export function BalanceView({
                       {FMT.format(sf)}
                     </td>
                     <td className="px-2 py-1 align-top">
-                      {isAux ? (
+                      {!isAux ? (
+                        <span className="text-xs italic">cuenta de mayor (no agrega)</span>
+                      ) : l.renglon_110 != null && !unlockedMapping.has(l.cuenta) ? (
+                        // Mapeada y bloqueada: muestra el renglón como texto + ✏️
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs">
+                            <span className="font-mono">R{l.renglon_110}</span>{" "}
+                            <span className="text-muted-foreground">
+                              · {renglones.find((r) => r.numero === l.renglon_110)?.descripcion ?? ""}
+                            </span>
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setUnlockedMapping((s) => {
+                                const next = new Set(s);
+                                next.add(l.cuenta);
+                                return next;
+                              })
+                            }
+                            className="text-base text-muted-foreground hover:text-foreground"
+                            title="Modificar mapeo"
+                          >
+                            ✏️
+                          </button>
+                        </div>
+                      ) : (
+                        // Pendiente de mapear o desbloqueada: muestra el select
                         <select
                           value={valorActual(l)}
                           onChange={(e) => setEdit(l.cuenta, l.nombre, e.target.value)}
                           className="h-9 w-full rounded border border-border bg-card px-2 text-xs"
+                          autoFocus={unlockedMapping.has(l.cuenta)}
                         >
                           <option value="">— sin asignar —</option>
                           {[...grouped.entries()].map(([seccion, items]) => (
@@ -388,8 +420,6 @@ export function BalanceView({
                             </optgroup>
                           ))}
                         </select>
-                      ) : (
-                        <span className="text-xs italic">cuenta de mayor (no agrega)</span>
                       )}
                     </td>
                   </tr>
