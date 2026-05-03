@@ -180,14 +180,69 @@ function TabGeneral({ d }: { d: Decl }) {
 // Tab 2: Beneficio de auditoría
 // ============================================================
 function TabAuditoria({ d }: { d: Decl }) {
+  const impAnt = Number(d.impuesto_neto_anterior ?? 0);
+  const umbral12m = Math.ceil(impAnt * 1.25);
+  const umbral6m = Math.ceil(impAnt * 1.35);
+
   return (
-    <div className="space-y-5">
-      <h2 className="font-serif text-xl">Beneficio de auditoría · Art. 689-3 E.T.</h2>
-      <p className="text-sm text-muted-foreground">
-        Reduce el término de firmeza de la declaración a 12 o 6 meses si el impuesto neto
-        de renta del año actual aumenta como mínimo 25% o 35% respecto al año anterior.
-      </p>
-      <div className="grid gap-5 md:grid-cols-2">
+    <div className="space-y-6">
+      <div>
+        <h2 className="font-serif text-xl">Beneficio de auditoría · Art. 689-3 E.T.</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Reduce el término de firmeza de la declaración de 3 años a 12 o 6 meses si el
+          impuesto neto de renta del año actual (R96) aumenta como mínimo 25% o 35%
+          respecto al año anterior.
+        </p>
+      </div>
+
+      {/* Umbral calculado · alerta principal */}
+      {impAnt > 0 ? (
+        <div className="grid gap-4 md:grid-cols-2">
+          <UmbralAlert
+            titulo="Para firmeza de 12 meses"
+            descIncremento="incremento ≥ 25%"
+            umbral={umbral12m}
+            impAnt={impAnt}
+            factor="1,25"
+          />
+          <UmbralAlert
+            titulo="Para firmeza de 6 meses"
+            descIncremento="incremento ≥ 35%"
+            umbral={umbral6m}
+            impAnt={impAnt}
+            factor="1,35"
+          />
+        </div>
+      ) : (
+        <div className="border border-amber-500/40 bg-amber-500/5 p-4 text-sm">
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-amber-600 dark:text-amber-500">
+            ⚠ Falta dato
+          </p>
+          <p className="mt-2">
+            Para que el beneficio de auditoría aplique, debes registrar el{" "}
+            <span className="font-medium">impuesto neto del año anterior</span> en el tab
+            <span className="font-mono"> &quot;Año anterior&quot;</span>. Si fue cero, el
+            beneficio no procede (Art. 689-3 E.T. exige impuesto AG anterior {">"} 0).
+          </p>
+        </div>
+      )}
+
+      {/* Requisitos */}
+      <div className="border border-border p-4 text-sm">
+        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+          Requisitos del Art. 689-3 E.T.
+        </p>
+        <ul className="mt-3 space-y-1.5 text-xs">
+          <li>• Impuesto neto del año gravable anterior debe ser mayor a cero.</li>
+          <li>• Declaración debe presentarse <span className="font-medium">oportunamente</span> (no extemporánea).</li>
+          <li>• Incremento mínimo del impuesto neto: <span className="font-mono">25%</span> para 12 meses, <span className="font-mono">35%</span> para 6 meses.</li>
+          <li>• Si solicitas 6m pero solo cumples 25%, te queda 12m si también marcaste esa casilla.</li>
+          <li>• Si no cumples ninguno, la firmeza es la ordinaria de 3 años (Art. 714 E.T.).</li>
+        </ul>
+      </div>
+
+      {/* Checkboxes de selección */}
+      <div className="grid gap-4 md:grid-cols-2">
         <CheckField
           name="beneficio_auditoria_12m"
           label="Acoge beneficio 12 meses (incremento ≥ 25%)"
@@ -199,9 +254,42 @@ function TabAuditoria({ d }: { d: Decl }) {
           defaultChecked={d.beneficio_auditoria_6m}
         />
       </div>
+
       <p className="text-xs text-muted-foreground">
-        Tribai validará que el incremento mínimo se cumpla con base en el impuesto neto
-        del año anterior y el del año actual.
+        Tribai valida automáticamente el cumplimiento del incremento al guardar y
+        muestra el resultado en <span className="font-mono">/validaciones</span> y al
+        pie del <span className="font-mono">/formulario-110</span>.
+      </p>
+    </div>
+  );
+}
+
+function UmbralAlert({
+  titulo,
+  descIncremento,
+  umbral,
+  impAnt,
+  factor,
+}: {
+  titulo: string;
+  descIncremento: string;
+  umbral: number;
+  impAnt: number;
+  factor: string;
+}) {
+  return (
+    <div className="border border-foreground/40 bg-muted/30 p-4">
+      <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+        {titulo}
+      </p>
+      <p className="mt-2 text-xs text-muted-foreground">
+        Tu impuesto neto actual (R96) debe ser mayor o igual a:
+      </p>
+      <p className="mt-2 font-serif text-2xl tracking-[-0.02em] tabular-nums">
+        ${fmt(umbral)}
+      </p>
+      <p className="mt-2 font-mono text-[10px] text-muted-foreground">
+        = ${fmt(impAnt)} × {factor} ({descIncremento})
       </p>
     </div>
   );
