@@ -56,3 +56,32 @@ export async function deleteRetencionAction(
   await supabase.from("anexo_retenciones").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateRetencionAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    tipo: "retencion" | "autorretencion";
+    concepto: string;
+    agente: string | null;
+    nit: string | null;
+    base: number;
+    retenido: number;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_retenciones")
+    .update({
+      tipo: data.tipo,
+      concepto: data.concepto.trim(),
+      agente: data.agente?.trim() || null,
+      nit: data.nit?.trim() || null,
+      base: data.base,
+      retenido: data.retenido,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

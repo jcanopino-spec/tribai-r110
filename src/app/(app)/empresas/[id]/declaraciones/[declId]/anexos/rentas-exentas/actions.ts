@@ -50,3 +50,26 @@ export async function deleteRentaExentaAction(
   await supabase.from("anexo_rentas_exentas").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateRentaExentaAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    descripcion: string;
+    normatividad: string | null;
+    valor_fiscal: number;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_rentas_exentas")
+    .update({
+      descripcion: data.descripcion.trim(),
+      normatividad: data.normatividad?.trim() || null,
+      valor_fiscal: data.valor_fiscal,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

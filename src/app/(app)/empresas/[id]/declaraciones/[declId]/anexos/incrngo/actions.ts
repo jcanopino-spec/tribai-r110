@@ -50,3 +50,22 @@ export async function deleteIncrngoAction(
   await supabase.from("anexo_incrngo").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateIncrngoAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: { concepto: string; normatividad: string | null; valor: number },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_incrngo")
+    .update({
+      concepto: data.concepto.trim(),
+      normatividad: data.normatividad?.trim() || null,
+      valor: data.valor,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}

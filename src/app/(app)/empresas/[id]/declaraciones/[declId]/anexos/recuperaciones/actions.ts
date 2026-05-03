@@ -54,3 +54,28 @@ export async function deleteRecuperacionAction(
   await supabase.from("anexo_recuperaciones").delete().eq("id", id);
   revalidateDeclaracion(empresaId, declId);
 }
+
+export async function updateRecuperacionAction(
+  id: number,
+  declId: string,
+  empresaId: string,
+  data: {
+    concepto: string;
+    descripcion: string;
+    valor: number;
+    observacion: string | null;
+  },
+) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("anexo_recuperaciones")
+    .update({
+      concepto: data.concepto.trim(),
+      descripcion: data.descripcion.trim(),
+      valor: data.valor,
+      observacion: data.observacion?.trim() || null,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  revalidateDeclaracion(empresaId, declId);
+}
