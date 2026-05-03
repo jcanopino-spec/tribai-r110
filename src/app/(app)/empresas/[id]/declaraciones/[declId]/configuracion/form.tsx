@@ -346,13 +346,12 @@ function TabSanciones({
           name="calcula_sancion_extemporaneidad"
           label="Calcular sanción por extemporaneidad (Arts. 641, 642 E.T.)"
           defaultChecked={d.calcula_sancion_extemporaneidad}
-          disabled={evaluacion.estado !== "extemporanea"}
           help={
             evaluacion.estado === "oportuna"
-              ? "Solo se habilita cuando la presentación es extemporánea."
+              ? "La declaración actual es oportuna; el flag queda guardado pero R112 no incluirá esta sanción hasta que la presentación sea extemporánea."
               : evaluacion.estado === "no_presentada"
-                ? "Configura primero la fecha de presentación."
-                : undefined
+                ? "Si vas a presentar fuera de plazo, marca esta casilla y registra la fecha de presentación arriba."
+                : "La sanción se calcula sobre R99 (impuesto a cargo); si no hay impuesto, sobre R58 (ingresos brutos); si tampoco, sobre el patrimonio líquido del año anterior."
           }
         />
         <CheckField
