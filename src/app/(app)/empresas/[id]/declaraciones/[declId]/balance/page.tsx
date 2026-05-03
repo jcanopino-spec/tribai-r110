@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { SECCIONES_MAPEABLES } from "@/lib/forms/form110-2025";
-import { RENGLONES_COMPUTADOS } from "@/lib/forms/form110-compute";
+import { SECCIONES_MAPEABLES } from "@/engine/catalogos/form110-2025";
+import { RENGLONES_COMPUTADOS } from "@/engine/form110";
 import { BalanceView } from "./balance-view";
 
 export const metadata = { title: "Balance cargado" };

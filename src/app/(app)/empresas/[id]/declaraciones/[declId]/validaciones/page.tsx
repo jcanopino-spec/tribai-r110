@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { computarRenglones } from "@/engine/form110";
+import { normalizarSigno } from "@/engine/utils";
 import {
-  computarRenglones,
-  normalizarSigno,
   validarFormulario,
   resumenValidaciones,
   type Validacion,
-} from "@/lib/forms/form110-compute";
-import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
+} from "@/engine/validaciones";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { FinalizarButton } from "./finalizar-button";
 
 export const metadata = { title: "Validaciones" };

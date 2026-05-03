@@ -3,7 +3,8 @@
 import * as XLSX from "xlsx";
 import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
-import { RENGLONES_COMPUTADOS, normalizarSigno } from "@/lib/forms/form110-compute";
+import { RENGLONES_COMPUTADOS } from "@/engine/form110";
+import { normalizarSigno } from "@/engine/utils";
 
 export type CuentaSinMapear = {
   cuenta: string;

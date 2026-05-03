@@ -1,4 +1,4 @@
-"""Convierte data/extracted/04_formulario_110.json en src/lib/forms/form110-2025.ts
+"""Convierte data/extracted/04_formulario_110.json en src/engine/catalogos/form110-2025.ts
 con tipos TypeScript estables que consumira la UI."""
 
 from __future__ import annotations
@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data" / "extracted" / "04_formulario_110.json"
-OUT = ROOT / "src" / "lib" / "forms" / "form110-2025.ts"
+OUT = ROOT / "src" / "engine" / "catalogos" / "form110-2025.ts"
 
 
 def main():

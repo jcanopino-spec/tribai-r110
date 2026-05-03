@@ -8,9 +8,9 @@ import {
   FORMULAS_LEYENDA,
   NOTAS_RENGLON,
   computarRenglones,
-  normalizarSigno,
-  validarFormulario,
-} from "@/lib/forms/form110-compute";
+} from "@/engine/form110";
+import { normalizarSigno } from "@/engine/utils";
+import { validarFormulario } from "@/engine/validaciones";
 import Link from "next/link";
 
 type Renglon = { numero: number; descripcion: string; seccion: string };

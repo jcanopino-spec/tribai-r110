@@ -1,4 +1,4 @@
-// Helpers para vencimientos del Formulario 110.
+// Vencimientos del Formulario 110.
 // El vencimiento depende del último dígito del NIT y del tipo de contribuyente.
 // El catálogo está en la tabla `vencimientos_form110`.
 

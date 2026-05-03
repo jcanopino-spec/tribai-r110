@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { ConfiguracionForm } from "./form";
 
 export const metadata = { title: "Configuración" };

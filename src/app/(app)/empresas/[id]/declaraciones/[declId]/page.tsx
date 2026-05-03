@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
-import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 
 export const metadata = { title: "Editor declaración" };
 

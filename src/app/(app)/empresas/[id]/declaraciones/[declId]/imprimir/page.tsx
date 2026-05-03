@@ -1,12 +1,9 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import {
-  RENGLONES_COMPUTADOS,
-  computarRenglones,
-  normalizarSigno,
-} from "@/lib/forms/form110-compute";
-import { ultimoDigitoNit, evaluarPresentacion } from "@/lib/forms/vencimientos";
+import { RENGLONES_COMPUTADOS, computarRenglones } from "@/engine/form110";
+import { normalizarSigno } from "@/engine/utils";
+import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { PrintButton } from "./print-button";
 
 export const metadata = {

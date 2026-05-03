@@ -4,7 +4,7 @@ import { useActionState, useState } from "react";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { saveConfiguracionAction, type ConfigState } from "./actions";
-import type { EstadoPresentacion } from "@/lib/forms/vencimientos";
+import type { EstadoPresentacion } from "@/engine/vencimientos";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
