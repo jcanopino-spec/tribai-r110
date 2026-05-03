@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 
 function parseNum(s: string): number {
@@ -35,7 +35,6 @@ export async function saveDcAction(
     .eq("id", declId);
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/deterioro-cartera`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { Categoria, GoState } from "./consts";
 
@@ -47,8 +47,7 @@ export async function addGoAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/ganancia-ocasional`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
@@ -59,6 +58,5 @@ export async function deleteGoAction(
 ) {
   const supabase = await createClient();
   await supabase.from("anexo_ganancia_ocasional").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/ganancia-ocasional`);
+  revalidateDeclaracion(empresaId, declId);
 }

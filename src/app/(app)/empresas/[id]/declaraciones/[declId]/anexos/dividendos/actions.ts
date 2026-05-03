@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { State } from "./consts";
 
@@ -57,8 +57,7 @@ export async function addDividendoAction(
   const { error } = await supabase.from("anexo_dividendos").insert(payload);
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/dividendos`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
@@ -69,6 +68,5 @@ export async function deleteDividendoAction(
 ) {
   const supabase = await createClient();
   await supabase.from("anexo_dividendos").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/dividendos`);
+  revalidateDeclaracion(empresaId, declId);
 }

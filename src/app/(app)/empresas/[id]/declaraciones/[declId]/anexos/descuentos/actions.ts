@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { Categoria, DescuentoState } from "./consts";
 
@@ -43,8 +43,7 @@ export async function addDescuentoAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/descuentos`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
@@ -55,6 +54,5 @@ export async function deleteDescuentoAction(
 ) {
   const supabase = await createClient();
   await supabase.from("anexo_descuentos").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/descuentos`);
+  revalidateDeclaracion(empresaId, declId);
 }

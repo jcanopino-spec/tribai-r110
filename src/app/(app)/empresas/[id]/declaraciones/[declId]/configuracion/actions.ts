@@ -1,7 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 
 export type ConfigState = { error: string | null; saved: boolean };
 
@@ -77,7 +77,6 @@ export async function saveConfiguracionAction(
     .eq("id", declId);
   if (error) return { error: error.message, saved: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/configuracion`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, saved: true };
 }

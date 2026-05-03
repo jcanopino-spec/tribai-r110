@@ -1,7 +1,7 @@
 "use server";
 
 import * as XLSX from "xlsx";
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import { RENGLONES_COMPUTADOS, normalizarSigno } from "@/lib/forms/form110-compute";
 
@@ -320,9 +320,7 @@ export async function uploadBalanceAction(
     .update({ modo_carga: "balance", updated_at: new Date().toISOString() })
     .eq("id", declId);
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/importar`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/homologar`);
+  revalidateDeclaracion(empresaId, declId);
 
   return {
     error: null,
@@ -503,7 +501,7 @@ export async function reaggregateBalanceAction(declId: string, empresaId: string
     await supabase.from("form110_valores").insert(valoresPayload);
   }
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidateDeclaracion(empresaId, declId);
 }
 
 export async function saveOverridesAction(

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 
 function parseNumeric(s: string): number {
@@ -40,7 +40,6 @@ export async function saveRentaPresuntivaAction(
     .eq("id", declId);
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/renta-presuntiva`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }

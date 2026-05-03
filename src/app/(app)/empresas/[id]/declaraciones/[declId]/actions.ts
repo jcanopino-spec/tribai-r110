@@ -1,8 +1,8 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { RENGLONES_COMPUTADOS, normalizarSigno } from "@/lib/forms/form110-compute";
 
 export type SaveValoresState = {
@@ -23,7 +23,7 @@ export async function setModoCargaAction(
     .eq("id", declId);
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidateDeclaracion(empresaId, declId);
   if (modo === "balance") {
     redirect(`/empresas/${empresaId}/declaraciones/${declId}/importar`);
   }
@@ -45,7 +45,7 @@ export async function saveDatosAnticipoAction(
     })
     .eq("id", declId);
   if (error) throw new Error(error.message);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidateDeclaracion(empresaId, declId);
 }
 
 export async function setEstadoDeclaracionAction(
@@ -59,8 +59,7 @@ export async function setEstadoDeclaracionAction(
     .update({ estado, updated_at: new Date().toISOString() })
     .eq("id", declId);
   if (error) throw new Error(error.message);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/validaciones`);
+  revalidateDeclaracion(empresaId, declId);
 }
 
 export async function clearModoCargaAction(declId: string, empresaId: string) {
@@ -71,7 +70,7 @@ export async function clearModoCargaAction(declId: string, empresaId: string) {
     .eq("id", declId);
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidateDeclaracion(empresaId, declId);
   redirect(`/empresas/${empresaId}/declaraciones/${declId}`);
 }
 
@@ -115,6 +114,6 @@ export async function saveValoresAction(
     .update({ updated_at: new Date().toISOString() })
     .eq("id", declId);
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, saved: valores.length, savedAt: new Date().toISOString() };
 }

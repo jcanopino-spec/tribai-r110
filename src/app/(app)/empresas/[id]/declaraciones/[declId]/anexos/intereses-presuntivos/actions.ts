@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { State } from "./consts";
 
@@ -45,8 +45,7 @@ export async function addInteresAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/intereses-presuntivos`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
@@ -57,6 +56,5 @@ export async function deleteInteresAction(
 ) {
   const supabase = await createClient();
   await supabase.from("anexo_intereses_presuntivos").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/intereses-presuntivos`);
+  revalidateDeclaracion(empresaId, declId);
 }

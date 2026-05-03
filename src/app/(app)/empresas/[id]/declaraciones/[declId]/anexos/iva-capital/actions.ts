@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { State } from "./consts";
 
@@ -46,14 +46,12 @@ export async function addIvaCapitalAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/iva-capital`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
 export async function deleteIvaCapitalAction(id: number, declId: string, empresaId: string) {
   const supabase = await createClient();
   await supabase.from("anexo_iva_capital").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/iva-capital`);
+  revalidateDeclaracion(empresaId, declId);
 }

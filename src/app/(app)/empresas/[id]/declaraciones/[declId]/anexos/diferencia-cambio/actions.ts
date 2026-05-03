@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import { createClient } from "@/lib/supabase/server";
 import type { State, Tipo } from "./consts";
 
@@ -49,8 +49,7 @@ export async function addDifCambioAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/diferencia-cambio`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
@@ -61,6 +60,5 @@ export async function deleteDifCambioAction(
 ) {
   const supabase = await createClient();
   await supabase.from("anexo_diferencia_cambio").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/anexos/diferencia-cambio`);
+  revalidateDeclaracion(empresaId, declId);
 }

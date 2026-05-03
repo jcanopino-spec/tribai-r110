@@ -1,7 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { revalidateDeclaracion } from "@/lib/revalidate";
 import type { State, Tipo, Signo } from "./consts";
 
 function parseNum(s: string): number {
@@ -41,14 +41,12 @@ export async function addPartidaAction(
   });
   if (error) return { error: error.message, ok: false };
 
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`);
+  revalidateDeclaracion(empresaId, declId);
   return { error: null, ok: true };
 }
 
 export async function deletePartidaAction(id: number, declId: string, empresaId: string) {
   const supabase = await createClient();
   await supabase.from("conciliacion_partidas").delete().eq("id", id);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}`);
-  revalidatePath(`/empresas/${empresaId}/declaraciones/${declId}/conciliacion-fiscal`);
+  revalidateDeclaracion(empresaId, declId);
 }
