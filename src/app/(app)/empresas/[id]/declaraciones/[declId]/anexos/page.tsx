@@ -7,7 +7,6 @@ export const metadata = { title: "Anexos" };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
 type AnexoCard = {
-  numero: string;
   titulo: string;
   href: string;
   renglones: number[];
@@ -164,7 +163,6 @@ export default async function AnexosHubPage({
 
   const cards: AnexoCard[] = [
     {
-      numero: "1",
       titulo: "Renta Presuntiva",
       href: "renta-presuntiva",
       renglones: [76],
@@ -173,7 +171,6 @@ export default async function AnexosHubPage({
       descripcion: "Patrimonio líquido AG anterior × tarifa (0% en AG 2025).",
     },
     {
-      numero: "3",
       titulo: "Retenciones y Autorretenciones",
       href: "retenciones",
       renglones: [105, 106],
@@ -182,7 +179,6 @@ export default async function AnexosHubPage({
       descripcion: "Lista de retenciones y autorretenciones del año.",
     },
     {
-      numero: "4",
       titulo: "Descuentos Tributarios",
       href: "descuentos",
       renglones: [93],
@@ -191,7 +187,6 @@ export default async function AnexosHubPage({
       descripcion: "Impuestos exterior, donaciones, ICA 50%, otros.",
     },
     {
-      numero: "8",
       titulo: "Ganancias Ocasionales",
       href: "ganancia-ocasional",
       renglones: [80, 81, 82],
@@ -200,7 +195,6 @@ export default async function AnexosHubPage({
       descripcion: "Activos fijos, rifas, herencias, liquidaciones, etc.",
     },
     {
-      numero: "17",
       titulo: "Recuperación de Deducciones",
       href: "recuperaciones",
       renglones: [70],
@@ -209,7 +203,6 @@ export default async function AnexosHubPage({
       descripcion: "Reversiones de partidas que disminuyeron rentas anteriores.",
     },
     {
-      numero: "18",
       titulo: "Ingresos por Dividendos",
       href: "dividendos",
       renglones: [49, 50, 51, 52, 53, 54, 55, 56],
@@ -218,7 +211,6 @@ export default async function AnexosHubPage({
       descripcion: "Dividendos por categoría tributaria y tercero.",
     },
     {
-      numero: "19",
       titulo: "Rentas Exentas",
       href: "rentas-exentas",
       renglones: [77],
@@ -227,7 +219,6 @@ export default async function AnexosHubPage({
       descripcion: "Art. 235-2 ET y otras categorías exentas.",
     },
     {
-      numero: "20",
       titulo: "Compensación de Pérdidas",
       href: "compensaciones",
       renglones: [74],
@@ -236,7 +227,6 @@ export default async function AnexosHubPage({
       descripcion: "Pérdidas (12 años) y excesos de RP (5 años).",
     },
     {
-      numero: "26",
       titulo: "INCRNGO",
       href: "incrngo",
       renglones: [60],
@@ -245,7 +235,6 @@ export default async function AnexosHubPage({
       descripcion: "Ingresos no constitutivos de renta ni ganancia ocasional.",
     },
     {
-      numero: "14",
       titulo: "Interés Presuntivo",
       href: "intereses-presuntivos",
       renglones: [48],
@@ -255,7 +244,6 @@ export default async function AnexosHubPage({
         "Préstamos a socios (Art. 35 E.T.). Diferencia entre interés presunto e interés registrado.",
     },
     {
-      numero: "22",
       titulo: "Diferencia en Cambio",
       href: "diferencia-cambio",
       renglones: [48, 65],
@@ -265,7 +253,6 @@ export default async function AnexosHubPage({
         "Cuentas en USD. Diferencia entre TRM inicial y final del año (no realizada).",
     },
     {
-      numero: "12",
       titulo: "Deterioro de Cartera",
       href: "deterioro-cartera",
       renglones: [],
@@ -281,16 +268,14 @@ export default async function AnexosHubPage({
       descripcion: "Provisión fiscal por antigüedad (Art. 145 E.T.). General/Individual/Combinado.",
     },
     {
-      numero: "9",
       titulo: "ICA",
       href: "ica",
       renglones: [93],
       total: totalIca,
       items: ica.data?.length ?? 0,
-      descripcion: "Pagos de Industria y Comercio por municipio. 50% como descuento (Anexo 4).",
+      descripcion: "Pagos de Industria y Comercio por municipio. 50% se toma como descuento tributario.",
     },
     {
-      numero: "10",
       titulo: "GMF (4×1000)",
       href: "gmf",
       renglones: [],
@@ -299,7 +284,6 @@ export default async function AnexosHubPage({
       descripcion: "Gravamen a Movimientos Financieros. 50% deducible (Art. 115 E.T.).",
     },
     {
-      numero: "11",
       titulo: "Predial",
       href: "predial",
       renglones: [],
@@ -308,7 +292,6 @@ export default async function AnexosHubPage({
       descripcion: "Impuesto Predial Unificado. Deducible si hay relación de causalidad.",
     },
     {
-      numero: "13",
       titulo: "IVA Bienes de Capital",
       href: "iva-capital",
       renglones: [93],
@@ -317,7 +300,6 @@ export default async function AnexosHubPage({
       descripcion: "IVA pagado en bienes de capital. Descuento (Art. 258-1 E.T.).",
     },
     {
-      numero: "15",
       titulo: "Subcapitalización",
       href: "subcapitalizacion",
       renglones: [],
@@ -326,7 +308,6 @@ export default async function AnexosHubPage({
       descripcion: "Limitación de intereses con vinculados (Art. 118-1 E.T.). 2× patrimonio líquido.",
     },
     {
-      numero: "21",
       titulo: "Seguridad Social",
       href: "seguridad-social",
       renglones: [],
@@ -335,7 +316,6 @@ export default async function AnexosHubPage({
       descripcion: "Aportes salud, pensión, ARL y parafiscales. Requisito Art. 108 E.T.",
     },
     {
-      numero: "25",
       titulo: "Dividendos a Distribuir",
       href: "dividendos-distribuir",
       renglones: [],
@@ -365,20 +345,24 @@ export default async function AnexosHubPage({
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {cards.map((c) => (
           <Link
-            key={c.numero}
+            key={c.href}
             href={`/empresas/${empresaId}/declaraciones/${declId}/anexos/${c.href}`}
             className="group block border border-border p-5 transition-colors hover:border-foreground"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-                  Anexo {c.numero}
-                  {" · "}
-                  Renglones{" "}
-                  <span className="font-medium text-foreground">
-                    {c.renglones.join(", ")}
-                  </span>
-                </p>
+                {c.renglones.length > 0 ? (
+                  <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                    Alimenta R{" "}
+                    <span className="font-medium text-foreground">
+                      {c.renglones.join(", ")}
+                    </span>
+                  </p>
+                ) : (
+                  <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+                    Informativo
+                  </p>
+                )}
                 <h3 className="mt-2 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
                   {c.titulo}
                 </h3>
@@ -398,28 +382,6 @@ export default async function AnexosHubPage({
             </div>
           </Link>
         ))}
-      </div>
-
-      <div className="mt-12 border border-dashed border-border p-6">
-        <h3 className="font-serif text-xl">Anexos no implementados</h3>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Anexos del .xlsm modelo que se manejan desde el Balance Fiscal con
-          ajustes débito/crédito en lugar de tener su propia interfaz.
-        </p>
-        <ul className="mt-4 grid gap-2 text-sm md:grid-cols-2">
-          {[
-            "5 · Venta de Activos Fijos (cubierto parcialmente en Anexo 8)",
-            "6 · Inventarios y Costo de Ventas",
-            "7 · Conciliación Contable / Fiscal (cubierto en Balance Fiscal)",
-            "16 · Activos Biológicos",
-            "23 · Componente Inflacionario (derogado)",
-            "24 · Reservas",
-          ].map((a, i) => (
-            <li key={i} className="font-mono text-xs text-muted-foreground">
-              ◦ Anexo {a}
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );
