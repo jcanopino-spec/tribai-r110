@@ -57,7 +57,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             + Nueva empresa
           </Link>
           <p className="mt-3 text-xs text-muted-foreground">
-            {(empresas?.length ?? 0)} / 5 empresas
+            {(empresas?.length ?? 0)} / 20 empresas
           </p>
         </aside>
 

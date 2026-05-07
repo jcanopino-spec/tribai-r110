@@ -22,14 +22,14 @@ export default async function DashboardPage() {
         Tus declaraciones
       </h1>
       <p className="mt-4 max-w-xl text-muted-foreground">
-        Gestiona hasta 5 empresas y sus declaraciones de renta del año gravable 2025.
+        Gestiona hasta 20 empresas y sus declaraciones de renta del año gravable 2025.
       </p>
 
       <div className="mt-10 grid gap-4 md:grid-cols-3">
         <div className="border border-border p-5">
           <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">Empresas</p>
           <p className="mt-2 font-serif text-3xl tracking-[-0.02em]">
-            {empresasCount ?? 0} <span className="text-muted-foreground">/ 5</span>
+            {empresasCount ?? 0} <span className="text-muted-foreground">/ 20</span>
           </p>
         </div>
       </div>

@@ -34,7 +34,7 @@ export default function Home() {
         </h1>
         <p className="mt-8 max-w-2xl text-lg leading-[1.3] text-muted-foreground md:text-xl">
           Carga el balance de prueba, mapea tus cuentas al PUC y genera el formulario 110
-          y los formatos asociados. Hasta 5 empresas por cliente.
+          y los formatos asociados. Hasta 20 empresas por cliente.
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <a

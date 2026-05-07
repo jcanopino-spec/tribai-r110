@@ -16,10 +16,10 @@ export default async function EmpresasPage() {
     <div>
       <div className="flex items-end justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">{count} / 5</p>
+          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">{count} / 20</p>
           <h1 className="mt-3 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">Empresas</h1>
         </div>
-        {count < 5 ? (
+        {count < 20 ? (
           <Link
             href="/empresas/nueva"
             className="inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm text-primary-foreground hover:opacity-90"

@@ -38,8 +38,8 @@ export async function createEmpresaAction(_prev: EmpresaState, form: FormData): 
     .single();
 
   if (error) {
-    if (error.message.toLowerCase().includes("máximo 5")) {
-      return { error: "Ya tienes 5 empresas. Es el límite por cuenta." };
+    if (error.message.toLowerCase().includes("máximo 20")) {
+      return { error: "Ya tienes 20 empresas. Es el límite por cuenta." };
     }
     if (error.code === "23505") {
       return { error: "Ya tienes una empresa registrada con ese NIT." };
