@@ -264,6 +264,7 @@ export default async function DeclaracionEditorPage({
           uvtVigente={uvtVigente}
           patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
           esInstitucionFinanciera={!!declaracion.es_institucion_financiera}
+          aplicaTasaMinima={declaracion.aplica_tasa_minima ?? true}
           totalNomina={Number(declaracion.total_nomina ?? 0)}
           aportesSegSocial={Number(declaracion.aportes_seg_social ?? 0)}
           aportesParaFiscales={Number(declaracion.aportes_para_fiscales ?? 0)}
@@ -305,6 +306,7 @@ async function Workspace({
   uvtVigente,
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
+  aplicaTasaMinima,
   totalNomina,
   aportesSegSocial,
   aportesParaFiscales,
@@ -340,6 +342,7 @@ async function Workspace({
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
+  aplicaTasaMinima: boolean;
   totalNomina: number;
   aportesSegSocial: number;
   aportesParaFiscales: number;
@@ -523,6 +526,7 @@ async function Workspace({
             uvtVigente={uvtVigente}
             patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
             esInstitucionFinanciera={esInstitucionFinanciera}
+            aplicaTasaMinima={aplicaTasaMinima}
             totalNomina={totalNomina}
             aportesSegSocial={aportesSegSocial}
             aportesParaFiscales={aportesParaFiscales}

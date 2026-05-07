@@ -219,6 +219,7 @@ export default async function Formulario110Page({
           ? { estado: "oportuna" }
           : { estado: "no_presentada" },
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
     mayorValorCorreccion: Number(declaracion.mayor_valor_correccion ?? 0),
     existeEmplazamiento: !!declaracion.existe_emplazamiento,

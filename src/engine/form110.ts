@@ -8,6 +8,7 @@ import {
   calcularSancionExtemporaneidad,
   calcularSancionCorreccion,
 } from "./sanciones";
+import { calcularImpuestoAdicionar } from "./tasa-minima";
 
 export const RENGLONES_COMPUTADOS = new Set<number>([
   // Datos informativos · nómina (vienen de /configuracion tab Otros)
@@ -87,6 +88,8 @@ export type ComputeContext = {
   patrimonioLiquidoAnterior?: number;
   /** ¿Es institución financiera/aseguradora/hidroeléctrica/extractora? Activa sobretasa. */
   esInstitucionFinanciera?: boolean;
+  /** ¿Aplica Tasa Mínima de Tributación Depurada (Art. 240 par. 6° E.T.)? */
+  aplicaTasaMinima?: boolean;
   /** Datos de nómina (vienen de /configuracion tab Otros) */
   totalNomina?: number;
   aportesSegSocial?: number;
@@ -273,6 +276,19 @@ export function computarRenglones(
   //   El Liquidador oficial fuerza ≥0: si los descuentos exceden el impuesto
   //   bruto, el neto queda en 0 (no puede ser negativo).
   v.set(94, Math.max(0, get(91) + get(92) - get(93)));
+  // 95 = Impuesto a Adicionar (IA) · Tasa Mínima de Tributación (TTD)
+  //   Si el impuesto neto efectivo (R94/R79) está por debajo del 15%
+  //   mínimo legal (Art. 240 par. 6° E.T.), se adiciona la diferencia.
+  //   Si el usuario desactiva aplicaTasaMinima (zonas francas, etc.),
+  //   se respeta el valor manual ingresado en R95.
+  if (ctx.aplicaTasaMinima !== false) {
+    const ia = calcularImpuestoAdicionar({
+      rentaLiquidaGravable: get(79),
+      impuestoNeto: get(94),
+      aplica: true,
+    });
+    if (ia > 0) v.set(95, ia);
+  }
   // 96 = 94 + 95  (Impuesto neto de renta con impuesto adicionado)
   v.set(96, get(94) + get(95));
   // 99 = max(0, 96 + 97 - 98)  (Total impuesto a cargo)

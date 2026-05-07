@@ -888,6 +888,7 @@ export type Database = {
           ano_gravable: number
           anticipo_para_actual: number
           anticipo_puntos_adicionales: number
+          aplica_tasa_minima: boolean
           aportes_para_fiscales: number
           aportes_seg_social: number
           beneficio_auditoria_12m: boolean
@@ -951,6 +952,7 @@ export type Database = {
           ano_gravable: number
           anticipo_para_actual?: number
           anticipo_puntos_adicionales?: number
+          aplica_tasa_minima?: boolean
           aportes_para_fiscales?: number
           aportes_seg_social?: number
           beneficio_auditoria_12m?: boolean
@@ -1014,6 +1016,7 @@ export type Database = {
           ano_gravable?: number
           anticipo_para_actual?: number
           anticipo_puntos_adicionales?: number
+          aplica_tasa_minima?: boolean
           aportes_para_fiscales?: number
           aportes_seg_social?: number
           beneficio_auditoria_12m?: boolean

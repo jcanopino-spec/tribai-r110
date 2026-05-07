@@ -50,6 +50,7 @@ export function DeclaracionEditor({
   uvtVigente,
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
+  aplicaTasaMinima,
   totalNomina,
   aportesSegSocial,
   aportesParaFiscales,
@@ -84,6 +85,7 @@ export function DeclaracionEditor({
   uvtVigente: number | null;
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
+  aplicaTasaMinima: boolean;
   totalNomina: number;
   aportesSegSocial: number;
   aportesParaFiscales: number;
@@ -149,6 +151,7 @@ export function DeclaracionEditor({
       uvtVigente: uvtVigente ?? undefined,
       patrimonioLiquidoAnterior,
       esInstitucionFinanciera,
+      aplicaTasaMinima,
       totalNomina,
       aportesSegSocial,
       aportesParaFiscales,
@@ -179,6 +182,7 @@ export function DeclaracionEditor({
     uvtVigente,
     patrimonioLiquidoAnterior,
     esInstitucionFinanciera,
+    aplicaTasaMinima,
     totalNomina,
     aportesSegSocial,
     aportesParaFiscales,

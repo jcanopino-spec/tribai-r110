@@ -27,6 +27,7 @@ const BOOL_FIELDS = new Set([
   "tiene_justificacion_patrimonial",
   "calcula_anticipo",
   "es_institucion_financiera",
+  "aplica_tasa_minima",
   "ica_como_descuento",
   "beneficio_auditoria_12m",
   "beneficio_auditoria_6m",

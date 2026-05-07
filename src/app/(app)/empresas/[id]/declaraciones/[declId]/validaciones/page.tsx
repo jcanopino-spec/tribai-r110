@@ -213,6 +213,7 @@ export default async function ValidacionesPage({
       | undefined,
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
     mayorValorCorreccion: Number(declaracion.mayor_valor_correccion ?? 0),
     existeEmplazamiento: !!declaracion.existe_emplazamiento,
@@ -243,6 +244,7 @@ export default async function ValidacionesPage({
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
     beneficioAuditoria12m: !!declaracion.beneficio_auditoria_12m,
     beneficioAuditoria6m: !!declaracion.beneficio_auditoria_6m,
   });

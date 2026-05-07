@@ -160,6 +160,12 @@ function TabGeneral({ d }: { d: Decl }) {
           defaultChecked={d.ica_como_descuento}
           help="100% del ICA pagado puede descontarse del impuesto a cargo (Art. 115 E.T.)."
         />
+        <CheckField
+          name="aplica_tasa_minima"
+          label="Aplicar Tasa Mínima de Tributación (TTD, 15%)"
+          defaultChecked={d.aplica_tasa_minima ?? true}
+          help="Art. 240 par. 6° E.T. (Ley 2277/2022). Activo por defecto. Desactiva solo si la empresa está en zona franca, no es residente, o aplica algún régimen exonerado."
+        />
       </div>
 
       <h2 className="mt-8 font-serif text-xl">Datos para el anticipo</h2>

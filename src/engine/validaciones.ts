@@ -20,6 +20,7 @@ export function validarFormulario(
     aniosDeclarando?: string;
     presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
     calculaSancionExtemporaneidad?: boolean;
+    aplicaTasaMinima?: boolean;
     beneficioAuditoria12m?: boolean;
     beneficioAuditoria6m?: boolean;
   } = {},
@@ -236,6 +237,24 @@ export function validarFormulario(
       mensaje:
         "Sin fecha de presentación registrada. Configúrala en /configuracion (tab Sanciones) para evaluar oportunidad.",
     });
+  }
+
+  // Tasa Mínima de Tributación Depurada (Art. 240 par. 6° E.T.)
+  // Si está desactivada y la tasa efectiva en R79 es menor al 15%,
+  // avisar al usuario porque podría haber subpago si la empresa no
+  // está realmente exenta (zona franca, no residente, etc.).
+  if (ctx.aplicaTasaMinima === false && get(79) > 0) {
+    const ttdEfectiva = get(94) / get(79);
+    if (ttdEfectiva < 0.15) {
+      out.push({
+        categoria: "fiscal",
+        nivel: "warn",
+        renglon: 95,
+        mensaje:
+          `Tasa Mínima de Tributación (TTD) está DESACTIVADA pero la tasa efectiva sobre R79 es ${(ttdEfectiva * 100).toFixed(2)}%, menor al 15% requerido por Art. 240 par. 6° E.T. ` +
+          "Verifica que la empresa realmente esté exonerada (zona franca, no residente, etc.); si no, reactiva el flag en /configuracion para que se calcule el Impuesto a Adicionar (R95) correctamente.",
+      });
+    }
   }
 
   // Beneficio de auditoría
