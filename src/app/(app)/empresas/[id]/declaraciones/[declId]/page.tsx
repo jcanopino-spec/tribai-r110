@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
 import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
@@ -182,6 +183,9 @@ export default async function DeclaracionEditorPage({
   const rentaPresuntiva =
     baseRP * tarifaRP + Number(declaracion.rp_renta_gravada_bienes_excluidos ?? 0);
 
+  // Inputs para la fórmula DIAN de Tasa Mínima de Tributación
+  const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
+
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
   return (
@@ -265,6 +269,8 @@ export default async function DeclaracionEditorPage({
           patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
           esInstitucionFinanciera={!!declaracion.es_institucion_financiera}
           aplicaTasaMinima={declaracion.aplica_tasa_minima ?? true}
+          utilidadContableNeta={ttdInputs.utilidadContableNeta}
+          difPermanentesAumentan={ttdInputs.difPermanentesAumentan}
           totalNomina={Number(declaracion.total_nomina ?? 0)}
           aportesSegSocial={Number(declaracion.aportes_seg_social ?? 0)}
           aportesParaFiscales={Number(declaracion.aportes_para_fiscales ?? 0)}
@@ -307,6 +313,8 @@ async function Workspace({
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
   aplicaTasaMinima,
+  utilidadContableNeta,
+  difPermanentesAumentan,
   totalNomina,
   aportesSegSocial,
   aportesParaFiscales,
@@ -343,6 +351,8 @@ async function Workspace({
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
   aplicaTasaMinima: boolean;
+  utilidadContableNeta: number;
+  difPermanentesAumentan: number;
   totalNomina: number;
   aportesSegSocial: number;
   aportesParaFiscales: number;
@@ -527,6 +537,8 @@ async function Workspace({
             patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
             esInstitucionFinanciera={esInstitucionFinanciera}
             aplicaTasaMinima={aplicaTasaMinima}
+            utilidadContableNeta={utilidadContableNeta}
+            difPermanentesAumentan={difPermanentesAumentan}
             totalNomina={totalNomina}
             aportesSegSocial={aportesSegSocial}
             aportesParaFiscales={aportesParaFiscales}

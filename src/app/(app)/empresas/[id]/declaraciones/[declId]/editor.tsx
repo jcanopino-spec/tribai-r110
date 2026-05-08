@@ -51,6 +51,8 @@ export function DeclaracionEditor({
   patrimonioLiquidoAnterior,
   esInstitucionFinanciera,
   aplicaTasaMinima,
+  utilidadContableNeta,
+  difPermanentesAumentan,
   totalNomina,
   aportesSegSocial,
   aportesParaFiscales,
@@ -86,6 +88,8 @@ export function DeclaracionEditor({
   patrimonioLiquidoAnterior: number;
   esInstitucionFinanciera: boolean;
   aplicaTasaMinima: boolean;
+  utilidadContableNeta: number;
+  difPermanentesAumentan: number;
   totalNomina: number;
   aportesSegSocial: number;
   aportesParaFiscales: number;
@@ -152,6 +156,8 @@ export function DeclaracionEditor({
       patrimonioLiquidoAnterior,
       esInstitucionFinanciera,
       aplicaTasaMinima,
+      utilidadContableNeta,
+      difPermanentesAumentan,
       totalNomina,
       aportesSegSocial,
       aportesParaFiscales,
@@ -183,6 +189,8 @@ export function DeclaracionEditor({
     patrimonioLiquidoAnterior,
     esInstitucionFinanciera,
     aplicaTasaMinima,
+    utilidadContableNeta,
+    difPermanentesAumentan,
     totalNomina,
     aportesSegSocial,
     aportesParaFiscales,
