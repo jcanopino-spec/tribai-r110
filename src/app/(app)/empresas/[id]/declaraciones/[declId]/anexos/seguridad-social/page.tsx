@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SegSocialForm } from "./form";
 import { SegSocialList } from "./list";
 
-export const metadata = { title: "Anexo 21 · Seguridad Social" };
+export const metadata = { title: "Seguridad Social" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -48,14 +48,27 @@ export default async function SegSocialPage({
         ← Anexos
       </Link>
 
-      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 21 · Seguridad Social
-      </h1>
-      <p className="mt-3 max-w-3xl text-muted-foreground">
-        Aportes a salud, pensión, ARL y parafiscales. Para que los pagos
-        laborales sean deducibles, los aportes deben estar efectivamente pagados
-        antes de presentar la declaración (Art. 108 E.T.).
-      </p>
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
+            Seguridad Social
+          </h1>
+          <p className="mt-3 max-w-3xl text-muted-foreground">
+            Aportes a salud, pensión, ARL y parafiscales. Para que los pagos
+            laborales sean deducibles, los aportes deben estar efectivamente
+            pagados antes de presentar la declaración (Art. 108 E.T.).
+          </p>
+        </div>
+        {todos.length > 0 ? (
+          <a
+            href={`/api/anexos/seguridad-social/export?decl=${declId}`}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
+            title="Descarga el listado en .xlsx para validar contra PILA, nómina u otras fuentes"
+          >
+            ⬇️ Exportar a Excel
+          </a>
+        ) : null}
+      </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Stat label="Total salarios" value={totalSalario} />
