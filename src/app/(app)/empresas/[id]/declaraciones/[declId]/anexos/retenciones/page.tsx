@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { RetencionForm } from "./form";
 import { RetencionList } from "./list";
 
-export const metadata = { title: "Anexo 3 · Retenciones" };
+export const metadata = { title: "Retenciones y Autorretenciones" };
 
 export default async function RetencionesPage({
   params,
@@ -43,13 +43,26 @@ export default async function RetencionesPage({
         ← Volver al editor
       </Link>
 
-      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 3 · Retenciones y Autorretenciones
-      </h1>
-      <p className="mt-3 max-w-3xl text-muted-foreground">
-        Suma de autorretenciones → renglón 105. Suma de retenciones → renglón 106.
-        Total (105 + 106) → renglón 107.
-      </p>
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
+            Retenciones y Autorretenciones
+          </h1>
+          <p className="mt-3 max-w-3xl text-muted-foreground">
+            Suma de autorretenciones → renglón 105. Suma de retenciones →
+            renglón 106. Total (105 + 106) → renglón 107.
+          </p>
+        </div>
+        {todas.length > 0 ? (
+          <a
+            href={`/api/anexos/retenciones/export?decl=${declId}`}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
+            title="Descarga el listado en .xlsx para validar contra información exógena u otras fuentes"
+          >
+            ⬇️ Exportar a Excel
+          </a>
+        ) : null}
+      </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Stat label="Total retenciones (R106)" value={totalRetenciones} />
