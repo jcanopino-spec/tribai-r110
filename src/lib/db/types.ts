@@ -659,6 +659,62 @@ export type Database = {
           },
         ]
       }
+      anexo_venta_activos_fijos: {
+        Row: {
+          costo_fiscal: number
+          created_at: string
+          declaracion_id: string
+          depreciacion_acumulada: number
+          detalle_activo: string
+          fecha_compra: string | null
+          fecha_venta: string | null
+          id: number
+          nit_comprador: string | null
+          observacion: string | null
+          posesion_mas_2_anos: boolean
+          precio_venta: number
+          reajustes_fiscales: number
+        }
+        Insert: {
+          costo_fiscal?: number
+          created_at?: string
+          declaracion_id: string
+          depreciacion_acumulada?: number
+          detalle_activo: string
+          fecha_compra?: string | null
+          fecha_venta?: string | null
+          id?: number
+          nit_comprador?: string | null
+          observacion?: string | null
+          posesion_mas_2_anos?: boolean
+          precio_venta?: number
+          reajustes_fiscales?: number
+        }
+        Update: {
+          costo_fiscal?: number
+          created_at?: string
+          declaracion_id?: string
+          depreciacion_acumulada?: number
+          detalle_activo?: string
+          fecha_compra?: string | null
+          fecha_venta?: string | null
+          id?: number
+          nit_comprador?: string | null
+          observacion?: string | null
+          posesion_mas_2_anos?: boolean
+          precio_venta?: number
+          reajustes_fiscales?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_venta_activos_fijos_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_seg_social: {
         Row: {
           aporte_arl: number

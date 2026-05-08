@@ -101,6 +101,15 @@ export default async function AnexosHubPage({
       .eq("declaracion_id", declId),
   ]);
 
+  const { data: ventasAfData } = await supabase
+    .from("anexo_venta_activos_fijos")
+    .select("posesion_mas_2_anos, precio_venta")
+    .eq("declaracion_id", declId);
+  const ventasAfItems = ventasAfData ?? [];
+  const totalVentasAfIngresos = ventasAfItems
+    .filter((v) => v.posesion_mas_2_anos)
+    .reduce((s, v) => s + Number(v.precio_venta), 0);
+
   const totalRet =
     (retenciones.data ?? []).reduce((s, r) => s + Number(r.retenido), 0);
   const totalDesc =
@@ -192,7 +201,16 @@ export default async function AnexosHubPage({
       renglones: [80, 81, 82],
       total: totalGoBruto,
       items: goItems.length,
-      descripcion: "Activos fijos, rifas, herencias, liquidaciones, etc.",
+      descripcion: "Rifas, herencias, liquidaciones de sociedades, otros conceptos GO.",
+    },
+    {
+      titulo: "Venta de Activos Fijos",
+      href: "venta-activos-fijos",
+      renglones: [80, 81],
+      total: totalVentasAfIngresos,
+      items: ventasAfItems.length,
+      descripcion:
+        "Detalle de venta de activos fijos. Posesión > 2 años alimenta GO; ≤ 2 años es informativo.",
     },
     {
       titulo: "Recuperación de Deducciones",
