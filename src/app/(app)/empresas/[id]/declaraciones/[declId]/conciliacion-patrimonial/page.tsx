@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
 import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { evaluarPresentacion, ultimoDigitoNit } from "@/engine/vencimientos";
@@ -141,6 +142,7 @@ export default async function ConciliacionPatrimonialPage({
   for (const v of valores ?? []) {
     inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
   }
+  const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
   const numerico = computarRenglones(inputs, {
     tarifaRegimen: tarifaRegimen ?? undefined,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
@@ -154,6 +156,8 @@ export default async function ConciliacionPatrimonialPage({
           : { estado: "no_presentada" },
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
     aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    utilidadContableNeta: ttdInputs.utilidadContableNeta,
+    difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
     mayorValorCorreccion: Number(declaracion.mayor_valor_correccion ?? 0),
     existeEmplazamiento: !!declaracion.existe_emplazamiento,

@@ -90,6 +90,12 @@ export type ComputeContext = {
   esInstitucionFinanciera?: boolean;
   /** ¿Aplica Tasa Mínima de Tributación Depurada (Art. 240 par. 6° E.T.)? */
   aplicaTasaMinima?: boolean;
+  /** Utilidad contable antes de impuestos (utilidad_contable − perdida_contable). Para fórmula TTD. */
+  utilidadContableNeta?: number;
+  /** Σ diferencias permanentes que aumentan la renta (de la conciliación). Para fórmula TTD. */
+  difPermanentesAumentan?: number;
+  /** Valor ingreso método de participación patrimonial. Para fórmula TTD. Default 0. */
+  vimpp?: number;
   /** Datos de nómina (vienen de /configuracion tab Otros) */
   totalNomina?: number;
   aportesSegSocial?: number;
@@ -277,15 +283,31 @@ export function computarRenglones(
   //   bruto, el neto queda en 0 (no puede ser negativo).
   v.set(94, Math.max(0, get(91) + get(92) - get(93)));
   // 95 = Impuesto a Adicionar (IA) · Tasa Mínima de Tributación (TTD)
-  //   Si el impuesto neto efectivo (R94/R79) está por debajo del 15%
-  //   mínimo legal (Art. 240 par. 6° E.T.), se adiciona la diferencia.
-  //   Si el usuario desactiva aplicaTasaMinima (zonas francas, etc.),
-  //   se respeta el valor manual ingresado en R95.
-  if (ctx.aplicaTasaMinima !== false) {
+  //   Fórmula oficial DIAN (Anexo "Tasa Mínima - TTD" del Liquidador 2025):
+  //     ID = max(0, R94 + R92 + R93 − IRP)
+  //     UD = max(0, UC + DPARL − R60 − VIMPP − R83 − R77 − R74)
+  //     TTD = ID / UD
+  //     IA = max(0, UD × 15% − ID)  si TTD < 15%
+  //   Si aplicaTasaMinima=false (zonas francas, no residentes, etc.), o
+  //   no tenemos utilidadContableNeta (caso anterior a esta feature),
+  //   se respeta el R95 manual del usuario.
+  if (
+    ctx.aplicaTasaMinima !== false &&
+    typeof ctx.utilidadContableNeta === "number"
+  ) {
     const ia = calcularImpuestoAdicionar({
-      rentaLiquidaGravable: get(79),
-      impuestoNeto: get(94),
       aplica: true,
+      inr: get(94),
+      vaa: get(92),
+      descuentosTributarios: get(93),
+      impuestoRentasPasivas: 0,
+      utilidadContable: ctx.utilidadContableNeta,
+      difPermanentesAumentan: ctx.difPermanentesAumentan ?? 0,
+      incrngo: get(60),
+      vimpp: ctx.vimpp ?? 0,
+      gananciaOcasionalGravable: get(83),
+      rentasExentas: get(77),
+      compensaciones: get(74),
     });
     if (ia > 0) v.set(95, ia);
   }
