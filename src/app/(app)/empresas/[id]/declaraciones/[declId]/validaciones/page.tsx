@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
@@ -16,6 +16,7 @@ import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { loadF2516Aggregates } from "@/lib/f2516-aggregates";
 import { FinalizarButton } from "./finalizar-button";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Validaciones" };
 
@@ -209,23 +210,13 @@ export default async function ValidacionesPage({
 
   return (
     <div>
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
-
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            {empresa.razon_social} · AG {declaracion.ano_gravable} · {declaracion.estado}
-          </p>
-          <h1 className="mt-2 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-            Validaciones
-          </h1>
-        </div>
-      </div>
+      <ModuloHeader
+        titulo="Validaciones"
+        moduloLabel="Auditoría · 42 reglas"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`${empresa.razon_social} · AG ${declaracion.ano_gravable} · ${declaracion.estado}`}
+      />
 
       <div className="mt-8 grid gap-4 md:grid-cols-3">
         <Stat label="Errores" value={resumen.errores} alert={resumen.errores > 0} />

@@ -15,6 +15,7 @@ import {
 } from "@/engine/validaciones";
 import { evaluarChecklist, resumenChecklist } from "@/engine/checklist";
 import { evaluarObligacionPT } from "@/engine/precios-transferencia";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Dashboard" };
 
@@ -215,34 +216,19 @@ export default async function DashboardPage({
 
   return (
     <div className="max-w-6xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
+      <ModuloHeader
+        titulo="Dashboard"
+        moduloLabel="Resumen Ejecutivo"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`${empresa.razon_social} · NIT ${empresa.nit ?? "—"}${empresa.dv ? `-${empresa.dv}` : ""} · AG ${declaracion.ano_gravable}`}
+      />
 
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-            Dashboard ejecutivo
-          </h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            Vista consolidada de la declaración: KPIs principales, progreso de
-            preparación, alertas y vencimientos. Cada bloque es un cierre del
-            flujo y enlaza al módulo correspondiente.
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
-            {empresa.razon_social}
-          </p>
-          <p className="font-mono text-xs">
-            NIT {empresa.nit ?? "—"}
-            {empresa.dv ? `-${empresa.dv}` : ""} · AG {declaracion.ano_gravable}
-          </p>
-        </div>
-      </div>
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
+        Vista consolidada de la declaración: KPIs principales, progreso de
+        preparación, alertas y vencimientos. Cada bloque es un cierre del
+        flujo y enlaza al módulo correspondiente.
+      </p>
 
       {/* === Datos contribuyente === */}
       <section className="mt-8 grid gap-3 md:grid-cols-3">
@@ -452,6 +438,13 @@ export default async function DashboardPage({
             className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
           >
             ⬇️ Checklist
+          </a>
+          <a
+            href={`/api/guia/export`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+            title="Guía completa de funcionamiento del sistema en formato Word"
+          >
+            📖 Guía Tribai (Word)
           </a>
         </div>
       </section>

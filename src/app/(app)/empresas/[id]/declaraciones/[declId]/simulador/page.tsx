@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { computarRenglones, type ComputeContext } from "@/engine/form110";
@@ -8,6 +8,7 @@ import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
 import { SimuladorClient } from "./simulador-client";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Simulador What-If" };
 
@@ -124,33 +125,19 @@ export default async function SimuladorPage({
 
   return (
     <div className="max-w-6xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
-
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-            Simulador What-If
-          </h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            Compara hasta tres escenarios contra la base actual de la
-            declaración. Modifica las variables clave (ingresos, costos,
-            descuentos, retenciones, etc.) y observa el impacto en el saldo
-            final. Los cambios NO se guardan en la declaración: el simulador
-            es solo para planeación.
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
-            {empresa.razon_social}
-          </p>
-          <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
-        </div>
-      </div>
+      <ModuloHeader
+        titulo="Simulador What-If"
+        moduloLabel="Planeación · 4 escenarios"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`${empresa.razon_social} · AG ${declaracion.ano_gravable}`}
+      />
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
+        Compara hasta tres escenarios contra la base actual de la declaración.
+        Modifica las variables clave (ingresos, costos, descuentos, retenciones,
+        etc.) y observa el impacto en el saldo final. Los cambios NO se guardan
+        en la declaración: el simulador es solo para planeación.
+      </p>
 
       <SimuladorClient
         inputsBase={inputsBase}

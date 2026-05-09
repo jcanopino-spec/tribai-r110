@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Conciliaciones" };
 
@@ -49,17 +50,14 @@ export default async function ConciliacionesHubPage({
 
   return (
     <div className="max-w-5xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
-
-      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Conciliaciones
-      </h1>
-      <p className="mt-3 max-w-3xl text-muted-foreground">
+      <ModuloHeader
+        titulo="Conciliaciones"
+        moduloLabel="Módulo 10"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`AG ${declaracion.ano_gravable} · estado ${declaracion.estado}`}
+      />
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
         Dos puentes que la DIAN exige conciliar para que la declaración sea defendible
         ante una auditoría: la utilidad contable contra la renta líquida fiscal, y la
         variación patrimonial entre años. Tribai alimenta ambas automáticamente desde

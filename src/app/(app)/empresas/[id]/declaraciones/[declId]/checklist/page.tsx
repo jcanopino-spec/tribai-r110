@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { computarRenglones } from "@/engine/form110";
@@ -14,6 +14,7 @@ import {
   type ChecklistEstado,
 } from "@/engine/checklist";
 import { validarF2516, TOLERANCIA_CUADRE } from "@/engine/validaciones";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Checklist Normativo" };
 
@@ -174,43 +175,31 @@ export default async function ChecklistPage({
 
   return (
     <div className="max-w-5xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
-
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-            Checklist Normativo
-          </h1>
-          <p className="mt-3 max-w-3xl text-muted-foreground">
-            23 verificaciones de cumplimiento normativo antes de presentar
-            la declaración. Las marcadas como{" "}
-            <span className="font-medium">auto</span> el sistema las evalúa
-            desde el estado actual; las marcadas como{" "}
-            <span className="font-medium">manual</span> requieren tu
-            criterio profesional.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
+      <ModuloHeader
+        titulo="Checklist Normativo"
+        moduloLabel="23 verificaciones"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`${empresa.razon_social} · AG ${declaracion.ano_gravable}`}
+        acciones={
           <a
             href={`/api/checklist/export?decl=${declId}`}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
+            className="inline-flex h-9 items-center justify-center gap-2 rounded-full px-4 text-xs font-medium"
+            style={{ backgroundColor: "#C4952A", color: "#0A1628" }}
             title="Descarga el checklist en .xlsx con espacio para firma del revisor"
           >
-            ⬇️ Exportar a Excel
+            ⬇️ Exportar Excel
           </a>
-          <div className="text-right">
-            <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
-              {empresa.razon_social}
-            </p>
-            <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
-          </div>
-        </div>
-      </div>
+        }
+      />
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
+        23 verificaciones de cumplimiento normativo antes de presentar la
+        declaración. Las marcadas como{" "}
+        <span className="font-medium">auto</span> el sistema las evalúa desde
+        el estado actual; las marcadas como{" "}
+        <span className="font-medium">manual</span> requieren tu criterio
+        profesional.
+      </p>
 
       <div className="mt-8 grid gap-3 md:grid-cols-4">
         <Stat label="Aprobadas" value={resumen.ok} color="ok" />

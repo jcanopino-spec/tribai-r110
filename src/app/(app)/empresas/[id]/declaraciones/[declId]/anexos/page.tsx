@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { ModuloHeader } from "@/components/modulo-header";
 
 export const metadata = { title: "Anexos" };
 
@@ -386,17 +387,14 @@ export default async function AnexosHubPage({
 
   return (
     <div className="max-w-5xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver al editor
-      </Link>
-
-      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexos
-      </h1>
-      <p className="mt-3 max-w-3xl text-muted-foreground">
+      <ModuloHeader
+        titulo="Anexos"
+        moduloLabel={`${cards.length} módulos`}
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}`}
+        volverLabel="Editor"
+        contexto={`AG ${declaracion.ano_gravable}`}
+      />
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
         Cada anexo alimenta uno o varios renglones del Formulario 110. Los totales
         se reflejan automáticamente al guardar.
       </p>
