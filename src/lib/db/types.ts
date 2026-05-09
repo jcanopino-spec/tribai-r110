@@ -659,6 +659,77 @@ export type Database = {
           },
         ]
       }
+      anexo_iva_declaraciones: {
+        Row: {
+          id: number
+          declaracion_id: string
+          periodicidad: string
+          periodo: number
+          fecha_presentacion: string | null
+          numero_formulario: string | null
+          ingresos_brutos: number
+          ingresos_no_gravados: number
+          ingresos_exentos: number
+          ingresos_gravados: number
+          iva_generado: number
+          iva_descontable: number
+          saldo_pagar: number
+          saldo_favor: number
+          pdf_path: string | null
+          pdf_filename: string | null
+          observacion: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          declaracion_id: string
+          periodicidad: string
+          periodo: number
+          fecha_presentacion?: string | null
+          numero_formulario?: string | null
+          ingresos_brutos?: number
+          ingresos_no_gravados?: number
+          ingresos_exentos?: number
+          ingresos_gravados?: number
+          iva_generado?: number
+          iva_descontable?: number
+          saldo_pagar?: number
+          saldo_favor?: number
+          pdf_path?: string | null
+          pdf_filename?: string | null
+          observacion?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          declaracion_id?: string
+          periodicidad?: string
+          periodo?: number
+          fecha_presentacion?: string | null
+          numero_formulario?: string | null
+          ingresos_brutos?: number
+          ingresos_no_gravados?: number
+          ingresos_exentos?: number
+          ingresos_gravados?: number
+          iva_generado?: number
+          iva_descontable?: number
+          saldo_pagar?: number
+          saldo_favor?: number
+          pdf_path?: string | null
+          pdf_filename?: string | null
+          observacion?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_iva_declaraciones_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_inversiones_esal: {
         Row: {
           id: number

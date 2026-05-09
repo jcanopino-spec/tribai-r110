@@ -120,6 +120,17 @@ export default async function AnexosHubPage({
     .filter((r) => r.tipo === "liquidada")
     .reduce((s, r) => s + Number(r.valor), 0);
   const invEsalCount = invEsalRows.length;
+
+  // Anexo IVA · puede no existir si la migración 028 no se aplicó
+  const ivaRes = await supabase
+    .from("anexo_iva_declaraciones")
+    .select("ingresos_brutos, periodicidad")
+    .eq("declaracion_id", declId);
+  const ivaRows = ivaRes.error ? [] : (ivaRes.data ?? []);
+  const totalIvaIngresos = ivaRows.reduce(
+    (s, r) => s + Number(r.ingresos_brutos),
+    0,
+  );
   const ventasAfItems = ventasAfData ?? [];
   const totalVentasAfIngresos = ventasAfItems
     .filter((v) => v.posesion_mas_2_anos)
@@ -382,6 +393,15 @@ export default async function AnexosHubPage({
       items: 0,
       descripcion:
         "Evaluación automática de obligaciones (Arts. 260-1 a 260-11 E.T.) según patrimonio e ingresos.",
+    },
+    {
+      titulo: "Declaraciones de IVA",
+      href: "iva",
+      renglones: [],
+      total: totalIvaIngresos,
+      items: ivaRows.length,
+      descripcion:
+        "Formularios 300 del año (bimestral o cuatrimestral). Soporte de ingresos brutos · upload PDF + captura manual.",
     },
   ];
 
