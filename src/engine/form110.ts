@@ -45,6 +45,10 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   // Liquidación privada
   84, // Impuesto sobre la renta líquida gravable = 79 × tarifa del régimen
   85, // Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
+  86, // Impuesto sobre dividendos al 10%/20% (base R51+R55)
+  88, // Impuesto sobre dividendos megainversiones 27% (base R56)
+  89, // Impuesto sobre dividendos no residentes Art. 240 (base R53)
+  90, // Impuesto sobre dividendos no residentes Art. 245 33% (base R52)
   91, // Total impuesto sobre rentas líquidas gravables = sum(84..90)
   93, // Descuentos tributarios · viene del Anexo 4
   97, // Impuesto neto de ganancias ocasionales = 83 × 15%
@@ -267,9 +271,12 @@ export function computarRenglones(
   }
 
   // 85 = Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
-  //   5 puntos porcentuales sobre la renta líquida gravable COMPLETA cuando
-  //   ésta supera 120.000 UVT. Replica la fórmula del Liquidador oficial:
-  //   IF(D24="SI"; IF(R79 >= 120000*UVT; R79*5%; 0); 0)
+  //   5 puntos porcentuales sobre el EXCESO de la renta líquida gravable
+  //   por encima de 120.000 UVT. Fórmula oficial:
+  //     R85 = (R79 − 120.000 × UVT) × 5%   si R79 ≥ 120.000 UVT
+  //         = 0                            en caso contrario
+  //   La parte fija de R84 ya tiene la tarifa general (35%); R85 son SOLO
+  //   los puntos adicionales sobre el exceso, no sobre el total.
   if (
     ctx.esInstitucionFinanciera &&
     typeof ctx.uvtVigente === "number" &&
@@ -278,13 +285,38 @@ export function computarRenglones(
     const rentaGravable = Math.max(0, get(79));
     const umbral = UMBRAL_SOBRETASA_UVT * ctx.uvtVigente;
     if (rentaGravable >= umbral) {
-      v.set(85, Math.round(rentaGravable * PUNTOS_SOBRETASA));
+      const exceso = rentaGravable - umbral;
+      v.set(85, Math.round(exceso * PUNTOS_SOBRETASA));
     } else {
       v.set(85, 0);
     }
   } else {
     v.set(85, 0);
   }
+
+  // 86, 88, 89, 90 · Impuesto sobre dividendos por categoría (catálogo DIAN AG 2025)
+  //   R86 = (R51 + R55) × 20% · Dividendos gravados a la tarifa general (10% año 2022, 20% año 2023+)
+  //   R88 = R56 × 27% · Dividendos megainversiones (base R56)
+  //   R89 = R53 × 35% · Dividendos no residentes Art. 240 E.T. (base R53)
+  //   R90 = R52 × 33% · Dividendos no residentes Art. 245 E.T. PN (base R52)
+  //   Solo se calculan si el usuario NO los digitó manualmente.
+  if (!v.has(86) || get(86) === 0) {
+    const baseR86 = get(51) + get(55);
+    if (baseR86 > 0) v.set(86, Math.round(baseR86 * 0.20));
+  }
+  if (!v.has(88) || get(88) === 0) {
+    const baseR88 = get(56);
+    if (baseR88 > 0) v.set(88, Math.round(baseR88 * 0.27));
+  }
+  if (!v.has(89) || get(89) === 0) {
+    const baseR89 = get(53);
+    if (baseR89 > 0) v.set(89, Math.round(baseR89 * 0.35));
+  }
+  if (!v.has(90) || get(90) === 0) {
+    const baseR90 = get(52);
+    if (baseR90 > 0) v.set(90, Math.round(baseR90 * 0.33));
+  }
+
   // 97 = Ganancias ocasionales gravables × 15% (tarifa fija AG 2025)
   v.set(97, Math.round(Math.max(0, get(83)) * TARIFA_GANANCIAS_OCASIONALES));
   // 91 = sum(84..90)  (Total impuesto sobre rentas líquidas gravables)

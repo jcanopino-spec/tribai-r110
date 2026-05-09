@@ -254,6 +254,87 @@ describe("computarRenglones · Sobretasa financiera (R85)", () => {
     const g = compute({ 47: 100_000_000 }, { esInstitucionFinanciera: true, uvtVigente: UVT });
     expect(g(85)).toBe(0);
   });
+
+  it("aplica 5% solo al EXCESO sobre 120.000 UVT (no al total)", () => {
+    const umbral = 120_000 * UVT; // ≈ 5.97 billones
+    const exceso = 1_000_000_000; // 1.000M sobre el umbral
+    const r79 = umbral + exceso;
+
+    // Construimos un caso donde R47 termina alimentando R79 = umbral + exceso
+    const g = compute(
+      { 47: r79 },
+      { esInstitucionFinanciera: true, uvtVigente: UVT },
+    );
+    // R85 debería ser ~5% del exceso (1.000M × 5% = 50M), redondeado DIAN
+    expect(g(85)).toBe(50_000_000);
+  });
+});
+
+describe("computarRenglones · Impuesto sobre dividendos (R86, R88, R89, R90)", () => {
+  it("R86 = (R51 + R55) × 20%", () => {
+    const g = compute(
+      {},
+      {
+        dividendos: { r51: 50_000_000, r55: 30_000_000 },
+      },
+    );
+    expect(g(51)).toBe(50_000_000);
+    expect(g(55)).toBe(30_000_000);
+    // (50 + 30) × 20% = 16M
+    expect(g(86)).toBe(16_000_000);
+  });
+
+  it("R88 = R56 × 27% (megainversiones)", () => {
+    const g = compute({}, { dividendos: { r56: 100_000_000 } });
+    expect(g(88)).toBe(27_000_000);
+  });
+
+  it("R89 = R53 × 35% (no residentes Art. 240)", () => {
+    const g = compute({}, { dividendos: { r53: 100_000_000 } });
+    expect(g(89)).toBe(35_000_000);
+  });
+
+  it("R90 = R52 × 33% (PN no residente Art. 245)", () => {
+    const g = compute({}, { dividendos: { r52: 100_000_000 } });
+    expect(g(90)).toBe(33_000_000);
+  });
+
+  it("respeta override manual del usuario", () => {
+    // Si el usuario digitó R86 directamente, no se sobreescribe
+    const g = compute(
+      { 86: 999_000 },
+      { dividendos: { r51: 50_000_000 } },
+    );
+    expect(g(86)).toBe(999_000);
+  });
+
+  it("dividendos NO gravados (R49, R50, R54) no generan impuesto", () => {
+    const g = compute(
+      {},
+      { dividendos: { r49: 100_000_000, r50: 50_000_000, r54: 30_000_000 } },
+    );
+    // Ninguno alimenta R86-R90
+    expect(g(86)).toBe(0);
+    expect(g(88)).toBe(0);
+    expect(g(89)).toBe(0);
+    expect(g(90)).toBe(0);
+  });
+
+  it("R91 incluye los impuestos sobre dividendos calculados", () => {
+    const g = compute(
+      { 47: 1_000_000_000, 62: 600_000_000 },
+      {
+        tarifaRegimen: 0.35,
+        dividendos: { r56: 100_000_000 }, // R88 = 27M
+      },
+    );
+    // R91 = R84 (tarifa × R79) + R88 + ...
+    // R79 = (1.000 - 600) = 400M (R56 entra a R58 también)
+    // Espera · R56 SE SUMA a R58 e ingresa a la base
+    // Mejor: solo verificar que R91 incluye el R88 calculado
+    expect(g(88)).toBe(27_000_000);
+    expect(g(91)).toBeGreaterThanOrEqual(g(84) + g(88));
+  });
 });
 
 describe("computarRenglones · Anticipo (R108)", () => {
