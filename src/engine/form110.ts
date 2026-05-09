@@ -196,6 +196,13 @@ export function computarRenglones(
   // --- Costos ---
   v.set(67, sumRango(v, 62, 66));
 
+  // --- Anexos que alimentan la base de R72 ---
+  // 70 = Renta por recuperación de deducciones (Anexo 17). DEBE setearse
+  // antes del cálculo de R72 porque la base de R72 incluye R70.
+  if (typeof ctx.totalRecuperaciones === "number") {
+    v.set(70, ctx.totalRecuperaciones);
+  }
+
   // --- Renta líquida ordinaria / pérdida ---
   // 72 = max(0, 61 + 69 + 70 + 71 - 52 - 53 - 54 - 55 - 56 - 67 - 68)
   // 73 = espejo de 72 (cuando es negativo)
@@ -210,10 +217,6 @@ export function computarRenglones(
   v.set(73, Math.max(0, -baseRenta));
 
   // --- Renta líquida ---
-  // 70 = Renta por recuperación de deducciones (Anexo 17)
-  if (typeof ctx.totalRecuperaciones === "number") {
-    v.set(70, ctx.totalRecuperaciones);
-  }
   // 76 = Renta presuntiva (Anexo 1)
   if (typeof ctx.rentaPresuntiva === "number") {
     v.set(76, ctx.rentaPresuntiva);
