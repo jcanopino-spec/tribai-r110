@@ -406,6 +406,49 @@ export default async function DashboardPage({
           </QuickLink>
         </div>
       </section>
+
+      {/* === Excel exports === */}
+      <section className="mt-6 border border-border p-4">
+        <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
+          Descargas
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Cada bloque genera un .xlsx con encabezado del contribuyente para
+          entrega formal o validación cruzada.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <a
+            href={`/api/declaracion/form110/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
+          >
+            ⬇️ F110 completo
+          </a>
+          <a
+            href={`/api/conciliaciones/formato-2516/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            ⬇️ F2516
+          </a>
+          <a
+            href={`/api/conciliaciones/impuesto-diferido/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            ⬇️ Impuesto Diferido
+          </a>
+          <a
+            href={`/api/anexos/retenciones/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            ⬇️ Retenciones
+          </a>
+          <a
+            href={`/api/anexos/seguridad-social/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            ⬇️ Seguridad Social
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
