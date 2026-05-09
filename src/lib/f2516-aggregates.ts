@@ -78,9 +78,49 @@ async function cargarContablesESF_ERI(
     .select("cuenta, saldo, ajuste_debito, ajuste_credito")
     .eq("balance_id", balance.id);
 
+  // FILTRO ANTI-DUPLICACIÓN
+  //
+  // Si el balance carga cuentas a múltiples niveles (ej. 1105 [resumen] +
+  // 110505 [subcuenta] + 11050505 [auxiliar]), el saldo se duplica/triplica
+  // porque la cuenta padre ya contiene la suma de sus hijas.
+  //
+  // El .xlsm guía v5 usa SUMIF con prefijo "*" que tiene el mismo problema:
+  // depende de que el balance solo traiga cuentas hoja. Aquí lo robustecemos:
+  // si una cuenta tiene "hijas" (cuentas más detalladas con el mismo prefijo)
+  // presentes en el mismo balance, asumimos que es resumen y la EXCLUIMOS.
+  //
+  // Ejemplo:
+  //   Balance: [1105, 110505, 11050505]
+  //   1105     → tiene hijas (110505, 11050505) → resumen → EXCLUIR
+  //   110505   → tiene hija  (11050505)         → resumen → EXCLUIR
+  //   11050505 → es hoja                        → INCLUIR ✓
+  const todasCuentas = new Set<string>();
   for (const l of lineas ?? []) {
-    const filaId = categorizarPucF2516(l.cuenta);
+    const c = String(l.cuenta).replace(/[^0-9]/g, "");
+    if (c) todasCuentas.add(c);
+  }
+  function tieneHijas(cuenta: string): boolean {
+    for (const otra of todasCuentas) {
+      if (otra.length > cuenta.length && otra.startsWith(cuenta)) return true;
+    }
+    return false;
+  }
+
+  let totalLineas = 0;
+  let lineasIncluidas = 0;
+
+  for (const l of lineas ?? []) {
+    const cuentaNum = String(l.cuenta).replace(/[^0-9]/g, "");
+    if (!cuentaNum) continue;
+    totalLineas++;
+
+    const filaId = categorizarPucF2516(cuentaNum);
     if (!filaId) continue;
+
+    // Saltar cuentas resumen (que tienen hijas en el balance)
+    if (tieneHijas(cuentaNum)) continue;
+    lineasIncluidas++;
+
     const saldo = Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito);
     // Para pasivos / ingresos el saldo viene en negativo natural (saldo crédito).
     // Para que el F2516 lo muestre en positivo, normalizamos.
@@ -91,6 +131,13 @@ async function cargarContablesESF_ERI(
         ? Math.abs(saldo)
         : saldo;
     out.set(filaId, (out.get(filaId) ?? 0) + positivo);
+  }
+
+  // Logging diagnóstico (visible en server logs solo en dev)
+  if (process.env.NODE_ENV !== "production" && totalLineas > 0) {
+    console.log(
+      `[f2516] balance=${balance.id} líneas=${totalLineas} hojas=${lineasIncluidas} resumen-excluidas=${totalLineas - lineasIncluidas}`,
+    );
   }
 
   // Total activos = suma de filas 1..8

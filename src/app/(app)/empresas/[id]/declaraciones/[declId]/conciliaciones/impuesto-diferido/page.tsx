@@ -143,9 +143,28 @@ export default async function ImpuestoDiferidoPage({
       .from("balance_prueba_lineas")
       .select("cuenta, saldo, ajuste_debito, ajuste_credito")
       .eq("balance_id", balance.id);
+
+    // Filtro anti-duplicación: si el balance carga cuenta resumen +
+    // subcuentas, solo contar cuentas hoja (las que NO tienen hijas
+    // presentes en el mismo balance).
+    const todas = new Set<string>();
     for (const l of lineas ?? []) {
-      const catId = categorizarPucPasivosID(l.cuenta);
+      const c = String(l.cuenta).replace(/[^0-9]/g, "");
+      if (c) todas.add(c);
+    }
+    const tieneHijas = (cuenta: string): boolean => {
+      for (const otra of todas) {
+        if (otra.length > cuenta.length && otra.startsWith(cuenta)) return true;
+      }
+      return false;
+    };
+
+    for (const l of lineas ?? []) {
+      const cuentaNum = String(l.cuenta).replace(/[^0-9]/g, "");
+      if (!cuentaNum) continue;
+      const catId = categorizarPucPasivosID(cuentaNum);
       if (!catId) continue;
+      if (tieneHijas(cuentaNum)) continue; // saltar cuentas resumen
       const saldoContable = Math.abs(Number(l.saldo));
       const saldoFiscal = Math.abs(
         Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito),
