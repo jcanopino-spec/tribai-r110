@@ -292,6 +292,12 @@ export function DeclaracionEditor({
           Conciliaciones
         </Link>
         <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+        >
+          Simulador
+        </Link>
+        <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
