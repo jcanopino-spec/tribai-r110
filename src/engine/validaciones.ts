@@ -24,6 +24,7 @@ export function validarFormulario(
   numerico: Map<number, number>,
   ctx: {
     tarifaRegimen?: number | null;
+    regimenCodigo?: string | null;
     impuestoNetoAnterior?: number;
     aniosDeclarando?: string;
     presentacion?: { estado: "no_presentada" | "oportuna" | "extemporanea"; mesesExtemporanea?: number };
@@ -42,6 +43,21 @@ export function validarFormulario(
       categoria: "configuracion",
       nivel: "error",
       mensaje: "Esta empresa no tiene régimen tributario configurado. El renglón 84 quedará en 0.",
+    });
+  }
+
+  // ESAL · R68/R69 son inversiones específicas del Régimen Tributario Especial
+  // (Art. 357 E.T.). Si el régimen NO es 08 y hay valores, es probable error.
+  const esEsal = String(ctx.regimenCodigo ?? "").padStart(2, "0") === "08";
+  if (!esEsal && (get(68) > 0 || get(69) > 0)) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "warn",
+      renglon: 68,
+      mensaje:
+        "R68/R69 son inversiones del Régimen Tributario Especial (ESAL, Art. 357 E.T.). " +
+        "Esta empresa NO está configurada como régimen 08 pero tiene valores en R68/R69. " +
+        "Revisa que estén bien clasificadas; en régimen ordinario suelen ir como gastos en R62-R66.",
     });
   }
 

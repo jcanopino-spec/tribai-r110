@@ -164,6 +164,7 @@ export default async function ValidacionesPage({
 
   const validacionesF110 = validarFormulario(numerico, {
     tarifaRegimen,
+    regimenCodigo: empresa.regimen_codigo ?? null,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
     presentacion,
