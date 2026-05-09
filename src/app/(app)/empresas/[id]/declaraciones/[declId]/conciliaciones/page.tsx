@@ -24,13 +24,21 @@ export default async function ConciliacionesHubPage({
   if (!declaracion) notFound();
 
   // Conteos rápidos para mostrar progreso de cada conciliación
-  const [{ count: utilidadCount }, { count: patrimonialCount }] = await Promise.all([
+  const [
+    { count: utilidadCount },
+    { count: patrimonialCount },
+    { count: f2516Count },
+  ] = await Promise.all([
     supabase
       .from("conciliacion_partidas")
       .select("*", { count: "exact", head: true })
       .eq("declaracion_id", declId),
     supabase
       .from("conciliacion_patrimonial_partidas")
+      .select("*", { count: "exact", head: true })
+      .eq("declaracion_id", declId),
+    supabase
+      .from("formato_2516_ajustes")
       .select("*", { count: "exact", head: true })
       .eq("declaracion_id", declId),
   ]);
@@ -82,6 +90,19 @@ export default async function ConciliacionesHubPage({
         />
       </div>
 
+      <div className="mt-5">
+        <ConciliacionCard
+          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516`}
+          titulo="Formato 2516"
+          descripcion="Reporte oficial DIAN (Resolución 71/2019) que reconcilia el balance contable agregado (ESF + ERI) con los renglones del 110, fila por fila."
+          puntoPartida="Balance contable agrupado"
+          puntoFinal="Valores fiscales del 110"
+          valorInicio={null}
+          partidasManuales={f2516Count ?? 0}
+          baseLegal="Resolución DIAN 71/2019"
+        />
+      </div>
+
       <div className="mt-12 border border-dashed border-border p-5">
         <h3 className="font-serif text-lg">¿Por qué dos conciliaciones?</h3>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -126,7 +147,7 @@ function ConciliacionCard({
   descripcion: string;
   puntoPartida: string;
   puntoFinal: string;
-  valorInicio: number;
+  valorInicio: number | null;
   partidasManuales: number;
   baseLegal: string;
 }) {
@@ -151,7 +172,9 @@ function ConciliacionCard({
             Punto de partida
           </p>
           <p className="mt-1">{puntoPartida}</p>
-          <p className="mt-1 font-mono tabular-nums">${FMT.format(valorInicio)}</p>
+          <p className="mt-1 font-mono tabular-nums">
+            {valorInicio !== null ? `$${FMT.format(valorInicio)}` : "—"}
+          </p>
         </div>
         <div className="border border-border p-2">
           <p className="font-mono uppercase tracking-[0.05em] text-muted-foreground">

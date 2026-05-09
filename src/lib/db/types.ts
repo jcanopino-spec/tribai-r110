@@ -659,6 +659,44 @@ export type Database = {
           },
         ]
       }
+      formato_2516_ajustes: {
+        Row: {
+          declaracion_id: string
+          fila_id: string
+          conversion: number
+          menor_fiscal: number
+          mayor_fiscal: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          fila_id: string
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          fila_id?: string
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_ajustes_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_venta_activos_fijos: {
         Row: {
           costo_fiscal: number
