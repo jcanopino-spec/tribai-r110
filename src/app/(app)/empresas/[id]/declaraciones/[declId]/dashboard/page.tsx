@@ -447,6 +447,12 @@ export default async function DashboardPage({
           >
             ⬇️ Seguridad Social
           </a>
+          <a
+            href={`/api/checklist/export?decl=${declId}`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            ⬇️ Checklist
+          </a>
         </div>
       </section>
     </div>

@@ -195,11 +195,20 @@ export default async function ChecklistPage({
             criterio profesional.
           </p>
         </div>
-        <div className="text-right">
-          <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
-            {empresa.razon_social}
-          </p>
-          <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
+        <div className="flex items-center gap-3">
+          <a
+            href={`/api/checklist/export?decl=${declId}`}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
+            title="Descarga el checklist en .xlsx con espacio para firma del revisor"
+          >
+            ⬇️ Exportar a Excel
+          </a>
+          <div className="text-right">
+            <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+              {empresa.razon_social}
+            </p>
+            <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
+          </div>
         </div>
       </div>
 
