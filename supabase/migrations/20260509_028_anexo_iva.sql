@@ -46,10 +46,10 @@ create table public.anexo_iva_declaraciones (
 );
 
 -- Un solo registro por declaración + periodicidad + periodo
-create unique index anexo_iva_unique_periodo
+create unique index anexo_iva_decl_unique_periodo
   on public.anexo_iva_declaraciones (declaracion_id, periodicidad, periodo);
 
-create index anexo_iva_decl_idx
+create index anexo_iva_decl_decl_idx
   on public.anexo_iva_declaraciones (declaracion_id);
 
 alter table public.anexo_iva_declaraciones enable row level security;
