@@ -280,6 +280,12 @@ export function DeclaracionEditor({
 
       <div className="mb-6 flex flex-wrap justify-end gap-2">
         <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/dashboard`}
+          className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
+        >
+          📊 Dashboard
+        </Link>
+        <Link
           href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
           className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
         >
