@@ -90,7 +90,7 @@ export default async function ConciliacionesHubPage({
         />
       </div>
 
-      <div className="mt-5">
+      <div className="mt-5 grid gap-5 md:grid-cols-2">
         <ConciliacionCard
           href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516`}
           titulo="Formato 2516"
@@ -100,6 +100,16 @@ export default async function ConciliacionesHubPage({
           valorInicio={null}
           partidasManuales={f2516Count ?? 0}
           baseLegal="Resolución DIAN 71/2019"
+        />
+        <ConciliacionCard
+          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/impuesto-diferido`}
+          titulo="Impuesto Diferido"
+          descripcion="NIC 12 / Sección 29 NIIF Pymes. Activo y pasivo por ID derivado de las diferencias temporarias entre base contable y base fiscal."
+          puntoPartida="Diferencias temporarias"
+          puntoFinal="ID-A · ID-P · gasto neto"
+          valorInicio={null}
+          partidasManuales={0}
+          baseLegal="NIC 12 / Sección 29 NIIF Pymes"
         />
       </div>
 
