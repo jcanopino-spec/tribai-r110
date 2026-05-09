@@ -341,6 +341,15 @@ export default async function AnexosHubPage({
       items: divDist.data?.length ?? 0,
       descripcion: "Distribución a socios: gravado vs. no gravado (Art. 49 E.T.).",
     },
+    {
+      titulo: "Beneficios Tributarios",
+      href: "beneficios",
+      renglones: [],
+      total: 0,
+      items: 7,
+      descripcion:
+        "Catálogo de beneficios especiales (Economía Naranja, ZESE, ZOMAC, Hoteles, Editoriales, Zona Franca). Verifica qué aplica a tu régimen.",
+    },
   ];
 
   return (
