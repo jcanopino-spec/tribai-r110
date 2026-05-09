@@ -182,6 +182,16 @@ export default async function Formato2516Page({
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/oficial`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium text-white hover:opacity-90"
+            style={{ backgroundColor: "#1B5AAB" }}
+            title="Vista oficial DIAN del Formato 2516 (Resolución 71/2019)"
+          >
+            📄 Vista oficial DIAN →
+          </Link>
           <a
             href={`/api/conciliaciones/formato-2516/export?decl=${declId}`}
             className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
