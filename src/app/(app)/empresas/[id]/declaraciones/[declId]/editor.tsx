@@ -278,74 +278,87 @@ export function DeclaracionEditor({
         </section>
       ) : null}
 
-      <div className="mb-6 flex flex-wrap justify-end gap-2">
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/dashboard`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
-        >
-          📊 Dashboard
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Anexos
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Conciliaciones
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Simulador
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/checklist`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Checklist
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Configuración
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
-          className={`inline-flex h-9 items-center justify-center rounded-full border px-4 text-xs ${
-            errores > 0
-              ? "border-destructive/60 bg-destructive/5 text-destructive hover:bg-destructive/10"
-              : warns > 0
-                ? "border-amber-500/60 bg-amber-500/5 hover:bg-amber-500/10"
-                : "border-border-secondary hover:bg-muted"
-          }`}
-        >
-          Validaciones
-          {errores > 0 ? <span className="ml-2 font-mono">· {errores} err</span> : null}
-          {warns > 0 ? <span className="ml-2 font-mono">· {warns} warn</span> : null}
-          {errores === 0 && warns === 0 ? <span className="ml-2 font-mono">· OK</span> : null}
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/formulario-110`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
-        >
-          Formulario 110 →
-        </Link>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-        >
-          Vista plana →
-        </Link>
+      {/* Nav agrupado · 4 categorías */}
+      <div className="mb-6 space-y-2">
+        {/* Acción primaria · Dashboard + Form110 */}
+        <div className="flex flex-wrap justify-end gap-2">
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/dashboard`}
+            className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
+          >
+            📊 Dashboard
+          </Link>
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/formulario-110`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
+          >
+            Formulario 110 →
+          </Link>
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+          >
+            Vista plana →
+          </Link>
+        </div>
+
+        {/* Trabajo · captura y conciliación */}
+        <div className="flex flex-wrap justify-end gap-2">
+          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground self-center mr-1">
+            Trabajo
+          </span>
+          <NavLink
+            href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+          >
+            Configuración
+          </NavLink>
+          <NavLink
+            href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
+          >
+            Anexos
+          </NavLink>
+          <NavLink
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
+          >
+            Conciliaciones
+          </NavLink>
+        </div>
+
+        {/* Análisis · revisión y planeación */}
+        <div className="flex flex-wrap justify-end gap-2">
+          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground self-center mr-1">
+            Análisis
+          </span>
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
+            className={`inline-flex h-9 items-center justify-center rounded-full border px-4 text-xs ${
+              errores > 0
+                ? "border-destructive/60 bg-destructive/5 text-destructive hover:bg-destructive/10"
+                : warns > 0
+                  ? "border-amber-500/60 bg-amber-500/5 hover:bg-amber-500/10"
+                  : "border-border-secondary hover:bg-muted"
+            }`}
+          >
+            Validaciones
+            {errores > 0 ? <span className="ml-2 font-mono">· {errores} err</span> : null}
+            {warns > 0 ? <span className="ml-2 font-mono">· {warns} warn</span> : null}
+            {errores === 0 && warns === 0 ? <span className="ml-2 font-mono">· OK</span> : null}
+          </Link>
+          <NavLink
+            href={`/empresas/${empresaId}/declaraciones/${declId}/checklist`}
+          >
+            Checklist
+          </NavLink>
+          <NavLink
+            href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
+          >
+            Simulador
+          </NavLink>
+        </div>
       </div>
 
       <section className="mb-10 flex flex-wrap items-center gap-4 border border-border p-4">
@@ -482,5 +495,22 @@ function ResumenItem({ label, value }: { label: string; value: number }) {
       <span className="font-mono uppercase tracking-[0.05em] text-muted-foreground">{label}:</span>{" "}
       <span className="font-mono">{FORMATTER.format(value)}</span>
     </p>
+  );
+}
+
+function NavLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+    >
+      {children}
+    </Link>
   );
 }
