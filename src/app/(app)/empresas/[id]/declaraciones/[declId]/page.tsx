@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
-import { loadSegSocialTotals } from "@/lib/seg-social-totals";
+import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
@@ -77,90 +77,28 @@ export default async function DeclaracionEditorPage({
     Number(declaracion.patrimonio_bruto_anterior ?? 0) -
     Number(declaracion.pasivos_anterior ?? 0);
 
-  // Totales del Anexo 3 (renglones 105 y 106)
-  const { data: retenciones } = await supabase
-    .from("anexo_retenciones")
-    .select("tipo, retenido")
-    .eq("declaracion_id", declId);
-  const totalAutorretenciones =
-    (retenciones ?? [])
-      .filter((r) => r.tipo === "autorretencion")
-      .reduce((s, r) => s + Number(r.retenido), 0);
-  const totalRetenciones =
-    (retenciones ?? [])
-      .filter((r) => r.tipo === "retencion")
-      .reduce((s, r) => s + Number(r.retenido), 0);
-
-  // Total Descuentos tributarios → renglón 93
-  const { data: descuentos } = await supabase
-    .from("anexo_descuentos")
-    .select("valor_descuento")
-    .eq("declaracion_id", declId);
-  const totalDescuentosTributarios = (descuentos ?? []).reduce(
-    (s, d) => s + Number(d.valor_descuento),
-    0,
-  );
-
-  // Ganancia Ocasional → renglones 80, 81, 82
-  const { data: gos } = await supabase
-    .from("anexo_ganancia_ocasional")
-    .select("precio_venta, costo_fiscal, no_gravada")
-    .eq("declaracion_id", declId);
-  const goIngresos = (gos ?? []).reduce((s, g) => s + Number(g.precio_venta), 0);
-  const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
-  const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
-
-  // Rentas Exentas → R77
-  const { data: rentasExentas } = await supabase
-    .from("anexo_rentas_exentas")
-    .select("valor_fiscal")
-    .eq("declaracion_id", declId);
-  const totalRentasExentas = (rentasExentas ?? []).reduce(
-    (s, r) => s + Number(r.valor_fiscal),
-    0,
-  );
-
-  // Compensaciones → R74
-  const { data: compensaciones } = await supabase
-    .from("anexo_compensaciones")
-    .select("compensar")
-    .eq("declaracion_id", declId);
-  const totalCompensaciones = (compensaciones ?? []).reduce(
-    (s, c) => s + Number(c.compensar),
-    0,
-  );
-
-  // Dividendos → R49..R56
-  const { data: divs } = await supabase
-    .from("anexo_dividendos")
-    .select(
-      "no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos",
-    )
-    .eq("declaracion_id", declId);
-  const dividendos = {
-    r49: (divs ?? []).reduce((s, d) => s + Number(d.no_constitutivos), 0),
-    r50: (divs ?? []).reduce((s, d) => s + Number(d.distribuidos_no_residentes), 0),
-    r51: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_general), 0),
-    r52: (divs ?? []).reduce((s, d) => s + Number(d.gravados_persona_natural_dos), 0),
-    r53: (divs ?? []).reduce((s, d) => s + Number(d.gravados_personas_extranjeras), 0),
-    r54: (divs ?? []).reduce((s, d) => s + Number(d.gravados_art_245), 0),
-    r55: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_l1819), 0),
-    r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
-  };
-
-  // INCRNGO → R60
-  const { data: incrngos } = await supabase
-    .from("anexo_incrngo")
-    .select("valor")
-    .eq("declaracion_id", declId);
-  const totalIncrngo = (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0);
-
-  // Recuperación de deducciones → R70
-  const { data: recups } = await supabase
-    .from("anexo_recuperaciones")
-    .select("valor")
-    .eq("declaracion_id", declId);
-  const totalRecuperaciones = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
+  // Totales de TODOS los anexos centralizados en loadAnexosCtx
+  // (incluye R33/R34/R35 seg social, R49..R56 dividendos, R60 INCRNGO,
+  //  R70 recuperaciones, R74 compensaciones, R77 rentas exentas,
+  //  R80/R81/R82 ganancia ocasional + venta-AF >2a, R93 descuentos+IVA capital,
+  //  R105/R106 retenciones)
+  const anexosCtx = await loadAnexosCtx(supabase, declId, declaracion);
+  const {
+    totalAutorretenciones,
+    totalRetenciones,
+    totalDescuentosTributarios,
+    goIngresos,
+    goCostos,
+    goNoGravada,
+    totalRentasExentas,
+    totalCompensaciones,
+    totalRecuperaciones,
+    totalIncrngo,
+    dividendos,
+    totalNomina,
+    aportesSegSocial,
+    aportesParaFiscales,
+  } = anexosCtx;
 
   // Renta Presuntiva → R76
   const { data: tarifaRpRow } = await supabase
@@ -186,7 +124,6 @@ export default async function DeclaracionEditorPage({
 
   // Inputs para la fórmula DIAN de Tasa Mínima de Tributación
   const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
-  const segSocial = await loadSegSocialTotals(supabase, declId, declaracion);
 
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
@@ -273,9 +210,9 @@ export default async function DeclaracionEditorPage({
           aplicaTasaMinima={declaracion.aplica_tasa_minima ?? true}
           utilidadContableNeta={ttdInputs.utilidadContableNeta}
           difPermanentesAumentan={ttdInputs.difPermanentesAumentan}
-          totalNomina={segSocial.totalNomina}
-          aportesSegSocial={segSocial.aportesSegSocial}
-          aportesParaFiscales={segSocial.aportesParaFiscales}
+          totalNomina={totalNomina}
+          aportesSegSocial={aportesSegSocial}
+          aportesParaFiscales={aportesParaFiscales}
           beneficioAuditoria12m={!!declaracion.beneficio_auditoria_12m}
           beneficioAuditoria6m={!!declaracion.beneficio_auditoria_6m}
           totalAutorretenciones={totalAutorretenciones}

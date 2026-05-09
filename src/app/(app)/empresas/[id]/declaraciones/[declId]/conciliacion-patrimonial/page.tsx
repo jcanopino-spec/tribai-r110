@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
-import { loadSegSocialTotals } from "@/lib/seg-social-totals";
+import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { evaluarPresentacion, ultimoDigitoNit } from "@/engine/vencimientos";
@@ -77,44 +77,13 @@ export default async function ConciliacionPatrimonialPage({
     declaracion.fecha_presentacion,
   );
 
-  // Cargar valores y anexos
-  const [{ data: valores }, { data: retenciones }, { data: descuentos },
-    { data: gos }, { data: rentasExentas }, { data: compensaciones },
-    { data: recups }, { data: incrngos }, { data: divs },
-    { data: manualPartidas },
-  ] = await Promise.all([
-    supabase.from("form110_valores").select("numero, valor").eq("declaracion_id", declId),
-    supabase.from("anexo_retenciones").select("tipo, retenido").eq("declaracion_id", declId),
-    supabase.from("anexo_descuentos").select("valor_descuento").eq("declaracion_id", declId),
-    supabase.from("anexo_ganancia_ocasional").select("precio_venta, costo_fiscal, no_gravada").eq("declaracion_id", declId),
-    supabase.from("anexo_rentas_exentas").select("valor_fiscal").eq("declaracion_id", declId),
-    supabase.from("anexo_compensaciones").select("compensar").eq("declaracion_id", declId),
-    supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
-    supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
-    supabase.from("anexo_dividendos").select("no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos").eq("declaracion_id", declId),
-    supabase.from("conciliacion_patrimonial_partidas").select("*").eq("declaracion_id", declId).order("created_at"),
-  ]);
-
-  const totalAutorret = (retenciones ?? []).filter(r => r.tipo === "autorretencion").reduce((s, r) => s + Number(r.retenido), 0);
-  const totalRet = (retenciones ?? []).filter(r => r.tipo === "retencion").reduce((s, r) => s + Number(r.retenido), 0);
-  const totalDesc = (descuentos ?? []).reduce((s, d) => s + Number(d.valor_descuento), 0);
-  const goIngresos = (gos ?? []).reduce((s, g) => s + Number(g.precio_venta), 0);
-  const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
-  const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
-  const totalRE = (rentasExentas ?? []).reduce((s, r) => s + Number(r.valor_fiscal), 0);
-  const totalComp = (compensaciones ?? []).reduce((s, c) => s + Number(c.compensar), 0);
-  const totalRec = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
-  const totalIncr = (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0);
-  const dividendos = {
-    r49: (divs ?? []).reduce((s, d) => s + Number(d.no_constitutivos), 0),
-    r50: (divs ?? []).reduce((s, d) => s + Number(d.distribuidos_no_residentes), 0),
-    r51: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_general), 0),
-    r52: (divs ?? []).reduce((s, d) => s + Number(d.gravados_persona_natural_dos), 0),
-    r53: (divs ?? []).reduce((s, d) => s + Number(d.gravados_personas_extranjeras), 0),
-    r54: (divs ?? []).reduce((s, d) => s + Number(d.gravados_art_245), 0),
-    r55: (divs ?? []).reduce((s, d) => s + Number(d.gravados_tarifa_l1819), 0),
-    r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
-  };
+  // Cargar valores + anexos centralizados + partidas manuales en paralelo
+  const [{ data: valores }, { data: manualPartidas }, anexosCtx] =
+    await Promise.all([
+      supabase.from("form110_valores").select("numero, valor").eq("declaracion_id", declId),
+      supabase.from("conciliacion_patrimonial_partidas").select("*").eq("declaracion_id", declId).order("created_at"),
+      loadAnexosCtx(supabase, declId, declaracion),
+    ]);
 
   // Renta presuntiva (Anexo 1)
   const { data: tarifaRpRow } = await supabase
@@ -144,8 +113,8 @@ export default async function ConciliacionPatrimonialPage({
     inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
   }
   const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
-  const segSocial = await loadSegSocialTotals(supabase, declId, declaracion);
   const numerico = computarRenglones(inputs, {
+    ...anexosCtx,
     tarifaRegimen: tarifaRegimen ?? undefined,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
     aniosDeclarando: declaracion.anios_declarando as
@@ -167,19 +136,7 @@ export default async function ConciliacionPatrimonialPage({
     uvtVigente: uvtVigente ?? undefined,
     patrimonioLiquidoAnterior: plAnt,
     esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
-    totalNomina: segSocial.totalNomina,
-    aportesSegSocial: segSocial.aportesSegSocial,
-    aportesParaFiscales: segSocial.aportesParaFiscales,
-    totalAutorretenciones: totalAutorret,
-    totalRetenciones: totalRet,
-    totalDescuentosTributarios: totalDesc,
-    goIngresos, goCostos, goNoGravada,
-    totalRentasExentas: totalRE,
-    totalCompensaciones: totalComp,
-    totalRecuperaciones: totalRec,
     rentaPresuntiva,
-    totalIncrngo: totalIncr,
-    dividendos,
   });
   const v = (n: number) => numerico.get(n) ?? 0;
 
