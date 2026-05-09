@@ -1,0 +1,2207 @@
+[
+  {
+    "row": 12,
+    "rgl": "SECCION I: PATRIMONIO",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 13,
+    "rgl": "33",
+    "puc": null,
+    "concepto": "Costos y gastos de nomina",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 14,
+    "rgl": null,
+    "puc": "5105",
+    "concepto": "Sueldos y salarios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 15,
+    "rgl": null,
+    "puc": "5110",
+    "concepto": "Horas extras y recargos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 16,
+    "rgl": null,
+    "puc": "5115",
+    "concepto": "Comisiones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 17,
+    "rgl": null,
+    "puc": "5120",
+    "concepto": "Viaticos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 18,
+    "rgl": null,
+    "puc": "5125",
+    "concepto": "Auxilio de transporte",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 19,
+    "rgl": null,
+    "puc": "5130",
+    "concepto": "Cesantias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 20,
+    "rgl": null,
+    "puc": "5135",
+    "concepto": "Intereses sobre cesantias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 21,
+    "rgl": null,
+    "puc": "5140",
+    "concepto": "Prima de servicios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 22,
+    "rgl": null,
+    "puc": "5145",
+    "concepto": "Vacaciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 23,
+    "rgl": null,
+    "puc": "5150",
+    "concepto": "Dotacion y suministros",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 24,
+    "rgl": null,
+    "puc": "5155",
+    "concepto": "Bonificaciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 25,
+    "rgl": null,
+    "puc": "5195",
+    "concepto": "Otros gastos de personal",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 26,
+    "rgl": "34",
+    "puc": null,
+    "concepto": "Aportes al sistema de seguridad social",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 27,
+    "rgl": null,
+    "puc": "5160",
+    "concepto": "Aportes a EPS",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 28,
+    "rgl": null,
+    "puc": "5165",
+    "concepto": "Aportes a ARL",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 29,
+    "rgl": null,
+    "puc": "5170",
+    "concepto": "Aportes a pensiones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 30,
+    "rgl": null,
+    "puc": "5175",
+    "concepto": "Aportes a cajas de compensacion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 31,
+    "rgl": "35",
+    "puc": null,
+    "concepto": "Aportes parafiscales",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 32,
+    "rgl": null,
+    "puc": "5180",
+    "concepto": "Aportes ICBF",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 33,
+    "rgl": null,
+    "puc": "5185",
+    "concepto": "Aportes SENA",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 34,
+    "rgl": "PATRIMONIO BRUTO",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 35,
+    "rgl": "36",
+    "puc": null,
+    "concepto": "Efectivo y equivalentes de efectivo",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 36,
+    "rgl": null,
+    "puc": "1105",
+    "concepto": "Caja",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 37,
+    "rgl": null,
+    "puc": "1110",
+    "concepto": "Bancos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 38,
+    "rgl": null,
+    "puc": "1130",
+    "concepto": "Efectivo restringido",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 39,
+    "rgl": null,
+    "puc": "1120",
+    "concepto": "Fondos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 40,
+    "rgl": null,
+    "puc": "1140",
+    "concepto": "Inversiones a la vista",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 41,
+    "rgl": "37",
+    "puc": null,
+    "concepto": "Inversiones e instrumentos financieros derivados",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 42,
+    "rgl": null,
+    "puc": "1205",
+    "concepto": "Acciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 43,
+    "rgl": null,
+    "puc": "1210",
+    "concepto": "Cuotas o partes de interes social",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 44,
+    "rgl": null,
+    "puc": "1215",
+    "concepto": "Bonos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 45,
+    "rgl": null,
+    "puc": "1220",
+    "concepto": "Cedulas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 46,
+    "rgl": null,
+    "puc": "1225",
+    "concepto": "Certificados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 47,
+    "rgl": null,
+    "puc": "1230",
+    "concepto": "Papeles comerciales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 48,
+    "rgl": null,
+    "puc": "1235",
+    "concepto": "Titulos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 49,
+    "rgl": null,
+    "puc": "1240",
+    "concepto": "Aceptaciones bancarias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 50,
+    "rgl": null,
+    "puc": "1245",
+    "concepto": "Derechos fiduciarios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 51,
+    "rgl": null,
+    "puc": "1250",
+    "concepto": "Derechos de recompra",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 52,
+    "rgl": null,
+    "puc": "1255",
+    "concepto": "Obligatorias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 53,
+    "rgl": null,
+    "puc": "1260",
+    "concepto": "Cuentas en participacion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 54,
+    "rgl": "38",
+    "puc": null,
+    "concepto": "Cuentas, documentos y arrendamientos por cobrar",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 55,
+    "rgl": null,
+    "puc": "1305",
+    "concepto": "Clientes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 56,
+    "rgl": null,
+    "puc": "1310",
+    "concepto": "Cuentas corrientes comerciales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 57,
+    "rgl": null,
+    "puc": "1315",
+    "concepto": "Cuentas por cobrar a socios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 58,
+    "rgl": null,
+    "puc": "1320",
+    "concepto": "Cuentas por cobrar a vinculados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 59,
+    "rgl": null,
+    "puc": "1325",
+    "concepto": "Cuentas por cobrar a directores",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 60,
+    "rgl": null,
+    "puc": "1330",
+    "concepto": "Anticipos y avances",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 61,
+    "rgl": null,
+    "puc": "1335",
+    "concepto": "Depositos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 62,
+    "rgl": null,
+    "puc": "1340",
+    "concepto": "Promesas de compraventa",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 63,
+    "rgl": null,
+    "puc": "1345",
+    "concepto": "Ingresos por cobrar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 64,
+    "rgl": null,
+    "puc": "1350",
+    "concepto": "Retencion sobre contratos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 65,
+    "rgl": null,
+    "puc": "1355",
+    "concepto": "Anticipo de impuestos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 66,
+    "rgl": null,
+    "puc": "1360",
+    "concepto": "Cuentas por cobrar trabajadores",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 67,
+    "rgl": null,
+    "puc": "1365",
+    "concepto": "Prestamos a particulares",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 68,
+    "rgl": null,
+    "puc": "1380",
+    "concepto": "Deudores varios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 69,
+    "rgl": null,
+    "puc": "1390",
+    "concepto": "Deudas de dificil cobro",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 70,
+    "rgl": null,
+    "puc": "1399",
+    "concepto": "Provision de cartera (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 71,
+    "rgl": "39",
+    "puc": null,
+    "concepto": "Inventarios",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 72,
+    "rgl": null,
+    "puc": "1405",
+    "concepto": "Materias primas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 73,
+    "rgl": null,
+    "puc": "1410",
+    "concepto": "Productos en proceso",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 74,
+    "rgl": null,
+    "puc": "1415",
+    "concepto": "Productos terminados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 75,
+    "rgl": null,
+    "puc": "1420",
+    "concepto": "Mercancias no fabricadas por la empresa",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 76,
+    "rgl": null,
+    "puc": "1425",
+    "concepto": "Materiales, repuestos y accesorios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 77,
+    "rgl": null,
+    "puc": "1430",
+    "concepto": "Envases y empaques",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 78,
+    "rgl": null,
+    "puc": "1435",
+    "concepto": "Inventarios en transito",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 79,
+    "rgl": null,
+    "puc": "1499",
+    "concepto": "Provision de inventarios (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 80,
+    "rgl": "40",
+    "puc": null,
+    "concepto": "Activos intangibles",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 81,
+    "rgl": null,
+    "puc": "1605",
+    "concepto": "Credito mercantil (goodwill)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 82,
+    "rgl": null,
+    "puc": "1610",
+    "concepto": "Marcas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 83,
+    "rgl": null,
+    "puc": "1615",
+    "concepto": "Patentes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 84,
+    "rgl": null,
+    "puc": "1620",
+    "concepto": "Concesiones y franquicias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 85,
+    "rgl": null,
+    "puc": "1625",
+    "concepto": "Derechos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 86,
+    "rgl": null,
+    "puc": "1630",
+    "concepto": "Know how",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 87,
+    "rgl": null,
+    "puc": "1635",
+    "concepto": "Licencias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 88,
+    "rgl": null,
+    "puc": "1698",
+    "concepto": "Amortizacion acumulada (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 89,
+    "rgl": "41",
+    "puc": null,
+    "concepto": "Activos biologicos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 90,
+    "rgl": null,
+    "puc": "(BIO1)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (1)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 91,
+    "rgl": null,
+    "puc": "(BIO2)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (2)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 92,
+    "rgl": null,
+    "puc": "(BIO3)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (3)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 93,
+    "rgl": "42",
+    "puc": null,
+    "concepto": "Propiedades, planta y equipo, propiedades de inversion",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 94,
+    "rgl": null,
+    "puc": "1504",
+    "concepto": "Terrenos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 95,
+    "rgl": null,
+    "puc": "1506",
+    "concepto": "Materiales proyectos petroleros",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 97,
+    "rgl": null,
+    "puc": "1512",
+    "concepto": "Maquinaria en montaje",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 99,
+    "rgl": null,
+    "puc": "1520",
+    "concepto": "Maquinaria y equipo",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 100,
+    "rgl": null,
+    "puc": "1524",
+    "concepto": "Equipo de oficina",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 101,
+    "rgl": null,
+    "puc": "1528",
+    "concepto": "Equipo de computacion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 102,
+    "rgl": null,
+    "puc": "1532",
+    "concepto": "Equipo medico-cientifico",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 103,
+    "rgl": null,
+    "puc": "1536",
+    "concepto": "Equipo de hoteles y restaurantes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 104,
+    "rgl": null,
+    "puc": "1540",
+    "concepto": "Flota y equipo de transporte",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 105,
+    "rgl": null,
+    "puc": "1544",
+    "concepto": "Flota y equipo fluvial",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 106,
+    "rgl": null,
+    "puc": "1548",
+    "concepto": "Flota y equipo aereo",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 107,
+    "rgl": null,
+    "puc": "1552",
+    "concepto": "Flota y equipo ferreo",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 108,
+    "rgl": null,
+    "puc": "1556",
+    "concepto": "Acueductos, plantas y redes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 109,
+    "rgl": null,
+    "puc": "1560",
+    "concepto": "Armamento de vigilancia",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 110,
+    "rgl": null,
+    "puc": "1562",
+    "concepto": "Envases y empaques",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 111,
+    "rgl": null,
+    "puc": "1564",
+    "concepto": "Plantaciones agricolas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 112,
+    "rgl": null,
+    "puc": "1568",
+    "concepto": "Vias de comunicacion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 113,
+    "rgl": null,
+    "puc": "1572",
+    "concepto": "Minas y canteras",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 114,
+    "rgl": null,
+    "puc": "1576",
+    "concepto": "Pozos artesianos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 115,
+    "rgl": null,
+    "puc": "1580",
+    "concepto": "Yacimientos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 116,
+    "rgl": null,
+    "puc": "1584",
+    "concepto": "Semovientes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 117,
+    "rgl": null,
+    "puc": "1588",
+    "concepto": "Propiedades de inversion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 118,
+    "rgl": null,
+    "puc": "1592",
+    "concepto": "Depreciacion acumulada (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 119,
+    "rgl": null,
+    "puc": "1596",
+    "concepto": "Depreciacion diferida",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 120,
+    "rgl": null,
+    "puc": "1597",
+    "concepto": "Amortizacion acumulada (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 121,
+    "rgl": null,
+    "puc": "1598",
+    "concepto": "Agotamiento acumulado (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 122,
+    "rgl": null,
+    "puc": "1599",
+    "concepto": "Provisiones (-)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 123,
+    "rgl": "43",
+    "puc": null,
+    "concepto": "Otros activos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 124,
+    "rgl": null,
+    "puc": "1705",
+    "concepto": "Gastos pagados por anticipado",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 125,
+    "rgl": null,
+    "puc": "1710",
+    "concepto": "Cargos diferidos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 126,
+    "rgl": null,
+    "puc": "1715",
+    "concepto": "Activos por impuesto diferido",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 127,
+    "rgl": null,
+    "puc": "1720",
+    "concepto": "Bienes de arte y cultura",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 128,
+    "rgl": null,
+    "puc": "1798",
+    "concepto": "Otros activos no clasificados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 129,
+    "rgl": "44",
+    "puc": null,
+    "concepto": "TOTAL PATRIMONIO BRUTO",
+    "tipo": "seccion"
+  },
+  {
+    "row": 130,
+    "rgl": "PASIVOS",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 131,
+    "rgl": "45",
+    "puc": null,
+    "concepto": "Total pasivos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 132,
+    "rgl": null,
+    "puc": "2105",
+    "concepto": "Obligaciones financieras",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 133,
+    "rgl": null,
+    "puc": "2205",
+    "concepto": "Proveedores nacionales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 134,
+    "rgl": null,
+    "puc": "2210",
+    "concepto": "Proveedores del exterior",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 135,
+    "rgl": null,
+    "puc": "2305",
+    "concepto": "Cuentas por pagar - Cuentas corrientes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 136,
+    "rgl": null,
+    "puc": "2310",
+    "concepto": "Cuentas por pagar a socios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 137,
+    "rgl": null,
+    "puc": "2315",
+    "concepto": "Cuentas por pagar a vinculados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 138,
+    "rgl": null,
+    "puc": "2320",
+    "concepto": "Cuentas por pagar a contratistas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 139,
+    "rgl": null,
+    "puc": "2335",
+    "concepto": "Costos y gastos por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 140,
+    "rgl": null,
+    "puc": "2101",
+    "concepto": "Obligaciones financieras (2101 alterno)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 141,
+    "rgl": null,
+    "puc": "2345",
+    "concepto": "Acreedores oficiales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 142,
+    "rgl": null,
+    "puc": "2355",
+    "concepto": "Deudas con accionistas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 143,
+    "rgl": null,
+    "puc": "2360",
+    "concepto": "Dividendos por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 144,
+    "rgl": null,
+    "puc": "2365",
+    "concepto": "Retencion en la fuente por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 145,
+    "rgl": null,
+    "puc": "2367",
+    "concepto": "Impuesto a las ventas retenido",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 146,
+    "rgl": null,
+    "puc": "2368",
+    "concepto": "Impuesto de industria y comercio retenido",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 147,
+    "rgl": null,
+    "puc": "2370",
+    "concepto": "Retenciones y aportes de nomina",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 148,
+    "rgl": null,
+    "puc": "2380",
+    "concepto": "Acreedores varios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 149,
+    "rgl": null,
+    "puc": "2404",
+    "concepto": "Impuesto de renta por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 150,
+    "rgl": null,
+    "puc": "2408",
+    "concepto": "IVA por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 151,
+    "rgl": null,
+    "puc": "2412",
+    "concepto": "ICA por pagar",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 152,
+    "rgl": null,
+    "puc": "2424",
+    "concepto": "Gravamen a los movimientos financieros",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 153,
+    "rgl": null,
+    "puc": "2505",
+    "concepto": "Obligaciones laborales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 154,
+    "rgl": null,
+    "puc": "2510",
+    "concepto": "Cesantias consolidadas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 155,
+    "rgl": null,
+    "puc": "2515",
+    "concepto": "Intereses sobre cesantias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 156,
+    "rgl": null,
+    "puc": "2520",
+    "concepto": "Prima de servicios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 157,
+    "rgl": null,
+    "puc": "2525",
+    "concepto": "Vacaciones consolidadas",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 158,
+    "rgl": null,
+    "puc": "2530",
+    "concepto": "Prestaciones extralegales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 159,
+    "rgl": null,
+    "puc": "2605",
+    "concepto": "Pasivos estimados - Para costos y gastos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 160,
+    "rgl": null,
+    "puc": "2610",
+    "concepto": "Para obligaciones laborales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 161,
+    "rgl": null,
+    "puc": "2615",
+    "concepto": "Para obligaciones fiscales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 162,
+    "rgl": null,
+    "puc": "2550",
+    "concepto": "Beneficios a empleados largo plazo",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 163,
+    "rgl": null,
+    "puc": "2705",
+    "concepto": "Ingresos recibidos por anticipado",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 164,
+    "rgl": null,
+    "puc": "2805",
+    "concepto": "Otros pasivos - Anticipos y avances recibidos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 165,
+    "rgl": null,
+    "puc": "2815",
+    "concepto": "Ingresos recibidos para terceros",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 166,
+    "rgl": null,
+    "puc": "2895",
+    "concepto": "Otros pasivos diversos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 167,
+    "rgl": null,
+    "puc": "2905",
+    "concepto": "Pasivo por impuesto diferido",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 168,
+    "rgl": "46",
+    "puc": null,
+    "concepto": "PATRIMONIO LIQUIDO (R44 - R45)",
+    "tipo": "seccion"
+  },
+  {
+    "row": 169,
+    "rgl": "SECCION II: INGRESOS",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 170,
+    "rgl": "47",
+    "puc": null,
+    "concepto": "Ingresos brutos de actividades ordinarias",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 171,
+    "rgl": null,
+    "puc": "4105",
+    "concepto": "Agricultura, ganaderia, caza, silvicultura",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 172,
+    "rgl": null,
+    "puc": "4110",
+    "concepto": "Pesca",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 173,
+    "rgl": null,
+    "puc": "4115",
+    "concepto": "Explotacion de minas y canteras",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 174,
+    "rgl": null,
+    "puc": "4120",
+    "concepto": "Industrias manufactureras",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 175,
+    "rgl": null,
+    "puc": "4125",
+    "concepto": "Suministro de electricidad, gas y vapor",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 176,
+    "rgl": null,
+    "puc": "4130",
+    "concepto": "Construccion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 177,
+    "rgl": null,
+    "puc": "4135",
+    "concepto": "Comercio al por mayor y menor",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 178,
+    "rgl": null,
+    "puc": "4140",
+    "concepto": "Hoteles y restaurantes",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 179,
+    "rgl": null,
+    "puc": "4145",
+    "concepto": "Transporte, almacenamiento y comunicaciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 180,
+    "rgl": null,
+    "puc": "4150",
+    "concepto": "Actividad financiera",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 181,
+    "rgl": null,
+    "puc": "4155",
+    "concepto": "Actividades inmobiliarias",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 182,
+    "rgl": null,
+    "puc": "4160",
+    "concepto": "Servicios sociales y de salud",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 183,
+    "rgl": null,
+    "puc": "4165",
+    "concepto": "Servicios de ensenanza",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 184,
+    "rgl": null,
+    "puc": "4170",
+    "concepto": "Servicios de consultoria",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 185,
+    "rgl": null,
+    "puc": "(ver R59)",
+    "concepto": "Devoluciones reclasificadas a R59",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 186,
+    "rgl": null,
+    "puc": "4180",
+    "concepto": "Ingresos diversos (cuenta 4180)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 187,
+    "rgl": "48",
+    "puc": null,
+    "concepto": "Ingresos brutos por rendimientos financieros",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 188,
+    "rgl": null,
+    "puc": "4205",
+    "concepto": "Intereses",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 189,
+    "rgl": null,
+    "puc": "4210",
+    "concepto": "Rendimientos de inversiones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 190,
+    "rgl": null,
+    "puc": "4215",
+    "concepto": "Descuentos comerciales condicionados",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 191,
+    "rgl": null,
+    "puc": "4220",
+    "concepto": "Utilidad en venta de inversiones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 192,
+    "rgl": null,
+    "puc": "4225",
+    "concepto": "Diferencia en cambio",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 193,
+    "rgl": "49",
+    "puc": null,
+    "concepto": "Dividendos y/o participaciones 2016 y anteriores (no gravados)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 194,
+    "rgl": "50",
+    "puc": null,
+    "concepto": "Dividendos y/o participaciones 2017-2018 (no gravados art 49 ET)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 195,
+    "rgl": "51",
+    "puc": null,
+    "concepto": "Dividendos 2017-2018 gravados art 49 par 2",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 196,
+    "rgl": "52",
+    "puc": null,
+    "concepto": "Dividendos 2019-2022 no gravados (art 49 numeral 3)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 197,
+    "rgl": "53",
+    "puc": null,
+    "concepto": "Dividendos 2019-2022 gravados",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 198,
+    "rgl": "54",
+    "puc": null,
+    "concepto": "Dividendos 2023+ no gravados (art 49 num 3)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 199,
+    "rgl": "55",
+    "puc": null,
+    "concepto": "Dividendos 2023+ gravados",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 200,
+    "rgl": "56",
+    "puc": null,
+    "concepto": "Dividendos recibidos de ECE",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 201,
+    "rgl": "57",
+    "puc": null,
+    "concepto": "Otros ingresos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 202,
+    "rgl": null,
+    "puc": "4240",
+    "concepto": "Recuperaciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 203,
+    "rgl": null,
+    "puc": "4245",
+    "concepto": "Indemnizaciones",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 204,
+    "rgl": null,
+    "puc": "4250",
+    "concepto": "Participacion en concordatos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 205,
+    "rgl": null,
+    "puc": "4255",
+    "concepto": "Ingresos de ejercicios anteriores",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 206,
+    "rgl": null,
+    "puc": "4295",
+    "concepto": "Ingresos diversos",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 207,
+    "rgl": "58",
+    "puc": null,
+    "concepto": "TOTAL INGRESOS BRUTOS (suma R47 a R57)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 208,
+    "rgl": "59",
+    "puc": null,
+    "concepto": "Devoluciones, rebajas y descuentos en ventas",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 209,
+    "rgl": "60",
+    "puc": null,
+    "concepto": "Ingresos no constitutivos de renta (INCRNGO)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 210,
+    "rgl": "61",
+    "puc": null,
+    "concepto": "Total ingresos netos (R58 - R59 - R60)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 211,
+    "rgl": "SECCION III: COSTOS Y DEDUCCIONES",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 212,
+    "rgl": "62",
+    "puc": null,
+    "concepto": "Costos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 213,
+    "rgl": null,
+    "puc": "6105",
+    "concepto": "Costo de ventas - Comercio",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 214,
+    "rgl": null,
+    "puc": "6110",
+    "concepto": "Costo de ventas - Industria",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 215,
+    "rgl": null,
+    "puc": "6115",
+    "concepto": "Costo de ventas - Servicios",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 216,
+    "rgl": null,
+    "puc": "6120",
+    "concepto": "Costo de produccion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 217,
+    "rgl": null,
+    "puc": "6125",
+    "concepto": "Costo de mano de obra",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 218,
+    "rgl": null,
+    "puc": "6130",
+    "concepto": "Costo materiales",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 219,
+    "rgl": null,
+    "puc": "6135",
+    "concepto": "CIF - Costos indirectos de fabricacion",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 220,
+    "rgl": null,
+    "puc": "7",
+    "concepto": "Costos de produccion/operacion (clase 7)",
+    "tipo": "cuenta"
+  },
+  {
+    "row": 221,
+    "rgl": "63",
+    "puc": null,
+    "concepto": "Gastos de administracion",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 222,
+    "rgl": "64",
+    "puc": null,
+    "concepto": "Gastos de comercializacion y ventas",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 223,
+    "rgl": "65",
+    "puc": null,
+    "concepto": "Gastos financieros - Intereses y demas gastos",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 224,
+    "rgl": "66",
+    "puc": null,
+    "concepto": "Otros gastos y deducciones",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 225,
+    "rgl": "67",
+    "puc": null,
+    "concepto": "Total costos y gastos deducibles (R62+R63+R64+R65+R66)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 226,
+    "rgl": "68",
+    "puc": null,
+    "concepto": "Inversiones efectuadas en el año",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 227,
+    "rgl": "SECCION IV: RENTA",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 228,
+    "rgl": "72",
+    "puc": null,
+    "concepto": "Renta líquida ordinaria del ejercicio (R61 + R69 + R70 + R71 - R67 - R68 - dividendos R49..R56)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 229,
+    "rgl": "73",
+    "puc": null,
+    "concepto": "O Pérdida líquida del ejercicio",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 230,
+    "rgl": "74",
+    "puc": null,
+    "concepto": "Compensaciones (Art. 147 ET - pérdidas fiscales)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 231,
+    "rgl": "74b",
+    "puc": null,
+    "concepto": "Compensación de excesos de renta presuntiva (parte de R74)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 232,
+    "rgl": "75",
+    "puc": null,
+    "concepto": "Renta líquida (R72 - R74)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 233,
+    "rgl": "76",
+    "puc": null,
+    "concepto": "Renta presuntiva",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 234,
+    "rgl": "aux",
+    "puc": null,
+    "concepto": "MAX(R75, R76) — paso intermedio para R79",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 235,
+    "rgl": "77",
+    "puc": null,
+    "concepto": "Rentas exentas",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 236,
+    "rgl": "78",
+    "puc": null,
+    "concepto": "Rentas gravables",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 237,
+    "rgl": "79",
+    "puc": null,
+    "concepto": "RENTA LÍQUIDA GRAVABLE (MAX(R75,R76) - R77 + R78)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 238,
+    "rgl": "SECCION V: GANANCIAS OCASIONALES",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 239,
+    "rgl": "80",
+    "puc": null,
+    "concepto": "Ingresos por ganancias ocasionales del país y del exterior",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 240,
+    "rgl": "81",
+    "puc": null,
+    "concepto": "Costos por ganancias ocasionales",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 241,
+    "rgl": "82",
+    "puc": null,
+    "concepto": "Ganancias ocasionales no gravadas y exentas",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 242,
+    "rgl": "83",
+    "puc": null,
+    "concepto": "Ganancias ocasionales gravables",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 243,
+    "rgl": "SECCION VI: LIQUIDACION PRIVADA",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 244,
+    "rgl": "84",
+    "puc": null,
+    "concepto": "Impuesto sobre las rentas líquidas gravables (R79 × tarifa)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 245,
+    "rgl": "85",
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2017-2018",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 246,
+    "rgl": "86",
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2019-2022 (art. 240)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 247,
+    "rgl": "87",
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2019-2022 (27%)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 248,
+    "rgl": "88",
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2023+ (art. 240)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 249,
+    "rgl": "89",
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2023+ (32% o 33%)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 250,
+    "rgl": "90",
+    "puc": null,
+    "concepto": "De dividendos y participaciones recibidas de ECE",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 251,
+    "rgl": "97",
+    "puc": null,
+    "concepto": "Impuesto de ganancias ocasionales (R83 × tarifa)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 252,
+    "rgl": "91",
+    "puc": null,
+    "concepto": "Total impuesto sobre las rentas líquidas gravables (R84 a R90)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 253,
+    "rgl": "93",
+    "puc": null,
+    "concepto": "Descuentos tributarios",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 254,
+    "rgl": "94",
+    "puc": null,
+    "concepto": "Impuesto neto de renta (sin impuesto adicionado) = R91 - R93",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 255,
+    "rgl": "96",
+    "puc": null,
+    "concepto": "Impuesto neto de renta (con impuesto adicionado) = R94 + R92 + R95",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 256,
+    "rgl": "108",
+    "puc": null,
+    "concepto": "Anticipo renta para el año gravable siguiente",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 257,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(reservado para R92 VAA o R95 IA - agregar si aplica)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 258,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(obsoleto: usar R111 en f272)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 259,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(obsoleto: usar R112 en f273)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 260,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(obsoleto: usar R113 en f274)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 261,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(obsoleto: usar R114 en f275)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 262,
+    "rgl": "SECCION VII: CONTROL Y PAGOS",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 263,
+    "rgl": "103",
+    "puc": null,
+    "concepto": "Anticipo renta liquidado año gravable anterior",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 264,
+    "rgl": "104",
+    "puc": null,
+    "concepto": "Saldo a favor año gravable anterior sin solicitud de devolución",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 265,
+    "rgl": "105",
+    "puc": null,
+    "concepto": "Autorretenciones",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 266,
+    "rgl": "106",
+    "puc": null,
+    "concepto": "Otras retenciones",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 267,
+    "rgl": "-",
+    "puc": null,
+    "concepto": "(espacio disponible)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 268,
+    "rgl": "107",
+    "puc": null,
+    "concepto": "Total retenciones año gravable a declarar (R105 + R106)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 269,
+    "rgl": "109",
+    "puc": null,
+    "concepto": "Anticipo Puntos adicionales año gravable anterior",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 270,
+    "rgl": "100",
+    "puc": null,
+    "concepto": "Valor inversión obras por impuestos hasta del 50% de R99 (Modalidad 1)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 271,
+    "rgl": "101",
+    "puc": null,
+    "concepto": "Descuento efectivo inversión obras por impuestos (Modalidad 2)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 272,
+    "rgl": "111",
+    "puc": null,
+    "concepto": "Saldo a pagar por impuesto",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 273,
+    "rgl": "112",
+    "puc": null,
+    "concepto": "Sanciones",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 274,
+    "rgl": "113",
+    "puc": null,
+    "concepto": "Total saldo a pagar",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 275,
+    "rgl": "114",
+    "puc": null,
+    "concepto": "Total saldo a favor",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 276,
+    "rgl": "92",
+    "puc": null,
+    "concepto": "Valor a adicionar (VAA)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 277,
+    "rgl": "95",
+    "puc": null,
+    "concepto": "Impuesto a adicionar (IA)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 278,
+    "rgl": "98",
+    "puc": null,
+    "concepto": "Descuento por impuestos pagados en exterior por GO",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 279,
+    "rgl": "99",
+    "puc": null,
+    "concepto": "Total impuesto a cargo (R96 + R97 - R98)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 280,
+    "rgl": "102",
+    "puc": null,
+    "concepto": "Crédito fiscal art. 256-1 E.T.",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 281,
+    "rgl": "110",
+    "puc": null,
+    "concepto": "Anticipo Puntos adicionales año gravable siguiente",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 283,
+    "rgl": "PANEL DIAN AG 2024 — RENTAS ADICIONALES (intermedios R69-R71)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 284,
+    "rgl": "Rgl DIAN",
+    "puc": null,
+    "concepto": "Concepto (suma a la Renta Líquida Ordinaria)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 285,
+    "rgl": "69 DIAN",
+    "puc": null,
+    "concepto": "Inversiones liquidadas de períodos anteriores",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 286,
+    "rgl": "70 DIAN",
+    "puc": null,
+    "concepto": "Renta por recuperación de deducciones",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 287,
+    "rgl": "71 DIAN",
+    "puc": null,
+    "concepto": "Renta pasiva - ECE sin residencia fiscal Colombia",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 288,
+    "rgl": "Σ adic",
+    "puc": null,
+    "concepto": "TOTAL RENTAS ADICIONALES (suma a RLO)",
+    "tipo": "renglon_total"
+  },
+  {
+    "row": 295,
+    "rgl": "CONTROLES Y AUDITORÍA",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 297,
+    "rgl": "1. ECUACIÓN PATRIMONIAL (CONTABLE)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 298,
+    "rgl": "Concepto",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 299,
+    "rgl": "Total patrimonio bruto (R44)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 300,
+    "rgl": "Total pasivos (R45)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 301,
+    "rgl": "Patrimonio líquido (R46) = R44 - R45",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 302,
+    "rgl": "Control: Activos = Pasivos + Patrimonio líquido",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 304,
+    "rgl": "2. CUENTA DE RESULTADO (CONTABLE)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 305,
+    "rgl": "Total ingresos netos (R61)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 306,
+    "rgl": "Total costos y deducciones (R67)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 307,
+    "rgl": "Inversiones efectuadas (R68)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 308,
+    "rgl": "Rentas adicionales (R69-R71 DIAN)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 309,
+    "rgl": "Dividendos (R49-R56)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 310,
+    "rgl": "Utilidad contable estimada",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 311,
+    "rgl": "Renta líquida ordinaria (R72 DIAN)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 312,
+    "rgl": "Pérdida líquida (R73 DIAN)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 314,
+    "rgl": "3. DIFERENCIAS CONTABLE vs FISCAL (AJUSTES)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 315,
+    "rgl": "Concepto",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 316,
+    "rgl": "Patrimonio bruto (R44)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 317,
+    "rgl": "Total pasivos (R45)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 318,
+    "rgl": "Ingresos netos (R61)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 319,
+    "rgl": "Costos y deducciones (R67)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 320,
+    "rgl": "Renta líquida ordinaria (R72)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 321,
+    "rgl": "Renta líquida gravable (R79)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 322,
+    "rgl": "Impuesto neto de renta (R94)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 324,
+    "rgl": "4. FLUJO DE RENTA LÍQUIDA GRAVABLE (R78 FINAL)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 325,
+    "rgl": "R61 Ingresos netos",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 326,
+    "rgl": "(-) R67 Costos y deducciones",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 327,
+    "rgl": "(-) R68 Inversiones año",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 328,
+    "rgl": "(+) R69+R70+R71 DIAN Rentas adicionales",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 329,
+    "rgl": "(-) R49..R56 Dividendos (tratamiento especial)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 330,
+    "rgl": "R72 = Renta líquida ordinaria",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 331,
+    "rgl": "(-) R74 Compensaciones",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 332,
+    "rgl": "R75 = Renta líquida",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 333,
+    "rgl": "R76 = Renta presuntiva",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 334,
+    "rgl": "MAX(R75, R76)",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 335,
+    "rgl": "(-) R77 Rentas exentas",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 336,
+    "rgl": "(+) R78 Rentas gravables",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 337,
+    "rgl": "R79 RENTA LÍQUIDA GRAVABLE",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 338,
+    "rgl": "R84 Impuesto renta = R79 × tarifa",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  },
+  {
+    "row": 1204,
+    "rgl": "(c) 2026 INPLUX S.A.S. | NIT 901.784.448-8 | Marca TRIBAI | tribai.co | Autor: Jaime Alonso Cano Pino, CEO | Todos los derechos reservados. Prohibida su reproduccion sin autorizacion escrita.",
+    "puc": null,
+    "concepto": "",
+    "tipo": "marker"
+  }
+]

@@ -3,7 +3,6 @@
 // inesperados (ej. "el total pasivo está inflado") para identificar
 // la cuenta raíz del problema sin tener que abrir el balance crudo.
 
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { categorizarPucF2516, F2516_FILAS, type F2516FilaId } from "@/engine/f2516";
