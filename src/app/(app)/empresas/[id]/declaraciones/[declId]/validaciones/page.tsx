@@ -11,6 +11,7 @@ import {
   type Validacion,
 } from "@/engine/validaciones";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { FinalizarButton } from "./finalizar-button";
 
 export const metadata = { title: "Validaciones" };
@@ -143,7 +144,9 @@ export default async function ValidacionesPage({
       | undefined,
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    aplicaTasaMinima:
+      aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
+      (declaracion.aplica_tasa_minima ?? true),
     utilidadContableNeta: ttdInputs.utilidadContableNeta,
     difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
@@ -162,7 +165,9 @@ export default async function ValidacionesPage({
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
     presentacion,
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    aplicaTasaMinima:
+      aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
+      (declaracion.aplica_tasa_minima ?? true),
     beneficioAuditoria12m: !!declaracion.beneficio_auditoria_12m,
     beneficioAuditoria6m: !!declaracion.beneficio_auditoria_6m,
   });

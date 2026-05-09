@@ -6,6 +6,7 @@ import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { RENGLONES_COMPUTADOS, computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { PrintButton } from "./print-button";
 
 export const metadata = {
@@ -141,7 +142,9 @@ export default async function ImprimirDeclaracionPage({
           ? { estado: "oportuna" }
           : { estado: "no_presentada" },
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    aplicaTasaMinima:
+      aplicaTTDPorRegimen(regimenCodigo).aplica &&
+      (declaracion.aplica_tasa_minima ?? true),
     utilidadContableNeta: ttdInputs.utilidadContableNeta,
     difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,

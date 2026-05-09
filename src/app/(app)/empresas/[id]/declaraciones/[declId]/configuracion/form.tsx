@@ -5,6 +5,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { saveConfiguracionAction, type ConfigState } from "./actions";
 import type { EstadoPresentacion } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -88,7 +89,9 @@ export function ConfiguracionForm({
         a false al guardar.
       */}
       <div className="mt-8 space-y-6">
-        <div hidden={tab !== "general"}><TabGeneral d={d} /></div>
+        <div hidden={tab !== "general"}>
+          <TabGeneral d={d} regimenCodigo={regimenCodigo} />
+        </div>
         <div hidden={tab !== "auditoria"}><TabAuditoria d={d} /></div>
         <div hidden={tab !== "anterior"}><TabAnterior d={d} /></div>
         <div hidden={tab !== "sanciones"}>
@@ -128,7 +131,14 @@ export function ConfiguracionForm({
 // ============================================================
 // Tab 1: General
 // ============================================================
-function TabGeneral({ d }: { d: Decl }) {
+function TabGeneral({
+  d,
+  regimenCodigo,
+}: {
+  d: Decl;
+  regimenCodigo: string | null;
+}) {
+  const ttdRegimen = aplicaTTDPorRegimen(regimenCodigo);
   return (
     <div className="space-y-5">
       <h2 className="font-serif text-xl">Características de la empresa</h2>
@@ -164,9 +174,22 @@ function TabGeneral({ d }: { d: Decl }) {
           name="aplica_tasa_minima"
           label="Aplicar Tasa Mínima de Tributación (TTD, 15%)"
           defaultChecked={d.aplica_tasa_minima ?? true}
-          help="Art. 240 par. 6° E.T. (Ley 2277/2022). Activo por defecto. Desactiva solo si la empresa está en zona franca, no es residente, o aplica algún régimen exonerado."
+          disabled={!ttdRegimen.aplica}
+          help={
+            ttdRegimen.aplica
+              ? "Art. 240 par. 6° E.T. (Ley 2277/2022). Activo por defecto. Desactiva solo si la empresa está en zona franca, no es residente, o aplica algún régimen exonerado."
+              : `Desactivado automáticamente: el régimen no está sujeto a TTD. Razón: ${ttdRegimen.razon}.`
+          }
         />
       </div>
+
+      {!ttdRegimen.aplica ? (
+        <div className="border border-amber-500/40 bg-amber-500/5 p-3 text-xs">
+          ⓘ La <span className="font-medium">Tasa Mínima de Tributación</span>{" "}
+          NO aplica para este régimen ({ttdRegimen.razon}). El R95 del
+          formulario quedará en 0 sin importar el valor del checkbox.
+        </div>
+      ) : null}
 
       <h2 className="mt-8 font-serif text-xl">Datos para el anticipo</h2>
       <div className="grid gap-5 md:grid-cols-2">

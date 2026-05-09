@@ -6,6 +6,7 @@ import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { evaluarPresentacion, ultimoDigitoNit } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { PartidaPatrimonialForm } from "./partida-form";
 import { PartidasPatrimonialList, type PartidaItem } from "./list";
 
@@ -126,7 +127,9 @@ export default async function ConciliacionPatrimonialPage({
           ? { estado: "oportuna" }
           : { estado: "no_presentada" },
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    aplicaTasaMinima:
+      aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
+      (declaracion.aplica_tasa_minima ?? true),
     utilidadContableNeta: ttdInputs.utilidadContableNeta,
     difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,

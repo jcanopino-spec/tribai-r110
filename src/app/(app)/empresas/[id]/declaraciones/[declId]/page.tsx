@@ -7,6 +7,7 @@ import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 
 export const metadata = { title: "Editor declaración" };
 
@@ -207,7 +208,10 @@ export default async function DeclaracionEditorPage({
           uvtVigente={uvtVigente}
           patrimonioLiquidoAnterior={patrimonioLiquidoAnterior}
           esInstitucionFinanciera={!!declaracion.es_institucion_financiera}
-          aplicaTasaMinima={declaracion.aplica_tasa_minima ?? true}
+          aplicaTasaMinima={
+            aplicaTTDPorRegimen(regimenCodigo).aplica &&
+            (declaracion.aplica_tasa_minima ?? true)
+          }
           utilidadContableNeta={ttdInputs.utilidadContableNeta}
           difPermanentesAumentan={ttdInputs.difPermanentesAumentan}
           totalNomina={totalNomina}

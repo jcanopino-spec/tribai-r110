@@ -7,6 +7,7 @@ import { loadAnexosCtx } from "@/lib/anexos-ctx";
 import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
+import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { PrintButton } from "./print-button";
 
 export const metadata = { title: "Formulario 110" };
@@ -142,7 +143,9 @@ export default async function Formulario110Page({
           ? { estado: "oportuna" }
           : { estado: "no_presentada" },
     calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima: declaracion.aplica_tasa_minima ?? true,
+    aplicaTasaMinima:
+      aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
+      (declaracion.aplica_tasa_minima ?? true),
     utilidadContableNeta: ttdInputs.utilidadContableNeta,
     difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
     calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
