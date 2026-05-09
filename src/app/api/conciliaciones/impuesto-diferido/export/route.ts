@@ -156,18 +156,20 @@ export async function GET(req: Request) {
       return false;
     };
 
+    // Sumamos preservando signo natural · abs sólo al final agregado.
     for (const l of lineas ?? []) {
       const cuentaNum = String(l.cuenta).replace(/[^0-9]/g, "");
       if (!cuentaNum) continue;
       const catId = categorizarPucPasivosID(cuentaNum);
       if (!catId) continue;
       if (tieneHijas(cuentaNum)) continue;
-      const c = Math.abs(Number(l.saldo));
-      const f = Math.abs(
-        Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito),
-      );
+      const c = Number(l.saldo);
+      const f = Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito);
       const prev = pasivosBases.get(catId) ?? { contable: 0, fiscal: 0 };
       pasivosBases.set(catId, { contable: prev.contable + c, fiscal: prev.fiscal + f });
+    }
+    for (const [catId, b] of pasivosBases) {
+      pasivosBases.set(catId, { contable: Math.abs(b.contable), fiscal: Math.abs(b.fiscal) });
     }
   }
 

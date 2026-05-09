@@ -183,6 +183,13 @@ export default async function Formato2516Page({
         </div>
         <div className="flex items-center gap-3">
           <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/diagnostico`}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-amber-500/60 bg-amber-500/5 px-4 text-sm hover:bg-amber-500/10"
+            title="Inspecciona qué cuentas del balance alimentan cada fila del F2516"
+          >
+            🔍 Diagnóstico
+          </Link>
+          <Link
             href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/oficial`}
             target="_blank"
             rel="noopener noreferrer"

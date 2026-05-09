@@ -106,6 +106,13 @@ async function cargarContablesESF_ERI(
     return false;
   }
 
+  // Sumamos preservando el SIGNO NATURAL del saldo (débito positivo · crédito
+  // negativo). Para pasivos/ingresos, la suma natural produce un resultado
+  // negativo (porque clase 2 y clase 4 tienen saldo crédito por convención).
+  // Convertimos a positivo SOLO al final por categoría usando Math.abs sobre
+  // el TOTAL — no sobre cada línea individualmente — porque hacerlo línea por
+  // línea convertiría contra-saldos (anticipos en clase 2 con saldo débito,
+  // por ejemplo) en sumas en vez de restas, inflando el total del pasivo.
   let totalLineas = 0;
   let lineasIncluidas = 0;
 
@@ -121,22 +128,31 @@ async function cargarContablesESF_ERI(
     if (tieneHijas(cuentaNum)) continue;
     lineasIncluidas++;
 
-    const saldo = Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito);
-    // Para pasivos / ingresos el saldo viene en negativo natural (saldo crédito).
-    // Para que el F2516 lo muestre en positivo, normalizamos.
-    const positivo =
-      filaId === "ESF_10_PASIVOS" ||
-      filaId === "ERI_12_INGRESOS" ||
-      filaId === "ERI_13_DEVOL"
-        ? Math.abs(saldo)
-        : saldo;
-    out.set(filaId, (out.get(filaId) ?? 0) + positivo);
+    const saldo =
+      Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito);
+    out.set(filaId, (out.get(filaId) ?? 0) + saldo);
+  }
+
+  // Normalización de signo POR CATEGORÍA · al final, una vez agregados.
+  // Pasivos, ingresos y devoluciones tienen naturaleza crédito → su saldo
+  // agregado típicamente es negativo. Lo convertimos a positivo aplicando
+  // abs solo al TOTAL ya consolidado (preservando los contra-saldos durante
+  // la agregación intermedia).
+  for (const id of [
+    "ESF_10_PASIVOS",
+    "ERI_12_INGRESOS",
+    "ERI_13_DEVOL",
+  ] as const) {
+    out.set(id, Math.abs(out.get(id) ?? 0));
   }
 
   // Logging diagnóstico (visible en server logs solo en dev)
   if (process.env.NODE_ENV !== "production" && totalLineas > 0) {
     console.log(
       `[f2516] balance=${balance.id} líneas=${totalLineas} hojas=${lineasIncluidas} resumen-excluidas=${totalLineas - lineasIncluidas}`,
+    );
+    console.log(
+      `[f2516] efectivo=${out.get("ESF_01_EFECTIVO")} pasivos=${out.get("ESF_10_PASIVOS")} ingresos=${out.get("ERI_12_INGRESOS")} costos=${out.get("ERI_16_COSTOS")}`,
     );
   }
 

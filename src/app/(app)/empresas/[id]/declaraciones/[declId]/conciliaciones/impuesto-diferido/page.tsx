@@ -159,20 +159,28 @@ export default async function ImpuestoDiferidoPage({
       return false;
     };
 
+    // Sumamos preservando el signo natural; absoluto SÓLO al final por
+    // categoría (evita inflar pasivos por contra-saldos débito en clase 2).
     for (const l of lineas ?? []) {
       const cuentaNum = String(l.cuenta).replace(/[^0-9]/g, "");
       if (!cuentaNum) continue;
       const catId = categorizarPucPasivosID(cuentaNum);
       if (!catId) continue;
-      if (tieneHijas(cuentaNum)) continue; // saltar cuentas resumen
-      const saldoContable = Math.abs(Number(l.saldo));
-      const saldoFiscal = Math.abs(
-        Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito),
-      );
+      if (tieneHijas(cuentaNum)) continue;
+      const saldoContable = Number(l.saldo);
+      const saldoFiscal =
+        Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito);
       const prev = pasivosBases.get(catId) ?? { contable: 0, fiscal: 0 };
       pasivosBases.set(catId, {
         contable: prev.contable + saldoContable,
         fiscal: prev.fiscal + saldoFiscal,
+      });
+    }
+    // Normalización de signo por categoría agregada
+    for (const [catId, b] of pasivosBases) {
+      pasivosBases.set(catId, {
+        contable: Math.abs(b.contable),
+        fiscal: Math.abs(b.fiscal),
       });
     }
   }
