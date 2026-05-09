@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { GmfForm } from "./form";
 import { GmfList } from "./list";
 
-export const metadata = { title: "Anexo 10 · GMF" };
+export const metadata = { title: "GMF" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -43,7 +43,7 @@ export default async function GmfPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 10 · GMF
+        GMF
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Gravamen a Movimientos Financieros (4×1000). El 50% del GMF efectivamente

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { DcForm } from "./form";
 
-export const metadata = { title: "Anexo 12 · Deterioro de Cartera" };
+export const metadata = { title: "Deterioro de Cartera" };
 
 export default async function DcPage({
   params,
@@ -30,7 +30,7 @@ export default async function DcPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 12 · Deterioro de Cartera
+        Deterioro de Cartera
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Cartera por antigüedad (Art. 145 E.T., Decreto 187/1975). Calcula la

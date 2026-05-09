@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { PredialForm } from "./form";
 import { PredialList } from "./list";
 
-export const metadata = { title: "Anexo 11 · Predial" };
+export const metadata = { title: "Predial" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -43,7 +43,7 @@ export default async function PredialPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 11 · Predial
+        Predial
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Impuesto Predial Unificado pagado durante el año. Deducible 100% si tiene

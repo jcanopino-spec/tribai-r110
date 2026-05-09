@@ -5,7 +5,7 @@ import { CATEGORIAS, type Categoria } from "./consts";
 import { DescuentoForm } from "./form";
 import { DescuentoList } from "./list";
 
-export const metadata = { title: "Anexo 4 · Descuentos" };
+export const metadata = { title: "Descuentos" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -49,7 +49,7 @@ export default async function DescuentosPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 4 · Descuentos Tributarios
+        Descuentos Tributarios
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Suma de todos los descuentos tributarios → renglón 93 del Formulario 110.

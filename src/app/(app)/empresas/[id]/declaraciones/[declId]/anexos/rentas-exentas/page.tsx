@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { RentasExentasForm } from "./form";
 import { RentasExentasList } from "./list";
 
-export const metadata = { title: "Anexo 19 · Rentas Exentas" };
+export const metadata = { title: "Rentas Exentas" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -42,7 +42,7 @@ export default async function RentasExentasPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 19 · Rentas Exentas
+        Rentas Exentas
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Rentas exentas según el Art. 235-2 E.T. y otras normas. La suma alimenta el
@@ -52,7 +52,7 @@ export default async function RentasExentasPage({
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <div className="border border-border p-5">
           <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Total Anexo 19
+            Total
           </p>
           <p className="mt-2 font-serif text-3xl tracking-[-0.02em]">{FMT.format(total)}</p>
         </div>

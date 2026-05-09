@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { RentaPresuntivaForm } from "./form";
 
-export const metadata = { title: "Anexo 1 · Renta Presuntiva" };
+export const metadata = { title: "Renta Presuntiva" };
 
 export default async function RentaPresuntivaPage({
   params,
@@ -39,7 +39,7 @@ export default async function RentaPresuntivaPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 1 · Renta Presuntiva
+        Renta Presuntiva
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Renta presuntiva = (Patrimonio líquido AG anterior − depuraciones) × tarifa.

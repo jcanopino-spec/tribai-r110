@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { IvaCapitalForm } from "./form";
 import { IvaCapitalList } from "./list";
 
-export const metadata = { title: "Anexo 13 · IVA Bienes de Capital" };
+export const metadata = { title: "IVA Bienes de Capital" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -43,12 +43,12 @@ export default async function IvaCapitalPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 13 · IVA Bienes de Capital
+        IVA Bienes de Capital
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Adquisición o importación de bienes de capital. El IVA pagado puede
         descontarse del impuesto sobre la renta del año en que se efectúe el
-        pago (Art. 258-1 E.T.). Alimenta el Anexo 4 · Descuentos.
+        pago (Art. 258-1 E.T.). Alimenta el Descuentos.
       </p>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">

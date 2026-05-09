@@ -91,7 +91,7 @@ export default async function DeclaracionEditorPage({
       .filter((r) => r.tipo === "retencion")
       .reduce((s, r) => s + Number(r.retenido), 0);
 
-  // Total Anexo 4 · Descuentos tributarios → renglón 93
+  // Total Descuentos tributarios → renglón 93
   const { data: descuentos } = await supabase
     .from("anexo_descuentos")
     .select("valor_descuento")
@@ -101,7 +101,7 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
-  // Anexo 8 · Ganancia Ocasional → renglones 80, 81, 82
+  // Ganancia Ocasional → renglones 80, 81, 82
   const { data: gos } = await supabase
     .from("anexo_ganancia_ocasional")
     .select("precio_venta, costo_fiscal, no_gravada")
@@ -110,7 +110,7 @@ export default async function DeclaracionEditorPage({
   const goCostos = (gos ?? []).reduce((s, g) => s + Number(g.costo_fiscal), 0);
   const goNoGravada = (gos ?? []).reduce((s, g) => s + Number(g.no_gravada), 0);
 
-  // Anexo 19 · Rentas Exentas → R77
+  // Rentas Exentas → R77
   const { data: rentasExentas } = await supabase
     .from("anexo_rentas_exentas")
     .select("valor_fiscal")
@@ -120,7 +120,7 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
-  // Anexo 20 · Compensaciones → R74
+  // Compensaciones → R74
   const { data: compensaciones } = await supabase
     .from("anexo_compensaciones")
     .select("compensar")
@@ -130,7 +130,7 @@ export default async function DeclaracionEditorPage({
     0,
   );
 
-  // Anexo 18 · Dividendos → R49..R56
+  // Dividendos → R49..R56
   const { data: divs } = await supabase
     .from("anexo_dividendos")
     .select(
@@ -148,21 +148,21 @@ export default async function DeclaracionEditorPage({
     r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
   };
 
-  // Anexo 26 · INCRNGO → R60
+  // INCRNGO → R60
   const { data: incrngos } = await supabase
     .from("anexo_incrngo")
     .select("valor")
     .eq("declaracion_id", declId);
   const totalIncrngo = (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0);
 
-  // Anexo 17 · Recuperación de deducciones → R70
+  // Recuperación de deducciones → R70
   const { data: recups } = await supabase
     .from("anexo_recuperaciones")
     .select("valor")
     .eq("declaracion_id", declId);
   const totalRecuperaciones = (recups ?? []).reduce((s, r) => s + Number(r.valor), 0);
 
-  // Anexo 1 · Renta Presuntiva → R76
+  // Renta Presuntiva → R76
   const { data: tarifaRpRow } = await supabase
     .from("parametros_anuales")
     .select("valor")

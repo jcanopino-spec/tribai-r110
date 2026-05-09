@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { RecuperacionForm } from "./form";
 import { RecuperacionList } from "./list";
 
-export const metadata = { title: "Anexo 17 · Recuperaciones" };
+export const metadata = { title: "Recuperaciones" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -42,7 +42,7 @@ export default async function RecuperacionesPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 17 · Recuperación de Deducciones
+        Recuperación de Deducciones
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Ingresos fiscales por reversión o recuperación de partidas que disminuyeron
@@ -53,7 +53,7 @@ export default async function RecuperacionesPage({
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <div className="border border-border p-5">
           <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Total Anexo 17
+            Total
           </p>
           <p className="mt-2 font-serif text-3xl tracking-[-0.02em]">{FMT.format(total)}</p>
         </div>

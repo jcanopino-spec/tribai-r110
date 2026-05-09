@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SubForm } from "./form";
 
-export const metadata = { title: "Anexo 15 · Subcapitalización" };
+export const metadata = { title: "Subcapitalización" };
 
 export default async function SubPage({
   params,
@@ -30,7 +30,7 @@ export default async function SubPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 15 · Subcapitalización
+        Subcapitalización
       </h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Limitación a la deducibilidad de intereses pagados a vinculados

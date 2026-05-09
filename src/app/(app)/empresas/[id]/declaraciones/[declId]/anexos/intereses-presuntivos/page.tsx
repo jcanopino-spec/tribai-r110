@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { InteresForm } from "./form";
 import { InteresList } from "./list";
 
-export const metadata = { title: "Anexo 14 · Interés Presuntivo" };
+export const metadata = { title: "Interés Presuntivo" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -62,7 +62,7 @@ export default async function InteresesPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 14 · Interés Presuntivo
+        Interés Presuntivo
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Préstamos a socios/accionistas (Art. 35 E.T.). El interés presuntivo es

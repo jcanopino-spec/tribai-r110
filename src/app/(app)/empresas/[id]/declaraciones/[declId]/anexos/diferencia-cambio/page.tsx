@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { DifCambioForm } from "./form";
 import { DifCambioList } from "./list";
 
-export const metadata = { title: "Anexo 22 · Diferencia en Cambio" };
+export const metadata = { title: "Diferencia en Cambio" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 const USD = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -68,7 +68,7 @@ export default async function DifCambioPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 22 · Diferencia en Cambio
+        Diferencia en Cambio
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Cuentas con saldo en moneda extranjera (USD). La diferencia en cambio

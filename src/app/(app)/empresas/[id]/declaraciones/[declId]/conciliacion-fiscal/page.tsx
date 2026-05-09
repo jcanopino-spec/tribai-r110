@@ -206,7 +206,7 @@ export default async function ConciliacionPage({
   // adicionales en su PyG. La sanción del 110 misma se descuenta del saldo,
   // no entra a la conciliación de utilidad.
 
-  // Anexo 10 · GMF: 50% no deducible (Art. 115 E.T.)
+  // GMF: 50% no deducible (Art. 115 E.T.)
   const totalGmf = (gmfRes.data ?? []).reduce((s, r) => s + Number(r.valor_gmf), 0);
   if (totalGmf > 0) {
     partidasAuto.push({
@@ -217,11 +217,11 @@ export default async function ConciliacionPage({
       valor: totalGmf * 0.5,
       observacion: null,
       origen: "auto",
-      fuente: "Anexo 10 · GMF",
+      fuente: "GMF",
     });
   }
 
-  // Anexo 12 · Deterioro de cartera: provisión fiscal vs contable
+  // Deterioro de cartera: provisión fiscal vs contable
   const dcMetodo = (declaracion.dc_metodo ?? "general") as
     | "general"
     | "individual"
@@ -249,11 +249,11 @@ export default async function ConciliacionPage({
       valor: Math.abs(ajusteDc),
       observacion: `Método: ${dcMetodo}. Provisión fiscal ${FMT.format(provFiscal)} vs. saldo contable ${FMT.format(dcSaldoCont)}.`,
       origen: "auto",
-      fuente: "Anexo 12 · Deterioro de Cartera",
+      fuente: "Deterioro de Cartera",
     });
   }
 
-  // Anexo 14 · Interés presuntivo (Art. 35 E.T.)
+  // Interés presuntivo (Art. 35 E.T.)
   const totalIntPresunto = (intPresRes.data ?? []).reduce((s, p) => {
     const presunto =
       Number(p.saldo_promedio) * tasaIntPres * (Number(p.dias) / 360);
@@ -268,11 +268,11 @@ export default async function ConciliacionPage({
       valor: totalIntPresunto,
       observacion: null,
       origen: "auto",
-      fuente: "Anexo 14 · Interés Presuntivo",
+      fuente: "Interés Presuntivo",
     });
   }
 
-  // Anexo 15 · Subcapitalización (intereses no deducibles)
+  // Subcapitalización (intereses no deducibles)
   if (declaracion.sub_es_vinculado) {
     const deuda = Number(declaracion.sub_deuda_promedio ?? 0);
     const intereses = Number(declaracion.sub_intereses ?? 0);
@@ -292,12 +292,12 @@ export default async function ConciliacionPage({
         valor: intNoDed,
         observacion: `Exceso: ${FMT.format(exceso)} / deuda ${FMT.format(deuda)} (${(propExc * 100).toFixed(2)}%).`,
         origen: "auto",
-        fuente: "Anexo 15 · Subcapitalización",
+        fuente: "Subcapitalización",
       });
     }
   }
 
-  // Anexo 22 · Diferencia en cambio neta (no realizada → temporal)
+  // Diferencia en cambio neta (no realizada → temporal)
   const totalDifCambio = (difCambioRes.data ?? []).reduce((s, d) => {
     const valIni = Number(d.valor_usd) * Number(d.trm_inicial);
     const valFin = Number(d.valor_usd) * trmFinal;
@@ -316,7 +316,7 @@ export default async function ConciliacionPage({
       valor: Math.abs(totalDifCambio),
       observacion: "Causación fiscal por TRM final del año.",
       origen: "auto",
-      fuente: "Anexo 22 · Diferencia en Cambio",
+      fuente: "Diferencia en Cambio",
     });
   }
 

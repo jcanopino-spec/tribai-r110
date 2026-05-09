@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { IncrngoForm } from "./form";
 import { IncrngoList } from "./list";
 
-export const metadata = { title: "Anexo 26 · INCRNGO" };
+export const metadata = { title: "INCRNGO" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -42,7 +42,7 @@ export default async function IncrngoPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 26 · INCRNGO
+        INCRNGO
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Ingresos no constitutivos de renta ni ganancia ocasional. La suma alimenta el
@@ -52,7 +52,7 @@ export default async function IncrngoPage({
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         <div className="border border-border p-5">
           <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Total Anexo 26
+            Total
           </p>
           <p className="mt-2 font-serif text-3xl tracking-[-0.02em]">{FMT.format(total)}</p>
         </div>

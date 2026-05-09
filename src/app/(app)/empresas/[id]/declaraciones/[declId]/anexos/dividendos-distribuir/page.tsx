@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { DivDistForm } from "./form";
 import { DivDistList } from "./list";
 
-export const metadata = { title: "Anexo 25 · Dividendos a Distribuir" };
+export const metadata = { title: "Dividendos a Distribuir" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -48,7 +48,7 @@ export default async function DivDistPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 25 · Dividendos a Distribuir
+        Dividendos a Distribuir
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Distribución de dividendos a socios o accionistas. La parte no gravada

@@ -5,7 +5,7 @@ import { CATEGORIAS } from "./consts";
 import { DividendoForm } from "./form";
 import { DividendoList } from "./list";
 
-export const metadata = { title: "Anexo 18 · Dividendos" };
+export const metadata = { title: "Dividendos" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -59,7 +59,7 @@ export default async function DividendosPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 18 · Ingresos por Dividendos
+        Ingresos por Dividendos
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Dividendos recibidos por categoría tributaria. Cada categoría alimenta su

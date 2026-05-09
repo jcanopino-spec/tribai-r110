@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { GoForm } from "./form";
 import { GoList } from "./list";
 
-export const metadata = { title: "Anexo 8 · Ganancia Ocasional" };
+export const metadata = { title: "Ganancia Ocasional" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -47,7 +47,7 @@ export default async function GoPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 8 · Ganancias Ocasionales
+        Ganancias Ocasionales
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Suma por categoría → renglones 80 (ingresos), 81 (costos) y 82 (no

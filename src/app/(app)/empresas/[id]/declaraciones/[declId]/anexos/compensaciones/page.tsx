@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { CompensacionForm } from "./form";
 import { CompensacionList } from "./list";
 
-export const metadata = { title: "Anexo 20 · Compensaciones" };
+export const metadata = { title: "Compensaciones" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -49,7 +49,7 @@ export default async function CompensacionesPage({
       </Link>
 
       <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Anexo 20 · Compensación de Pérdidas
+        Compensación de Pérdidas
       </h1>
       <p className="mt-3 max-w-3xl text-muted-foreground">
         Compensaciones de pérdidas fiscales (Art. 147 E.T., 12 años) y excesos de renta
