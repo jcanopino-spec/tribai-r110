@@ -67,6 +67,40 @@ describe("computarRenglones · Ingresos", () => {
   });
 });
 
+describe("computarRenglones · ESAL Inversiones (R68/R69)", () => {
+  it("totalInversionesEsalEfectuadas → R68 (resta a la base de R72)", () => {
+    const g = compute(
+      { 47: 1_000_000_000, 62: 600_000_000 },
+      { totalInversionesEsalEfectuadas: 50_000_000 },
+    );
+    expect(g(68)).toBe(50_000_000);
+    // Base = R61 - R67 - R68 = 1.000 - 600 - 50 = 350M
+    expect(g(72)).toBe(350_000_000);
+  });
+
+  it("totalInversionesEsalLiquidadas → R69 (suma a la base de R72)", () => {
+    const g = compute(
+      { 47: 1_000_000_000, 62: 600_000_000 },
+      { totalInversionesEsalLiquidadas: 30_000_000 },
+    );
+    expect(g(69)).toBe(30_000_000);
+    // Base = R61 + R69 - R67 = 1.000 + 30 - 600 = 430M
+    expect(g(72)).toBe(430_000_000);
+  });
+
+  it("efectuadas + liquidadas combinadas", () => {
+    const g = compute(
+      { 47: 1_000_000_000, 62: 500_000_000 },
+      {
+        totalInversionesEsalEfectuadas: 100_000_000,
+        totalInversionesEsalLiquidadas: 20_000_000,
+      },
+    );
+    // Base = 1.000 + 20 - 500 - 100 = 420M
+    expect(g(72)).toBe(420_000_000);
+  });
+});
+
 describe("computarRenglones · Renta líquida ordinaria (R72/R73)", () => {
   it("R72 = max(0, 61 + 70 - 67)", () => {
     // Caso sencillo: ingresos netos 1.000M, costos 600M, sin recuperaciones

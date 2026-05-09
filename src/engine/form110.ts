@@ -26,6 +26,8 @@ export const RENGLONES_COMPUTADOS = new Set<number>([
   61, // Total ingresos netos = max(0, 58 - 59 - 60)
   // Costos
   67, // Total costos y gastos deducibles = sum(62..66)
+  68, // Inversiones ESAL efectuadas en el año (Art. 358 E.T.)
+  69, // Inversiones ESAL liquidadas en años anteriores
   // Renta
   70, // Renta por recuperación de deducciones · viene del Anexo 17
   72, // Renta líquida ordinaria = max(0, 61 + 69 + 70 + 71 - 52..56 - 67 - 68)
@@ -115,6 +117,10 @@ export type ComputeContext = {
   totalCompensaciones?: number;
   /** Anexo 17 · total recuperación de deducciones → R70 */
   totalRecuperaciones?: number;
+  /** Anexo Inversiones ESAL · total efectuadas → R68 (deducción ESAL Art. 358) */
+  totalInversionesEsalEfectuadas?: number;
+  /** Anexo Inversiones ESAL · total liquidadas → R69 (recuperación ESAL) */
+  totalInversionesEsalLiquidadas?: number;
   /** Anexo 1 · renta presuntiva calculada → R76 */
   rentaPresuntiva?: number;
   /** Anexo 18 · dividendos por categoría (R49..R56) */
@@ -201,6 +207,15 @@ export function computarRenglones(
   // antes del cálculo de R72 porque la base de R72 incluye R70.
   if (typeof ctx.totalRecuperaciones === "number") {
     v.set(70, ctx.totalRecuperaciones);
+  }
+  // 68 · Inversiones ESAL efectuadas en el año (Anexo Inv. ESAL).
+  // 69 · Inversiones ESAL liquidadas en años anteriores.
+  // Setear ANTES del cálculo de R72: R72 RESTA R68 y SUMA R69 a la base.
+  if (typeof ctx.totalInversionesEsalEfectuadas === "number") {
+    v.set(68, ctx.totalInversionesEsalEfectuadas);
+  }
+  if (typeof ctx.totalInversionesEsalLiquidadas === "number") {
+    v.set(69, ctx.totalInversionesEsalLiquidadas);
   }
 
   // --- Renta líquida ordinaria / pérdida ---

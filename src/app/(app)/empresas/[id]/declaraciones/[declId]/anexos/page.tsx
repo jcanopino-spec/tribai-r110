@@ -105,6 +105,20 @@ export default async function AnexosHubPage({
     .from("anexo_venta_activos_fijos")
     .select("posesion_mas_2_anos, precio_venta")
     .eq("declaracion_id", declId);
+
+  // Inversiones ESAL · puede no existir si la migración 027 no se aplicó
+  const invEsalRes = await supabase
+    .from("anexo_inversiones_esal")
+    .select("tipo, valor")
+    .eq("declaracion_id", declId);
+  const invEsalRows = invEsalRes.error ? [] : (invEsalRes.data ?? []);
+  const totalInvEsalEfec = invEsalRows
+    .filter((r) => r.tipo === "efectuada")
+    .reduce((s, r) => s + Number(r.valor), 0);
+  const totalInvEsalLiq = invEsalRows
+    .filter((r) => r.tipo === "liquidada")
+    .reduce((s, r) => s + Number(r.valor), 0);
+  const invEsalCount = invEsalRows.length;
   const ventasAfItems = ventasAfData ?? [];
   const totalVentasAfIngresos = ventasAfItems
     .filter((v) => v.posesion_mas_2_anos)
@@ -349,6 +363,15 @@ export default async function AnexosHubPage({
       items: 7,
       descripcion:
         "Catálogo de beneficios especiales (Economía Naranja, ZESE, ZOMAC, Hoteles, Editoriales, Zona Franca). Verifica qué aplica a tu régimen.",
+    },
+    {
+      titulo: "Inversiones ESAL",
+      href: "inversiones-esal",
+      renglones: [68, 69],
+      total: totalInvEsalEfec + totalInvEsalLiq,
+      items: invEsalCount,
+      descripcion:
+        "Régimen Tributario Especial (Art. 356-359 E.T.). Efectuadas → R68 · Liquidadas → R69.",
     },
   ];
 

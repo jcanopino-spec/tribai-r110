@@ -659,6 +659,53 @@ export type Database = {
           },
         ]
       }
+      anexo_inversiones_esal: {
+        Row: {
+          id: number
+          declaracion_id: string
+          tipo: string
+          fecha: string | null
+          ano_origen: number | null
+          concepto: string
+          categoria: string | null
+          valor: number
+          observacion: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          declaracion_id: string
+          tipo: string
+          fecha?: string | null
+          ano_origen?: number | null
+          concepto: string
+          categoria?: string | null
+          valor?: number
+          observacion?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          declaracion_id?: string
+          tipo?: string
+          fecha?: string | null
+          ano_origen?: number | null
+          concepto?: string
+          categoria?: string | null
+          valor?: number
+          observacion?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anexo_inversiones_esal_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       formato_2516_ajustes: {
         Row: {
           declaracion_id: string

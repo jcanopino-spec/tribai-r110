@@ -47,6 +47,8 @@ export type AnexosCtx = {
   totalCompensaciones: number;
   totalRecuperaciones: number;
   totalIncrngo: number;
+  totalInversionesEsalEfectuadas: number;
+  totalInversionesEsalLiquidadas: number;
   dividendos: {
     r49: number;
     r50: number;
@@ -82,6 +84,7 @@ export async function loadAnexosCtx(
     { data: recups },
     { data: incrngos },
     { data: divs },
+    invEsalRes,
     segSocial,
   ] = await Promise.all([
     supabase.from("anexo_retenciones").select("tipo, retenido").eq("declaracion_id", declId),
@@ -107,8 +110,22 @@ export async function loadAnexosCtx(
         "no_constitutivos, distribuidos_no_residentes, gravados_tarifa_general, gravados_persona_natural_dos, gravados_personas_extranjeras, gravados_art_245, gravados_tarifa_l1819, gravados_proyectos",
       )
       .eq("declaracion_id", declId),
+    // Anexo Inversiones ESAL · puede no existir si la migración 027 no
+    // está aplicada. Tratamos el error como tabla vacía.
+    supabase
+      .from("anexo_inversiones_esal")
+      .select("tipo, valor")
+      .eq("declaracion_id", declId),
     loadSegSocialTotals(supabase, declId, declaracion),
   ]);
+
+  const invEsalRows = invEsalRes.error ? [] : (invEsalRes.data ?? []);
+  const totalInversionesEsalEfectuadas = invEsalRows
+    .filter((r) => r.tipo === "efectuada")
+    .reduce((s, r) => s + Number(r.valor), 0);
+  const totalInversionesEsalLiquidadas = invEsalRows
+    .filter((r) => r.tipo === "liquidada")
+    .reduce((s, r) => s + Number(r.valor), 0);
 
   // R105/R106 · Retenciones / Autorretenciones
   const totalAutorretenciones = (retenciones ?? [])
@@ -180,6 +197,8 @@ export async function loadAnexosCtx(
     ),
     totalRecuperaciones: (recups ?? []).reduce((s, r) => s + Number(r.valor), 0),
     totalIncrngo: (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0),
+    totalInversionesEsalEfectuadas,
+    totalInversionesEsalLiquidadas,
     dividendos,
   };
 }
