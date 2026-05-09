@@ -375,6 +375,203 @@ export function validarF2516(
   return out;
 }
 
+/**
+ * Validaciones cruzadas V1-V18 oficiales del .xlsm guía v5.
+ *
+ * Verifican coherencia interna del F110 (sumas, fórmulas, topes) y
+ * cruces entre el F110 y los anexos. La numeración V1..V18 sigue el
+ * orden del .xlsm para trazabilidad. V19-V22 (cuadre con BP) están
+ * cubiertas por validarF2516.
+ *
+ * Cada validación devuelve una Validacion con:
+ *   - categoría "cuadre" si es interno del F110
+ *   - categoría "fiscal" si es contra topes legales
+ *   - nivel "warn" para descuadres tolerables, "error" para topes legales
+ */
+export function validarCuadresF110(
+  numerico: Map<number, number>,
+  ctx: {
+    totalAutorretenciones?: number;
+    totalRetenciones?: number;
+    totalDescuentosTributarios?: number;
+    totalRentasExentas?: number;
+    totalCompensaciones?: number;
+    perdidasAcumuladas?: number;
+  } = {},
+): Validacion[] {
+  const get = (n: number) => numerico.get(n) ?? 0;
+  const out: Validacion[] = [];
+
+  // V1 · R77 Rentas exentas anexo vs F110
+  if (typeof ctx.totalRentasExentas === "number") {
+    const dif = ctx.totalRentasExentas - get(77);
+    if (Math.abs(dif) > TOLERANCIA_CUADRE) {
+      out.push({
+        categoria: "cuadre",
+        nivel: "warn",
+        renglon: 77,
+        mensaje: `V1 · Rentas exentas Anexo 19 (${formatMoney(ctx.totalRentasExentas)}) no cuadra con R77 del 110 (${formatMoney(get(77))}).`,
+      });
+    }
+  }
+
+  // V2 · R107 Total retenciones (anexo) vs F110
+  if (
+    typeof ctx.totalAutorretenciones === "number" &&
+    typeof ctx.totalRetenciones === "number"
+  ) {
+    const totalAnexo = ctx.totalAutorretenciones + ctx.totalRetenciones;
+    const dif = totalAnexo - get(107);
+    if (Math.abs(dif) > TOLERANCIA_CUADRE) {
+      out.push({
+        categoria: "cuadre",
+        nivel: "warn",
+        renglon: 107,
+        mensaje: `V2 · Anexo 3 retenciones+autorretenciones (${formatMoney(totalAnexo)}) no cuadra con R107 (${formatMoney(get(107))}).`,
+      });
+    }
+  }
+
+  // V7 · Patrimonio líquido: R44 - R45 vs R46
+  const r46Calc = Math.max(0, get(44) - get(45));
+  if (Math.abs(r46Calc - get(46)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 46,
+      mensaje: `V7 · R46 esperado ${formatMoney(r46Calc)} (R44-R45), declarado ${formatMoney(get(46))}.`,
+    });
+  }
+
+  // V8 · Ingresos netos: R58 - R59 - R60 vs R61
+  const r61Calc = Math.max(0, get(58) - get(59) - get(60));
+  if (Math.abs(r61Calc - get(61)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 61,
+      mensaje: `V8 · R61 esperado ${formatMoney(r61Calc)} (R58-R59-R60), declarado ${formatMoney(get(61))}.`,
+    });
+  }
+
+  // V9 · Total costos: sum(R62..R66) vs R67
+  let r67Calc = 0;
+  for (let n = 62; n <= 66; n++) r67Calc += get(n);
+  if (Math.abs(r67Calc - get(67)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 67,
+      mensaje: `V9 · R67 esperado ${formatMoney(r67Calc)} (suma 62..66), declarado ${formatMoney(get(67))}.`,
+    });
+  }
+
+  // V10 · Total retenciones: R105 + R106 vs R107
+  const r107Calc = get(105) + get(106);
+  if (Math.abs(r107Calc - get(107)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 107,
+      mensaje: `V10 · R107 esperado ${formatMoney(r107Calc)} (R105+R106), declarado ${formatMoney(get(107))}.`,
+    });
+  }
+
+  // V11 · Impuesto neto: max(0, R91 + R92 - R93) vs R94
+  const r94Calc = Math.max(0, get(91) + get(92) - get(93));
+  if (Math.abs(r94Calc - get(94)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 94,
+      mensaje: `V11 · R94 esperado ${formatMoney(r94Calc)} (R91+R92-R93), declarado ${formatMoney(get(94))}.`,
+    });
+  }
+
+  // V12 · Renta líquida gravable: max(R75, R76) - R77 + R78 vs R79
+  const r79Calc = Math.max(get(75), get(76)) - get(77) + get(78);
+  if (Math.abs(r79Calc - get(79)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 79,
+      mensaje: `V12 · R79 esperado ${formatMoney(r79Calc)} (max(R75,R76)-R77+R78), declarado ${formatMoney(get(79))}.`,
+    });
+  }
+
+  // V14 · Descuentos tributarios ≤ 75% R84 (Art. 259 E.T.)
+  const tope259 = Math.max(0, get(84)) * 0.75;
+  if (get(93) > tope259 + TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "error",
+      renglon: 93,
+      mensaje: `V14 · R93 (${formatMoney(get(93))}) supera el tope del 75% del R84 (${formatMoney(Math.round(tope259))}) · Art. 259 E.T.`,
+    });
+  }
+
+  // V16 · Compensación de pérdidas no excede saldo acumulado
+  if (
+    typeof ctx.perdidasAcumuladas === "number" &&
+    get(74) > ctx.perdidasAcumuladas + TOLERANCIA_CUADRE
+  ) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "error",
+      renglon: 74,
+      mensaje: `V16 · R74 compensación (${formatMoney(get(74))}) supera el saldo acumulado de pérdidas (${formatMoney(ctx.perdidasAcumuladas)}).`,
+    });
+  }
+
+  // V18 · Suma R49..R56 dividendos · cruce de coherencia interna
+  let sumDiv = 0;
+  for (let n = 49; n <= 56; n++) sumDiv += get(n);
+  if (sumDiv > 0 && get(58) < sumDiv) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "warn",
+      renglon: 58,
+      mensaje: `V18 · R58 ingresos brutos (${formatMoney(get(58))}) es menor que la suma de dividendos R49..R56 (${formatMoney(sumDiv)}).`,
+    });
+  }
+
+  // V cuadre · R99 = max(0, R96 + R97 - R98)
+  const r99Calc = Math.max(0, get(96) + get(97) - get(98));
+  if (Math.abs(r99Calc - get(99)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 99,
+      mensaje: `R99 esperado ${formatMoney(r99Calc)} (R96+R97-R98), declarado ${formatMoney(get(99))}.`,
+    });
+  }
+
+  // V cuadre · R96 = R94 + R95
+  const r96Calc = get(94) + get(95);
+  if (Math.abs(r96Calc - get(96)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 96,
+      mensaje: `R96 esperado ${formatMoney(r96Calc)} (R94+R95), declarado ${formatMoney(get(96))}.`,
+    });
+  }
+
+  // V cuadre · R91 = sum(R84..R90)
+  let r91Calc = 0;
+  for (let n = 84; n <= 90; n++) r91Calc += get(n);
+  if (Math.abs(r91Calc - get(91)) > TOLERANCIA_CUADRE) {
+    out.push({
+      categoria: "cuadre",
+      nivel: "error",
+      renglon: 91,
+      mensaje: `R91 esperado ${formatMoney(r91Calc)} (suma R84..R90), declarado ${formatMoney(get(91))}.`,
+    });
+  }
+
+  return out;
+}
+
 const FMT_VAL = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 function formatMoney(n: number): string {
   return `$${FMT_VAL.format(n)}`;

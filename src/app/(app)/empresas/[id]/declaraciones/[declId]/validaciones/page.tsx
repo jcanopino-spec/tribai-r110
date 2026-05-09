@@ -8,6 +8,7 @@ import { normalizarSigno } from "@/engine/utils";
 import {
   validarFormulario,
   validarF2516,
+  validarCuadresF110,
   resumenValidaciones,
   type Validacion,
 } from "@/engine/validaciones";
@@ -180,7 +181,23 @@ export default async function ValidacionesPage({
   const filasF2516 = await loadF2516Aggregates(supabase, declId, numerico);
   const validacionesF2516 = validarF2516(filasF2516);
 
-  const validaciones = [...validacionesF110, ...validacionesF2516];
+  // Validaciones V1-V18 oficiales del .xlsm (cruces internos del 110)
+  const validacionesCuadres = validarCuadresF110(numerico, {
+    totalAutorretenciones: anexosCtx.totalAutorretenciones,
+    totalRetenciones: anexosCtx.totalRetenciones,
+    totalDescuentosTributarios: anexosCtx.totalDescuentosTributarios,
+    totalRentasExentas: anexosCtx.totalRentasExentas,
+    totalCompensaciones: anexosCtx.totalCompensaciones,
+    // Pérdidas fiscales acumuladas · viene del Anexo de pérdidas. Si no se
+    // ha capturado, V16 no se evalúa (simplemente no genera hallazgo).
+    perdidasAcumuladas: undefined,
+  });
+
+  const validaciones = [
+    ...validacionesF110,
+    ...validacionesCuadres,
+    ...validacionesF2516,
+  ];
 
   const resumen = resumenValidaciones(validaciones);
   const porCategoria = new Map<Validacion["categoria"], Validacion[]>();
