@@ -4,13 +4,21 @@
 // /validaciones y se usan para gatear la finalización de la declaración.
 
 import { evaluarBeneficioAuditoria } from "./beneficio-auditoria";
+import type { F2516Fila } from "./f2516";
 
 export type Validacion = {
   nivel: "info" | "warn" | "error";
   renglon?: number;
   mensaje: string;
-  categoria: "configuracion" | "cuadre" | "sanidad" | "completitud" | "fiscal";
+  categoria: "configuracion" | "cuadre" | "sanidad" | "completitud" | "fiscal" | "f2516";
 };
+
+/**
+ * Tolerancia aceptable para el cuadre F2516 ↔ F110.
+ * El Liquidador oficial DIAN trabaja en múltiplos de 1.000 (redondeo DIAN),
+ * así que diferencias menores son ruido de redondeo.
+ */
+export const TOLERANCIA_CUADRE = 1000;
 
 export function validarFormulario(
   numerico: Map<number, number>,
@@ -286,6 +294,74 @@ export function validarFormulario(
   }
 
   return out;
+}
+
+/**
+ * Valida cuadre del Formato 2516 (Resolución DIAN 71/2019) contra los
+ * renglones equivalentes del Formulario 110.
+ *
+ * Para cada fila del F2516 con `cuadraConR110`, compara el FISCAL contra
+ * el valor del renglón. Si |Δ| > TOLERANCIA_CUADRE genera un hallazgo:
+ *   - error  · cuando es un total estructural (TOTAL ACTIVOS, R44/R46)
+ *              que indica que el balance no concilia con la declaración
+ *   - warn   · cuando es una fila individual descuadrada (R58, R67, etc.)
+ *
+ * Si NO hay balance cargado → emite info diciendo que F2516 va vacío.
+ */
+export function validarF2516(
+  filas: ReadonlyArray<{
+    fila: F2516Fila;
+    contable: number;
+    fiscal: number;
+    r110: number | null;
+    diferencia: number | null;
+  }>,
+): Validacion[] {
+  const out: Validacion[] = [];
+
+  // Si TODOS los contables están en 0 → balance no cargado o sin clasificar
+  const todoEnCero = filas.every((f) => f.contable === 0);
+  if (todoEnCero) {
+    out.push({
+      categoria: "f2516",
+      nivel: "info",
+      mensaje:
+        "El Formato 2516 no tiene saldos contables: aún no has cargado el balance " +
+        "o las cuentas no tienen prefijo PUC reconocible. Sube el balance para que " +
+        "ESF + ERI se llenen automáticamente.",
+    });
+    return out;
+  }
+
+  for (const f of filas) {
+    if (!f.fila.cuadraConR110 || f.diferencia === null) continue;
+    if (Math.abs(f.diferencia) <= TOLERANCIA_CUADRE) continue;
+
+    const esTotalEstructural =
+      f.fila.id === "ESF_09_TOTAL_ACT" ||
+      f.fila.id === "ESF_10_PASIVOS" ||
+      f.fila.id === "PAT_11_LIQUIDO";
+
+    out.push({
+      categoria: "f2516",
+      nivel: esTotalEstructural ? "error" : "warn",
+      renglon: f.fila.cuadraConR110,
+      mensaje:
+        `F2516 fila ${f.fila.numero} "${f.fila.label}" no cuadra con R${f.fila.cuadraConR110}: ` +
+        `fiscal ${formatMoney(f.fiscal)} vs renglón ${formatMoney(f.r110 ?? 0)} ` +
+        `(Δ ${formatMoney(f.diferencia)}). ` +
+        (esTotalEstructural
+          ? "Es un total estructural; revisa los ajustes de las filas hijas."
+          : "Captura conversión / menor / mayor fiscal en /conciliaciones/formato-2516."),
+    });
+  }
+
+  return out;
+}
+
+const FMT_VAL = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+function formatMoney(n: number): string {
+  return `$${FMT_VAL.format(n)}`;
 }
 
 /**

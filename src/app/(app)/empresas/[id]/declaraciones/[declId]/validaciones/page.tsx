@@ -7,11 +7,13 @@ import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import {
   validarFormulario,
+  validarF2516,
   resumenValidaciones,
   type Validacion,
 } from "@/engine/validaciones";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { aplicaTTDPorRegimen } from "@/engine/condicionales";
+import { loadF2516Aggregates } from "@/lib/f2516-aggregates";
 import { FinalizarButton } from "./finalizar-button";
 
 export const metadata = { title: "Validaciones" };
@@ -24,6 +26,7 @@ const CATEGORIAS: { key: Validacion["categoria"]; label: string; descripcion: st
   { key: "fiscal", label: "Reglas fiscales", descripcion: "Topes y restricciones del Estatuto Tributario." },
   { key: "sanidad", label: "Sanidad de datos", descripcion: "Posibles errores de digitación o signo." },
   { key: "completitud", label: "Completitud", descripcion: "Datos esperados que faltan." },
+  { key: "f2516", label: "Formato 2516", descripcion: "Cuadre del balance contable agregado vs renglones del 110." },
 ];
 
 export default async function ValidacionesPage({
@@ -159,7 +162,7 @@ export default async function ValidacionesPage({
     rentaPresuntiva,
   });
 
-  const validaciones = validarFormulario(numerico, {
+  const validacionesF110 = validarFormulario(numerico, {
     tarifaRegimen,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
     aniosDeclarando: declaracion.anios_declarando ?? "tercero_o_mas",
@@ -171,6 +174,12 @@ export default async function ValidacionesPage({
     beneficioAuditoria12m: !!declaracion.beneficio_auditoria_12m,
     beneficioAuditoria6m: !!declaracion.beneficio_auditoria_6m,
   });
+
+  // Validaciones F2516 ↔ F110 (cuadre balance vs renglones)
+  const filasF2516 = await loadF2516Aggregates(supabase, declId, numerico);
+  const validacionesF2516 = validarF2516(filasF2516);
+
+  const validaciones = [...validacionesF110, ...validacionesF2516];
 
   const resumen = resumenValidaciones(validaciones);
   const porCategoria = new Map<Validacion["categoria"], Validacion[]>();
