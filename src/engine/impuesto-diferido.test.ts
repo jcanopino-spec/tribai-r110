@@ -4,6 +4,7 @@ import {
   TARIFA_ID_DEFAULT,
   calcularFilaID,
   resumenID,
+  categorizarPucPasivosID,
 } from "./impuesto-diferido";
 
 const cat = (id: string) => ID_CATEGORIAS.find((c) => c.id === id)!;
@@ -166,5 +167,59 @@ describe("resumenID", () => {
 describe("constantes", () => {
   it("TARIFA_ID_DEFAULT = 0.35", () => {
     expect(TARIFA_ID_DEFAULT).toBe(0.35);
+  });
+});
+
+describe("categorizarPucPasivosID", () => {
+  it("21xx · obligaciones financieras", () => {
+    expect(categorizarPucPasivosID("2101")).toBe("PAS_01_OBLIGFIN");
+    expect(categorizarPucPasivosID("2105")).toBe("PAS_01_OBLIGFIN");
+    expect(categorizarPucPasivosID("210505")).toBe("PAS_01_OBLIGFIN");
+  });
+
+  it("22xx · proveedores", () => {
+    expect(categorizarPucPasivosID("2205")).toBe("PAS_02_PROV");
+    expect(categorizarPucPasivosID("2210")).toBe("PAS_02_PROV");
+  });
+
+  it("23xx · cuentas por pagar", () => {
+    expect(categorizarPucPasivosID("2305")).toBe("PAS_03_CXP");
+    expect(categorizarPucPasivosID("2335")).toBe("PAS_03_CXP");
+    expect(categorizarPucPasivosID("2380")).toBe("PAS_03_CXP");
+  });
+
+  it("24xx · impuestos por pagar", () => {
+    expect(categorizarPucPasivosID("2404")).toBe("PAS_06_IMPTOS");
+    expect(categorizarPucPasivosID("2408")).toBe("PAS_06_IMPTOS");
+    expect(categorizarPucPasivosID("2424")).toBe("PAS_06_IMPTOS");
+  });
+
+  it("25xx · obligaciones laborales", () => {
+    expect(categorizarPucPasivosID("2505")).toBe("PAS_04_LABOR");
+    expect(categorizarPucPasivosID("2510")).toBe("PAS_04_LABOR");
+    expect(categorizarPucPasivosID("2550")).toBe("PAS_04_LABOR");
+  });
+
+  it("26xx · pasivos estimados", () => {
+    expect(categorizarPucPasivosID("2605")).toBe("PAS_05_PROV_EST");
+    expect(categorizarPucPasivosID("2615")).toBe("PAS_05_PROV_EST");
+  });
+
+  it("27/28/29xx · otros pasivos", () => {
+    expect(categorizarPucPasivosID("2705")).toBe("PAS_07_OTROS");
+    expect(categorizarPucPasivosID("2805")).toBe("PAS_07_OTROS");
+    expect(categorizarPucPasivosID("2905")).toBe("PAS_07_OTROS");
+  });
+
+  it("clase distinta a 2 → null", () => {
+    expect(categorizarPucPasivosID("1105")).toBe(null);
+    expect(categorizarPucPasivosID("3105")).toBe(null);
+    expect(categorizarPucPasivosID("4135")).toBe(null);
+  });
+
+  it("null/undefined/vacío → null", () => {
+    expect(categorizarPucPasivosID(null)).toBe(null);
+    expect(categorizarPucPasivosID(undefined)).toBe(null);
+    expect(categorizarPucPasivosID("")).toBe(null);
   });
 });

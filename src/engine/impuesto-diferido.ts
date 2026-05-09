@@ -68,6 +68,38 @@ export const ID_CATEGORIAS: readonly IDCategoria[] = [
 /** Tarifa estándar del régimen general (35%). El usuario puede ajustarla. */
 export const TARIFA_ID_DEFAULT = 0.35;
 
+/**
+ * Clasifica una cuenta PUC clase 2 (pasivos) en una de las 7 categorías
+ * del Impuesto Diferido, siguiendo el mapeo del Detalle Fiscal del .xlsm:
+ *
+ *   PAS_01 Obligaciones financieras  → 2101, 2105 (21xx)
+ *   PAS_02 Proveedores               → 22xx (2205, 2210)
+ *   PAS_03 Cuentas por pagar         → 23xx (2305..2380)
+ *   PAS_04 Obligaciones laborales    → 25xx (2505..2530, 2550)
+ *   PAS_05 Pasivos estimados y prov. → 26xx (2605, 2610, 2615)
+ *   PAS_06 Impuestos por pagar       → 24xx (2404, 2408, 2412, 2424)
+ *   PAS_07 Otros pasivos             → 27xx, 28xx, 29xx
+ *
+ * Devuelve null si la cuenta no es clase 2 o no es clasificable.
+ */
+export function categorizarPucPasivosID(
+  puc: string | null | undefined,
+): string | null {
+  if (!puc) return null;
+  const p = String(puc).replace(/[^0-9]/g, "").padEnd(4, "0").slice(0, 4);
+  if (p.length < 4 || p[0] !== "2") return null;
+
+  if (p.startsWith("21")) return "PAS_01_OBLIGFIN";
+  if (p.startsWith("22")) return "PAS_02_PROV";
+  if (p.startsWith("23")) return "PAS_03_CXP";
+  if (p.startsWith("24")) return "PAS_06_IMPTOS";
+  if (p.startsWith("25")) return "PAS_04_LABOR";
+  if (p.startsWith("26")) return "PAS_05_PROV_EST";
+  if (p.startsWith("27") || p.startsWith("28") || p.startsWith("29"))
+    return "PAS_07_OTROS";
+  return null;
+}
+
 /** Redondeo DIAN al múltiplo de 1.000 más cercano. */
 function redondear(n: number): number {
   return Math.round(n / 1000) * 1000;

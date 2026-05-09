@@ -13,6 +13,7 @@ import {
   TARIFA_ID_DEFAULT,
   calcularFilaID,
   resumenID,
+  categorizarPucPasivosID,
 } from "@/engine/impuesto-diferido";
 
 export const metadata = { title: "Impuesto Diferido" };
@@ -123,20 +124,57 @@ export default async function ImpuestoDiferidoPage({
   const f2516Filas = await loadF2516Aggregates(supabase, declId, numerico);
   const f2516Map = new Map(f2516Filas.map((f) => [f.fila.id, f]));
 
+  // Cargar bases de PASIVOS agregadas por subprefijo PUC
+  // (clase 2 viene en negativo, lo absolutizamos para mostrarlo en positivo).
+  const pasivosBases = new Map<
+    string,
+    { contable: number; fiscal: number }
+  >();
+  const { data: balance } = await supabase
+    .from("balance_pruebas")
+    .select("id")
+    .eq("declaracion_id", declId)
+    .order("uploaded_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (balance) {
+    const { data: lineas } = await supabase
+      .from("balance_prueba_lineas")
+      .select("cuenta, saldo, ajuste_debito, ajuste_credito")
+      .eq("balance_id", balance.id);
+    for (const l of lineas ?? []) {
+      const catId = categorizarPucPasivosID(l.cuenta);
+      if (!catId) continue;
+      const saldoContable = Math.abs(Number(l.saldo));
+      const saldoFiscal = Math.abs(
+        Number(l.saldo) + Number(l.ajuste_debito) - Number(l.ajuste_credito),
+      );
+      const prev = pasivosBases.get(catId) ?? { contable: 0, fiscal: 0 };
+      pasivosBases.set(catId, {
+        contable: prev.contable + saldoContable,
+        fiscal: prev.fiscal + saldoFiscal,
+      });
+    }
+  }
+
   // Calcular cada categoría del ID
   const filasID = ID_CATEGORIAS.map((cat) => {
     let baseContable = 0;
     let baseFiscal = 0;
-    if (cat.f2516FilaId) {
+    if (cat.tipo === "activo" && cat.f2516FilaId) {
       const f = f2516Map.get(cat.f2516FilaId);
       if (f) {
         baseContable = f.contable;
         baseFiscal = f.fiscal;
       }
+    } else if (cat.tipo === "pasivo") {
+      const b = pasivosBases.get(cat.id);
+      if (b) {
+        baseContable = b.contable;
+        baseFiscal = b.fiscal;
+      }
     }
-    // Pasivos y "Propiedades de Inversión" sin mapping al F2516 quedan
-    // en cero · en versión futura habrá inputs manuales o un agregador
-    // de pasivos por subprefijo PUC.
     return calcularFilaID({ categoria: cat, baseContable, baseFiscal, tarifa: tarifaID });
   });
 
@@ -233,10 +271,12 @@ export default async function ImpuestoDiferidoPage({
             signos invertidos. Si CONTABLE &gt; FISCAL → DEDUCIBLE.
           </li>
           <li>
-            <span className="font-medium text-foreground">Pasivos sin mapping</span>:{" "}
-            por ahora las 7 filas de pasivos quedan en cero (el F2516
-            compacto solo agrega &ldquo;Total pasivos&rdquo;). En la próxima iteración
-            se agregará un agregador por subprefijo PUC o captura manual.
+            <span className="font-medium text-foreground">Pasivos por subprefijo PUC</span>:{" "}
+            las 7 categorías se llenan automáticamente clasificando cada
+            cuenta clase 2 según su prefijo (21xx oblig. financieras,
+            22xx proveedores, 23xx CxP, 24xx impuestos por pagar, 25xx
+            laborales, 26xx provisiones, 27/28/29xx otros). Si tu balance
+            no usa el PUC oficial, las cuentas sin clasificar no aparecen.
           </li>
           <li>
             <span className="font-medium text-foreground">Tarifa</span>:
