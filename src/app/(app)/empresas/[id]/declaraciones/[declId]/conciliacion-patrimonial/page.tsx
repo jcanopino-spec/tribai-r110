@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
+import { loadSegSocialTotals } from "@/lib/seg-social-totals";
 import { computarRenglones } from "@/engine/form110";
 import { normalizarSigno } from "@/engine/utils";
 import { evaluarPresentacion, ultimoDigitoNit } from "@/engine/vencimientos";
@@ -143,6 +144,7 @@ export default async function ConciliacionPatrimonialPage({
     inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
   }
   const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
+  const segSocial = await loadSegSocialTotals(supabase, declId, declaracion);
   const numerico = computarRenglones(inputs, {
     tarifaRegimen: tarifaRegimen ?? undefined,
     impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
@@ -165,9 +167,9 @@ export default async function ConciliacionPatrimonialPage({
     uvtVigente: uvtVigente ?? undefined,
     patrimonioLiquidoAnterior: plAnt,
     esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
-    totalNomina: Number(declaracion.total_nomina ?? 0),
-    aportesSegSocial: Number(declaracion.aportes_seg_social ?? 0),
-    aportesParaFiscales: Number(declaracion.aportes_para_fiscales ?? 0),
+    totalNomina: segSocial.totalNomina,
+    aportesSegSocial: segSocial.aportesSegSocial,
+    aportesParaFiscales: segSocial.aportesParaFiscales,
     totalAutorretenciones: totalAutorret,
     totalRetenciones: totalRet,
     totalDescuentosTributarios: totalDesc,

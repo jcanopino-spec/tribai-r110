@@ -56,7 +56,11 @@ export default async function SegSocialPage({
           <p className="mt-3 max-w-3xl text-muted-foreground">
             Aportes a salud, pensión, ARL y parafiscales. Para que los pagos
             laborales sean deducibles, los aportes deben estar efectivamente
-            pagados antes de presentar la declaración (Art. 108 E.T.).
+            pagados antes de presentar la declaración (Art. 108 E.T.). Los
+            totales aquí registrados alimentan automáticamente{" "}
+            <span className="font-mono">R33</span>,{" "}
+            <span className="font-mono">R34</span> y{" "}
+            <span className="font-mono">R35</span> del Formulario 110.
           </p>
         </div>
         {todos.length > 0 ? (

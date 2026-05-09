@@ -582,10 +582,17 @@ function TabOtros({ d }: { d: Decl }) {
       </div>
 
       <h2 className="mt-8 font-serif text-xl">Datos nómina (renglones 33-35 del 110)</h2>
+      <div className="border border-amber-500/40 bg-amber-500/5 p-3 text-xs">
+        ⓘ Si registras empleados en el anexo de{" "}
+        <span className="font-medium">Seguridad Social</span>, R33/R34/R35 se
+        calculan automáticamente desde ese anexo y los valores manuales de
+        abajo quedan IGNORADOS. Úsalos solo cuando no tengas el detalle por
+        empleado y quieras digitar los totales agregados.
+      </div>
       <div className="grid gap-5 md:grid-cols-3">
-        <NumField name="total_nomina" label="Total costos y gastos de nómina" defaultValue={d.total_nomina} />
-        <NumField name="aportes_seg_social" label="Aportes seguridad social" defaultValue={d.aportes_seg_social} />
-        <NumField name="aportes_para_fiscales" label="Aportes SENA, ICBF, cajas" defaultValue={d.aportes_para_fiscales} />
+        <NumField name="total_nomina" label="Total costos y gastos de nómina (R33)" defaultValue={d.total_nomina} />
+        <NumField name="aportes_seg_social" label="Aportes seguridad social (R34)" defaultValue={d.aportes_seg_social} />
+        <NumField name="aportes_para_fiscales" label="Aportes SENA, ICBF, cajas (R35)" defaultValue={d.aportes_para_fiscales} />
       </div>
     </div>
   );

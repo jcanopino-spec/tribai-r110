@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
+import { loadSegSocialTotals } from "@/lib/seg-social-totals";
 import { DeclaracionEditor } from "./editor";
 import { ModePicker } from "./mode-picker";
 import { clearModoCargaAction } from "./actions";
@@ -185,6 +186,7 @@ export default async function DeclaracionEditorPage({
 
   // Inputs para la fórmula DIAN de Tasa Mínima de Tributación
   const ttdInputs = await loadTasaMinimaInputs(supabase, declId, declaracion);
+  const segSocial = await loadSegSocialTotals(supabase, declId, declaracion);
 
   const cambiarModo = clearModoCargaAction.bind(null, declId, empresaId);
 
@@ -271,9 +273,9 @@ export default async function DeclaracionEditorPage({
           aplicaTasaMinima={declaracion.aplica_tasa_minima ?? true}
           utilidadContableNeta={ttdInputs.utilidadContableNeta}
           difPermanentesAumentan={ttdInputs.difPermanentesAumentan}
-          totalNomina={Number(declaracion.total_nomina ?? 0)}
-          aportesSegSocial={Number(declaracion.aportes_seg_social ?? 0)}
-          aportesParaFiscales={Number(declaracion.aportes_para_fiscales ?? 0)}
+          totalNomina={segSocial.totalNomina}
+          aportesSegSocial={segSocial.aportesSegSocial}
+          aportesParaFiscales={segSocial.aportesParaFiscales}
           beneficioAuditoria12m={!!declaracion.beneficio_auditoria_12m}
           beneficioAuditoria6m={!!declaracion.beneficio_auditoria_6m}
           totalAutorretenciones={totalAutorretenciones}
