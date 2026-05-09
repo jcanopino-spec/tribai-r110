@@ -5,7 +5,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { saveConfiguracionAction, type ConfigState } from "./actions";
 import type { EstadoPresentacion } from "@/engine/vencimientos";
-import { aplicaTTDPorRegimen } from "@/engine/condicionales";
+import { aplicaTTDPorRegimen, elegibleSobretasaFinanciera } from "@/engine/condicionales";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -139,8 +139,18 @@ function TabGeneral({
   regimenCodigo: string | null;
 }) {
   const ttdRegimen = aplicaTTDPorRegimen(regimenCodigo);
+  const esEsal = String(regimenCodigo ?? "").padStart(2, "0") === "08";
+  const elegibleSobretasa = elegibleSobretasaFinanciera(regimenCodigo);
   return (
     <div className="space-y-5">
+      <ReglasAplicablesPanel
+        regimenCodigo={regimenCodigo}
+        ttdAplica={ttdRegimen.aplica}
+        ttdRazon={ttdRegimen.razon}
+        esEsal={esEsal}
+        elegibleSobretasa={elegibleSobretasa}
+      />
+
       <h2 className="font-serif text-xl">Características de la empresa</h2>
       <div className="grid gap-5 md:grid-cols-2">
         <CheckField
@@ -618,6 +628,124 @@ function TabOtros({ d }: { d: Decl }) {
         <NumField name="aportes_para_fiscales" label="Aportes SENA, ICBF, cajas (R35)" defaultValue={d.aportes_para_fiscales} />
       </div>
     </div>
+  );
+}
+
+// ============================================================
+// Panel "Reglas aplicables según régimen"
+// ============================================================
+function ReglasAplicablesPanel({
+  regimenCodigo,
+  ttdAplica,
+  ttdRazon,
+  esEsal,
+  elegibleSobretasa,
+}: {
+  regimenCodigo: string | null;
+  ttdAplica: boolean;
+  ttdRazon: string | null;
+  esEsal: boolean;
+  elegibleSobretasa: boolean;
+}) {
+  if (!regimenCodigo) {
+    return (
+      <div className="rounded-md border border-destructive/40 bg-destructive/5 p-4 text-sm">
+        <p className="font-medium text-destructive">Sin régimen tributario</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          La empresa no tiene régimen configurado. Las reglas que aplican
+          (tarifa, TTD, ESAL, sobretasa) dependen de él. Edita la empresa
+          para asignarlo.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-md border border-border bg-muted/20 p-4">
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-mono text-xs uppercase tracking-[0.08em] text-muted-foreground">
+          Reglas aplicables según régimen
+        </h3>
+        <span className="font-mono text-xs">Régimen {regimenCodigo}</span>
+      </div>
+
+      <ul className="mt-3 space-y-2 text-xs">
+        <Regla
+          aplica={ttdAplica}
+          titulo="Tasa Mínima de Tributación (TTD)"
+          referencia="Art. 240 par. 6° E.T. · Ley 2277/2022"
+          detalle={
+            ttdAplica
+              ? "Tasa efectiva mínima del 15%. Si la TTD calculada es menor, se adiciona en R95."
+              : `Excluida del régimen. ${ttdRazon ?? ""}`
+          }
+        />
+
+        <Regla
+          aplica={esEsal}
+          titulo="Régimen Tributario Especial (ESAL)"
+          referencia="Art. 356 E.T."
+          detalle={
+            esEsal
+              ? "Tarifa 20%. R68 inversiones del año y R69 inversiones liquidadas en años anteriores son específicos de este régimen."
+              : "No aplica · si tiene valores en R68/R69 son anomalías a revisar."
+          }
+        />
+
+        <Regla
+          aplica={elegibleSobretasa}
+          titulo="Elegible para sobretasa financiera"
+          referencia="Par. 1° Art. 240 E.T."
+          detalle={
+            elegibleSobretasa
+              ? "Si es entidad financiera y R79 ≥ 120.000 UVT, aplica 5pp adicionales en R85."
+              : "No es elegible (régimen no general)."
+          }
+        />
+      </ul>
+    </div>
+  );
+}
+
+function Regla({
+  aplica,
+  titulo,
+  referencia,
+  detalle,
+}: {
+  aplica: boolean;
+  titulo: string;
+  referencia: string;
+  detalle: string;
+}) {
+  return (
+    <li className="flex items-start gap-2">
+      <span
+        className={
+          aplica
+            ? "mt-0.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-success"
+            : "mt-0.5 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-muted-foreground/30"
+        }
+        aria-label={aplica ? "Aplica" : "No aplica"}
+      />
+      <div className="flex-1">
+        <p>
+          <span
+            className={
+              aplica
+                ? "font-medium text-foreground"
+                : "font-medium text-muted-foreground line-through"
+            }
+          >
+            {titulo}
+          </span>
+          <span className="ml-2 font-mono text-[10px] text-muted-foreground">
+            {referencia}
+          </span>
+        </p>
+        <p className="mt-0.5 text-muted-foreground">{detalle}</p>
+      </div>
+    </li>
   );
 }
 
