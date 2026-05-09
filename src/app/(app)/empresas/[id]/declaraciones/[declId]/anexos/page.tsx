@@ -373,6 +373,15 @@ export default async function AnexosHubPage({
       descripcion:
         "Régimen Tributario Especial (Art. 356-359 E.T.). Efectuadas → R68 · Liquidadas → R69.",
     },
+    {
+      titulo: "Precios de Transferencia",
+      href: "precios-transferencia",
+      renglones: [],
+      total: 0,
+      items: 0,
+      descripcion:
+        "Evaluación automática de obligaciones (Arts. 260-1 a 260-11 E.T.) según patrimonio e ingresos.",
+    },
   ];
 
   return (
