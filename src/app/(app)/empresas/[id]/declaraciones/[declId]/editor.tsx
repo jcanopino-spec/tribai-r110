@@ -12,6 +12,17 @@ import {
 import { normalizarSigno } from "@/engine/utils";
 import { validarFormulario } from "@/engine/validaciones";
 import Link from "next/link";
+import {
+  IconDashboard,
+  IconForm110,
+  IconTable,
+  IconGear,
+  IconFolders,
+  IconConciliacion,
+  IconValidate,
+  IconChecklist,
+  IconCalculator,
+} from "@/components/icons";
 
 type Renglon = { numero: number; descripcion: string; seccion: string };
 type Valor = { numero: number; valor: number };
@@ -284,25 +295,25 @@ export function DeclaracionEditor({
         <div className="flex flex-wrap justify-end gap-2">
           <Link
             href={`/empresas/${empresaId}/declaraciones/${declId}/dashboard`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
           >
-            📊 Dashboard
+            <IconDashboard size={14} /> Dashboard
           </Link>
           <Link
             href={`/empresas/${empresaId}/declaraciones/${declId}/formulario-110`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
           >
-            Formulario 110 →
+            <IconForm110 size={14} /> Formulario 110 →
           </Link>
           <Link
             href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
           >
-            Vista plana →
+            <IconTable size={14} /> Vista plana →
           </Link>
         </div>
 
@@ -313,16 +324,19 @@ export function DeclaracionEditor({
           </span>
           <NavLink
             href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+            icon={<IconGear size={14} />}
           >
             Configuración
           </NavLink>
           <NavLink
             href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
+            icon={<IconFolders size={14} />}
           >
             Anexos
           </NavLink>
           <NavLink
             href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
+            icon={<IconConciliacion size={14} />}
           >
             Conciliaciones
           </NavLink>
@@ -335,7 +349,7 @@ export function DeclaracionEditor({
           </span>
           <Link
             href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
-            className={`inline-flex h-9 items-center justify-center rounded-full border px-4 text-xs ${
+            className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-full border px-4 text-xs ${
               errores > 0
                 ? "border-destructive/60 bg-destructive/5 text-destructive hover:bg-destructive/10"
                 : warns > 0
@@ -343,18 +357,20 @@ export function DeclaracionEditor({
                   : "border-border-secondary hover:bg-muted"
             }`}
           >
-            Validaciones
-            {errores > 0 ? <span className="ml-2 font-mono">· {errores} err</span> : null}
-            {warns > 0 ? <span className="ml-2 font-mono">· {warns} warn</span> : null}
-            {errores === 0 && warns === 0 ? <span className="ml-2 font-mono">· OK</span> : null}
+            <IconValidate size={14} /> Validaciones
+            {errores > 0 ? <span className="ml-1 font-mono">· {errores} err</span> : null}
+            {warns > 0 ? <span className="ml-1 font-mono">· {warns} warn</span> : null}
+            {errores === 0 && warns === 0 ? <span className="ml-1 font-mono">· OK</span> : null}
           </Link>
           <NavLink
             href={`/empresas/${empresaId}/declaraciones/${declId}/checklist`}
+            icon={<IconChecklist size={14} />}
           >
             Checklist
           </NavLink>
           <NavLink
             href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
+            icon={<IconCalculator size={14} />}
           >
             Simulador
           </NavLink>
@@ -388,9 +404,43 @@ export function DeclaracionEditor({
       </section>
 
       <div className="space-y-12">
-        {Array.from(renglonesPorSeccion.entries()).map(([seccion, items]) => (
+        {Array.from(renglonesPorSeccion.entries()).map(([seccion, items]) => {
+          // En "Datos informativos" (R32-R35) ocultamos filas en cero.
+          // Estos renglones vienen del anexo de seguridad social (R33-R35)
+          // y de configuración (R32 pérdidas acumuladas). Si están en 0,
+          // no aportan al usuario · solo agregan ruido visual.
+          const ocultarCeros = seccion === "Datos informativos";
+          const itemsVisibles = ocultarCeros
+            ? items.filter((r) => {
+                const isComputado = RENGLONES_COMPUTADOS.has(r.numero);
+                const v = isComputado
+                  ? Number(numerico.get(r.numero) ?? 0)
+                  : Number(String(valores.get(r.numero) ?? "").replace(/[^0-9-]/g, ""));
+                return v !== 0;
+              })
+            : items;
+          const totalOcultos = items.length - itemsVisibles.length;
+          if (ocultarCeros && itemsVisibles.length === 0) {
+            return (
+              <section key={seccion}>
+                <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">{seccion}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Sin valores capturados · {items.length} renglones disponibles
+                  desde la configuración y los anexos.
+                </p>
+              </section>
+            );
+          }
+          return (
           <section key={seccion}>
-            <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">{seccion}</h2>
+            <div className="flex items-baseline justify-between gap-3">
+              <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">{seccion}</h2>
+              {ocultarCeros && totalOcultos > 0 ? (
+                <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+                  {totalOcultos} en cero ocultos
+                </p>
+              ) : null}
+            </div>
             <div className="mt-4 overflow-hidden border border-border">
               <table className="w-full text-sm">
                 <thead className="bg-muted text-left">
@@ -407,7 +457,7 @@ export function DeclaracionEditor({
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map((r) => {
+                  {itemsVisibles.map((r) => {
                     const isComputado = RENGLONES_COMPUTADOS.has(r.numero);
                     const valor = isComputado
                       ? numerico.get(r.numero) ?? 0
@@ -460,7 +510,8 @@ export function DeclaracionEditor({
               </table>
             </div>
           </section>
-        ))}
+          );
+        })}
       </div>
 
       <div className="sticky bottom-0 mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border bg-background py-4">
@@ -501,15 +552,18 @@ function ResumenItem({ label, value }: { label: string; value: number }) {
 function NavLink({
   href,
   children,
+  icon,
 }: {
   href: string;
   children: React.ReactNode;
+  icon?: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
-      className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+      className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
     >
+      {icon}
       {children}
     </Link>
   );

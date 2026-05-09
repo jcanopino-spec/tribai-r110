@@ -16,6 +16,7 @@ import {
 import { evaluarChecklist, resumenChecklist } from "@/engine/checklist";
 import { evaluarObligacionPT } from "@/engine/precios-transferencia";
 import { ModuloHeader } from "@/components/modulo-header";
+import { IconDownload, IconDocument } from "@/components/icons";
 
 export const metadata = { title: "Dashboard" };
 
@@ -403,48 +404,34 @@ export default async function DashboardPage({
           entrega formal o validación cruzada.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
-          <a
+          <DownloadLink
             href={`/api/declaracion/form110/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
+            primary
           >
-            ⬇️ F110 completo
-          </a>
-          <a
-            href={`/api/conciliaciones/formato-2516/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            ⬇️ F2516
-          </a>
-          <a
-            href={`/api/conciliaciones/impuesto-diferido/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            ⬇️ Impuesto Diferido
-          </a>
-          <a
-            href={`/api/anexos/retenciones/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            ⬇️ Retenciones
-          </a>
-          <a
-            href={`/api/anexos/seguridad-social/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            ⬇️ Seguridad Social
-          </a>
-          <a
-            href={`/api/checklist/export?decl=${declId}`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            ⬇️ Checklist
-          </a>
+            F110 completo
+          </DownloadLink>
+          <DownloadLink href={`/api/conciliaciones/formato-2516/export?decl=${declId}`}>
+            F2516
+          </DownloadLink>
+          <DownloadLink href={`/api/conciliaciones/impuesto-diferido/export?decl=${declId}`}>
+            Impuesto Diferido
+          </DownloadLink>
+          <DownloadLink href={`/api/anexos/retenciones/export?decl=${declId}`}>
+            Retenciones
+          </DownloadLink>
+          <DownloadLink href={`/api/anexos/seguridad-social/export?decl=${declId}`}>
+            Seguridad Social
+          </DownloadLink>
+          <DownloadLink href={`/api/checklist/export?decl=${declId}`}>
+            Checklist
+          </DownloadLink>
           <a
             href={`/api/guia/export`}
-            className="inline-flex h-9 items-center justify-center rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
             title="Guía completa de funcionamiento del sistema en formato Word"
           >
-            📖 Guía Tribai (Word)
+            <IconDocument size={14} />
+            Guía Tribai (Word)
           </a>
         </div>
       </section>
@@ -571,5 +558,28 @@ function QuickLink({
     >
       {children}
     </Link>
+  );
+}
+
+function DownloadLink({
+  href,
+  children,
+  primary,
+}: {
+  href: string;
+  children: React.ReactNode;
+  primary?: boolean;
+}) {
+  const cls = primary
+    ? "border-foreground/40 bg-foreground/[0.04] font-medium hover:bg-foreground/[0.08]"
+    : "border-border-secondary hover:bg-muted";
+  return (
+    <a
+      href={href}
+      className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-full border px-4 text-xs ${cls}`}
+    >
+      <IconDownload size={14} />
+      {children}
+    </a>
   );
 }

@@ -39,10 +39,16 @@ const SECCIONES: readonly SeccionDef[] = [
 
 export default async function F2516DetallePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string; declId: string }>;
+  searchParams: Promise<{ todos?: string }>;
 }) {
   const { id: empresaId, declId } = await params;
+  const sp = await searchParams;
+  // Por defecto ocultamos filas en cero · "?todos=1" muestra todo (para
+  // generar el reporte oficial completo)
+  const mostrarTodos = sp.todos === "1";
   const supabase = await createClient();
 
   const { data: declaracion } = await supabase
@@ -62,7 +68,7 @@ export default async function F2516DetallePage({
   const filas = await loadF2516DetalleCompleto(supabase, declId);
   const porRenglon = agruparPorRenglon(filas);
 
-  // Agrupar renglones por sección
+  // Agrupar renglones por sección · y filtrar ceros si aplica
   const seccionesAgrupadas = SECCIONES.map((s) => {
     const renglones: Array<{
       total: ReturnType<typeof agruparPorRenglon> extends Map<number, infer T>
@@ -72,7 +78,17 @@ export default async function F2516DetallePage({
     }> = [];
     for (let r = s.desde; r <= s.hasta; r++) {
       const data = porRenglon.get(r);
-      if (data) renglones.push({ total: data, rgl: r });
+      if (data) {
+        if (!mostrarTodos) {
+          // Ocultar renglón si total contable y fiscal son 0
+          if (data.total.contable === 0 && data.total.fiscal === 0) continue;
+          // Filtrar cuentas en cero del detalle (mantener total)
+          data.cuentas = data.cuentas.filter(
+            (c) => c.contable !== 0 || c.fiscal !== 0,
+          );
+        }
+        renglones.push({ total: data, rgl: r });
+      }
     }
     return { ...s, renglones };
   });
@@ -97,14 +113,44 @@ export default async function F2516DetallePage({
         volverHref={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516`}
         volverLabel="F2516 compacto"
         contexto={`${empresa.razon_social} · NIT ${nitEmpresa} · AG ${declaracion.ano_gravable}`}
+        acciones={
+          <a
+            href={
+              mostrarTodos
+                ? `/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/detalle`
+                : `/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/detalle?todos=1`
+            }
+            className="inline-flex h-9 items-center justify-center rounded-full px-4 text-xs font-medium"
+            style={{ backgroundColor: "#C4952A", color: "#0A1628" }}
+            title={
+              mostrarTodos
+                ? "Volver a vista compacta · solo filas con valor"
+                : "Mostrar reporte oficial completo · todas las filas"
+            }
+          >
+            {mostrarTodos
+              ? "👁 Solo filas con valor"
+              : "📑 Reporte oficial completo"}
+          </a>
+        }
       />
 
       <p className="mb-6 max-w-4xl text-sm text-muted-foreground">
         Vista detallada con la estructura completa del Detalle Fiscal del
         archivo guía v5: cada renglón del F110 con las cuentas PUC que lo
         componen, valor contable agregado del balance y valor fiscal con
-        ajustes. Esta es la forma que cumple con la obligación de
-        presentación detallada del F2516 ante la DIAN.
+        ajustes.{" "}
+        {mostrarTodos ? (
+          <span>
+            <strong>Mostrando todas las filas</strong> · este es el reporte
+            completo para presentación oficial DIAN.
+          </span>
+        ) : (
+          <span>
+            <strong>Mostrando solo filas con valor</strong> · usa el botón
+            superior para ver el reporte oficial completo.
+          </span>
+        )}
       </p>
 
       <div className="mb-6 grid gap-3 md:grid-cols-3">
