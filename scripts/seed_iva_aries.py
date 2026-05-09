@@ -141,6 +141,7 @@ def extraer_bimestres() -> list[dict]:
             "fecha_presentacion": None,  # No está en el Excel
             "numero_formulario": None,
             "ingresos_brutos": ingresos_brutos,
+            "devoluciones": get(CASILLAS_F300["devoluciones"]),
             "ingresos_no_gravados": get(CASILLAS_F300["ingresos_no_gravados"]),
             "ingresos_exentos": get(CASILLAS_F300["ingresos_exentos"]),
             "ingresos_gravados": gravados,

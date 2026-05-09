@@ -85,6 +85,7 @@ export async function saveIvaAction(
     fecha_presentacion,
     numero_formulario,
     ingresos_brutos: parseN(form.get("ingresos_brutos")),
+    devoluciones: parseN(form.get("devoluciones")),
     ingresos_no_gravados: parseN(form.get("ingresos_no_gravados")),
     ingresos_exentos: parseN(form.get("ingresos_exentos")),
     ingresos_gravados: parseN(form.get("ingresos_gravados")),

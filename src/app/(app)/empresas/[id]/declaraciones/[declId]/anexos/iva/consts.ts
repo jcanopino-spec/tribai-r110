@@ -47,6 +47,7 @@ export type IvaItem = {
   fecha_presentacion: string | null;
   numero_formulario: string | null;
   ingresos_brutos: number;
+  devoluciones: number;
   ingresos_no_gravados: number;
   ingresos_exentos: number;
   ingresos_gravados: number;

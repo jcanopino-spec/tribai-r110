@@ -46,6 +46,7 @@ export function IvaForm({
     fecha_presentacion: inicial?.fecha_presentacion ?? "",
     numero_formulario: inicial?.numero_formulario ?? "",
     ingresos_brutos: fmt(String(inicial?.ingresos_brutos ?? 0)),
+    devoluciones: fmt(String(inicial?.devoluciones ?? 0)),
     ingresos_no_gravados: fmt(String(inicial?.ingresos_no_gravados ?? 0)),
     ingresos_exentos: fmt(String(inicial?.ingresos_exentos ?? 0)),
     ingresos_gravados: fmt(String(inicial?.ingresos_gravados ?? 0)),
@@ -106,27 +107,33 @@ export function IvaForm({
       <div className="grid gap-4 md:grid-cols-2">
         <NumField
           name="ingresos_brutos"
-          label="Ingresos brutos"
+          label="Ingresos brutos (cas. 39)"
           value={fields.ingresos_brutos}
           onChange={(v) => set("ingresos_brutos", v)}
         />
         <NumField
+          name="devoluciones"
+          label="Devoluciones (cas. 40)"
+          value={fields.devoluciones}
+          onChange={(v) => set("devoluciones", v)}
+        />
+        <NumField
+          name="ingresos_gravados"
+          label="Gravados (cas. 27 + 28)"
+          value={fields.ingresos_gravados}
+          onChange={(v) => set("ingresos_gravados", v)}
+        />
+        <NumField
           name="ingresos_no_gravados"
-          label="No gravados"
+          label="No gravados (cas. 38)"
           value={fields.ingresos_no_gravados}
           onChange={(v) => set("ingresos_no_gravados", v)}
         />
         <NumField
           name="ingresos_exentos"
-          label="Exentos"
+          label="Exentos (cas. 35)"
           value={fields.ingresos_exentos}
           onChange={(v) => set("ingresos_exentos", v)}
-        />
-        <NumField
-          name="ingresos_gravados"
-          label="Gravados"
-          value={fields.ingresos_gravados}
-          onChange={(v) => set("ingresos_gravados", v)}
         />
       </div>
 
