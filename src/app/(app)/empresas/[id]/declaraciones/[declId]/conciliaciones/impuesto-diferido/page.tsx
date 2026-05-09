@@ -213,11 +213,20 @@ export default async function ImpuestoDiferidoPage({
             TARIFA APLICADA · {(tarifaID * 100).toFixed(0)}%
           </p>
         </div>
-        <div className="text-right">
-          <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
-            {empresa.razon_social}
-          </p>
-          <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
+        <div className="flex items-center gap-3">
+          <a
+            href={`/api/conciliaciones/impuesto-diferido/export?decl=${declId}`}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border-secondary px-5 text-sm hover:bg-muted"
+            title="Descarga el Impuesto Diferido en .xlsx para entregar a auditoría externa"
+          >
+            ⬇️ Exportar a Excel
+          </a>
+          <div className="text-right">
+            <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+              {empresa.razon_social}
+            </p>
+            <p className="font-mono text-xs">AG {declaracion.ano_gravable}</p>
+          </div>
         </div>
       </div>
 
