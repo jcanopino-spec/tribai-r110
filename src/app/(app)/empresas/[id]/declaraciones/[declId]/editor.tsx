@@ -289,118 +289,106 @@ export function DeclaracionEditor({
         </section>
       ) : null}
 
-      {/* Nav agrupado · 4 categorías */}
-      <div className="mb-6 space-y-2">
-        {/* Acción primaria · Dashboard + Form110 */}
-        <div className="flex flex-wrap justify-end gap-2">
-          <Link
+      {/* Nav grid · cards con icono prominente arriba + label abajo */}
+      <nav className="mb-8">
+        <div className="grid gap-2 sm:grid-cols-3 md:grid-cols-6 lg:grid-cols-9">
+          <NavCard
             href={`/empresas/${empresaId}/declaraciones/${declId}/dashboard`}
-            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-foreground/40 bg-foreground/[0.04] px-4 text-xs font-medium hover:bg-foreground/[0.08]"
-          >
-            <IconDashboard size={14} /> Dashboard
-          </Link>
-          <Link
+            icon={<IconDashboard size={28} />}
+            label="Dashboard"
+            primary
+          />
+          <NavCard
             href={`/empresas/${empresaId}/declaraciones/${declId}/formulario-110`}
-            target="_blank"
-            rel="noopener noreferrer"
+            icon={<IconForm110 size={28} />}
+            label="Formulario 110"
+            external
+            dark
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
+            icon={<IconTable size={28} />}
+            label="Vista plana"
+            external
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
+            icon={<IconGear size={28} />}
+            label="Configuración"
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
+            icon={<IconFolders size={28} />}
+            label="Anexos"
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
+            icon={<IconConciliacion size={28} />}
+            label="Conciliaciones"
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
+            icon={<IconValidate size={28} />}
+            label="Validaciones"
+            badge={
+              errores > 0
+                ? { text: `${errores} err`, level: "error" }
+                : warns > 0
+                  ? { text: `${warns} warn`, level: "warn" }
+                  : { text: "OK", level: "ok" }
+            }
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/checklist`}
+            icon={<IconChecklist size={28} />}
+            label="Checklist"
+          />
+          <NavCard
+            href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
+            icon={<IconCalculator size={28} />}
+            label="Simulador"
+          />
+        </div>
+      </nav>
+
+      <section
+        className="mb-10 rounded-md border p-5"
+        style={{ borderColor: "rgba(196,149,42,0.3)", backgroundColor: "rgba(196,149,42,0.04)" }}
+      >
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="mt-0.5 text-foreground/70">
+              <IconGear size={20} />
+            </div>
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+                Configuración aplicada
+              </p>
+              <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1.5">
+                <ConfigStat
+                  label="Impuesto AG anterior"
+                  value={formatValor(impuestoNetoAnterior) || "0"}
+                />
+                <ConfigStat
+                  label="Años declarando"
+                  value={
+                    aniosDeclarando === "primero"
+                      ? "primero"
+                      : aniosDeclarando === "segundo"
+                        ? "segundo"
+                        : "tercero o más"
+                  }
+                />
+              </div>
+            </div>
+          </div>
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
             className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full bg-foreground px-4 text-xs text-background hover:opacity-90"
           >
-            <IconForm110 size={14} /> Formulario 110 →
-          </Link>
-          <Link
-            href={`/empresas/${empresaId}/declaraciones/${declId}/imprimir`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
-          >
-            <IconTable size={14} /> Vista plana →
+            <IconGear size={14} /> Editar configuración →
           </Link>
         </div>
-
-        {/* Trabajo · captura y conciliación */}
-        <div className="flex flex-wrap justify-end gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground self-center mr-1">
-            Trabajo
-          </span>
-          <NavLink
-            href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
-            icon={<IconGear size={14} />}
-          >
-            Configuración
-          </NavLink>
-          <NavLink
-            href={`/empresas/${empresaId}/declaraciones/${declId}/anexos`}
-            icon={<IconFolders size={14} />}
-          >
-            Anexos
-          </NavLink>
-          <NavLink
-            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
-            icon={<IconConciliacion size={14} />}
-          >
-            Conciliaciones
-          </NavLink>
-        </div>
-
-        {/* Análisis · revisión y planeación */}
-        <div className="flex flex-wrap justify-end gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground self-center mr-1">
-            Análisis
-          </span>
-          <Link
-            href={`/empresas/${empresaId}/declaraciones/${declId}/validaciones`}
-            className={`inline-flex h-9 items-center justify-center gap-1.5 rounded-full border px-4 text-xs ${
-              errores > 0
-                ? "border-destructive/60 bg-destructive/5 text-destructive hover:bg-destructive/10"
-                : warns > 0
-                  ? "border-amber-500/60 bg-amber-500/5 hover:bg-amber-500/10"
-                  : "border-border-secondary hover:bg-muted"
-            }`}
-          >
-            <IconValidate size={14} /> Validaciones
-            {errores > 0 ? <span className="ml-1 font-mono">· {errores} err</span> : null}
-            {warns > 0 ? <span className="ml-1 font-mono">· {warns} warn</span> : null}
-            {errores === 0 && warns === 0 ? <span className="ml-1 font-mono">· OK</span> : null}
-          </Link>
-          <NavLink
-            href={`/empresas/${empresaId}/declaraciones/${declId}/checklist`}
-            icon={<IconChecklist size={14} />}
-          >
-            Checklist
-          </NavLink>
-          <NavLink
-            href={`/empresas/${empresaId}/declaraciones/${declId}/simulador`}
-            icon={<IconCalculator size={14} />}
-          >
-            Simulador
-          </NavLink>
-        </div>
-      </div>
-
-      <section className="mb-10 flex flex-wrap items-center gap-4 border border-border p-4">
-        <div className="flex-1 min-w-[200px]">
-          <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">
-            Configuración aplicada
-          </p>
-          <p className="mt-1 text-sm">
-            Impuesto AG anterior:{" "}
-            <span className="font-mono">{formatValor(impuestoNetoAnterior) || "0"}</span>
-            {" · "}Años declarando:{" "}
-            <span className="font-mono">
-              {aniosDeclarando === "primero"
-                ? "primero"
-                : aniosDeclarando === "segundo"
-                  ? "segundo"
-                  : "tercero o más"}
-            </span>
-          </p>
-        </div>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
-          className="inline-flex h-9 items-center justify-center rounded-full bg-primary px-4 text-xs text-primary-foreground hover:opacity-90"
-        >
-          Editar configuración →
-        </Link>
       </section>
 
       <div className="space-y-12">
@@ -422,12 +410,24 @@ export function DeclaracionEditor({
           const totalOcultos = items.length - itemsVisibles.length;
           if (ocultarCeros && itemsVisibles.length === 0) {
             return (
-              <section key={seccion}>
-                <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">{seccion}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Sin valores capturados · {items.length} renglones disponibles
-                  desde la configuración y los anexos.
-                </p>
+              <section
+                key={seccion}
+                className="rounded-md border border-border bg-muted/20 p-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+                      {seccion}
+                    </h2>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Sin valores capturados · {items.length} renglones disponibles
+                      desde configuración y anexos.
+                    </p>
+                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+                    {items.length} en 0
+                  </span>
+                </div>
               </section>
             );
           }
@@ -549,22 +549,68 @@ function ResumenItem({ label, value }: { label: string; value: number }) {
   );
 }
 
-function NavLink({
+function ConfigStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="font-mono text-[9px] uppercase tracking-[0.05em] text-muted-foreground">
+        {label}
+      </p>
+      <p className="font-mono text-sm font-medium">{value}</p>
+    </div>
+  );
+}
+
+function NavCard({
   href,
-  children,
   icon,
+  label,
+  primary,
+  dark,
+  external,
+  badge,
 }: {
   href: string;
-  children: React.ReactNode;
-  icon?: React.ReactNode;
+  icon: React.ReactNode;
+  label: string;
+  primary?: boolean;
+  dark?: boolean;
+  external?: boolean;
+  badge?: { text: string; level: "ok" | "warn" | "error" };
 }) {
+  const baseCls =
+    "group flex flex-col items-center justify-center gap-2 rounded-md border px-3 py-4 text-center transition-colors min-h-[100px] relative";
+  let stateCls = "border-border bg-card hover:bg-muted/50 hover:border-foreground/40";
+  if (dark) stateCls = "border-foreground bg-foreground text-background hover:opacity-90";
+  else if (primary) stateCls = "border-foreground/40 bg-foreground/[0.04] hover:bg-foreground/[0.08]";
+
+  const badgeCls =
+    badge?.level === "error"
+      ? "bg-destructive/10 text-destructive border-destructive/40"
+      : badge?.level === "warn"
+        ? "bg-amber-500/10 text-amber-700 dark:text-amber-500 border-amber-500/40"
+        : "bg-success/10 text-success border-success/40";
+
   return (
     <Link
       href={href}
-      className="inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-border-secondary px-4 text-xs hover:bg-muted"
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className={`${baseCls} ${stateCls}`}
     >
-      {icon}
-      {children}
+      <div className="flex h-7 items-center justify-center">{icon}</div>
+      <span className="text-xs font-medium leading-tight">{label}</span>
+      {badge ? (
+        <span
+          className={`absolute right-1.5 top-1.5 rounded-full border px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.05em] ${badgeCls}`}
+        >
+          {badge.text}
+        </span>
+      ) : null}
+      {external ? (
+        <span className="absolute bottom-1 right-1.5 font-mono text-[9px] text-muted-foreground/60 group-hover:text-foreground/60">
+          ↗
+        </span>
+      ) : null}
     </Link>
   );
 }

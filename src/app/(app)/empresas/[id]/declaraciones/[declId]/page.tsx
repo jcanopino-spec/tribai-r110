@@ -525,15 +525,31 @@ function Stat({
     ? "border-destructive/40 bg-destructive/5"
     : success
       ? "border-success/40 bg-success/5"
-      : "border-border";
-  const valueCls = alert ? "text-destructive" : muted ? "text-muted-foreground" : "";
+      : "border-border bg-muted/20";
+  const valueCls = alert
+    ? "text-destructive"
+    : success
+      ? "text-success"
+      : muted
+        ? "text-muted-foreground"
+        : "text-foreground";
 
   const content = (
-    <div className={`border p-4 ${cls}`}>
-      <p className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground">{label}</p>
-      <p className={`mt-1 font-serif text-2xl tracking-[-0.02em] ${valueCls}`}>
-        {FMT.format(value)}
-      </p>
+    <div className={`flex items-center gap-3 rounded-md border p-4 transition-colors ${cls} ${href ? "hover:opacity-80 cursor-pointer" : ""}`}>
+      {/* Indicador visual lateral */}
+      <div
+        className={`h-12 w-1 rounded ${
+          alert ? "bg-destructive" : success ? "bg-success" : "bg-muted-foreground/30"
+        }`}
+      />
+      <div className="flex-1">
+        <p className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-foreground">
+          {label}
+        </p>
+        <p className={`mt-0.5 font-serif text-2xl tracking-[-0.02em] tabular-nums ${valueCls}`}>
+          {FMT.format(value)}
+        </p>
+      </div>
     </div>
   );
   return href ? <Link href={href}>{content}</Link> : content;
