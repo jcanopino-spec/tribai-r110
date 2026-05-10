@@ -160,16 +160,20 @@ def main():
             # Borrar valores actuales
             cur.execute("DELETE FROM form110_valores WHERE declaracion_id = %s", (decl_id,))
 
-            # Re-insertar agregando por renglón. Aplicar normalización de
-            # signo: pasivos/ingresos vienen como saldo crédito (negativo),
-            # los pasamos a positivo en su renglón. Filtro anti-duplicación:
-            # solo cuentas hoja (sin hijas presentes en el balance).
+            # Re-insertar agregando por renglón. Aplicar:
+            #   1. Filtro anti-duplicación: solo cuentas hoja (sin hijas)
+            #   2. Saldo fiscal: saldo + ajuste_debito - ajuste_credito
+            #      Esto es consistente con loadF2516Aggregates (que aplica
+            #      la misma fórmula). Si el balance no tiene ajustes capturados,
+            #      saldo_fiscal = saldo (compat con balances simples).
+            #   3. Normalización de signo: pasivos/ingresos vienen como
+            #      saldo crédito (negativo), los pasamos a positivo.
             cur.execute("""
                 WITH lineas AS (
                     SELECT
                         regexp_replace(l.cuenta, '[^0-9]', '', 'g') as cuenta_num,
                         l.renglon_110,
-                        l.saldo,
+                        l.saldo + COALESCE(l.ajuste_debito, 0) - COALESCE(l.ajuste_credito, 0) as saldo_fiscal,
                         b.id as balance_id
                     FROM balance_prueba_lineas l
                     JOIN balance_pruebas b ON b.id = l.balance_id
@@ -190,15 +194,15 @@ def main():
                 agregado AS (
                     SELECT
                         renglon_110,
-                        sum(saldo) as suma_natural,
+                        sum(saldo_fiscal) as suma_natural,
                         -- Pasivos (R45) e ingresos (R47-R57) tienen naturaleza crédito
                         -- → su suma natural es negativa. Convertimos a positivo.
                         CASE
-                            WHEN renglon_110 = 45 THEN abs(sum(saldo))
-                            WHEN renglon_110 BETWEEN 47 AND 57 THEN abs(sum(saldo))
-                            WHEN renglon_110 = 59 THEN abs(sum(saldo))
-                            WHEN renglon_110 = 60 THEN abs(sum(saldo))
-                            ELSE sum(saldo)
+                            WHEN renglon_110 = 45 THEN abs(sum(saldo_fiscal))
+                            WHEN renglon_110 BETWEEN 47 AND 57 THEN abs(sum(saldo_fiscal))
+                            WHEN renglon_110 = 59 THEN abs(sum(saldo_fiscal))
+                            WHEN renglon_110 = 60 THEN abs(sum(saldo_fiscal))
+                            ELSE sum(saldo_fiscal)
                         END as valor_normalizado
                     FROM hojas
                     GROUP BY renglon_110

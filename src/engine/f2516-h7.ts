@@ -94,19 +94,23 @@ export function computarH7(input: {
   const r47_57 =
     (input.valoresF110.get(47) ?? 0) + (input.valoresF110.get(57) ?? 0);
 
-  // Nota: ERI_16_COSTOS del F2516 compacto cubre TODO el R67 (clases 5+6+7
-  // del PUC), no solo los costos puros. Por eso V5 cruza contra R67 entero,
-  // que es coherente con el `cuadraConR110: 67` declarado en F2516_FILAS.
-  // Para validar gastos por separado (R63-R66) se usa la suma de costos
-  // F2516 menos R62 fiscal, comparada contra R63..R66 fiscal.
-  const totalCostosYGastosF2516 = totalCostos + totalGastos;
+  // ERI_16_COSTOS del F2516 compacto YA cubre TODO el R67 (clases 5+6+7
+  // del PUC), no solo los costos puros. Por eso V5 cruza `totalCostos`
+  // (que es ERI_16_COSTOS del F2516) directamente contra R67 (= R62..R66
+  // fiscal del F110). NO sumamos `totalGastos` por encima · ya está incluido.
+  //
+  // Diferencias residuales reales:
+  //   El F2516 aplica `saldo + ajuste_debito - ajuste_credito` (saldo neto
+  //   fiscal) mientras que `form110_valores` se calcula solo con `saldo`.
+  //   Si el contador capturó ajustes en cuentas clase 5/6/7, esa diferencia
+  //   es legítima y aparece en V5 como alerta para revisar congruencia.
 
   const cruces: CruceH7[] = [
     cruce("V1", "Total activos = R44", totalActivos, r44),
     cruce("V2", "Total pasivos = R45", totalPasivos, r45),
     cruce("V3", "Patrimonio líquido = R46", patrimonioLiquido, r46),
     cruce("V4", "Total ingresos = R58", totalIngresos, r58),
-    cruce("V5", "Costos+gastos F2516 = R67 (R62..R66)", totalCostosYGastosF2516, r67),
+    cruce("V5", "Costos+gastos F2516 = R67 (R62..R66)", totalCostos, r67),
     cruce("V7", "Impuesto = R96", impuestoRenta, r96),
     cruce(
       "V8",
