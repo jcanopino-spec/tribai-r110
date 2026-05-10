@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { computarConcUtilidades } from "@/engine/conc-utilidades";
+import { loadConcUtilidades } from "@/lib/conc-utilidades";
+import { ModuloHeader } from "@/components/modulo-header";
 import { PartidaForm } from "./partida-form";
 import { PartidasList } from "./list";
 
-export const metadata = { title: "Conciliación Fiscal" };
+export const metadata = { title: "Conciliación de Utilidad" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
-export default async function ConciliacionPage({
+export default async function ConcUtilidadPage({
   params,
 }: {
   params: Promise<{ id: string; declId: string }>;
@@ -23,476 +26,356 @@ export default async function ConciliacionPage({
     .single();
   if (!declaracion) notFound();
 
-  // Cargar balance fiscal de esta declaración
-  const { data: balanceMeta } = await supabase
-    .from("balance_pruebas")
-    .select("id")
-    .eq("declaracion_id", declId)
-    .maybeSingle();
-
-  // Cargar partidas manuales + anexos + balance en paralelo
-  const [
-    partidasRes,
-    icaRes,
-    gmfRes,
-    intPresRes,
-    difCambioRes,
-    trmRes,
-    tasaIntRes,
-    r72Res,
-    balanceLineasRes,
-    incrngoRes,
-    recupRes,
-    donacionesRes,
-  ] = await Promise.all([
-    supabase
-      .from("conciliacion_partidas")
-      .select("id, tipo, signo, concepto, valor, observacion")
-      .eq("declaracion_id", declId)
-      .order("created_at"),
-    supabase.from("anexo_ica").select("valor_pagado").eq("declaracion_id", declId),
-    supabase.from("anexo_gmf").select("valor_gmf").eq("declaracion_id", declId),
-    supabase
-      .from("anexo_intereses_presuntivos")
-      .select("saldo_promedio, dias, interes_registrado")
-      .eq("declaracion_id", declId),
-    supabase
-      .from("anexo_diferencia_cambio")
-      .select("tipo, valor_usd, trm_inicial")
-      .eq("declaracion_id", declId),
-    supabase
-      .from("parametros_anuales")
-      .select("valor")
-      .eq("ano_gravable", declaracion.ano_gravable)
-      .eq("codigo", "trm_promedio")
-      .maybeSingle(),
-    supabase
-      .from("parametros_anuales")
-      .select("valor")
-      .eq("ano_gravable", declaracion.ano_gravable)
-      .eq("codigo", "tasa_interes_presuntivo")
-      .maybeSingle(),
-    supabase
-      .from("form110_valores")
-      .select("valor")
-      .eq("declaracion_id", declId)
-      .eq("numero", 72)
-      .maybeSingle(),
-    balanceMeta
-      ? supabase
-          .from("balance_prueba_lineas")
-          .select("cuenta, nombre, ajuste_debito, ajuste_credito")
-          .eq("balance_id", balanceMeta.id)
-          .or("ajuste_debito.gt.0,ajuste_credito.gt.0")
-      : Promise.resolve({ data: [] }),
-    supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
-    supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
-    supabase
-      .from("anexo_descuentos")
-      .select("categoria, valor_descuento")
-      .eq("declaracion_id", declId),
-  ]);
-
-  const partidasManuales = (partidasRes.data ?? []).map((p) => ({
-    id: p.id,
-    tipo: p.tipo as "permanente" | "temporal",
-    signo: p.signo as "mas" | "menos",
-    concepto: p.concepto,
-    valor: Number(p.valor),
-    observacion: p.observacion,
-    origen: "manual" as const,
-  }));
-
-  const r72 = r72Res.data ? Number(r72Res.data.valor) : 0;
-  const trmFinal = trmRes.data ? Number(trmRes.data.valor) : 0;
-  const tasaIntPres = tasaIntRes.data ? Number(tasaIntRes.data.valor) : 0;
-
-  // Utilidad contable proviene de /configuracion (cuentas 3605/3610)
-  const utilidadCont = Number(declaracion.utilidad_contable ?? 0);
-  const perdidaCont = Number(declaracion.perdida_contable ?? 0);
-  const utilidadContable = utilidadCont - perdidaCont;
-
-  // ─── Partidas derivadas automáticamente ─────────────────────────────────
-  type Auto = {
-    id: string;
-    tipo: "permanente" | "temporal";
-    signo: "mas" | "menos";
-    concepto: string;
-    valor: number;
-    observacion: string | null;
-    origen: "auto";
-    fuente: string;
-  };
-  const partidasAuto: Auto[] = [];
-
-  // ICA: 50% pagado se asume tomado como descuento → no deducible
-  const totalIca = (icaRes.data ?? []).reduce((s, r) => s + Number(r.valor_pagado), 0);
-  if (totalIca > 0 && declaracion.ica_como_descuento) {
-    partidasAuto.push({
-      id: "auto-ica-50",
-      tipo: "permanente",
-      signo: "mas",
-      concepto: "50% ICA pagado (tomado como descuento tributario)",
-      valor: totalIca * 0.5,
-      observacion: "Art. 115 E.T.: solo el 50% es deducible cuando se toma como descuento.",
-      origen: "auto",
-      fuente: "ICA pagado",
-    });
+  // Cargar valores del F110 (lado fiscal del PyG y los 3 cuadres)
+  const { data: valoresRows } = await supabase
+    .from("form110_valores")
+    .select("numero, valor")
+    .eq("declaracion_id", declId);
+  const valoresF110 = new Map<number, number>();
+  for (const v of valoresRows ?? []) {
+    valoresF110.set(v.numero, Math.abs(Number(v.valor)));
   }
 
-  // INCRNGO · ingresos no constitutivos de renta ni GO (R141 xlsm)
-  // Son ingresos contables que NO son fiscales → restan a la utilidad fiscal.
-  const totalIncrngo = (incrngoRes.data ?? []).reduce(
-    (s, r) => s + Number(r.valor),
-    0,
-  );
-  if (totalIncrngo > 0) {
-    partidasAuto.push({
-      id: "auto-incrngo",
-      tipo: "permanente",
-      signo: "menos",
-      concepto: "Ingresos no constitutivos de renta ni ganancia ocasional",
-      valor: totalIncrngo,
-      observacion:
-        "Ingresos contables que la ley excluye de la base gravable (Arts. 36 a 57-2 E.T.). Se restan de la utilidad para llegar a la renta fiscal.",
-      origen: "auto",
-      fuente: "INCRNGO",
-    });
-  }
+  // Llamada al loader · agrupa balance + anexos + partidas + flags
+  const input = await loadConcUtilidades(supabase, declaracion, valoresF110);
+  const r = computarConcUtilidades(input);
 
-  // Recuperación de deducciones (R149/R188 xlsm) · Art. 195 E.T.
-  // Renta fiscal adicional que no aparece en la utilidad contable estándar.
-  const totalRecup = (recupRes.data ?? []).reduce((s, r) => s + Number(r.valor), 0);
-  if (totalRecup > 0) {
-    partidasAuto.push({
-      id: "auto-recuperacion",
-      tipo: "permanente",
-      signo: "mas",
-      concepto: "Renta líquida por recuperación de deducciones",
-      valor: totalRecup,
-      observacion:
-        "Reversiones de partidas que disminuyeron rentas líquidas anteriores (Art. 195 E.T.). Suman a la renta fiscal aunque ya estén en utilidad contable.",
-      origen: "auto",
-      fuente: "Recuperación deducciones",
-    });
-  }
+  const partidasAuto = r.partidas.filter((p) => p.origen === "auto");
+  const partidasManuales = r.partidas.filter((p) => p.origen === "manual");
 
-  // Donaciones tomadas como descuento tributario (Art. 257 E.T.)
-  // Si están en Anexo 4 con categoría "donacion", el valor donado en sí
-  // se considera no deducible como gasto (porque ya está en R93).
-  const donacionesDescuento = (donacionesRes.data ?? [])
-    .filter((d) => String(d.categoria).toLowerCase().includes("donaci"))
-    .reduce((s, d) => s + Number(d.valor_descuento), 0);
-  if (donacionesDescuento > 0) {
-    partidasAuto.push({
-      id: "auto-donaciones",
-      tipo: "permanente",
-      signo: "mas",
-      concepto: "Donaciones tomadas como descuento (no deducibles como gasto)",
-      valor: donacionesDescuento * 4, // descuento ~25% → gasto base ~4x
-      observacion:
-        "Las donaciones tomadas como descuento del 25% (Art. 257 E.T.) NO son deducibles como gasto. La utilidad contable las trataba como gasto.",
-      origen: "auto",
-      fuente: "Descuentos tributarios",
-    });
-  }
-
-  // Sanciones causadas en el año · multas, intereses moratorios DIAN (R173 xlsm)
-  // No son deducibles (Art. 105 E.T.).
-  // Si se calcula sanción extemporaneidad o corrección, el valor estimado
-  // puede provisionarse contablemente y debe sumarse fiscalmente como no
-  // deducible.
-  // Por ahora dejamos esto MANUAL — el usuario sabe si tiene sanciones DIAN
-  // adicionales en su PyG. La sanción del 110 misma se descuenta del saldo,
-  // no entra a la conciliación de utilidad.
-
-  // GMF: 50% no deducible (Art. 115 E.T.)
-  const totalGmf = (gmfRes.data ?? []).reduce((s, r) => s + Number(r.valor_gmf), 0);
-  if (totalGmf > 0) {
-    partidasAuto.push({
-      id: "auto-gmf-50",
-      tipo: "permanente",
-      signo: "mas",
-      concepto: "50% GMF no deducible",
-      valor: totalGmf * 0.5,
-      observacion: null,
-      origen: "auto",
-      fuente: "GMF",
-    });
-  }
-
-  // Deterioro de cartera: provisión fiscal vs contable
-  const dcMetodo = (declaracion.dc_metodo ?? "general") as
-    | "general"
-    | "individual"
-    | "combinado";
-  const dc0_90 = Number(declaracion.dc_cartera_0_90 ?? 0);
-  const dc91 = Number(declaracion.dc_cartera_91_180 ?? 0);
-  const dc181 = Number(declaracion.dc_cartera_181_360 ?? 0);
-  const dc360 = Number(declaracion.dc_cartera_360_mas ?? 0);
-  const dcSaldoCont = Number(declaracion.dc_saldo_contable ?? 0);
-  const provGen = dc0_90 * 0 + dc91 * 0.05 + dc181 * 0.10 + dc360 * 0.15;
-  const provInd = dc360 * 0.33;
-  const provCombo = Math.max(provGen, provInd);
-  const provFiscal =
-    dcMetodo === "general" ? provGen : dcMetodo === "individual" ? provInd : provCombo;
-  const ajusteDc = provFiscal - dcSaldoCont;
-  if (Math.abs(ajusteDc) > 0.01) {
-    partidasAuto.push({
-      id: "auto-deterioro",
-      tipo: "temporal",
-      signo: ajusteDc > 0 ? "menos" : "mas",
-      concepto:
-        ajusteDc > 0
-          ? "Mayor provisión fiscal cartera vs. contable"
-          : "Menor provisión fiscal cartera vs. contable (reverso)",
-      valor: Math.abs(ajusteDc),
-      observacion: `Método: ${dcMetodo}. Provisión fiscal ${FMT.format(provFiscal)} vs. saldo contable ${FMT.format(dcSaldoCont)}.`,
-      origen: "auto",
-      fuente: "Deterioro de Cartera",
-    });
-  }
-
-  // Interés presuntivo (Art. 35 E.T.)
-  const totalIntPresunto = (intPresRes.data ?? []).reduce((s, p) => {
-    const presunto =
-      Number(p.saldo_promedio) * tasaIntPres * (Number(p.dias) / 360);
-    return s + Math.max(0, presunto - Number(p.interes_registrado));
-  }, 0);
-  if (totalIntPresunto > 0) {
-    partidasAuto.push({
-      id: "auto-int-presuntivo",
-      tipo: "permanente",
-      signo: "mas",
-      concepto: "Interés presuntivo a socios (Art. 35 E.T.)",
-      valor: totalIntPresunto,
-      observacion: null,
-      origen: "auto",
-      fuente: "Interés Presuntivo",
-    });
-  }
-
-  // Subcapitalización (intereses no deducibles)
-  if (declaracion.sub_es_vinculado) {
-    const deuda = Number(declaracion.sub_deuda_promedio ?? 0);
-    const intereses = Number(declaracion.sub_intereses ?? 0);
-    const patrimonioLiqAnterior =
-      Number(declaracion.patrimonio_bruto_anterior ?? 0) -
-      Number(declaracion.pasivos_anterior ?? 0);
-    const limite = patrimonioLiqAnterior * 2;
-    const exceso = Math.max(0, deuda - limite);
-    const propExc = deuda > 0 ? exceso / deuda : 0;
-    const intNoDed = intereses * propExc;
-    if (intNoDed > 0.01) {
-      partidasAuto.push({
-        id: "auto-subcap",
-        tipo: "permanente",
-        signo: "mas",
-        concepto: "Intereses no deducibles por subcapitalización (Art. 118-1 E.T.)",
-        valor: intNoDed,
-        observacion: `Exceso: ${FMT.format(exceso)} / deuda ${FMT.format(deuda)} (${(propExc * 100).toFixed(2)}%).`,
-        origen: "auto",
-        fuente: "Subcapitalización",
-      });
-    }
-  }
-
-  // Diferencia en cambio neta (no realizada → temporal)
-  const totalDifCambio = (difCambioRes.data ?? []).reduce((s, d) => {
-    const valIni = Number(d.valor_usd) * Number(d.trm_inicial);
-    const valFin = Number(d.valor_usd) * trmFinal;
-    const dif = valFin - valIni;
-    return s + (d.tipo === "pasivo" ? -dif : dif);
-  }, 0);
-  if (Math.abs(totalDifCambio) > 0.01) {
-    partidasAuto.push({
-      id: "auto-dif-cambio",
-      tipo: "temporal",
-      signo: totalDifCambio > 0 ? "mas" : "menos",
-      concepto:
-        totalDifCambio > 0
-          ? "Diferencia en cambio · ingreso fiscal"
-          : "Diferencia en cambio · gasto fiscal",
-      valor: Math.abs(totalDifCambio),
-      observacion: "Causación fiscal por TRM final del año.",
-      origen: "auto",
-      fuente: "Diferencia en Cambio",
-    });
-  }
-
-  // Balance Fiscal · ajustes en cuentas P&L (4xxx ingresos, 5/6/7xxx costos/gastos)
-  // Convención del sistema: ajuste_credito en costo/gasto reduce el costo fiscal
-  // (suma a la utilidad fiscal); ajuste_debito en costo lo aumenta (resta).
-  // Ingresos al revés: credito aumenta ingreso fiscal (suma); debito lo reduce (resta).
-  for (const l of balanceLineasRes.data ?? []) {
-    const cuenta = String(l.cuenta);
-    const primer = cuenta.charAt(0);
-    if (!["4", "5", "6", "7"].includes(primer)) continue;
-    const ajDeb = Number(l.ajuste_debito ?? 0);
-    const ajCre = Number(l.ajuste_credito ?? 0);
-    if (ajDeb === 0 && ajCre === 0) continue;
-    const esIngreso = primer === "4";
-    // Efecto en utilidad fiscal:
-    //   Ingreso (4): +credito −debito
-    //   Costo/gasto (5/6/7): +credito −debito (porque crédito reduce costo)
-    const efecto = ajCre - ajDeb;
-    if (Math.abs(efecto) < 0.01) continue;
-    partidasAuto.push({
-      id: `auto-bal-${l.cuenta}`,
-      tipo: "permanente",
-      signo: efecto > 0 ? "mas" : "menos",
-      concepto: `Ajuste fiscal · ${l.cuenta} ${l.nombre ?? ""}`.trim(),
-      valor: Math.abs(efecto),
-      observacion: esIngreso
-        ? `Ajuste sobre ingreso (cuenta ${primer}xxx).`
-        : `Ajuste sobre costo/gasto (cuenta ${primer}xxx).`,
-      origen: "auto",
-      fuente: "Balance Fiscal",
-    });
-  }
-
-  const todas = [...partidasAuto, ...partidasManuales];
-
-  const sumaMasPerm = todas
-    .filter((p) => p.tipo === "permanente" && p.signo === "mas")
-    .reduce((s, p) => s + p.valor, 0);
-  const sumaMenosPerm = todas
-    .filter((p) => p.tipo === "permanente" && p.signo === "menos")
-    .reduce((s, p) => s + p.valor, 0);
-  const sumaMasTemp = todas
-    .filter((p) => p.tipo === "temporal" && p.signo === "mas")
-    .reduce((s, p) => s + p.valor, 0);
-  const sumaMenosTemp = todas
-    .filter((p) => p.tipo === "temporal" && p.signo === "menos")
-    .reduce((s, p) => s + p.valor, 0);
-
-  const netoPerm = sumaMasPerm - sumaMenosPerm;
-  const netoTemp = sumaMasTemp - sumaMenosTemp;
-  const rentaCalculada = utilidadContable + netoPerm + netoTemp;
-  const diff = r72 - rentaCalculada;
-  const cuadra = Math.abs(diff) < 1;
-
-  // Estimado de impuesto diferido (sólo informativo, tarifa 35%)
-  const tarifa = 0.35;
-  const impuestoDiferidoNeto = netoTemp * tarifa;
+  // Estimación informativa de impuesto diferido (tarifa 35%)
+  const tarifaID = 0.35;
+  const impuestoDiferidoNeto =
+    (r.subtotales.temporariasDeducibles - r.subtotales.temporariasImponibles) *
+    tarifaID;
 
   return (
-    <div className="max-w-5xl">
-      <Link
-        href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
-        className="font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-      >
-        ← Volver a Conciliaciones
-      </Link>
+    <div className="max-w-6xl">
+      <ModuloHeader
+        titulo="Conciliación de Utilidad"
+        moduloLabel="Módulo 10b · Utilidad contable → Renta fiscal"
+        volverHref={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones`}
+        volverLabel="Conciliaciones"
+        contexto={`AG ${declaracion.ano_gravable}`}
+      />
 
-      <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-[-0.02em]">
-        Conciliación de Utilidad
-      </h1>
-      <p className="mt-3 max-w-3xl text-muted-foreground">
-        Explica las diferencias entre la utilidad contable antes de impuestos
-        y la renta líquida fiscal por concepto. Las diferencias permanentes no
-        se revierten; las temporales generan impuesto diferido.
+      <p className="mb-6 max-w-3xl text-sm text-muted-foreground">
+        Reconcilia la utilidad contable (NIIF) con la renta líquida fiscal.
+        El bloque PyG compara las dos visiones por concepto. Las partidas
+        de conciliación se clasifican en 3 categorías según NIC 12:
+        permanentes (no revierten) · temporarias deducibles (suman a la fiscal,
+        generan ATD) · temporarias imponibles (restan, generan PTD).
       </p>
-      {partidasAuto.length > 0 ? (
-        <p className="mt-2 max-w-3xl text-xs text-muted-foreground">
-          Las partidas marcadas{" "}
-          <span className="font-mono uppercase">auto</span> se derivan
-          automáticamente de los anexos y del Balance Fiscal. Para modificarlas,
-          vuelve al anexo o al balance.
-        </p>
-      ) : null}
 
-      {/* Punto de partida */}
-      <section className="mt-10">
-        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-          Punto de partida
-        </h2>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Utilidad (o pérdida) contable antes del impuesto sobre la renta.
-          Se toma de Configuración (cuentas 3605/3610).
+      {/* PyG · 3 columnas (Contable | Fiscal | Diferencia) */}
+      <Section title="1 · Estado de Resultados · Contable vs Fiscal">
+        <p className="mb-3 text-xs text-muted-foreground">
+          Lado contable · SUMIF al balance de prueba por prefijo PUC. Lado
+          fiscal · renglones del Formulario 110 ya computados.
         </p>
-        <div className="mt-4 grid max-w-md gap-3 sm:grid-cols-3">
-          <Stat label="Utilidad contable" value={utilidadCont} />
-          <Stat label="Pérdida contable" value={perdidaCont} />
-          <Stat label="Neto" value={utilidadContable} emphasis />
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b-2 border-foreground text-left">
+                <Th>Concepto</Th>
+                <Th align="right">Contable</Th>
+                <Th align="right">Fiscal</Th>
+                <Th align="right">Diferencia</Th>
+              </tr>
+            </thead>
+            <tbody>
+              {r.filasPyG.map((f) => (
+                <tr
+                  key={f.id}
+                  className={`border-b border-border/50 ${
+                    f.esTotal ? "bg-muted/30 font-semibold" : ""
+                  }`}
+                >
+                  <td className="px-2 py-2">{f.concepto}</td>
+                  <td className="px-2 py-2 text-right font-mono tabular-nums">
+                    {FMT.format(f.contable)}
+                  </td>
+                  <td className="px-2 py-2 text-right font-mono tabular-nums">
+                    {FMT.format(f.fiscal)}
+                  </td>
+                  <td
+                    className={`px-2 py-2 text-right font-mono tabular-nums ${
+                      Math.abs(f.diferencia) > 1
+                        ? "text-amber-700 dark:text-amber-400"
+                        : "text-muted-foreground"
+                    }`}
+                  >
+                    {f.diferencia < 0 ? "−" : ""}
+                    {FMT.format(Math.abs(f.diferencia))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/configuracion`}
-          className="mt-3 inline-block font-mono text-xs uppercase tracking-[0.05em] text-muted-foreground hover:text-foreground"
-        >
-          Editar en Configuración →
-        </Link>
-      </section>
+      </Section>
 
-      {/* Resumen visual de la conciliación */}
-      <section className="mt-12">
-        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-          Conciliación en cascada
-        </h2>
-        <div className="mt-5 border border-border">
-          <Row label="Utilidad contable antes de impuestos" value={utilidadContable} />
-          <Row label="(+) Permanentes que suman" value={sumaMasPerm} muted />
-          <Row label="(−) Permanentes que restan" value={-sumaMenosPerm} muted />
-          <Row label="(+) Temporales que suman" value={sumaMasTemp} muted />
-          <Row label="(−) Temporales que restan" value={-sumaMenosTemp} muted />
+      {/* Partidas de conciliación · 3 categorías NIC 12 */}
+      <Section title="2 · Partidas de Conciliación · NIC 12 / IFRS">
+        <p className="mb-3 text-xs text-muted-foreground">
+          Las partidas marcadas{" "}
+          <span className="font-mono uppercase">auto</span> se derivan de los
+          anexos y el balance fiscal. Las{" "}
+          <span className="font-mono uppercase">manual</span> las captura el
+          usuario abajo.
+        </p>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <CategoryCard
+            title="Temporarias deducibles"
+            descripcion="Suman a la utilidad fiscal · generan Activo por Impuesto Diferido (ATD)"
+            partidas={r.partidas.filter(
+              (p) => p.categoria === "temporaria_deducible",
+            )}
+            subtotal={r.subtotales.temporariasDeducibles}
+            color="emerald"
+          />
+          <CategoryCard
+            title="Temporarias imponibles"
+            descripcion="Restan de la utilidad fiscal · generan Pasivo por Impuesto Diferido (PTD)"
+            partidas={r.partidas.filter(
+              (p) => p.categoria === "temporaria_imponible",
+            )}
+            subtotal={r.subtotales.temporariasImponibles}
+            color="rose"
+          />
+          <CategoryCard
+            title="Permanentes"
+            descripcion="No revierten · afectan solo la renta fiscal del año"
+            partidas={r.partidas.filter((p) => p.categoria === "permanente")}
+            subtotal={r.subtotales.permanentes}
+            color="amber"
+          />
+        </div>
+      </Section>
+
+      {/* Cómputo final · fórmula + cuadres */}
+      <Section title="3 · Renta Líquida Fiscal Calculada">
+        <p className="mb-3 text-xs text-muted-foreground">
+          Fórmula NIC 12: Renta Fiscal = Utilidad Contable + ΔTempDed −
+          ΔTempImp + Permanentes
+        </p>
+        <div className="rounded-md border border-border bg-card">
+          <Row label="Utilidad contable antes de impuestos" value={r.utilidadContableTotal} />
           <Row
-            label="Renta líquida fiscal calculada"
-            value={rentaCalculada}
+            label="(+) Diferencias temporarias deducibles"
+            value={r.subtotales.temporariasDeducibles}
+            muted
+          />
+          <Row
+            label="(−) Diferencias temporarias imponibles"
+            value={-r.subtotales.temporariasImponibles}
+            muted
+          />
+          <Row label="(±) Diferencias permanentes" value={r.subtotales.permanentes} muted />
+          <Row
+            label="RENTA LÍQUIDA FISCAL CALCULADA"
+            value={r.rentaLiquidaCalculada}
             emphasis
           />
         </div>
-      </section>
 
-      {/* Cruce con formulario */}
-      <section className="mt-10">
-        <h2 className="font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
-          Cruce con el formulario
-        </h2>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
-          <Stat label="Calculada" value={rentaCalculada} />
-          <Stat label="R72 actual del 110" value={r72} />
-          <Stat label="Diferencia" value={diff} alert={!cuadra} emphasis />
+        {/* Triple cuadre vs F110 */}
+        <h3 className="mt-6 font-mono text-xs uppercase tracking-[0.08em] text-muted-foreground">
+          Cruce con el Formulario 110
+        </h3>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          <CuadreCard
+            label="vs R72 · Renta líquida ordinaria"
+            calculada={r.cuadres.vsR72.calculada}
+            real={r.cuadres.vsR72.real}
+            ok={r.cuadres.vsR72.ok}
+          />
+          <CuadreCard
+            label="vs R75 · Post compensaciones"
+            calculada={r.cuadres.vsR75.calculada}
+            real={r.cuadres.vsR75.real}
+            ok={r.cuadres.vsR75.ok}
+          />
+          <CuadreCard
+            label="vs R79 · Renta líquida gravable"
+            calculada={r.cuadres.vsR79.calculada}
+            real={r.cuadres.vsR79.real}
+            ok={r.cuadres.vsR79.ok}
+          />
         </div>
         <p
           className={`mt-3 text-xs ${
-            cuadra ? "text-success" : "text-destructive"
+            r.estado === "cuadrado"
+              ? "text-success"
+              : r.estado === "descuadrado_leve"
+                ? "text-amber-700"
+                : "text-destructive"
           }`}
         >
-          {cuadra
-            ? "✓ La conciliación cuadra con la renta líquida del formulario."
-            : `⚠ Diferencia de ${FMT.format(diff)}. Revisa partidas faltantes o el Balance Fiscal.`}
+          {r.estado === "cuadrado"
+            ? "✓ La conciliación cuadra con R72 (tolerancia 1 peso)."
+            : r.estado === "descuadrado_leve"
+              ? "⚠ Diferencia leve · puede ser por redondeos."
+              : "⨯ Diferencia material · revisa las partidas o el balance fiscal."}
         </p>
-      </section>
+      </Section>
 
       {/* Impuesto diferido informativo */}
-      <section className="mt-10 border border-dashed border-border p-5">
-        <h3 className="font-serif text-xl">Impacto en impuesto diferido</h3>
-        <p className="mt-1 text-xs text-muted-foreground">
-          Estimación informativa con tarifa nominal {(tarifa * 100).toFixed(0)}%.
-          Las diferencias temporales generan activos o pasivos por impuesto
-          diferido (NIC 12 / Sección 29 NIIF).
+      <Section title="4 · Impacto en Impuesto Diferido (NIC 12)">
+        <p className="text-xs text-muted-foreground">
+          Estimación informativa con tarifa nominal {(tarifaID * 100).toFixed(0)}%.
+          El cálculo detallado por categoría está en{" "}
+          <Link
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h4-impuesto-diferido`}
+            className="underline hover:text-foreground"
+          >
+            F2516 H4
+          </Link>
+          .
         </p>
-        <div className="mt-4 grid gap-4 md:grid-cols-2">
-          <Stat label="Diferencias temporales netas" value={netoTemp} />
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          <Stat
+            label="Σ Temporarias deducibles"
+            value={r.subtotales.temporariasDeducibles}
+          />
+          <Stat
+            label="Σ Temporarias imponibles"
+            value={r.subtotales.temporariasImponibles}
+          />
           <Stat
             label={
               impuestoDiferidoNeto >= 0
-                ? "Activo por impuesto diferido (estimado)"
-                : "Pasivo por impuesto diferido (estimado)"
+                ? "ATD estimado (35%)"
+                : "PTD estimado (35%)"
             }
             value={Math.abs(impuestoDiferidoNeto)}
+            emphasis
           />
         </div>
-      </section>
+      </Section>
 
-      {/* Form de partidas */}
-      <div className="mt-12">
+      {/* Captura manual */}
+      <Section title="5 · Capturar partida manual">
         <PartidaForm declId={declId} empresaId={empresaId} />
-      </div>
+      </Section>
 
-      {/* Listado */}
-      <div className="mt-12">
-        <PartidasList items={todas} declId={declId} empresaId={empresaId} />
+      {/* Listado completo · auto + manual */}
+      <Section title="6 · Detalle de todas las partidas">
+        <p className="mb-3 text-xs text-muted-foreground">
+          {partidasAuto.length} partidas automáticas · {partidasManuales.length}{" "}
+          manuales. Las auto se actualizan al cambiar el anexo origen.
+        </p>
+        <PartidasList
+          items={r.partidas.map((p) => ({
+            id: p.origen === "manual" ? Number(p.id.replace(/^manual-/, "")) : p.id,
+            tipo: p.categoria === "permanente" ? "permanente" : "temporal",
+            signo: p.signo,
+            concepto: p.concepto,
+            valor: p.valor,
+            observacion: p.observacion ?? null,
+            origen: p.origen,
+          }))}
+          declId={declId}
+          empresaId={empresaId}
+        />
+      </Section>
+    </div>
+  );
+}
+
+// ============================================================
+// COMPONENTES UI
+// ============================================================
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-10">
+      <h2 className="mb-4 font-serif text-2xl leading-[1.1] tracking-[-0.01em]">
+        {title}
+      </h2>
+      {children}
+    </section>
+  );
+}
+
+function Th({ children, align }: { children: React.ReactNode; align?: "right" }) {
+  return (
+    <th
+      className={`px-2 py-2 font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground ${
+        align === "right" ? "text-right" : ""
+      }`}
+    >
+      {children}
+    </th>
+  );
+}
+
+type ColorKey = "emerald" | "rose" | "amber";
+const COLORS: Record<ColorKey, string> = {
+  emerald: "border-emerald-500/30 bg-emerald-500/5",
+  rose: "border-rose-500/30 bg-rose-500/5",
+  amber: "border-amber-500/30 bg-amber-500/5",
+};
+
+function CategoryCard({
+  title,
+  descripcion,
+  partidas,
+  subtotal,
+  color,
+}: {
+  title: string;
+  descripcion: string;
+  partidas: { id: string; concepto: string; valor: number; signo: string; origen: string }[];
+  subtotal: number;
+  color: ColorKey;
+}) {
+  return (
+    <div className={`rounded-md border p-4 ${COLORS[color]}`}>
+      <h3 className="font-medium">{title}</h3>
+      <p className="mt-1 text-[11px] leading-snug text-muted-foreground">
+        {descripcion}
+      </p>
+      <div className="mt-3 max-h-48 overflow-y-auto">
+        {partidas.length === 0 ? (
+          <p className="text-xs italic text-muted-foreground">Sin partidas.</p>
+        ) : (
+          <ul className="space-y-1.5 text-xs">
+            {partidas.map((p) => (
+              <li key={p.id} className="flex items-baseline gap-2">
+                <span
+                  className={`inline-block w-3 text-center font-mono ${
+                    p.signo === "mas" ? "text-emerald-700" : "text-rose-700"
+                  }`}
+                >
+                  {p.signo === "mas" ? "+" : "−"}
+                </span>
+                <span className="flex-1 truncate" title={p.concepto}>
+                  {p.concepto}
+                </span>
+                <span className="font-mono tabular-nums">
+                  {FMT.format(p.valor)}
+                </span>
+                {p.origen === "auto" && (
+                  <span className="ml-1 rounded bg-foreground/10 px-1 font-mono text-[9px] uppercase">
+                    auto
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div className="mt-3 border-t border-foreground/10 pt-2">
+        <div className="flex items-baseline justify-between">
+          <span className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+            Subtotal
+          </span>
+          <span className="font-mono text-base font-semibold tabular-nums">
+            {subtotal < 0 ? "−" : ""}
+            {FMT.format(Math.abs(subtotal))}
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -512,7 +395,7 @@ function Row({
   return (
     <div
       className={`flex items-center justify-between border-b border-border px-4 py-3 last:border-b-0 ${
-        emphasis ? "bg-muted/40" : ""
+        emphasis ? "bg-amber-500/5" : ""
       }`}
     >
       <span
@@ -523,7 +406,7 @@ function Row({
         {label}
       </span>
       <span
-        className={`font-mono ${
+        className={`font-mono tabular-nums ${
           emphasis ? "font-serif text-xl tracking-[-0.02em]" : "text-sm"
         }`}
       >
@@ -534,37 +417,54 @@ function Row({
   );
 }
 
+function CuadreCard({
+  label,
+  calculada,
+  real,
+  ok,
+}: {
+  label: string;
+  calculada: number;
+  real: number;
+  ok: boolean;
+}) {
+  const dif = calculada - real;
+  const cls = ok
+    ? "border-emerald-500/40 bg-emerald-500/5"
+    : "border-destructive/40 bg-destructive/5";
+  return (
+    <div className={`rounded-md border p-3 ${cls}`}>
+      <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+        {label}
+      </p>
+      <p className="mt-1 font-mono text-xs">
+        Calc: <span className="tabular-nums">{FMT.format(calculada)}</span>
+      </p>
+      <p className="font-mono text-xs">
+        F110: <span className="tabular-nums">{FMT.format(real)}</span>
+      </p>
+      <p className={`mt-1 font-mono text-sm font-semibold ${ok ? "" : "text-destructive"}`}>
+        {ok ? "✓ Cuadrado" : `Δ ${dif < 0 ? "−" : ""}${FMT.format(Math.abs(dif))}`}
+      </p>
+    </div>
+  );
+}
+
 function Stat({
   label,
   value,
-  alert,
   emphasis,
 }: {
   label: string;
   value: number;
-  alert?: boolean;
   emphasis?: boolean;
 }) {
-  const cls = emphasis
-    ? "border-foreground bg-foreground text-background"
-    : "border-border";
   return (
-    <div className={`border p-5 ${cls}`}>
-      <p
-        className={`font-mono text-xs uppercase tracking-[0.05em] ${
-          emphasis ? "text-background/70" : "text-muted-foreground"
-        }`}
-      >
+    <div className={`rounded-md border p-3 ${emphasis ? "border-foreground/40 bg-amber-500/5" : "border-border"}`}>
+      <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
         {label}
       </p>
-      <p
-        className={`mt-2 font-serif text-2xl tracking-[-0.02em] ${
-          alert && !emphasis ? "text-destructive" : ""
-        }`}
-      >
-        {value < 0 ? "−" : ""}
-        {FMT.format(Math.abs(value))}
-      </p>
+      <p className="mt-1 font-serif text-xl tabular-nums">{FMT.format(value)}</p>
     </div>
   );
 }

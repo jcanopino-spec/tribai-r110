@@ -1,0 +1,230 @@
+[
+  {
+    "r": 2,
+    "C2": "CONCILIACION DE UTILIDADES",
+    "C5": "Modulo 10b",
+    "C11": "←  Ir a Tribai Home"
+  },
+  {
+    "r": 3,
+    "C2": "Reconciliacion utilidad contable vs renta liquida fiscal — Base para Formato 2516"
+  },
+  {
+    "r": 6,
+    "C7": "< Dashboard"
+  },
+  {
+    "r": 7,
+    "C2": "Esta hoja reconcilia la utilidad contable (NIIF) con la renta liquida fiscal, identificando diferencias temporarias y permanentes."
+  },
+  {
+    "r": 9,
+    "C2": "UTILIDAD CONTABLE"
+  },
+  {
+    "r": 11,
+    "C3": "CONCEPTO",
+    "C5": "CONTABLE",
+    "C6": "FISCAL",
+    "C7": "DIFERENCIA"
+  },
+  {
+    "r": 12,
+    "C3": "Ingresos operacionales",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"41*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C6": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"41*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C7": "=F12-E12"
+  },
+  {
+    "r": 13,
+    "C3": "Ingresos no operacionales",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"42*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C6": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"42*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C7": "=F13-E13"
+  },
+  {
+    "r": 14,
+    "C3": "(-) Devoluciones y descuentos",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"4175*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C6": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"4175*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "C7": "=F14-E14"
+  },
+  {
+    "r": 15,
+    "C3": "TOTAL INGRESOS",
+    "C5": "=E12+E13-E14",
+    "C6": "=F12+F13-F14",
+    "C7": "=F15-E15"
+  },
+  {
+    "r": 16,
+    "C3": "Costo de ventas",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"6*\",'Balance de Prueba'!$H$10:$H$2509)+SUMIF('Balance de Prueba'!$C$10:$C$2509,\"7*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "C6": "='Detalle Fiscal'!L212",
+    "C7": "=F16-E16"
+  },
+  {
+    "r": 17,
+    "C3": "Gastos operacionales de administracion",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"51*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "C6": "='Detalle Fiscal'!L221",
+    "C7": "=F17-E17"
+  },
+  {
+    "r": 18,
+    "C3": "Gastos operacionales de ventas",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"52*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "C6": "='Detalle Fiscal'!L222",
+    "C7": "=F18-E18"
+  },
+  {
+    "r": 19,
+    "C3": "Gastos no operacionales",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"53*\",'Balance de Prueba'!$H$10:$H$2509)+SUMIF('Balance de Prueba'!$C$10:$C$2509,\"54*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "C6": "='Detalle Fiscal'!L223+'Detalle Fiscal'!L224",
+    "C7": "=F19-E19"
+  },
+  {
+    "r": 20,
+    "C3": "TOTAL COSTOS Y GASTOS",
+    "C5": "=SUM(E16:E19)",
+    "C6": "=SUM(F16:F19)",
+    "C7": "=F20-E20"
+  },
+  {
+    "r": 21,
+    "C3": "UTILIDAD (O PERDIDA) ANTES DE IMPUESTOS",
+    "C5": "=E15-E20",
+    "C6": "=F15-F20",
+    "C7": "=F21-E21"
+  },
+  {
+    "r": 23,
+    "C2": "DIFERENCIAS (PARTIDAS DE CONCILIACION)"
+  },
+  {
+    "r": 25,
+    "C2": "DIFERENCIAS TEMPORARIAS DEDUCIBLES"
+  },
+  {
+    "r": 26,
+    "C3": "  Deterioro de cartera (provision contable > fiscal)",
+    "C5": 0
+  },
+  {
+    "r": 27,
+    "C3": "  Beneficios a empleados (pasivos laborales)",
+    "C5": 0
+  },
+  {
+    "r": 28,
+    "C3": "  Depreciacion contable > fiscal",
+    "C5": 0
+  },
+  {
+    "r": 29,
+    "C3": "  Otros activos/pasivos con base fiscal diferente",
+    "C5": 0
+  },
+  {
+    "r": 30,
+    "C3": "  Subtotal temporarias deducibles",
+    "C5": "=SUM(E26:E29)"
+  },
+  {
+    "r": 31,
+    "C2": "DIFERENCIAS TEMPORARIAS IMPONIBLES"
+  },
+  {
+    "r": 32,
+    "C3": "  Depreciacion fiscal > contable",
+    "C5": 0
+  },
+  {
+    "r": 33,
+    "C3": "  Valoracion de inversiones (contable > fiscal)",
+    "C5": 0
+  },
+  {
+    "r": 34,
+    "C3": "  Reajuste fiscal de activos",
+    "C5": 0
+  },
+  {
+    "r": 35,
+    "C3": "  Otros",
+    "C5": 0
+  },
+  {
+    "r": 36,
+    "C3": "  Subtotal temporarias imponibles",
+    "C5": "=SUM(E32:E35)"
+  },
+  {
+    "r": 37,
+    "C2": "DIFERENCIAS PERMANENTES"
+  },
+  {
+    "r": 38,
+    "C3": "  Gastos no deducibles (Art. 105 E.T.)",
+    "C5": 0
+  },
+  {
+    "r": 39,
+    "C3": "  Costos y gastos sin soporte (Art. 771-2 E.T.)",
+    "C5": 0
+  },
+  {
+    "r": 40,
+    "C3": "  Gravamen a los movimientos financieros (50% no deducible)",
+    "C5": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"530507*\",'Balance de Prueba'!$H$10:$H$2509)*0.5,0)"
+  },
+  {
+    "r": 41,
+    "C3": "  Donaciones no deducibles",
+    "C5": 0
+  },
+  {
+    "r": 42,
+    "C3": "  Ingresos no gravados (INCRNGO)",
+    "C5": "='Detalle Fiscal'!L209"
+  },
+  {
+    "r": 43,
+    "C3": "  Rentas exentas",
+    "C5": "='Rentas Exentas'!D22"
+  },
+  {
+    "r": 44,
+    "C3": "  Otros ajustes permanentes",
+    "C5": 0
+  },
+  {
+    "r": 45,
+    "C3": "  Subtotal diferencias permanentes",
+    "C5": "=SUM(E38:E44)"
+  },
+  {
+    "r": 47,
+    "C2": "RENTA LIQUIDA FISCAL CALCULADA",
+    "C5": "=E21+E30-E36+E45"
+  },
+  {
+    "r": 48,
+    "C3": "Renta liquida gravable segun Detalle Fiscal (R78)",
+    "C5": "='Detalle Fiscal'!L237"
+  },
+  {
+    "r": 49,
+    "C3": "DIFERENCIA (debe ser cero)",
+    "C5": "=E47-E48"
+  },
+  {
+    "r": 50,
+    "C5": "=IF(ABS(E49)<1,\"CUADRADO\",\"DESCUADRADO - REVISAR\")"
+  },
+  {
+    "r": 82,
+    "C2": "(c) 2026 INPLUX S.A.S. | NIT 901.784.448-8 | Marca TRIBAI | tribai.co | Autor: Jaime Alonso Cano Pino, CEO | Todos los derechos reservados. Prohibida su reproduccion sin autorizacion escrita."
+  }
+]

@@ -1287,6 +1287,7 @@ export type Database = {
           signo: string
           tipo: string
           valor: number
+          categoria_nic12: string | null
         }
         Insert: {
           concepto: string
@@ -1297,6 +1298,7 @@ export type Database = {
           signo: string
           tipo: string
           valor?: number
+          categoria_nic12?: string | null
         }
         Update: {
           concepto?: string
@@ -1307,6 +1309,7 @@ export type Database = {
           signo?: string
           tipo?: string
           valor?: number
+          categoria_nic12?: string | null
         }
         Relationships: [
           {
