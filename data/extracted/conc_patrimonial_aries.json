@@ -1,0 +1,164 @@
+[
+  {
+    "C2": "Conciliación patrimonial"
+  },
+  {
+    "C2": "=+Presentación!B7"
+  },
+  {
+    "C2": "=+Presentación!B8"
+  },
+  {
+    "C2": "=+Presentación!B9"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C10"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C11"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C13"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C14"
+  },
+  {
+    "C2": "Modelo para llevar cabo la conciliación patrimonial y desvirtuar  un \"renta por comparación patrimonial\"\n(artículo 236 y siguientes del ET)"
+  },
+  {
+    "C2": "Entre patrimonio líquido fiscal a diciembre 31 de 2024 y patrimonio líquido fiscal a diciembre 31 de 2025"
+  },
+  {
+    "C2": "Suponga que la sociedad EL EJEMPLO SA en su declaración de renta 2024 denunció un patrimonio líquido fiscal de…",
+    "C7": "=+Subcapitalización!D19"
+  },
+  {
+    "C2": "De igual forma, en su declaración de renta 2025 denuncia la siguiente información:"
+  },
+  {
+    "C3": "Patrimonio líquido a diciembre 31 de 2025 (renglón 46)",
+    "C7": "=+'Detalle renglones del 110'!L346"
+  },
+  {
+    "C3": "Ingresos no gravados (renglón 60)",
+    "C7": "=+'Detalle renglones del 110'!L563"
+  },
+  {
+    "C3": "Deducción por inversión en activos fijos productores de renta (artículo 158-3 del ET) y otras similares que se llevan al renglón 66",
+    "C7": "=+'Detalle renglones del 110'!K871"
+  },
+  {
+    "C3": "(nota: este tipo de deducciones son valores que quedan como una \"deducción\" "
+  },
+  {
+    "C3": "en la declaración de renta, pero en realidad no fueron un valor en dinero que"
+  },
+  {
+    "C3": "haya \"salido\" del patrimonio; por tanto, este valor, de llegar a existir, es un"
+  },
+  {
+    "C3": "monto que rebaja la renta líquida, pero que luego tiene que volver a ser sumado"
+  },
+  {
+    "C3": "en los cálculos de conciliación patrimonial que se muestran más abajo; lo mismo"
+  },
+  {
+    "C3": "pasaría con las deducciones que realmente se hacen por un monto pero fiscalmente"
+  },
+  {
+    "C3": "se deducen por un mayor monto, pues así lo permiten las normas vigentes"
+  },
+  {
+    "C3": "tales como la donación a la Ley del cine, artículo 16 de la Ley 814 de 2003, que se deducen por el 165 %)"
+  },
+  {
+    "C3": "Renta líquida fiscal del ejercicio 2025 antes de compensaciones (renglón 72, pero incluyendo hasta los ingresos por dividendos de los renglones 52 a 56, más las rentas gravables especiales del renglón 78)",
+    "C7": "=+'Detalle renglones del 110'!L900+'Detalle renglones del 110'!L922+'Detalle renglones del 110'!L451+'Detalle renglones del 110'!L457+'Detalle renglones del 110'!L461+'Detalle renglones del 110'!L466+'Detalle renglones del 110'!L471"
+  },
+  {
+    "C3": "Ganancia (o pérdida) ocasional del ejercicio (renglón 80-81)",
+    "C7": "=+'Detalle renglones del 110'!L932-'Detalle renglones del 110'!L939"
+  },
+  {
+    "C3": "Impuesto neto de renta (renglón 96)",
+    "C7": "=+'Detalle renglones del 110'!L973"
+  },
+  {
+    "C3": "Impuesto neto de ganancias ocasionales (renglón 97-98)",
+    "C7": "=+'Detalle renglones del 110'!L974-'Detalle renglones del 110'!L978"
+  },
+  {
+    "C2": "Por último, en la contabilidad de 2025, los gastos que no se llevaron a la declaración 2025 (gastos no "
+  },
+  {
+    "C2": "deducibles), disminuidos con otros gastos que solo fueron fiscales y no eran contables, arroja un neto de:",
+    "C7": "=ROUND(+'Conciliación Utilidades'!E166+SUM('Conciliación Utilidades'!E148:E149),-3)"
+  },
+  {
+    "C2": "Con todos estos datos, el contribuyente debe justificar por qué su patrimonio líquido a diciembre de 2024….",
+    "C5": "=+G18"
+  },
+  {
+    "C2": "se creció en un valor de",
+    "C4": "=IF(+G22-E50>0,+G22-E50,0)"
+  },
+  {
+    "C2": "para llegar hasta el patrimonio líquido fiscal declarado a diciembre de 2025"
+  },
+  {
+    "C2": "(Nota: tanto para los contribuyentes del régimen ordinario como para los contribuyentes del régimen especial del artículo 19 del ET, la parte del incremento que se produzca en el patrimonio líquido de un año a otro, y que no quede justificada, será "
+  },
+  {
+    "C2": "convertida por la Dian en una \"renta líquida por comparación patrimonial\" que será agregada al renglón 78 del formulario 110;  ver artículo 236 y siguientes del ET, también el decreto 2150 diciembre 20 de 2017)."
+  },
+  {
+    "C2": "La conciliación sería:"
+  },
+  {
+    "C3": "Patrimonio líquido fiscal a diciembre 31 de 2024",
+    "C7": "=+E50"
+  },
+  {
+    "C3": "Más: Renta líquida del ejercicio, disminuida en el valor"
+  },
+  {
+    "C3": "         del impuesto neto de renta ",
+    "C5": "=+G38-G42"
+  },
+  {
+    "C3": "Más: Ingresos no gravados",
+    "C5": "=+G25"
+  },
+  {
+    "C3": "Más: Valor de la deducción especial artículo158-3 y otras similares (disminuyen la renta líquida",
+    "C5": "=+G27"
+  },
+  {
+    "C3": "         fiscal pero no disminuyeron el valor del activo fiscalmente)"
+  },
+  {
+    "C3": "Más: Ganancia ocasional (disminuida con el \"impuesto neto de ganancia ocasional\") ",
+    "C5": "=+G40-G44"
+  },
+  {
+    "C3": "         "
+  },
+  {
+    "C3": "Menos: Gastos no deducidos en la renta fiscal",
+    "C5": "=-G48",
+    "C7": "=SUM(E61:E73)"
+  },
+  {
+    "C3": "Total patrimonio líquido fiscal a diciembre 31 de 2025 que se puede justificar",
+    "C7": "=SUM(G59:G73)"
+  },
+  {
+    "C3": "Total patrimonio líquido fiscal a diciembre 31 de 2025 que se va a declarar",
+    "C7": "=+G22"
+  },
+  {
+    "C3": "Diferencia por justificar",
+    "C7": "=+G76-G75"
+  }
+]

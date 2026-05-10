@@ -1384,6 +1384,7 @@ export type Database = {
           dc_cartera_91_180: number
           dc_metodo: string
           dc_saldo_contable: number
+          deduccion_art_158_3: number
           empresa_id: string
           es_gran_contribuyente: boolean
           es_institucion_financiera: boolean
@@ -1450,6 +1451,7 @@ export type Database = {
           dc_cartera_91_180?: number
           dc_metodo?: string
           dc_saldo_contable?: number
+          deduccion_art_158_3?: number
           empresa_id: string
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean
@@ -1517,6 +1519,7 @@ export type Database = {
           dc_metodo?: string
           dc_saldo_contable?: number
           empresa_id?: string
+          deduccion_art_158_3?: number
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean
           tipo_sobretasa?: string
