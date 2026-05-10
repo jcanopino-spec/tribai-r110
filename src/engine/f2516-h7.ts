@@ -60,16 +60,20 @@ export function computarH7(input: {
   const totalPasivos = byId.get("ESF_10_PASIVOS")?.fiscal ?? 0;
   const patrimonioLiquido = totalActivos - totalPasivos;
 
-  // ERI · usa los IDs reales del catálogo F2516_FILAS
+  // ERI · usa los IDs reales del catálogo F2516_FILAS.
+  // ERI_16_COSTOS cubre TODO el R67 fiscal (costos+gastos clases 5+6+7).
+  // No hay fila separada de "gastos operacionales" en el F2516 compacto.
   const totalIngresos = byId.get("ERI_12_INGRESOS")?.fiscal ?? 0;
   const totalCostos = byId.get("ERI_16_COSTOS")?.fiscal ?? 0;
-  // Los gastos R63-R66 no están en el F2516 compacto · vienen del F110
+  // `totalGastos` se conserva como R63..R66 del F110 SOLO para informativo
+  // de la card de resumen (mostrar el desglose). En la utilidad antes de
+  // impuestos NO se resta otra vez (ya está en totalCostos).
   const totalGastos =
     (input.valoresF110.get(63) ?? 0) +
     (input.valoresF110.get(64) ?? 0) +
     (input.valoresF110.get(65) ?? 0) +
     (input.valoresF110.get(66) ?? 0);
-  const utilidadAntesImpuestos = totalIngresos - totalCostos - totalGastos;
+  const utilidadAntesImpuestos = totalIngresos - totalCostos;
   const impuestoRenta = input.impuestoRenta;
   const resultadoEjercicio = utilidadAntesImpuestos - impuestoRenta;
 
@@ -78,8 +82,8 @@ export function computarH7(input: {
   const r45 = input.valoresF110.get(45) ?? 0;
   const r46 = input.valoresF110.get(46) ?? 0;
   const r58 = input.valoresF110.get(58) ?? 0;
-  const r62 = input.valoresF110.get(62) ?? 0;
-  const r63a66 =
+  const r67 =
+    (input.valoresF110.get(62) ?? 0) +
     (input.valoresF110.get(63) ?? 0) +
     (input.valoresF110.get(64) ?? 0) +
     (input.valoresF110.get(65) ?? 0) +
@@ -90,13 +94,19 @@ export function computarH7(input: {
   const r47_57 =
     (input.valoresF110.get(47) ?? 0) + (input.valoresF110.get(57) ?? 0);
 
+  // Nota: ERI_16_COSTOS del F2516 compacto cubre TODO el R67 (clases 5+6+7
+  // del PUC), no solo los costos puros. Por eso V5 cruza contra R67 entero,
+  // que es coherente con el `cuadraConR110: 67` declarado en F2516_FILAS.
+  // Para validar gastos por separado (R63-R66) se usa la suma de costos
+  // F2516 menos R62 fiscal, comparada contra R63..R66 fiscal.
+  const totalCostosYGastosF2516 = totalCostos + totalGastos;
+
   const cruces: CruceH7[] = [
     cruce("V1", "Total activos = R44", totalActivos, r44),
     cruce("V2", "Total pasivos = R45", totalPasivos, r45),
     cruce("V3", "Patrimonio líquido = R46", patrimonioLiquido, r46),
     cruce("V4", "Total ingresos = R58", totalIngresos, r58),
-    cruce("V5", "Total costos = R62", totalCostos, r62),
-    cruce("V6", "Total gastos = R63+R64+R65+R66", totalGastos, r63a66),
+    cruce("V5", "Costos+gastos F2516 = R67 (R62..R66)", totalCostosYGastosF2516, r67),
     cruce("V7", "Impuesto = R96", impuestoRenta, r96),
     cruce(
       "V8",

@@ -135,9 +135,12 @@ export default async function H7Page({
   });
   const filasESF = await loadF2516Aggregates(supabase, declId, numerico);
 
+  // Para los cruces necesitamos los renglones COMPUTADOS (R44=Σ36..43,
+  // R46, R58, R67, R96, etc) que solo viven en `numerico`. La tabla
+  // form110_valores guarda únicamente los inputs/agregados base.
   const valoresF110Map = new Map<number, number>();
-  for (const v of valores ?? []) {
-    valoresF110Map.set(v.numero, Math.abs(Number(v.valor)));
+  for (const [numero, valor] of numerico) {
+    valoresF110Map.set(numero, Math.abs(valor));
   }
 
   const resumen = computarH7({
@@ -179,8 +182,8 @@ export default async function H7Page({
       <Section title="Estado de Resultados Integral">
         <Tabla rows={[
           ["Total ingresos fiscales", resumen.totalIngresos],
-          ["Total costos fiscales", resumen.totalCostos],
-          ["Total gastos fiscales", resumen.totalGastos],
+          ["Total costos y gastos fiscales (cubre R67)", resumen.totalCostos],
+          ["  De los cuales · gastos R63..R66 (informativo)", resumen.totalGastos],
           ["Utilidad antes de impuestos", resumen.utilidadAntesImpuestos],
           ["Impuesto de renta (R96)", resumen.impuestoRenta],
           ["Resultado del ejercicio", resumen.resultadoEjercicio],
