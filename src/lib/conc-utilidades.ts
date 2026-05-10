@@ -46,7 +46,20 @@ const num = (v: number | string | null | undefined): number =>
 
 /**
  * Calcula los saldos contables por prefijo PUC desde el balance de prueba.
- * Replica los `SUMIF` de la hoja Conc Utilidades del .xlsm guía.
+ * Replica los `SUMIF` de la hoja Conc Utilidades del .xlsm guía pero con
+ * dos correcciones críticas:
+ *
+ *   1. Filtro anti-duplicación: el balance puede contener tanto la cuenta
+ *      resumen (ej. "4155") como sus hijas detalle (ej. "415530", "415550").
+ *      Sumar todas duplica el saldo. Solo se incluyen cuentas HOJA, definidas
+ *      como aquellas que NO tienen otra cuenta más larga en el mismo balance
+ *      con su mismo prefijo.
+ *
+ *   2. Costo de ventas: el balance del régimen contable colombiano puede
+ *      usar clase 6 (Costo de ventas) o clase 7 (Costo de producción/
+ *      operación) según el tipo de empresa (comercial vs industrial/
+ *      servicios). Sumamos AMBAS clases para no perder saldos reales como
+ *      pasaba con Aries que usa clase 7 exclusivamente.
  */
 async function calcularContablesPyG(supabase: SC, declId: string) {
   const { data: lineas } = await supabase
@@ -54,21 +67,46 @@ async function calcularContablesPyG(supabase: SC, declId: string) {
     .select("cuenta, saldo, balance_id, balance_pruebas!inner(declaracion_id)")
     .eq("balance_pruebas.declaracion_id", declId);
 
-  const sumByPrefix = (prefix: string): number => {
+  const cuentasSet = new Set((lineas ?? []).map((l) => String(l.cuenta)));
+  const esHoja = (cuenta: string): boolean => {
+    for (const otra of cuentasSet) {
+      if (otra.length > cuenta.length && otra.startsWith(cuenta)) return false;
+    }
+    return true;
+  };
+
+  /**
+   * Suma el saldo absoluto de todas las cuentas HOJA cuyo PUC empieza con
+   * alguno de los prefijos dados (incluir) y NO empieza con ninguno de los
+   * prefijos a excluir.
+   */
+  const sumByPrefixes = (
+    incluir: string[],
+    excluir: string[] = [],
+  ): number => {
     return (lineas ?? [])
-      .filter((l) => String(l.cuenta).startsWith(prefix))
+      .filter((l) => {
+        const cuenta = String(l.cuenta);
+        if (!incluir.some((p) => cuenta.startsWith(p))) return false;
+        if (excluir.some((p) => cuenta.startsWith(p))) return false;
+        return esHoja(cuenta);
+      })
       .reduce((s, l) => s + Math.abs(Number(l.saldo)), 0);
   };
 
   return {
-    ingOperacionales41: sumByPrefix("41"),
-    ingNoOperacionales42: sumByPrefix("42"),
-    devoluciones4175: sumByPrefix("4175"),
-    costoVenta6: sumByPrefix("6"),
-    gastosAdmin51: sumByPrefix("51"),
-    gastosVentas52: sumByPrefix("52"),
-    gastosNoOper53: sumByPrefix("53"),
-    gastosOtros54: sumByPrefix("54"),
+    // Ingresos operacionales (clase 41) sin devoluciones (4175)
+    // para evitar doble conteo cuando se restan abajo.
+    ingOperacionales41: sumByPrefixes(["41"], ["4175"]),
+    ingNoOperacionales42: sumByPrefixes(["42"]),
+    devoluciones4175: sumByPrefixes(["4175"]),
+    // Costos: suma clase 6 (costo de ventas) y clase 7 (costo de producción)
+    // Aries usa clase 7; otras empresas pueden usar 6 o ambas.
+    costoVenta6: sumByPrefixes(["6", "7"]),
+    gastosAdmin51: sumByPrefixes(["51"]),
+    gastosVentas52: sumByPrefixes(["52"]),
+    gastosNoOper53: sumByPrefixes(["53"]),
+    gastosOtros54: sumByPrefixes(["54"]),
   };
 }
 
