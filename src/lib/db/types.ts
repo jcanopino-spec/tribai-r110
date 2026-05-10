@@ -818,6 +818,262 @@ export type Database = {
           },
         ]
       }
+      formato_2516_h1_caratula: {
+        Row: {
+          declaracion_id: string
+          rep_legal_nombre: string | null
+          rep_legal_tipo_doc: string | null
+          rep_legal_numero_doc: string | null
+          rep_legal_cargo: string | null
+          contador_nombre: string | null
+          contador_tipo_doc: string | null
+          contador_numero_doc: string | null
+          contador_tarjeta_prof: string | null
+          obligado_revisor_fiscal: boolean
+          rf_nombre: string | null
+          rf_tipo_doc: string | null
+          rf_numero_doc: string | null
+          rf_tarjeta_prof: string | null
+          marco_normativo: string | null
+          direccion_notificacion: string | null
+          departamento_codigo: string | null
+          municipio_codigo: string | null
+          telefono: string | null
+          correo: string | null
+          observaciones: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          rep_legal_nombre?: string | null
+          rep_legal_tipo_doc?: string | null
+          rep_legal_numero_doc?: string | null
+          rep_legal_cargo?: string | null
+          contador_nombre?: string | null
+          contador_tipo_doc?: string | null
+          contador_numero_doc?: string | null
+          contador_tarjeta_prof?: string | null
+          obligado_revisor_fiscal?: boolean
+          rf_nombre?: string | null
+          rf_tipo_doc?: string | null
+          rf_numero_doc?: string | null
+          rf_tarjeta_prof?: string | null
+          marco_normativo?: string | null
+          direccion_notificacion?: string | null
+          departamento_codigo?: string | null
+          municipio_codigo?: string | null
+          telefono?: string | null
+          correo?: string | null
+          observaciones?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          rep_legal_nombre?: string | null
+          rep_legal_tipo_doc?: string | null
+          rep_legal_numero_doc?: string | null
+          rep_legal_cargo?: string | null
+          contador_nombre?: string | null
+          contador_tipo_doc?: string | null
+          contador_numero_doc?: string | null
+          contador_tarjeta_prof?: string | null
+          obligado_revisor_fiscal?: boolean
+          rf_nombre?: string | null
+          rf_tipo_doc?: string | null
+          rf_numero_doc?: string | null
+          rf_tarjeta_prof?: string | null
+          marco_normativo?: string | null
+          direccion_notificacion?: string | null
+          departamento_codigo?: string | null
+          municipio_codigo?: string | null
+          telefono?: string | null
+          correo?: string | null
+          observaciones?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h1_caratula_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: true
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formato_2516_h4_imp_diferido: {
+        Row: {
+          declaracion_id: string
+          categoria_id: string
+          tipo: string
+          concepto: string
+          base_contable: number
+          base_fiscal: number
+          tarifa: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          categoria_id: string
+          tipo: string
+          concepto: string
+          base_contable?: number
+          base_fiscal?: number
+          tarifa?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          categoria_id?: string
+          tipo?: string
+          concepto?: string
+          base_contable?: number
+          base_fiscal?: number
+          tarifa?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h4_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formato_2516_h5_ingresos: {
+        Row: {
+          declaracion_id: string
+          concepto_id: string
+          concepto: string
+          gravados: number
+          exentos: number
+          excluidos: number
+          exportacion: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          concepto_id: string
+          concepto: string
+          gravados?: number
+          exentos?: number
+          excluidos?: number
+          exportacion?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          concepto_id?: string
+          concepto?: string
+          gravados?: number
+          exentos?: number
+          excluidos?: number
+          exportacion?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h5_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formato_2516_h5_conciliacion: {
+        Row: {
+          declaracion_id: string
+          total_facturado_dian: number
+          notas_credito_emitidas: number
+          notas_debito_emitidas: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          total_facturado_dian?: number
+          notas_credito_emitidas?: number
+          notas_debito_emitidas?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          total_facturado_dian?: number
+          notas_credito_emitidas?: number
+          notas_debito_emitidas?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h5c_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: true
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formato_2516_h6_activos_fijos: {
+        Row: {
+          declaracion_id: string
+          categoria_id: string
+          categoria: string
+          saldo_inicial: number
+          adiciones: number
+          retiros: number
+          deprec_acumulada: number
+          deprec_ano: number
+          ajuste_fiscal: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          categoria_id: string
+          categoria: string
+          saldo_inicial?: number
+          adiciones?: number
+          retiros?: number
+          deprec_acumulada?: number
+          deprec_ano?: number
+          ajuste_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          categoria_id?: string
+          categoria?: string
+          saldo_inicial?: number
+          adiciones?: number
+          retiros?: number
+          deprec_acumulada?: number
+          deprec_ano?: number
+          ajuste_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h6_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       anexo_venta_activos_fijos: {
         Row: {
           costo_fiscal: number

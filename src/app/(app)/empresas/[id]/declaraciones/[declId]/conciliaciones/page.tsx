@@ -29,6 +29,10 @@ export default async function ConciliacionesHubPage({
     { count: utilidadCount },
     { count: patrimonialCount },
     { count: f2516Count },
+    { count: h1Count },
+    { count: h4Count },
+    { count: h5Count },
+    { count: h6Count },
   ] = await Promise.all([
     supabase
       .from("conciliacion_partidas")
@@ -40,6 +44,22 @@ export default async function ConciliacionesHubPage({
       .eq("declaracion_id", declId),
     supabase
       .from("formato_2516_ajustes")
+      .select("*", { count: "exact", head: true })
+      .eq("declaracion_id", declId),
+    supabase
+      .from("formato_2516_h1_caratula")
+      .select("*", { count: "exact", head: true })
+      .eq("declaracion_id", declId),
+    supabase
+      .from("formato_2516_h4_imp_diferido")
+      .select("*", { count: "exact", head: true })
+      .eq("declaracion_id", declId),
+    supabase
+      .from("formato_2516_h5_ingresos")
+      .select("*", { count: "exact", head: true })
+      .eq("declaracion_id", declId),
+    supabase
+      .from("formato_2516_h6_activos_fijos")
       .select("*", { count: "exact", head: true })
       .eq("declaracion_id", declId),
   ]);
@@ -111,6 +131,61 @@ export default async function ConciliacionesHubPage({
         />
       </div>
 
+      <div className="mt-10">
+        <h2 className="font-serif text-2xl tracking-[-0.01em]">
+          Hojas oficiales del F2516
+        </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Las 7 secciones que la Resolución DIAN 71/2019 exige reportar.
+          Tribai pre-llena lo que se deriva del balance + F110, el contador
+          captura lo específico de cada hoja.
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-3 lg:grid-cols-4">
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h1-caratula`}
+            codigo="H1"
+            titulo="Carátula"
+            estado={h1Count && h1Count > 0 ? "completo" : "pendiente"}
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h2-esf`}
+            codigo="H2"
+            titulo="ESF"
+            estado="auto"
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h3-eri`}
+            codigo="H3"
+            titulo="ERI"
+            estado="auto"
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h4-impuesto-diferido`}
+            codigo="H4"
+            titulo="Imp Diferido"
+            estado={h4Count && h4Count > 0 ? "completo" : "pendiente"}
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h5-ingresos-facturacion`}
+            codigo="H5"
+            titulo="Ingresos · FE"
+            estado={h5Count && h5Count > 0 ? "completo" : "pendiente"}
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h6-activos-fijos`}
+            codigo="H6"
+            titulo="Activos Fijos"
+            estado={h6Count && h6Count > 0 ? "completo" : "pendiente"}
+          />
+          <HojaPill
+            href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h7-resumen`}
+            codigo="H7"
+            titulo="Resumen"
+            estado="auto"
+          />
+        </div>
+      </div>
+
       <div className="mt-12 border border-dashed border-border p-5">
         <h3 className="font-serif text-lg">¿Por qué dos conciliaciones?</h3>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -137,6 +212,43 @@ export default async function ConciliacionesHubPage({
         </p>
       </div>
     </div>
+  );
+}
+
+function HojaPill({
+  href,
+  codigo,
+  titulo,
+  estado,
+}: {
+  href: string;
+  codigo: string;
+  titulo: string;
+  estado: "completo" | "pendiente" | "auto";
+}) {
+  const colors =
+    estado === "completo"
+      ? "border-emerald-500/40 bg-emerald-500/5"
+      : estado === "auto"
+        ? "border-amber-500/40 bg-amber-500/5"
+        : "border-border";
+  const label =
+    estado === "completo" ? "✓ Capturado" : estado === "auto" ? "Auto" : "Pendiente";
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 rounded-md border p-3 transition-colors hover:border-foreground ${colors}`}
+    >
+      <span className="inline-flex h-9 w-9 items-center justify-center rounded font-mono text-xs font-bold bg-foreground text-background">
+        {codigo}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium">{titulo}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+          {label}
+        </p>
+      </div>
+    </Link>
   );
 }
 

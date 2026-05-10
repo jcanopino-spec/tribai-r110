@@ -1,0 +1,2558 @@
+[
+  {
+    "r_xlsm": 12,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 13,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Costos y gastos de nomina",
+    "contable_fml": null,
+    "fiscal_fml": "=Nomina!E27",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 14,
+    "fila_2516": null,
+    "puc": "5105",
+    "concepto": "Sueldos y salarios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C14&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 15,
+    "fila_2516": null,
+    "puc": "5110",
+    "concepto": "Horas extras y recargos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C15&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 16,
+    "fila_2516": null,
+    "puc": "5115",
+    "concepto": "Comisiones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C16&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 17,
+    "fila_2516": null,
+    "puc": "5120",
+    "concepto": "Viaticos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C17&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 18,
+    "fila_2516": null,
+    "puc": "5125",
+    "concepto": "Auxilio de transporte",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C18&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 19,
+    "fila_2516": null,
+    "puc": "5130",
+    "concepto": "Cesantias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C19&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 20,
+    "fila_2516": null,
+    "puc": "5135",
+    "concepto": "Intereses sobre cesantias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C20&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 21,
+    "fila_2516": null,
+    "puc": "5140",
+    "concepto": "Prima de servicios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C21&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 22,
+    "fila_2516": null,
+    "puc": "5145",
+    "concepto": "Vacaciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C22&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 23,
+    "fila_2516": null,
+    "puc": "5150",
+    "concepto": "Dotacion y suministros",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C23&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 24,
+    "fila_2516": null,
+    "puc": "5155",
+    "concepto": "Bonificaciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C24&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 25,
+    "fila_2516": null,
+    "puc": "5195",
+    "concepto": "Otros gastos de personal",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C25&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 26,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Aportes al sistema de seguridad social",
+    "contable_fml": null,
+    "fiscal_fml": "=Nomina!E35",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 27,
+    "fila_2516": null,
+    "puc": "5160",
+    "concepto": "Aportes a EPS",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C27&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 28,
+    "fila_2516": null,
+    "puc": "5165",
+    "concepto": "Aportes a ARL",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C28&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 29,
+    "fila_2516": null,
+    "puc": "5170",
+    "concepto": "Aportes a pensiones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C29&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 30,
+    "fila_2516": null,
+    "puc": "5175",
+    "concepto": "Aportes a cajas de compensacion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C30&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 31,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Aportes parafiscales",
+    "contable_fml": null,
+    "fiscal_fml": "=Nomina!E41",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 32,
+    "fila_2516": null,
+    "puc": "5180",
+    "concepto": "Aportes ICBF",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C32&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 33,
+    "fila_2516": null,
+    "puc": "5185",
+    "concepto": "Aportes SENA",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C33&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 34,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 35,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Efectivo y equivalentes de efectivo",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E36:E40),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 36,
+    "fila_2516": null,
+    "puc": "1105",
+    "concepto": "Caja",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C36&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 37,
+    "fila_2516": null,
+    "puc": "1110",
+    "concepto": "Bancos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C37&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 38,
+    "fila_2516": null,
+    "puc": "1130",
+    "concepto": "Efectivo restringido",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C38&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 39,
+    "fila_2516": null,
+    "puc": "1120",
+    "concepto": "Fondos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C39&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 40,
+    "fila_2516": null,
+    "puc": "1140",
+    "concepto": "Inversiones a la vista",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C40&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 41,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Inversiones e instrumentos financieros derivados",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E42:E53),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 42,
+    "fila_2516": null,
+    "puc": "1205",
+    "concepto": "Acciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C42&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 43,
+    "fila_2516": null,
+    "puc": "1210",
+    "concepto": "Cuotas o partes de interes social",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C43&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 44,
+    "fila_2516": null,
+    "puc": "1215",
+    "concepto": "Bonos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C44&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 45,
+    "fila_2516": null,
+    "puc": "1220",
+    "concepto": "Cedulas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C45&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 46,
+    "fila_2516": null,
+    "puc": "1225",
+    "concepto": "Certificados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C46&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 47,
+    "fila_2516": null,
+    "puc": "1230",
+    "concepto": "Papeles comerciales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C47&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 48,
+    "fila_2516": null,
+    "puc": "1235",
+    "concepto": "Titulos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C48&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 49,
+    "fila_2516": null,
+    "puc": "1240",
+    "concepto": "Aceptaciones bancarias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C49&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 50,
+    "fila_2516": null,
+    "puc": "1245",
+    "concepto": "Derechos fiduciarios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C50&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 51,
+    "fila_2516": null,
+    "puc": "1250",
+    "concepto": "Derechos de recompra",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C51&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 52,
+    "fila_2516": null,
+    "puc": "1255",
+    "concepto": "Obligatorias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C52&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 53,
+    "fila_2516": null,
+    "puc": "1260",
+    "concepto": "Cuentas en participacion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C53&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 54,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Cuentas, documentos y arrendamientos por cobrar",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E55:E70),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 55,
+    "fila_2516": null,
+    "puc": "1305",
+    "concepto": "Clientes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C55&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 56,
+    "fila_2516": null,
+    "puc": "1310",
+    "concepto": "Cuentas corrientes comerciales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C56&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 57,
+    "fila_2516": null,
+    "puc": "1315",
+    "concepto": "Cuentas por cobrar a socios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C57&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 58,
+    "fila_2516": null,
+    "puc": "1320",
+    "concepto": "Cuentas por cobrar a vinculados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C58&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 59,
+    "fila_2516": null,
+    "puc": "1325",
+    "concepto": "Cuentas por cobrar a directores",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C59&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 60,
+    "fila_2516": null,
+    "puc": "1330",
+    "concepto": "Anticipos y avances",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C60&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 61,
+    "fila_2516": null,
+    "puc": "1335",
+    "concepto": "Depositos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C61&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 62,
+    "fila_2516": null,
+    "puc": "1340",
+    "concepto": "Promesas de compraventa",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C62&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 63,
+    "fila_2516": null,
+    "puc": "1345",
+    "concepto": "Ingresos por cobrar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C63&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 64,
+    "fila_2516": null,
+    "puc": "1350",
+    "concepto": "Retencion sobre contratos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C64&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 65,
+    "fila_2516": null,
+    "puc": "1355",
+    "concepto": "Anticipo de impuestos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C65&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 66,
+    "fila_2516": null,
+    "puc": "1360",
+    "concepto": "Cuentas por cobrar trabajadores",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C66&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 67,
+    "fila_2516": null,
+    "puc": "1365",
+    "concepto": "Prestamos a particulares",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C67&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 68,
+    "fila_2516": null,
+    "puc": "1380",
+    "concepto": "Deudores varios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C68&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 69,
+    "fila_2516": null,
+    "puc": "1390",
+    "concepto": "Deudas de dificil cobro",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C69&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 70,
+    "fila_2516": null,
+    "puc": "1399",
+    "concepto": "Provision de cartera (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C70&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 71,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Inventarios",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E72:E79),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 72,
+    "fila_2516": null,
+    "puc": "1405",
+    "concepto": "Materias primas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C72&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 73,
+    "fila_2516": null,
+    "puc": "1410",
+    "concepto": "Productos en proceso",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C73&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 74,
+    "fila_2516": null,
+    "puc": "1415",
+    "concepto": "Productos terminados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C74&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 75,
+    "fila_2516": null,
+    "puc": "1420",
+    "concepto": "Mercancias no fabricadas por la empresa",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C75&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 76,
+    "fila_2516": null,
+    "puc": "1425",
+    "concepto": "Materiales, repuestos y accesorios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C76&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 77,
+    "fila_2516": null,
+    "puc": "1430",
+    "concepto": "Envases y empaques",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C77&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 78,
+    "fila_2516": null,
+    "puc": "1435",
+    "concepto": "Inventarios en transito",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C78&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 79,
+    "fila_2516": null,
+    "puc": "1499",
+    "concepto": "Provision de inventarios (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C79&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 80,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Activos intangibles",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E81:E88),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 81,
+    "fila_2516": null,
+    "puc": "1605",
+    "concepto": "Credito mercantil (goodwill)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C81&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 82,
+    "fila_2516": null,
+    "puc": "1610",
+    "concepto": "Marcas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C82&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 83,
+    "fila_2516": null,
+    "puc": "1615",
+    "concepto": "Patentes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C83&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 84,
+    "fila_2516": null,
+    "puc": "1620",
+    "concepto": "Concesiones y franquicias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C84&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 85,
+    "fila_2516": null,
+    "puc": "1625",
+    "concepto": "Derechos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C85&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 86,
+    "fila_2516": null,
+    "puc": "1630",
+    "concepto": "Know how",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C86&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 87,
+    "fila_2516": null,
+    "puc": "1635",
+    "concepto": "Licencias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C87&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 88,
+    "fila_2516": null,
+    "puc": "1698",
+    "concepto": "Amortizacion acumulada (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C88&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 89,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Activos biologicos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E90:E92),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 90,
+    "fila_2516": null,
+    "puc": "(BIO1)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (1)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C90&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 91,
+    "fila_2516": null,
+    "puc": "(BIO2)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (2)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C91&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 92,
+    "fila_2516": null,
+    "puc": "(BIO3)",
+    "concepto": "Activos biológicos - ingrese cuenta PUC (3)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C92&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 93,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Propiedades, planta y equipo, propiedades de inversion",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E94:E122),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 94,
+    "fila_2516": null,
+    "puc": "1504",
+    "concepto": "Terrenos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C94&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 95,
+    "fila_2516": null,
+    "puc": "1506",
+    "concepto": "Materiales proyectos petroleros",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C95&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 96,
+    "fila_2516": null,
+    "puc": "1508",
+    "concepto": "",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C96&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 97,
+    "fila_2516": null,
+    "puc": "1512",
+    "concepto": "Maquinaria en montaje",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C97&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 98,
+    "fila_2516": null,
+    "puc": "1516",
+    "concepto": "",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C98&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 99,
+    "fila_2516": null,
+    "puc": "1520",
+    "concepto": "Maquinaria y equipo",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C99&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 100,
+    "fila_2516": null,
+    "puc": "1524",
+    "concepto": "Equipo de oficina",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C100&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 101,
+    "fila_2516": null,
+    "puc": "1528",
+    "concepto": "Equipo de computacion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C101&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 102,
+    "fila_2516": null,
+    "puc": "1532",
+    "concepto": "Equipo medico-cientifico",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C102&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 103,
+    "fila_2516": null,
+    "puc": "1536",
+    "concepto": "Equipo de hoteles y restaurantes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C103&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 104,
+    "fila_2516": null,
+    "puc": "1540",
+    "concepto": "Flota y equipo de transporte",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C104&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 105,
+    "fila_2516": null,
+    "puc": "1544",
+    "concepto": "Flota y equipo fluvial",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C105&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 106,
+    "fila_2516": null,
+    "puc": "1548",
+    "concepto": "Flota y equipo aereo",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C106&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 107,
+    "fila_2516": null,
+    "puc": "1552",
+    "concepto": "Flota y equipo ferreo",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C107&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 108,
+    "fila_2516": null,
+    "puc": "1556",
+    "concepto": "Acueductos, plantas y redes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C108&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 109,
+    "fila_2516": null,
+    "puc": "1560",
+    "concepto": "Armamento de vigilancia",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C109&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 110,
+    "fila_2516": null,
+    "puc": "1562",
+    "concepto": "Envases y empaques",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C110&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 111,
+    "fila_2516": null,
+    "puc": "1564",
+    "concepto": "Plantaciones agricolas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C111&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 112,
+    "fila_2516": null,
+    "puc": "1568",
+    "concepto": "Vias de comunicacion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C112&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 113,
+    "fila_2516": null,
+    "puc": "1572",
+    "concepto": "Minas y canteras",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C113&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 114,
+    "fila_2516": null,
+    "puc": "1576",
+    "concepto": "Pozos artesianos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C114&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 115,
+    "fila_2516": null,
+    "puc": "1580",
+    "concepto": "Yacimientos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C115&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 116,
+    "fila_2516": null,
+    "puc": "1584",
+    "concepto": "Semovientes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C116&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 117,
+    "fila_2516": null,
+    "puc": "1588",
+    "concepto": "Propiedades de inversion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C117&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 118,
+    "fila_2516": null,
+    "puc": "1592",
+    "concepto": "Depreciacion acumulada (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C118&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 119,
+    "fila_2516": null,
+    "puc": "1596",
+    "concepto": "Depreciacion diferida",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C119&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 120,
+    "fila_2516": null,
+    "puc": "1597",
+    "concepto": "Amortizacion acumulada (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C120&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 121,
+    "fila_2516": null,
+    "puc": "1598",
+    "concepto": "Agotamiento acumulado (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C121&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 122,
+    "fila_2516": null,
+    "puc": "1599",
+    "concepto": "Provisiones (-)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C122&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 123,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Otros activos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E124:E128),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 124,
+    "fila_2516": null,
+    "puc": "1705",
+    "concepto": "Gastos pagados por anticipado",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C124&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 125,
+    "fila_2516": null,
+    "puc": "1710",
+    "concepto": "Cargos diferidos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C125&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 126,
+    "fila_2516": null,
+    "puc": "1715",
+    "concepto": "Activos por impuesto diferido",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C126&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 127,
+    "fila_2516": null,
+    "puc": "1720",
+    "concepto": "Bienes de arte y cultura",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C127&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 128,
+    "fila_2516": null,
+    "puc": "1798",
+    "concepto": "Otros activos no clasificados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C128&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 129,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "TOTAL PATRIMONIO BRUTO",
+    "contable_fml": null,
+    "fiscal_fml": "=F35+F41+F54+F71+F80+F89+F93+F123",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 130,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 131,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Total pasivos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(-SUM(E132:E167),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 132,
+    "fila_2516": null,
+    "puc": "2105",
+    "concepto": "Obligaciones financieras",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C132&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 133,
+    "fila_2516": null,
+    "puc": "2205",
+    "concepto": "Proveedores nacionales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C133&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 134,
+    "fila_2516": null,
+    "puc": "2210",
+    "concepto": "Proveedores del exterior",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C134&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 135,
+    "fila_2516": null,
+    "puc": "2305",
+    "concepto": "Cuentas por pagar - Cuentas corrientes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C135&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 136,
+    "fila_2516": null,
+    "puc": "2310",
+    "concepto": "Cuentas por pagar a socios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C136&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 137,
+    "fila_2516": null,
+    "puc": "2315",
+    "concepto": "Cuentas por pagar a vinculados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C137&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 138,
+    "fila_2516": null,
+    "puc": "2320",
+    "concepto": "Cuentas por pagar a contratistas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C138&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 139,
+    "fila_2516": null,
+    "puc": "2335",
+    "concepto": "Costos y gastos por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C139&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 140,
+    "fila_2516": null,
+    "puc": "2101",
+    "concepto": "Obligaciones financieras (2101 alterno)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C140&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 141,
+    "fila_2516": null,
+    "puc": "2345",
+    "concepto": "Acreedores oficiales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C141&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 142,
+    "fila_2516": null,
+    "puc": "2355",
+    "concepto": "Deudas con accionistas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C142&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 143,
+    "fila_2516": null,
+    "puc": "2360",
+    "concepto": "Dividendos por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C143&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 144,
+    "fila_2516": null,
+    "puc": "2365",
+    "concepto": "Retencion en la fuente por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C144&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 145,
+    "fila_2516": null,
+    "puc": "2367",
+    "concepto": "Impuesto a las ventas retenido",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C145&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 146,
+    "fila_2516": null,
+    "puc": "2368",
+    "concepto": "Impuesto de industria y comercio retenido",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C146&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 147,
+    "fila_2516": null,
+    "puc": "2370",
+    "concepto": "Retenciones y aportes de nomina",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C147&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 148,
+    "fila_2516": null,
+    "puc": "2380",
+    "concepto": "Acreedores varios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C148&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 149,
+    "fila_2516": null,
+    "puc": "2404",
+    "concepto": "Impuesto de renta por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C149&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 150,
+    "fila_2516": null,
+    "puc": "2408",
+    "concepto": "IVA por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C150&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 151,
+    "fila_2516": null,
+    "puc": "2412",
+    "concepto": "ICA por pagar",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C151&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 152,
+    "fila_2516": null,
+    "puc": "2424",
+    "concepto": "Gravamen a los movimientos financieros",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C152&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 153,
+    "fila_2516": null,
+    "puc": "2505",
+    "concepto": "Obligaciones laborales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C153&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 154,
+    "fila_2516": null,
+    "puc": "2510",
+    "concepto": "Cesantias consolidadas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C154&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 155,
+    "fila_2516": null,
+    "puc": "2515",
+    "concepto": "Intereses sobre cesantias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C155&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 156,
+    "fila_2516": null,
+    "puc": "2520",
+    "concepto": "Prima de servicios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C156&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 157,
+    "fila_2516": null,
+    "puc": "2525",
+    "concepto": "Vacaciones consolidadas",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C157&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 158,
+    "fila_2516": null,
+    "puc": "2530",
+    "concepto": "Prestaciones extralegales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C158&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 159,
+    "fila_2516": null,
+    "puc": "2605",
+    "concepto": "Pasivos estimados - Para costos y gastos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C159&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 160,
+    "fila_2516": null,
+    "puc": "2610",
+    "concepto": "Para obligaciones laborales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C160&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 161,
+    "fila_2516": null,
+    "puc": "2615",
+    "concepto": "Para obligaciones fiscales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C161&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 162,
+    "fila_2516": null,
+    "puc": "2550",
+    "concepto": "Beneficios a empleados largo plazo",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C162&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 163,
+    "fila_2516": null,
+    "puc": "2705",
+    "concepto": "Ingresos recibidos por anticipado",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C163&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 164,
+    "fila_2516": null,
+    "puc": "2805",
+    "concepto": "Otros pasivos - Anticipos y avances recibidos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C164&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 165,
+    "fila_2516": null,
+    "puc": "2815",
+    "concepto": "Ingresos recibidos para terceros",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C165&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 166,
+    "fila_2516": null,
+    "puc": "2895",
+    "concepto": "Otros pasivos diversos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C166&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 167,
+    "fila_2516": null,
+    "puc": "2905",
+    "concepto": "Pasivo por impuesto diferido",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C167&\"*\",'Balance de Prueba'!$L$10:$L$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 168,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "PATRIMONIO LIQUIDO (R44 - R45)",
+    "contable_fml": null,
+    "fiscal_fml": "=F129-F131",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 169,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 170,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Ingresos brutos de actividades ordinarias",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E171:E185),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 171,
+    "fila_2516": null,
+    "puc": "4105",
+    "concepto": "Agricultura, ganaderia, caza, silvicultura",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C171&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 172,
+    "fila_2516": null,
+    "puc": "4110",
+    "concepto": "Pesca",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C172&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 173,
+    "fila_2516": null,
+    "puc": "4115",
+    "concepto": "Explotacion de minas y canteras",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C173&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 174,
+    "fila_2516": null,
+    "puc": "4120",
+    "concepto": "Industrias manufactureras",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C174&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 175,
+    "fila_2516": null,
+    "puc": "4125",
+    "concepto": "Suministro de electricidad, gas y vapor",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C175&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 176,
+    "fila_2516": null,
+    "puc": "4130",
+    "concepto": "Construccion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C176&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 177,
+    "fila_2516": null,
+    "puc": "4135",
+    "concepto": "Comercio al por mayor y menor",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C177&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 178,
+    "fila_2516": null,
+    "puc": "4140",
+    "concepto": "Hoteles y restaurantes",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C178&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 179,
+    "fila_2516": null,
+    "puc": "4145",
+    "concepto": "Transporte, almacenamiento y comunicaciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C179&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 180,
+    "fila_2516": null,
+    "puc": "4150",
+    "concepto": "Actividad financiera",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C180&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 181,
+    "fila_2516": null,
+    "puc": "4155",
+    "concepto": "Actividades inmobiliarias",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C181&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 182,
+    "fila_2516": null,
+    "puc": "4160",
+    "concepto": "Servicios sociales y de salud",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C182&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 183,
+    "fila_2516": null,
+    "puc": "4165",
+    "concepto": "Servicios de ensenanza",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C183&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 184,
+    "fila_2516": null,
+    "puc": "4170",
+    "concepto": "Servicios de consultoria",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C184&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 185,
+    "fila_2516": null,
+    "puc": "(ver R59)",
+    "concepto": "Devoluciones reclasificadas a R59",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 186,
+    "fila_2516": null,
+    "puc": "4180",
+    "concepto": "Ingresos diversos (cuenta 4180)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C186&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 187,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Ingresos brutos por rendimientos financieros",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E188:E192),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 188,
+    "fila_2516": null,
+    "puc": "4205",
+    "concepto": "Intereses",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C188&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 189,
+    "fila_2516": null,
+    "puc": "4210",
+    "concepto": "Rendimientos de inversiones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C189&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 190,
+    "fila_2516": null,
+    "puc": "4215",
+    "concepto": "Descuentos comerciales condicionados",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C190&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 191,
+    "fila_2516": null,
+    "puc": "4220",
+    "concepto": "Utilidad en venta de inversiones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C191&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 192,
+    "fila_2516": null,
+    "puc": "4225",
+    "concepto": "Diferencia en cambio",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C192&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 193,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos y/o participaciones 2016 y anteriores (no gravados)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E11",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 194,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos y/o participaciones 2017-2018 (no gravados art 49 ET)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E13",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 195,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos 2017-2018 gravados art 49 par 2",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E14",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 196,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos 2019-2022 no gravados (art 49 numeral 3)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E16",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 197,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos 2019-2022 gravados",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E17",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 198,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos 2023+ no gravados (art 49 num 3)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E19",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 199,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos 2023+ gravados",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E20",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 200,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Dividendos recibidos de ECE",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!E22",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 201,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Otros ingresos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E202:E206),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 202,
+    "fila_2516": null,
+    "puc": "4240",
+    "concepto": "Recuperaciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C202&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 203,
+    "fila_2516": null,
+    "puc": "4245",
+    "concepto": "Indemnizaciones",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C203&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 204,
+    "fila_2516": null,
+    "puc": "4250",
+    "concepto": "Participacion en concordatos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C204&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 205,
+    "fila_2516": null,
+    "puc": "4255",
+    "concepto": "Ingresos de ejercicios anteriores",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C205&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 206,
+    "fila_2516": null,
+    "puc": "4295",
+    "concepto": "Ingresos diversos",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C206&\"*\",'Balance de Prueba'!$I$10:$I$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 207,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "TOTAL INGRESOS BRUTOS (suma R47 a R57)",
+    "contable_fml": null,
+    "fiscal_fml": "=F170+F187+F193+F194+F195+F196+F197+F198+F199+F200+F201",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 208,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Devoluciones, rebajas y descuentos en ventas",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"4175*\",'Balance de Prueba'!$I$10:$I$2509),0),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 209,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Ingresos no constitutivos de renta (INCRNGO)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 210,
+    "fila_2516": 61,
+    "puc": null,
+    "concepto": "Total ingresos netos (R58 - R59 - R60)",
+    "contable_fml": null,
+    "fiscal_fml": "=F207-F208-F209",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 211,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 212,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Costos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(SUM(E213:E220),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 213,
+    "fila_2516": null,
+    "puc": "6105",
+    "concepto": "Costo de ventas - Comercio",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C213&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 214,
+    "fila_2516": null,
+    "puc": "6110",
+    "concepto": "Costo de ventas - Industria",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C214&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 215,
+    "fila_2516": null,
+    "puc": "6115",
+    "concepto": "Costo de ventas - Servicios",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C215&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 216,
+    "fila_2516": null,
+    "puc": "6120",
+    "concepto": "Costo de produccion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C216&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 217,
+    "fila_2516": null,
+    "puc": "6125",
+    "concepto": "Costo de mano de obra",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C217&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 218,
+    "fila_2516": null,
+    "puc": "6130",
+    "concepto": "Costo materiales",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C218&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 219,
+    "fila_2516": null,
+    "puc": "6135",
+    "concepto": "CIF - Costos indirectos de fabricacion",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C219&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 220,
+    "fila_2516": null,
+    "puc": "7",
+    "concepto": "Costos de produccion/operacion (clase 7)",
+    "contable_fml": "=IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,C220&\"*\",'Balance de Prueba'!$H$10:$H$2509),0)",
+    "fiscal_fml": null,
+    "tipo": "puc"
+  },
+  {
+    "r_xlsm": 221,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Gastos de administracion",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"51*\",'Balance de Prueba'!$H$10:$H$2509),0),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 222,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Gastos de comercializacion y ventas",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"52*\",'Balance de Prueba'!$H$10:$H$2509),0),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 223,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Gastos financieros - Intereses y demas gastos",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"53*\",'Balance de Prueba'!$H$10:$H$2509),0),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 224,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Otros gastos y deducciones",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(IFERROR(SUMIF('Balance de Prueba'!$C$10:$C$2509,\"54*\",'Balance de Prueba'!$H$10:$H$2509)+SUMIF('Balance de Prueba'!$C$10:$C$2509,\"55*\",'Balance de Prueba'!$H$10:$H$2509)+SUMIF('Balance de Prueba'!$C$10:$C$2509,\"58*\",'Balance de Prueba'!$H$10:$H$2509)+SUMIF('Balance de Prueba'!$C$10:$C$2509,\"59*\",'Balance de Prueba'!$H$10:$H$2509),0),-3)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 225,
+    "fila_2516": 67,
+    "puc": null,
+    "concepto": "Total costos y gastos deducibles (R62+R63+R64+R65+R66)",
+    "contable_fml": null,
+    "fiscal_fml": "=F212+F221+F222+F223+F224",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 226,
+    "fila_2516": 68,
+    "puc": null,
+    "concepto": "Inversiones efectuadas en el año",
+    "contable_fml": null,
+    "fiscal_fml": "=IF(H226=\"\",0,H226)-IF(I226=\"\",0,I226)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 227,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 228,
+    "fila_2516": 72,
+    "puc": null,
+    "concepto": "Renta líquida ordinaria del ejercicio (R61 + R69 + R70 + R71 - R67 - R68 - dividendos R49..R56)",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F210+F288-F225-F226-(F193+F194+F195+F196+F197+F198+F199+F200))",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 229,
+    "fila_2516": 73,
+    "puc": null,
+    "concepto": "O Pérdida líquida del ejercicio",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F225+F226+(F193+F194+F195+F196+F197+F198+F199+F200)-F210-F288)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 230,
+    "fila_2516": 74,
+    "puc": null,
+    "concepto": "Compensaciones (Art. 147 ET - pérdidas fiscales)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 231,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Compensación de excesos de renta presuntiva (parte de R74)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 232,
+    "fila_2516": 75,
+    "puc": null,
+    "concepto": "Renta líquida (R72 - R74)",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F228-F230-F231)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 233,
+    "fila_2516": 76,
+    "puc": null,
+    "concepto": "Renta presuntiva",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 234,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "MAX(R75, R76) — paso intermedio para R79",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(F232,F233)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 235,
+    "fila_2516": 77,
+    "puc": null,
+    "concepto": "Rentas exentas",
+    "contable_fml": null,
+    "fiscal_fml": "=L235",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 236,
+    "fila_2516": 78,
+    "puc": null,
+    "concepto": "Rentas gravables",
+    "contable_fml": null,
+    "fiscal_fml": "=L236",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 237,
+    "fila_2516": 79,
+    "puc": null,
+    "concepto": "RENTA LÍQUIDA GRAVABLE (MAX(R75,R76) - R77 + R78)",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F234-F235+F236)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 238,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 239,
+    "fila_2516": 80,
+    "puc": null,
+    "concepto": "Ingresos por ganancias ocasionales del país y del exterior",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 240,
+    "fila_2516": 81,
+    "puc": null,
+    "concepto": "Costos por ganancias ocasionales",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 241,
+    "fila_2516": 82,
+    "puc": null,
+    "concepto": "Ganancias ocasionales no gravadas y exentas",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 242,
+    "fila_2516": 83,
+    "puc": null,
+    "concepto": "Ganancias ocasionales gravables",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F239-F240-F241)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 243,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 244,
+    "fila_2516": 84,
+    "puc": null,
+    "concepto": "Impuesto sobre las rentas líquidas gravables (R79 × tarifa)",
+    "contable_fml": null,
+    "fiscal_fml": "=ROUND(F237*0.35,-3)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 245,
+    "fila_2516": 85,
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2017-2018",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!G14",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 246,
+    "fila_2516": 86,
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2019-2022 (art. 240)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!G17",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 247,
+    "fila_2516": 87,
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2019-2022 (27%)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 248,
+    "fila_2516": 88,
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2023+ (art. 240)",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!G20",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 249,
+    "fila_2516": 89,
+    "puc": null,
+    "concepto": "De dividendos y participaciones gravadas 2023+ (32% o 33%)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 250,
+    "fila_2516": 90,
+    "puc": null,
+    "concepto": "De dividendos y participaciones recibidas de ECE",
+    "contable_fml": null,
+    "fiscal_fml": "=Dividendos!G22",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 251,
+    "fila_2516": 97,
+    "puc": null,
+    "concepto": "Impuesto de ganancias ocasionales (R83 × tarifa)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 252,
+    "fila_2516": 91,
+    "puc": null,
+    "concepto": "Total impuesto sobre las rentas líquidas gravables (R84 a R90)",
+    "contable_fml": null,
+    "fiscal_fml": "=F244+F245+F246+F247+F248+F249+F250+F251",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 253,
+    "fila_2516": 93,
+    "puc": null,
+    "concepto": "Descuentos tributarios",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 254,
+    "fila_2516": 94,
+    "puc": null,
+    "concepto": "Impuesto neto de renta (sin impuesto adicionado) = R91 - R93",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F252-F253)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 255,
+    "fila_2516": 96,
+    "puc": null,
+    "concepto": "Impuesto neto de renta (con impuesto adicionado) = R94 + R92 + R95",
+    "contable_fml": null,
+    "fiscal_fml": "=F254+F276+F277",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 256,
+    "fila_2516": 108,
+    "puc": null,
+    "concepto": "Anticipo renta para el año gravable siguiente",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 257,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(reservado para R92 VAA o R95 IA - agregar si aplica)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 258,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(obsoleto: usar R111 en f272)",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F254+F255-F268)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 259,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(obsoleto: usar R112 en f273)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 260,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(obsoleto: usar R113 en f274)",
+    "contable_fml": null,
+    "fiscal_fml": "=F258+F259",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 261,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(obsoleto: usar R114 en f275)",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F268-F254-F255)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 262,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 263,
+    "fila_2516": 103,
+    "puc": null,
+    "concepto": "Anticipo renta liquidado año gravable anterior",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 264,
+    "fila_2516": 104,
+    "puc": null,
+    "concepto": "Saldo a favor año gravable anterior sin solicitud de devolución",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 265,
+    "fila_2516": 105,
+    "puc": null,
+    "concepto": "Autorretenciones",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 266,
+    "fila_2516": 106,
+    "puc": null,
+    "concepto": "Otras retenciones",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 267,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "(espacio disponible)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 268,
+    "fila_2516": 107,
+    "puc": null,
+    "concepto": "Total retenciones año gravable a declarar (R105 + R106)",
+    "contable_fml": null,
+    "fiscal_fml": "=F265+F266+F267",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 269,
+    "fila_2516": 109,
+    "puc": null,
+    "concepto": "Anticipo Puntos adicionales año gravable anterior",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 270,
+    "fila_2516": 100,
+    "puc": null,
+    "concepto": "Valor inversión obras por impuestos hasta del 50% de R99 (Modalidad 1)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 271,
+    "fila_2516": 101,
+    "puc": null,
+    "concepto": "Descuento efectivo inversión obras por impuestos (Modalidad 2)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 272,
+    "fila_2516": 111,
+    "puc": null,
+    "concepto": "Saldo a pagar por impuesto",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F279+F281-F263-F264-F268-F270-F271-F280)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 273,
+    "fila_2516": 112,
+    "puc": null,
+    "concepto": "Sanciones",
+    "contable_fml": null,
+    "fiscal_fml": "=L273",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 274,
+    "fila_2516": 113,
+    "puc": null,
+    "concepto": "Total saldo a pagar",
+    "contable_fml": null,
+    "fiscal_fml": "=F272+F273",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 275,
+    "fila_2516": 114,
+    "puc": null,
+    "concepto": "Total saldo a favor",
+    "contable_fml": null,
+    "fiscal_fml": "=MAX(0,F263+F264+F268-F254-F255-F256)",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 276,
+    "fila_2516": 92,
+    "puc": null,
+    "concepto": "Valor a adicionar (VAA)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 277,
+    "fila_2516": 95,
+    "puc": null,
+    "concepto": "Impuesto a adicionar (IA)",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 278,
+    "fila_2516": 98,
+    "puc": null,
+    "concepto": "Descuento por impuestos pagados en exterior por GO",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 279,
+    "fila_2516": 99,
+    "puc": null,
+    "concepto": "Total impuesto a cargo (R96 + R97 - R98)",
+    "contable_fml": null,
+    "fiscal_fml": "=L255+L251-L278",
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 280,
+    "fila_2516": 102,
+    "puc": null,
+    "concepto": "Crédito fiscal art. 256-1 E.T.",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 281,
+    "fila_2516": 110,
+    "puc": null,
+    "concepto": "Anticipo Puntos adicionales año gravable siguiente",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "total"
+  },
+  {
+    "r_xlsm": 283,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 284,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Concepto (suma a la Renta Líquida Ordinaria)",
+    "contable_fml": null,
+    "fiscal_fml": "Contable",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 285,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Inversiones liquidadas de períodos anteriores",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 286,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Renta por recuperación de deducciones",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 287,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "Renta pasiva - ECE sin residencia fiscal Colombia",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 288,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "TOTAL RENTAS ADICIONALES (suma a RLO)",
+    "contable_fml": null,
+    "fiscal_fml": "=SUM(F285:F287)",
+    "tipo": "subtitulo"
+  },
+  {
+    "r_xlsm": 295,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 297,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 298,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": "Saldo Contable",
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 299,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": "=F129",
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 300,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": "=F131",
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 301,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": "=F168",
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 302,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": "=F129-F131-F168",
+    "tipo": "otro"
+  },
+  {
+    "r_xlsm": 304,
+    "fila_2516": null,
+    "puc": null,
+    "concepto": "",
+    "contable_fml": null,
+    "fiscal_fml": null,
+    "tipo": "otro"
+  }
+]

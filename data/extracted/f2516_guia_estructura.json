@@ -1,0 +1,128 @@
+[
+  {
+    "fila_xlsm": 11,
+    "fila_2516": null,
+    "concepto": "Efectivo y equivalentes",
+    "contable_fml": "='Detalle Fiscal'!F35",
+    "fiscal_fml": "=D11+IF(E11=\"\",0,E11)-IF(F11=\"\",0,F11)+IF(G11=\"\",0,G11)"
+  },
+  {
+    "fila_xlsm": 12,
+    "fila_2516": null,
+    "concepto": "Inversiones",
+    "contable_fml": "='Detalle Fiscal'!F41",
+    "fiscal_fml": "=D12+IF(E12=\"\",0,E12)-IF(F12=\"\",0,F12)+IF(G12=\"\",0,G12)"
+  },
+  {
+    "fila_xlsm": 13,
+    "fila_2516": null,
+    "concepto": "Cuentas por cobrar",
+    "contable_fml": "='Detalle Fiscal'!F54",
+    "fiscal_fml": "=D13+IF(E13=\"\",0,E13)-IF(F13=\"\",0,F13)+IF(G13=\"\",0,G13)"
+  },
+  {
+    "fila_xlsm": 14,
+    "fila_2516": null,
+    "concepto": "Inventarios",
+    "contable_fml": "='Detalle Fiscal'!F71",
+    "fiscal_fml": "=D14+IF(E14=\"\",0,E14)-IF(F14=\"\",0,F14)+IF(G14=\"\",0,G14)"
+  },
+  {
+    "fila_xlsm": 15,
+    "fila_2516": null,
+    "concepto": "Intangibles",
+    "contable_fml": "='Detalle Fiscal'!F80",
+    "fiscal_fml": "=D15+IF(E15=\"\",0,E15)-IF(F15=\"\",0,F15)+IF(G15=\"\",0,G15)"
+  },
+  {
+    "fila_xlsm": 16,
+    "fila_2516": null,
+    "concepto": "Biologicos",
+    "contable_fml": "='Detalle Fiscal'!F89",
+    "fiscal_fml": "=D16+IF(E16=\"\",0,E16)-IF(F16=\"\",0,F16)+IF(G16=\"\",0,G16)"
+  },
+  {
+    "fila_xlsm": 17,
+    "fila_2516": null,
+    "concepto": "PPE",
+    "contable_fml": "='Detalle Fiscal'!F93",
+    "fiscal_fml": "=D17+IF(E17=\"\",0,E17)-IF(F17=\"\",0,F17)+IF(G17=\"\",0,G17)"
+  },
+  {
+    "fila_xlsm": 18,
+    "fila_2516": null,
+    "concepto": "Otros activos",
+    "contable_fml": "='Detalle Fiscal'!F123",
+    "fiscal_fml": "=D18+IF(E18=\"\",0,E18)-IF(F18=\"\",0,F18)+IF(G18=\"\",0,G18)"
+  },
+  {
+    "fila_xlsm": 19,
+    "fila_2516": null,
+    "concepto": "TOTAL ACTIVOS",
+    "contable_fml": "='Detalle Fiscal'!F129",
+    "fiscal_fml": "=D19+IF(E19=\"\",0,E19)-IF(F19=\"\",0,F19)+IF(G19=\"\",0,G19)"
+  },
+  {
+    "fila_xlsm": 21,
+    "fila_2516": null,
+    "concepto": "Total pasivos",
+    "contable_fml": "='Detalle Fiscal'!F131",
+    "fiscal_fml": "=D21+IF(E21=\"\",0,E21)-IF(F21=\"\",0,F21)+IF(G21=\"\",0,G21)"
+  },
+  {
+    "fila_xlsm": 23,
+    "fila_2516": null,
+    "concepto": "PATRIMONIO LIQUIDO",
+    "contable_fml": "='Detalle Fiscal'!F168",
+    "fiscal_fml": "=D23+IF(E23=\"\",0,E23)-IF(F23=\"\",0,F23)+IF(G23=\"\",0,G23)"
+  },
+  {
+    "fila_xlsm": 25,
+    "fila_2516": null,
+    "concepto": "Total ingresos brutos",
+    "contable_fml": "='Detalle Fiscal'!F207",
+    "fiscal_fml": "=D25+IF(E25=\"\",0,E25)-IF(F25=\"\",0,F25)+IF(G25=\"\",0,G25)"
+  },
+  {
+    "fila_xlsm": 26,
+    "fila_2516": null,
+    "concepto": "Devoluciones",
+    "contable_fml": "='Detalle Fiscal'!F207",
+    "fiscal_fml": "=D26+IF(E26=\"\",0,E26)-IF(F26=\"\",0,F26)+IF(G26=\"\",0,G26)"
+  },
+  {
+    "fila_xlsm": 27,
+    "fila_2516": null,
+    "concepto": "INCRNGO",
+    "contable_fml": "='Detalle Fiscal'!F208",
+    "fiscal_fml": "=D27+IF(E27=\"\",0,E27)-IF(F27=\"\",0,F27)+IF(G27=\"\",0,G27)"
+  },
+  {
+    "fila_xlsm": 28,
+    "fila_2516": null,
+    "concepto": "Ingresos netos",
+    "contable_fml": "='Detalle Fiscal'!F209",
+    "fiscal_fml": "=D28+IF(E28=\"\",0,E28)-IF(F28=\"\",0,F28)+IF(G28=\"\",0,G28)"
+  },
+  {
+    "fila_xlsm": 30,
+    "fila_2516": null,
+    "concepto": "Total costos y deducciones",
+    "contable_fml": "='Detalle Fiscal'!F224",
+    "fiscal_fml": "=D30+IF(E30=\"\",0,E30)-IF(F30=\"\",0,F30)+IF(G30=\"\",0,G30)"
+  },
+  {
+    "fila_xlsm": 32,
+    "fila_2516": null,
+    "concepto": "Renta liquida gravable",
+    "contable_fml": "='Detalle Fiscal'!F236",
+    "fiscal_fml": "=D32+IF(E32=\"\",0,E32)-IF(F32=\"\",0,F32)+IF(G32=\"\",0,G32)"
+  },
+  {
+    "fila_xlsm": 33,
+    "fila_2516": null,
+    "concepto": "GO gravables",
+    "contable_fml": "='Detalle Fiscal'!F241",
+    "fiscal_fml": "=D33+IF(E33=\"\",0,E33)-IF(F33=\"\",0,F33)+IF(G33=\"\",0,G33)"
+  }
+]

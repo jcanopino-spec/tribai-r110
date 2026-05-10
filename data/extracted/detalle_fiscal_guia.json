@@ -1,0 +1,380 @@
+[
+  {
+    "tipo": "total_renglon",
+    "renglon": 61,
+    "puc": null,
+    "desc": "Total ingresos netos (R58 - R59 - R60)",
+    "fila": 210
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6105",
+    "desc": "  Costo de ventas - Comercio",
+    "fila": 213
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6110",
+    "desc": "  Costo de ventas - Industria",
+    "fila": 214
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6115",
+    "desc": "  Costo de ventas - Servicios",
+    "fila": 215
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6120",
+    "desc": "  Costo de produccion",
+    "fila": 216
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6125",
+    "desc": "  Costo de mano de obra",
+    "fila": 217
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6130",
+    "desc": "  Costo materiales",
+    "fila": 218
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "6135",
+    "desc": "  CIF - Costos indirectos de fabricacion",
+    "fila": 219
+  },
+  {
+    "tipo": "puc",
+    "renglon": 61,
+    "puc": "7",
+    "desc": "  Costos de produccion/operacion (clase 7)",
+    "fila": 220
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 67,
+    "puc": null,
+    "desc": "Total costos y gastos deducibles (R62+R63+R64+R65+R66)",
+    "fila": 225
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 68,
+    "puc": null,
+    "desc": "Inversiones efectuadas en el año",
+    "fila": 226
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 72,
+    "puc": null,
+    "desc": "Renta líquida ordinaria del ejercicio (R61 + R69 + R70 + R71 - R67 - R68 - dividendos R49..R56)",
+    "fila": 228
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 73,
+    "puc": null,
+    "desc": "O Pérdida líquida del ejercicio",
+    "fila": 229
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 74,
+    "puc": null,
+    "desc": "Compensaciones (Art. 147 ET - pérdidas fiscales)",
+    "fila": 230
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 75,
+    "puc": null,
+    "desc": "Renta líquida (R72 - R74)",
+    "fila": 232
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 76,
+    "puc": null,
+    "desc": "Renta presuntiva",
+    "fila": 233
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 77,
+    "puc": null,
+    "desc": "Rentas exentas",
+    "fila": 235
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 78,
+    "puc": null,
+    "desc": "Rentas gravables",
+    "fila": 236
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 79,
+    "puc": null,
+    "desc": "RENTA LÍQUIDA GRAVABLE (MAX(R75,R76) - R77 + R78)",
+    "fila": 237
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 80,
+    "puc": null,
+    "desc": "Ingresos por ganancias ocasionales del país y del exterior",
+    "fila": 239
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 81,
+    "puc": null,
+    "desc": "Costos por ganancias ocasionales",
+    "fila": 240
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 82,
+    "puc": null,
+    "desc": "Ganancias ocasionales no gravadas y exentas",
+    "fila": 241
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 83,
+    "puc": null,
+    "desc": "Ganancias ocasionales gravables",
+    "fila": 242
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 84,
+    "puc": null,
+    "desc": "Impuesto sobre las rentas líquidas gravables (R79 × tarifa)",
+    "fila": 244
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 85,
+    "puc": null,
+    "desc": "De dividendos y participaciones gravadas 2017-2018",
+    "fila": 245
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 86,
+    "puc": null,
+    "desc": "De dividendos y participaciones gravadas 2019-2022 (art. 240)",
+    "fila": 246
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 87,
+    "puc": null,
+    "desc": "De dividendos y participaciones gravadas 2019-2022 (27%)",
+    "fila": 247
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 88,
+    "puc": null,
+    "desc": "De dividendos y participaciones gravadas 2023+ (art. 240)",
+    "fila": 248
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 89,
+    "puc": null,
+    "desc": "De dividendos y participaciones gravadas 2023+ (32% o 33%)",
+    "fila": 249
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 90,
+    "puc": null,
+    "desc": "De dividendos y participaciones recibidas de ECE",
+    "fila": 250
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 97,
+    "puc": null,
+    "desc": "Impuesto de ganancias ocasionales (R83 × tarifa)",
+    "fila": 251
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 91,
+    "puc": null,
+    "desc": "Total impuesto sobre las rentas líquidas gravables (R84 a R90)",
+    "fila": 252
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 93,
+    "puc": null,
+    "desc": "Descuentos tributarios",
+    "fila": 253
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 94,
+    "puc": null,
+    "desc": "Impuesto neto de renta (sin impuesto adicionado) = R91 - R93",
+    "fila": 254
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 96,
+    "puc": null,
+    "desc": "Impuesto neto de renta (con impuesto adicionado) = R94 + R92 + R95",
+    "fila": 255
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 108,
+    "puc": null,
+    "desc": "Anticipo renta para el año gravable siguiente",
+    "fila": 256
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 103,
+    "puc": null,
+    "desc": "Anticipo renta liquidado año gravable anterior",
+    "fila": 263
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 104,
+    "puc": null,
+    "desc": "Saldo a favor año gravable anterior sin solicitud de devolución",
+    "fila": 264
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 105,
+    "puc": null,
+    "desc": "Autorretenciones",
+    "fila": 265
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 106,
+    "puc": null,
+    "desc": "Otras retenciones",
+    "fila": 266
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 107,
+    "puc": null,
+    "desc": "Total retenciones año gravable a declarar (R105 + R106)",
+    "fila": 268
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 109,
+    "puc": null,
+    "desc": "Anticipo Puntos adicionales año gravable anterior",
+    "fila": 269
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 100,
+    "puc": null,
+    "desc": "Valor inversión obras por impuestos hasta del 50% de R99 (Modalidad 1)",
+    "fila": 270
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 101,
+    "puc": null,
+    "desc": "Descuento efectivo inversión obras por impuestos (Modalidad 2)",
+    "fila": 271
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 111,
+    "puc": null,
+    "desc": "Saldo a pagar por impuesto",
+    "fila": 272
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 112,
+    "puc": null,
+    "desc": "Sanciones",
+    "fila": 273
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 113,
+    "puc": null,
+    "desc": "Total saldo a pagar",
+    "fila": 274
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 114,
+    "puc": null,
+    "desc": "Total saldo a favor",
+    "fila": 275
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 92,
+    "puc": null,
+    "desc": "Valor a adicionar (VAA)",
+    "fila": 276
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 95,
+    "puc": null,
+    "desc": "Impuesto a adicionar (IA)",
+    "fila": 277
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 98,
+    "puc": null,
+    "desc": "Descuento por impuestos pagados en exterior por GO",
+    "fila": 278
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 99,
+    "puc": null,
+    "desc": "Total impuesto a cargo (R96 + R97 - R98)",
+    "fila": 279
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 102,
+    "puc": null,
+    "desc": "Crédito fiscal art. 256-1 E.T.",
+    "fila": 280
+  },
+  {
+    "tipo": "total_renglon",
+    "renglon": 110,
+    "puc": null,
+    "desc": "Anticipo Puntos adicionales año gravable siguiente",
+    "fila": 281
+  }
+]
