@@ -44,3 +44,4 @@ data/extracted/*_raw.json
 *.tsbuildinfo
 next-env.d.ts
 supabase/.temp/
+data/output/
