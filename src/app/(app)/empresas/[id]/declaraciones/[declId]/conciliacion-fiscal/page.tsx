@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { computarConcUtilidades } from "@/engine/conc-utilidades";
+import {
+  computarConcUtilidades,
+  computarLimiteBeneficios,
+  SUBCATEGORIA_LABEL,
+  type PartidaConc,
+  type SubcategoriaConc,
+} from "@/engine/conc-utilidades";
 import { loadConcUtilidades } from "@/lib/conc-utilidades";
 import { ModuloHeader } from "@/components/modulo-header";
 import { PartidaForm } from "./partida-form";
@@ -48,6 +54,17 @@ export default async function ConcUtilidadPage({
   const impuestoDiferidoNeto =
     (r.subtotales.temporariasDeducibles - r.subtotales.temporariasImponibles) *
     tarifaID;
+
+  // Control límite 35% beneficios (Art. 240 par. 5)
+  // Por defecto sin beneficios especiales · si la empresa los usa, capturarlos manualmente.
+  // En implementación futura este loader leería de los anexos especiales (Art. 158-1, etc).
+  const limite = computarLimiteBeneficios({
+    rentaLiquidaGravable: valoresF110.get(79) ?? 0,
+    deduccionesEspeciales: 0,
+    ingresosNoGravadosEspeciales: 0,
+    descuentosEspeciales: 0,
+    tarifa: 0.35,
+  });
 
   return (
     <div className="max-w-6xl">
@@ -115,32 +132,27 @@ export default async function ConcUtilidadPage({
         </div>
       </Section>
 
-      {/* Partidas de conciliación · 3 categorías NIC 12 */}
+      {/* Partidas de conciliación · 3 categorías NIC 12 con subcategorías */}
       <Section title="2 · Partidas de Conciliación · NIC 12 / IFRS">
         <p className="mb-3 text-xs text-muted-foreground">
-          Las partidas marcadas{" "}
-          <span className="font-mono uppercase">auto</span> se derivan de los
-          anexos y el balance fiscal. Las{" "}
-          <span className="font-mono uppercase">manual</span> las captura el
-          usuario abajo.
+          Cada partida se clasifica por su naturaleza tributaria (estructura
+          actualicese / archivo Aries) dentro de las 3 categorías NIC 12.
+          Las marcadas <span className="font-mono uppercase">auto</span> se
+          derivan de los anexos y balance fiscal.
         </p>
 
         <div className="grid gap-4 md:grid-cols-3">
           <CategoryCard
             title="Temporarias deducibles"
-            descripcion="Suman a la utilidad fiscal · generan Activo por Impuesto Diferido (ATD)"
-            partidas={r.partidas.filter(
-              (p) => p.categoria === "temporaria_deducible",
-            )}
+            descripcion="Suman a la utilidad fiscal · generan ATD"
+            partidas={r.partidas.filter((p) => p.categoria === "temporaria_deducible")}
             subtotal={r.subtotales.temporariasDeducibles}
             color="emerald"
           />
           <CategoryCard
             title="Temporarias imponibles"
-            descripcion="Restan de la utilidad fiscal · generan Pasivo por Impuesto Diferido (PTD)"
-            partidas={r.partidas.filter(
-              (p) => p.categoria === "temporaria_imponible",
-            )}
+            descripcion="Restan de la utilidad fiscal · generan PTD"
+            partidas={r.partidas.filter((p) => p.categoria === "temporaria_imponible")}
             subtotal={r.subtotales.temporariasImponibles}
             color="rose"
           />
@@ -151,6 +163,14 @@ export default async function ConcUtilidadPage({
             subtotal={r.subtotales.permanentes}
             color="amber"
           />
+        </div>
+
+        {/* Detalle por subcategoría · estructura archivo Aries */}
+        <div className="mt-6">
+          <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.08em] text-muted-foreground">
+            Detalle por subcategoría tributaria
+          </h3>
+          <SubcategoriaTabla partidas={r.partidas} />
         </div>
       </Section>
 
@@ -221,8 +241,41 @@ export default async function ConcUtilidadPage({
         </p>
       </Section>
 
+      {/* Control límite 35% beneficios · Art. 240 par. 5 */}
+      <Section title="4 · Control Límite 35% Beneficios · Art. 240 par. 5">
+        <p className="mb-3 text-xs text-muted-foreground">
+          La suma de deducciones especiales, ingresos no gravados especiales y
+          descuentos tributarios especiales no puede beneficiar al contribuyente
+          más de lo que se ahorraría con la sola tarifa del 35% sobre la renta
+          líquida ajustada. Si excede, se causa un impuesto a adicionar.
+        </p>
+        <div className="rounded-md border border-border bg-card">
+          <Row label="Parámetro 1 · (RL gravable + ded. esp.) × 35%" value={limite.parametro1} />
+          <Row label="Parámetro 2 · (ded. esp. + INCRNGO esp.) × 35% + descuentos esp." value={limite.parametro2} />
+          <Row
+            label="Impuesto a adicionar (R239) · max(0, P2 − P1)"
+            value={limite.impuestoAdicionar}
+            emphasis
+          />
+        </div>
+        <p
+          className={`mt-3 text-xs ${
+            limite.excedeLimite ? "text-destructive" : "text-success"
+          }`}
+        >
+          {limite.excedeLimite
+            ? `⚠ Los beneficios exceden el límite · adicional ${FMT.format(limite.impuestoAdicionar)}.`
+            : "✓ Los beneficios no exceden el límite del 35%."}
+        </p>
+        <p className="mt-2 text-[11px] text-muted-foreground">
+          Aries (régimen general sin beneficios especiales) tiene parámetro 2 = 0.
+          Para empresas con Art. 158-1, 256, 257 esp., la captura se hace en
+          los anexos correspondientes; este control se ejecuta automáticamente.
+        </p>
+      </Section>
+
       {/* Impuesto diferido informativo */}
-      <Section title="4 · Impacto en Impuesto Diferido (NIC 12)">
+      <Section title="5 · Impacto en Impuesto Diferido (NIC 12)">
         <p className="text-xs text-muted-foreground">
           Estimación informativa con tarifa nominal {(tarifaID * 100).toFixed(0)}%.
           El cálculo detallado por categoría está en{" "}
@@ -256,12 +309,12 @@ export default async function ConcUtilidadPage({
       </Section>
 
       {/* Captura manual */}
-      <Section title="5 · Capturar partida manual">
+      <Section title="6 · Capturar partida manual">
         <PartidaForm declId={declId} empresaId={empresaId} />
       </Section>
 
       {/* Listado completo · auto + manual */}
-      <Section title="6 · Detalle de todas las partidas">
+      <Section title="7 · Detalle de todas las partidas">
         <p className="mb-3 text-xs text-muted-foreground">
           {partidasAuto.length} partidas automáticas · {partidasManuales.length}{" "}
           manuales. Las auto se actualizan al cambiar el anexo origen.
@@ -465,6 +518,106 @@ function Stat({
         {label}
       </p>
       <p className="mt-1 font-serif text-xl tabular-nums">{FMT.format(value)}</p>
+    </div>
+  );
+}
+
+/**
+ * Tabla de partidas agrupada por subcategoría tributaria (estructura del
+ * archivo Aries / actualicese). Las 6 subcategorías + "otros" se renderizan
+ * como secciones colapsables con subtotales.
+ */
+function SubcategoriaTabla({ partidas }: { partidas: PartidaConc[] }) {
+  const orden: NonNullable<SubcategoriaConc>[] = [
+    "ingresos_no_gravados",
+    "ingresos_contables_no_fiscales",
+    "gastos_fiscales_no_contables",
+    "gastos_no_deducibles",
+    "ingresos_fiscales_no_contables",
+    "partidas_no_afectan_renta",
+  ];
+
+  const grupos = new Map<string, PartidaConc[]>();
+  for (const p of partidas) {
+    const key = p.subcategoria ?? "_otros";
+    const arr = grupos.get(key) ?? [];
+    arr.push(p);
+    grupos.set(key, arr);
+  }
+
+  // Subcategorías con al menos 1 partida + "otros" si hay
+  const subcatsConDatos = orden.filter((s) => (grupos.get(s) ?? []).length > 0);
+  const otros = grupos.get("_otros") ?? [];
+
+  if (subcatsConDatos.length === 0 && otros.length === 0) {
+    return <p className="text-xs italic text-muted-foreground">Sin partidas para clasificar.</p>;
+  }
+
+  return (
+    <div className="space-y-3">
+      {subcatsConDatos.map((sub) => {
+        const items = grupos.get(sub) ?? [];
+        const subtotal = items.reduce(
+          (s, p) => s + (p.signo === "mas" ? p.valor : -p.valor),
+          0,
+        );
+        return (
+          <div key={sub} className="rounded-md border border-border">
+            <div className="flex items-baseline justify-between bg-muted/30 px-3 py-2">
+              <h4 className="font-mono text-[11px] uppercase tracking-[0.05em]">
+                {SUBCATEGORIA_LABEL[sub]}
+              </h4>
+              <span className="font-mono text-sm font-semibold tabular-nums">
+                {subtotal < 0 ? "−" : ""}
+                {FMT.format(Math.abs(subtotal))}
+              </span>
+            </div>
+            <ul className="divide-y divide-border/50 text-xs">
+              {items.map((p) => (
+                <li key={p.id} className="flex items-center gap-2 px-3 py-2">
+                  <span
+                    className={`inline-block w-3 text-center font-mono ${
+                      p.signo === "mas" ? "text-emerald-700" : "text-rose-700"
+                    }`}
+                  >
+                    {p.signo === "mas" ? "+" : "−"}
+                  </span>
+                  <span className="flex-1 truncate" title={p.observacion ?? p.concepto}>
+                    {p.concepto}
+                  </span>
+                  <span className="font-mono tabular-nums">{FMT.format(p.valor)}</span>
+                  {p.origen === "auto" && (
+                    <span className="rounded bg-foreground/10 px-1 font-mono text-[9px] uppercase">
+                      auto
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+      {otros.length > 0 && (
+        <div className="rounded-md border border-dashed border-border">
+          <div className="flex items-baseline justify-between bg-muted/20 px-3 py-2">
+            <h4 className="font-mono text-[11px] uppercase tracking-[0.05em] text-muted-foreground">
+              Sin subcategoría (manuales · clasificar)
+            </h4>
+            <span className="text-xs text-muted-foreground">{otros.length} partida(s)</span>
+          </div>
+          <ul className="divide-y divide-border/50 text-xs">
+            {otros.map((p) => (
+              <li key={p.id} className="flex items-center gap-2 px-3 py-2">
+                <span className={`inline-block w-3 text-center font-mono ${p.signo === "mas" ? "text-emerald-700" : "text-rose-700"}`}>
+                  {p.signo === "mas" ? "+" : "−"}
+                </span>
+                <span className="flex-1 truncate">{p.concepto}</span>
+                <span className="font-mono tabular-nums">{FMT.format(p.valor)}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

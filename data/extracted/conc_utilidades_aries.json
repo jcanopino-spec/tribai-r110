@@ -1,0 +1,1037 @@
+[
+  {
+    "C2": "Conciliación de utilidades"
+  },
+  {
+    "C2": "=+Presentación!B7"
+  },
+  {
+    "C2": "=+Presentación!B8"
+  },
+  {
+    "C2": "=+Presentación!B9"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C10"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C11"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C13"
+  },
+  {
+    "C2": "=+'Detalle renglones del 110'!C14"
+  },
+  {
+    "C2": "Conciliación entre el resultado contable y el resultado fiscal"
+  },
+  {
+    "C2": "Nota: a lo largo de esta hoja se incrustaron marcas de referenciación como (*-1), (*-2), etc. Cuando se encuentre con alguna de ellas, remítase a la parte final de la herramienta para leer el comentario pertinente a dicha parte de la depuración"
+  },
+  {
+    "C2": "Códigos \ncontables",
+    "C3": "Nombre cuentas",
+    "C4": "Valores contables"
+  },
+  {
+    "C4": "Subparciales",
+    "C5": "Parciales",
+    "C6": "Totales"
+  },
+  {
+    "C2": "41",
+    "C3": "Operacionales"
+  },
+  {
+    "C2": "4135",
+    "C3": "Comercio al por mayor y por menor",
+    "C6": "=SUM(E22:E26)"
+  },
+  {
+    "C3": "   A clientes nacionales por fuera de zona franca (sin importar si son o no vinculados económicos)"
+  },
+  {
+    "C3": "  A clientes en zonas francas que no sean vinculados económicos"
+  },
+  {
+    "C3": "  A sociedades de comercialización"
+  },
+  {
+    "C3": "   A clientes en jurisdicciones no cooperantes (anteriormente llamadas \"paraísos fiscales\"; ver decreto 1966 de 2014 recopilado en el artículo 1.2.2.5.1 del DUT 1625 de 2016) pero que no sean vinculados económicos"
+  },
+  {
+    "C3": "  A vinculados económicos ubicados en zona franca o ubicados en cualquier otro país"
+  },
+  {
+    "C2": "4140",
+    "C3": "Servicios - Generación de energía electrica con fuentes eólicas (*-1)"
+  },
+  {
+    "C2": "42",
+    "C3": "No operacionales"
+  },
+  {
+    "C2": "421020",
+    "C3": "Financieros - Diferencia en cambio"
+  },
+  {
+    "C2": "421005",
+    "C3": "Financieros - Intereses"
+  },
+  {
+    "C2": "4215",
+    "C3": "Dividendos"
+  },
+  {
+    "C2": "425035",
+    "C3": "Reversión de deterioros-inventarios"
+  },
+  {
+    "C2": "425050",
+    "C3": "Reintegro de otros costos y gastos"
+  },
+  {
+    "C2": "4295",
+    "C3": "Diversos-indemnizaciones de aseguradoras, reintegros incapacidades EPS, metodo de particiapacion, etc"
+  },
+  {
+    "C2": "429543",
+    "C3": "Premios, rifas y loterías"
+  },
+  {
+    "C3": "Subtotal ingresos no operacionales",
+    "C6": "=SUM(F31:F38)"
+  },
+  {
+    "C2": "4175",
+    "C3": "Devoluciones, rebajas y descuentos"
+  },
+  {
+    "C3": "Total ingresos netos",
+    "C6": "=+F21+F28+F40+F43"
+  },
+  {
+    "C2": "61",
+    "C3": "Costo de ventas y prestación de servicios"
+  },
+  {
+    "C3": "Inventario inicial de mercancías"
+  },
+  {
+    "C3": "Inventario inicial trabajo en proceso"
+  },
+  {
+    "C3": "Más: Consumo de materias primas"
+  },
+  {
+    "C3": "        Inventario inicial de materias primas"
+  },
+  {
+    "C3": "        Más: compras netas de materias primas en el año"
+  },
+  {
+    "C3": "        Menos: Inventario final materias primas"
+  },
+  {
+    "C3": "Total consumo de materias primas",
+    "C4": "=SUM(D53:D55)"
+  },
+  {
+    "C3": "Más: Mano de obra"
+  },
+  {
+    "C3": "        Mano de obra (salarios y prestaciones)"
+  },
+  {
+    "C3": "        Aportes a EPS"
+  },
+  {
+    "C3": "        Aportes a ARP"
+  },
+  {
+    "C3": "        Aportes a fondos de pensiones"
+  },
+  {
+    "C3": "        Aportes al Sena"
+  },
+  {
+    "C3": "        Aportes a ICBF"
+  },
+  {
+    "C3": "        Aportes a cajas de compensación"
+  },
+  {
+    "C3": "Subtotal de costos  mano de obra",
+    "C4": "=SUM(D59:D65)"
+  },
+  {
+    "C3": "Más: Costos indirectos de fabricación"
+  },
+  {
+    "C3": "         Mano de obra indirecta"
+  },
+  {
+    "C3": "         Depreciaciones"
+  },
+  {
+    "C3": "         Amortizaciones"
+  },
+  {
+    "C3": "         Agotamiento"
+  },
+  {
+    "C3": "         Diferencia en cambio"
+  },
+  {
+    "C3": "         Pagos al exterior por servicios técnicos, asist. técnica y consultoría"
+  },
+  {
+    "C3": "         Servicios contratados con terceros"
+  },
+  {
+    "C3": "         Otros costos generales de fabricación"
+  },
+  {
+    "C3": "Subtotal de costos indirectos",
+    "C4": "=SUM(D69:D76)"
+  },
+  {
+    "C3": "Menos: Inventario final de trabajo en proceso"
+  },
+  {
+    "C3": "Total costo de la mercancía fabricada y vendida",
+    "C5": "=+D50+D56+D66+D77+D79"
+  },
+  {
+    "r": 82,
+    "C3": "Más: Compras de mercancías"
+  },
+  {
+    "r": 83,
+    "C3": "        Valor de las compras del año"
+  },
+  {
+    "r": 85,
+    "C3": "Menos: Inventario final",
+    "C6": "=-(E48+E80+E83+E85)"
+  },
+  {
+    "r": 87,
+    "C2": "6140",
+    "C3": "Costo de prestación servicios energía eólica (*-1)"
+  },
+  {
+    "r": 89,
+    "C2": "51",
+    "C3": "Gastos de administración"
+  },
+  {
+    "r": 90,
+    "C2": "5105",
+    "C3": "De personal",
+    "C6": "=-(SUM('Detalle renglones del 110'!F49:F55)+SUM('Detalle renglones del 110'!F73:F75)+SUM('Detalle renglones del 110'!F84:F86))"
+  },
+  {
+    "r": 91,
+    "C2": "5110",
+    "C3": "Honorarios"
+  },
+  {
+    "r": 92,
+    "C2": "5115",
+    "C3": "Impuestos"
+  },
+  {
+    "r": 93,
+    "C2": "5120",
+    "C3": "Arrendamientos"
+  },
+  {
+    "r": 94,
+    "C2": "5125",
+    "C3": "Contribuciones"
+  },
+  {
+    "r": 95,
+    "C2": "5130",
+    "C3": "Seguros"
+  },
+  {
+    "r": 96,
+    "C2": "5135",
+    "C3": "Servicios"
+  },
+  {
+    "r": 97,
+    "C2": "5140",
+    "C3": "Gastos legales"
+  },
+  {
+    "r": 98,
+    "C2": "5145",
+    "C3": "Mantenimiento y reparación"
+  },
+  {
+    "r": 99,
+    "C2": "5150",
+    "C3": "Adecuaciones e instalaciones"
+  },
+  {
+    "r": 100,
+    "C2": "5155",
+    "C3": "Gastos de viajes"
+  },
+  {
+    "r": 101,
+    "C2": "5160",
+    "C3": "Depreciaciones",
+    "C6": "='Prop plant y equ'!J92"
+  },
+  {
+    "r": 102,
+    "C2": "5195",
+    "C3": "Diversos"
+  },
+  {
+    "r": 103,
+    "C2": "519901",
+    "C3": "Deterioros de inventarios"
+  },
+  {
+    "r": 104,
+    "C2": "519902",
+    "C3": "Deterioros de propiedad, planta y equipo",
+    "C6": "=+'Prop plant y equ'!K92"
+  },
+  {
+    "r": 106,
+    "C3": "Subtotal gastos operacionales de administración",
+    "C6": "=SUM(F90:F105)"
+  },
+  {
+    "r": 108,
+    "C2": "52",
+    "C3": "Gastos de distribución y ventas"
+  },
+  {
+    "r": 109,
+    "C2": "5205",
+    "C3": "Gastos de personal",
+    "C6": "=-(SUM('Detalle renglones del 110'!F56:F63)+SUM('Detalle renglones del 110'!F76:F78)+SUM('Detalle renglones del 110'!F87:F89))"
+  },
+  {
+    "r": 110,
+    "C2": "5215",
+    "C3": "Impuestos"
+  },
+  {
+    "r": 111,
+    "C2": "5220",
+    "C3": "Arrendamientos"
+  },
+  {
+    "r": 112,
+    "C2": "5235",
+    "C3": "Servicios"
+  },
+  {
+    "r": 113,
+    "C2": "5245",
+    "C3": "Mantenimiento y reparaciones"
+  },
+  {
+    "r": 114,
+    "C2": "5255",
+    "C3": "Gastos de viaje"
+  },
+  {
+    "r": 115,
+    "C2": "5260",
+    "C3": "Depreciaciones"
+  },
+  {
+    "r": 116,
+    "C2": "5295",
+    "C3": "Diversos"
+  },
+  {
+    "r": 118,
+    "C3": "Subtotal gastos operacionales de ventas",
+    "C6": "=SUM(F109:F117)"
+  },
+  {
+    "r": 121,
+    "C2": "53",
+    "C3": "Gastos no operacionales"
+  },
+  {
+    "r": 122,
+    "C2": "5305",
+    "C3": "Financieros",
+    "C6": "=-Subcapitalización!D29"
+  },
+  {
+    "r": 123,
+    "C2": "5310",
+    "C3": "Pérdida en venta y retiro de bienes"
+  },
+  {
+    "r": 124,
+    "C2": "5316",
+    "C3": "Gastos extraordinarios"
+  },
+  {
+    "r": 125,
+    "C2": "5394",
+    "C3": "Donaciones a entidades sin ánimo de lucro (régimen especial)"
+  },
+  {
+    "r": 126,
+    "C2": "5395",
+    "C3": "Gastos diversos"
+  },
+  {
+    "r": 128,
+    "C3": "Subtotal gastos no operacionales",
+    "C6": "=SUM(F122:F127)"
+  },
+  {
+    "r": 131,
+    "C3": "Utilidad (o pérdida) contable antes de impuesto",
+    "C6": "=+F45+F85+F87+F106+F118+F128"
+  },
+  {
+    "r": 133,
+    "C3": "Informativo: tarifa general de renta que aplica la sociedad (recuérdese que el cálculo de la \"tasa mínima de tributación\" aplicará para sociedades nacionales por dentro o fuera de zonas francas y por tanto esta tarifa que aquí se informa puede llegar a ser del 15% (caso por ejemplo de quienes explot",
+    "C4": "=IF('Detalle renglones del 110'!F36=1,35%,IF('Detalle renglones del 110'!F36=2,20%,IF('Detalle renglones del 110'!F36=3,20%,0)))"
+  },
+  {
+    "r": 134,
+    "C2": "54",
+    "C3": "Provisión impuesto a las ganancias",
+    "C4": "Depuración inicial permitida por las normas vigentes",
+    "C5": "Depuración final (ajustada o no) para cumplir con la \"tasa mínima de tributación\""
+  },
+  {
+    "r": 135,
+    "C3": "Utilidad o pérdida contable antes de impuestos",
+    "C4": "=+F131",
+    "C5": "=+D135"
+  },
+  {
+    "r": 138,
+    "C3": "Diferencias (temporarias o permanentes) deducibles (que disminuirán la base del impuesto)"
+  },
+  {
+    "r": 139,
+    "C3": "Menos: Ingresos no gravados"
+  },
+  {
+    "r": 140,
+    "C3": "Dividendos",
+    "C5": "=+D140"
+  },
+  {
+    "r": 141,
+    "C3": "Indemnizaciones de seguros de vida por daño emergente",
+    "C5": "=+D141"
+  },
+  {
+    "r": 143,
+    "C3": "Menos: Ingresos contables no fiscales"
+  },
+  {
+    "r": 144,
+    "C3": "  Reintegro de provisiones",
+    "C4": "=-F35",
+    "C5": "=+D144"
+  },
+  {
+    "r": 145,
+    "C3": "  Ingreso contable por aplicación del método de participación patrimonial",
+    "C5": "=+D145"
+  },
+  {
+    "r": 147,
+    "C3": "Menos: Gastos fiscales no contables"
+  },
+  {
+    "r": 148,
+    "C3": "  Aportes parafiscales del empleador causados en años anteriores al 2025, que no se dedujeron en esos años, pero que fueron pagados en 2025 (ver artículos 108 y 115-1 del ET).",
+    "C4": "=-SUM('Detalle renglones del 110'!H659:H664)-SUM('Detalle renglones del 110'!H728:H733)",
+    "C5": "=+D148"
+  },
+  {
+    "r": 149,
+    "C3": "  Impuestos de industria y comercio, avisos y tableros y otros mencionados en el artículo 115 del ET, los cuales fueron causados en años anteriores al 2025, y no fueron deducidos en esos años, pero fueron pagados en 2025",
+    "C5": "=+D149"
+  },
+  {
+    "r": 151,
+    "C3": "Menos: Partidas que no deben afectar el impuesto de renta y solo deben afectar el impuesto de ganancias ocasionales"
+  },
+  {
+    "r": 152,
+    "C3": "Utilidad contable en venta de activos fijos poseidos por más de dos años",
+    "C5": "=+D152"
+  },
+  {
+    "r": 153,
+    "C3": "Ingresos por loterías, rifas y similares",
+    "C4": "=-F38",
+    "C5": "=+D153"
+  },
+  {
+    "r": 156,
+    "C3": "Diferencias (temporarias o permanentes) imponibles (que aumentarán la base del impuesto; nota: aquellas que son \"permanentes\" las dejamos en color morado y las \"temporarias\" las dejamos en color negro)"
+  },
+  {
+    "r": 157,
+    "C3": "Más: Gastos contables no deducibles fiscalmente"
+  },
+  {
+    "r": 158,
+    "C3": "   Gasto impuestos que nunca son deducibles ya sea en el momento de su causación o de su pago (impuesto normalización, de patrimonio, ver artículo 115 del ET)",
+    "C5": "=+D158"
+  },
+  {
+    "r": 159,
+    "C3": "   Mayor gasto por depreciación contable",
+    "C4": "=+'Prop plant y equ'!J173-'Prop plant y equ'!J92",
+    "C5": "=+D159"
+  },
+  {
+    "r": 160,
+    "C3": "   Exceso de intereses por aplicación de la norma de subcapitalización (artículo 118-1 del ET)",
+    "C4": "=+Subcapitalización!H59",
+    "C5": "=+D160"
+  },
+  {
+    "r": 161,
+    "C3": "   Gasto deterioro de inventarios y de propiedad, planta y equipo",
+    "C4": "=-(F103+F104)",
+    "C5": "=+D161"
+  },
+  {
+    "r": 162,
+    "C3": "   Gastos extraordinarios (sanciones, multas)",
+    "C4": "=-F124",
+    "C5": "=+D162"
+  },
+  {
+    "r": 163,
+    "C3": "   Gasto por donaciones a entidades del régimen especial (este valor se suma pues dicho gasto solo dará derecho a un \"descuento del impuesto de renta\" de hasta el 25 % de su valor; ver artículo 257 del ET; ver más abajo en \"descuentos tributarios\")",
+    "C4": "=-F125",
+    "C5": "=+D163"
+  },
+  {
+    "r": 164,
+    "C3": "   Gastos diversos (no tienen relación de causalidad con la renta)",
+    "C4": "=-F126",
+    "C5": "=+D164"
+  },
+  {
+    "r": 166,
+    "C3": "Subtotal gastos contables no deducibles fiscalmente",
+    "C4": "=SUM(D158:D164)",
+    "C5": "=SUM(E158:E164)"
+  },
+  {
+    "r": 168,
+    "C3": "Ingresos fiscales no contables"
+  },
+  {
+    "r": 169,
+    "C3": "  Intereses presuntivos por prestamos en dinero a socios (artículo 35 del ET)",
+    "C5": "=+D169"
+  },
+  {
+    "r": 173,
+    "C3": "Más: Partidas que no deben afectar el impuesto de renta y solo deben afectar el impuesto de ganancias ocasionales"
+  },
+  {
+    "r": 174,
+    "C3": "Pérdida contable en venta o retiro de activos fijos poseídos más de dos años",
+    "C4": "=-F123",
+    "C5": "=+D174"
+  },
+  {
+    "r": 178,
+    "C3": "Renta líquida fiscal",
+    "C4": "=IF(SUM(D135:D154)+D166+D169+D174>0,ROUND(SUM(D135:D154)+D166+D169+D174,-3),0)",
+    "C5": "=IF(SUM(E135:E154)+E166+E169+E174>0,ROUND(SUM(E135:E154)+E166+E169+E174,-3),0)",
+    "C7": "=+E178-'formulario 110'!W63"
+  },
+  {
+    "r": 180,
+    "C3": "O pérdida líquida fiscal",
+    "C4": "=IF(D135+SUM(D140:D154)+D166+D169+D174<0,ROUND(D135+SUM(D140:D154)+D166+D169+D174,-3),0)",
+    "C5": "=IF(E135+SUM(E140:E154)+E166+E169+E174<0,ROUND(E135+SUM(E140:E154)+E166+E169+E174,-3),0)"
+  },
+  {
+    "r": 182,
+    "C3": "Menos: Compensaciones"
+  },
+  {
+    "r": 183,
+    "C3": "De excesos de renta presuntiva sobre líquida en años anteriores (formados en declaraciones de renta años anteriores), o de excesos de base mínima sobre renta ordinaria en años anteriores (formados en declaraciones del CREE 2013 a 2016; ver artículo 290 numeral 6 del ET). Solo se pueden restar a modo"
+  },
+  {
+    "r": 184,
+    "C3": "3000000",
+    "C4": "=IF(D178>0,IF(D178>=C184,-C184,D178),0)",
+    "C5": "=+D184"
+  },
+  {
+    "r": 185,
+    "C3": "De pérdidas fiscales de ejercicios anteriores (formadas tanto en declaraciones de renta como en declaraciones del CREE; ver artículo 290 numeral 5 del ET). Las pérdidas formadas entre 2013 y 2016 no tienen límite en el tiempo para ser compensadas. En cambio, las que se formen en un ejercicio 2017 y "
+  },
+  {
+    "r": 186,
+    "C3": "1170000",
+    "C4": "=IF(D178>0,IF(D178+D184>=C186,-C186,D178+D184),0)",
+    "C5": "=+D186"
+  },
+  {
+    "r": 188,
+    "C3": "Renta líquida compensada",
+    "C4": "=IF(D178>0,IF(D178+D184+D186>0,D178+D184+D186,0),0)",
+    "C5": "=IF(E178>0,IF(E178+E184+E186>0,E178+E184+E186,0),0)",
+    "C7": "=+E188-'formulario 110'!W66"
+  },
+  {
+    "r": 190,
+    "C3": "Renta presuntiva (a partir del año gravable 2021 se calcula siempre con el 0 %; ver artículo 188 del ET)"
+  },
+  {
+    "r": 192,
+    "C3": "Menos: rentas exentas (solo se pueden restar rentas exentas si el ejercicio, hasta antes de este punto, está arrojando ¨renta líquida¨ mayor a cero; además, el monto total de las rentas exentas que se resten no deben superar a dicha ¨renta líquida¨)"
+  },
+  {
+    "r": 193,
+    "C2": "(*-2)",
+    "C3": "   Por actividad de servicio de energía eólica (artículo 235-2 numeral 3 del ET)"
+  },
+  {
+    "r": 194,
+    "C3": "=+F28+F87",
+    "C4": "=IF(D188>0,IF(D188>=C194,-C194,D188),0)",
+    "C5": "=IF(D245<15%,D194+(D246/D133),D194)"
+  },
+  {
+    "r": 195,
+    "C3": "   Por otras actividades del art. 235-2 del ET (ejemplo, actividades de la economía naranja, o el desarrollo del campo colombiano; ver numerales 1 y 2 del art. 235-2 del ET y el último inciso del art. 96 de la Ley 2277 de 2022)",
+    "C5": "=+D195"
+  },
+  {
+    "r": 196,
+    "C3": "Rentas de hoteles de personas jurídicas construidos entre 2003 y 2016 (tienen derecho a las rentas exentas que se les daban en el artículo 207-2 del ET durante los primeros 30 años de operación del hotel; por tanto, no tienen que calcular la tarifa del 9 % que se les mencionaba en la anterior versió",
+    "C5": "=+D196"
+  },
+  {
+    "r": 197,
+    "C3": "Por aplicación de tratados para evitar la doble imposición – CAN, las percibidas por el régimen de compañías holding colombianas -CHC y las rentas exentas de que tratan los literales a) y b) del numeral 4 y el numeral 7 del artículo 235-2 del Estatuto Tributario. ",
+    "C5": "=+D197"
+  },
+  {
+    "r": 198,
+    "C3": "Más: rentas gravadas "
+  },
+  {
+    "r": 199,
+    "C3": "Por activos omitidos en años anteriores e incluidos en esta declaración",
+    "C5": "=+D199"
+  },
+  {
+    "r": 200,
+    "C3": "Por pasivos inexistentes incluidos en años anteriores y eliminados",
+    "C5": "=+D200"
+  },
+  {
+    "r": 203,
+    "C3": "Renta líquida gravable general",
+    "C4": "=ROUND(IF(D188>D190,D188+SUM(D194:D200)),-3)",
+    "C5": "=ROUND(IF(E188>E190,E188+SUM(E194:E200)),-3)",
+    "C7": "=+E203-'formulario 110'!AV29"
+  },
+  {
+    "r": 206,
+    "C3": "Informativo: Valor de la renta líquida gravable total y  que corresponde a las rentas líquidas pasivas obtenidas con entidades controladas del exterior",
+    "C5": "=+D206"
+  },
+  {
+    "r": 207,
+    "C3": "Impuesto básico de renta que recae sobre la renta liquida gravable general sin incluir la renta líquida pasiva obtenida con entidades controladas del exterior",
+    "C4": "=ROUND((D203*D133)+'Detalle renglones del 110'!L955+'Detalle renglones del 110'!L956+'Detalle renglones del 110'!L957+'Detalle renglones del 110'!L958+'Detalle renglones del 110'!L959-(D206*35%),-3)",
+    "C5": "=('Detalle renglones del 110'!L960-'Detalle renglones del 110'!L952)-(E206*35%)"
+  },
+  {
+    "r": 208,
+    "C3": "Impuesto básico de renta que recae sobre la renta líquida pasiva obtenida con entidades controladas del exterior",
+    "C4": "=IF(D203>0,D206*35%)",
+    "C5": "=IF(E203>0,E206*35%)"
+  },
+  {
+    "r": 209,
+    "C3": "Sobretasas al impuesto de renta (a cargo de entidades financieras, o productores de hidrocarburos, o hidroeléctricas, etc.)"
+  },
+  {
+    "r": 210,
+    "C3": "Total del impuesto básico de renta y sobretasa sobre la renta líquida gravable general",
+    "C4": "=SUM(D207:D209)",
+    "C5": "=SUM(E207:E209)",
+    "C7": "=+E210-'formulario 110'!AV34"
+  },
+  {
+    "r": 212,
+    "C3": "Menos: Descuentos tributarios (estos valores no pueden superar al impuesto básico de renta)"
+  },
+  {
+    "r": 213,
+    "C3": " -Que se pueden restar al impuesto de renta "
+  },
+  {
+    "r": 214,
+    "C3": "      Descuento por donaciones a entidades del régimen especial",
+    "C4": "=-(+D163*25%)",
+    "C5": "=+D214"
+  },
+  {
+    "r": 215,
+    "C3": "      Becas por impuestos (ver el artículo 257-1 del ET, creado con el artículo 190 de la Ley 1955 de mayo de 2019 y reglamentado con Decreto 985 de junio 13 de 2022; https://actualicese.com/descuento-tributario-de-becas-por-impuestos-fue-reglamentado/)",
+    "C5": "=+D215"
+  },
+  {
+    "r": 216,
+    "C3": "Por inversiones o donaciones en actividades de investigación y desarrollo  (artículo 256 ET)",
+    "C5": "=+D216"
+  },
+  {
+    "r": 217,
+    "C3": "Por IVA en compra o construcción de bienes de capital que adquieran o construyan todo tipo de contribuyentes, es decir, sin importar si son o no responsables del IVA (ver el artículo 258-1 del ET, modificado con el artículo 95 de la Ley 2010 de 2019, reglamentado con el Decreto 1089 de agosto 3 de 2",
+    "C5": "=+D217"
+  },
+  {
+    "r": 218,
+    "C3": "       Descuentos tributarios o créditos tributarios por aplicación de tratados para evitar la doble imposición y el establecido en el artículo 254 del Estatuto Tributario",
+    "C5": "=+D218"
+  },
+  {
+    "r": 219,
+    "C3": "Otros ",
+    "C5": "=+D219"
+  },
+  {
+    "r": 220,
+    "C3": "Impuesto neto de renta",
+    "C4": "=SUM(D210:D219)",
+    "C5": "=SUM(E210:E219)",
+    "C7": "=+E220-'formulario 110'!AV44"
+  },
+  {
+    "r": 222,
+    "C3": "Control al límite del uso de beneficios tributarios mencionadas en el artículo 259-1 del ET"
+  },
+  {
+    "r": 223,
+    "C3": "Obtención del primer parámetro de referencia"
+  },
+  {
+    "r": 224,
+    "C3": "  Renta líquida gravable general obtenida hasta este momento",
+    "C4": "=+D203",
+    "C5": "=+E203"
+  },
+  {
+    "r": 225,
+    "C3": "  Mas: Deducciones especiales expresamente mencionadas dentro del art. 259-1 y que estaban disminuyendo la renta líquida"
+  },
+  {
+    "r": 226,
+    "C3": "  Renta liquida ajustada",
+    "C4": "=+D224+D225",
+    "C5": "=+E224+E225"
+  },
+  {
+    "r": 227,
+    "C3": "  Tarifa especial aplicable"
+  },
+  {
+    "r": 228,
+    "C3": "   Valor especial de parámetro de referencia No 1",
+    "C4": "=ROUND(D226*D227,-3)",
+    "C5": "=ROUND(E226*E227,-3)"
+  },
+  {
+    "r": 230,
+    "C3": "Obtención del segundo parámetro de referencia"
+  },
+  {
+    "r": 231,
+    "C3": "   Deducciones especiales expresamente mencionadas dentro del art. 259-1",
+    "C4": "=+D225",
+    "C5": "=+E225"
+  },
+  {
+    "r": 232,
+    "C3": "   Más : Ingresos no gravados expresamente mencionados dentro del art. 259-1"
+  },
+  {
+    "r": 233,
+    "C3": "   Subtotal",
+    "C4": "=+D231+D232",
+    "C5": "=+E231+E232"
+  },
+  {
+    "r": 234,
+    "C3": "   Tarifa del impuesto de renta que aplica la sociedad",
+    "C4": "=+D133",
+    "C5": "=D133"
+  },
+  {
+    "r": 235,
+    "C3": "   Subtotal",
+    "C4": "=ROUND(D233*D234,-3)",
+    "C5": "=ROUND(E233*E234,-3)"
+  },
+  {
+    "r": 236,
+    "C3": "   Más: Descuentos tributarios expresamente mencionados en el art. 259-1"
+  },
+  {
+    "r": 237,
+    "C3": "   Valor especial de parámetro de referencia No 2",
+    "C4": "=+D235+D236",
+    "C5": "=+E235+E236"
+  },
+  {
+    "r": 239,
+    "C3": "   Valor del impuesto a adicionar por exceso en el uso de los beneficios del art. 259-1 del ET. (solo si el valor de referencia No.2 llega a superar al valor de referencia No 1)",
+    "C4": "=IF(D237>D228,D237-D228,0)",
+    "C5": "=IF(E237>E228,E237-E228,0)"
+  },
+  {
+    "r": 241,
+    "C3": "Impuesto neto de renta ajustado con el control al limite del uso de beneficios del art. 259-1 del ET",
+    "C4": "=+D220+D239",
+    "C5": "=+E220+E239",
+    "C7": "=+E241-'formulario 110'!AV46"
+  },
+  {
+    "r": 243,
+    "C3": "Informativo: El cálculo del \"impuesto depurado\" fijado en le parágrafo 6 del art. 240 daría:",
+    "C4": "=+D241-D218-D208",
+    "C5": "=+E241-E218-E208"
+  },
+  {
+    "r": 244,
+    "C3": "Informativo: El cálculo de la \"utilidad depurada\" fijado en el parágrafo 6 del art. 240 daría:",
+    "C4": "=IF(+D135+D166-D159+D169+D174+D140+D141+D145+D152+D153+D197+D184+D186>0,+D135+D166-D159+D169+D174+D140+D141+D145+D152+D153+D197+D184+D186,0)",
+    "C5": "=IF(+E135+E166-E159+E169+E174+E140+E141+E145+E152+E153+E197+E184+E186>0,+E135+E166-E159+E169+E174+E140+E141+E145+E152+E153+E197+E184+E186,0)"
+  },
+  {
+    "r": 245,
+    "C3": "Informativo:  Tasa de tributación depurada (se toma \"impuesto depurado\" y se divide entre \"utilidad depurada\")",
+    "C4": "=IF(D244>0,D243/D244,\"no aplica\")",
+    "C5": "=IF(E244>0,E243/E244,\"no aplica\")"
+  },
+  {
+    "r": 246,
+    "C3": "Informativo:  Valor del impuesto a adicionar",
+    "C4": "=IF(D244>0,IF(D245<15%,ROUND((D244*15%),-3)-D243,0),0)",
+    "C5": "=IF(E244>0,IF(E245<15%,ROUND((E244*15%),-3)-E243,0),0)"
+  },
+  {
+    "r": 248,
+    "C3": "Ingresos constitutivos de ganancia ocasional"
+  },
+  {
+    "r": 249,
+    "C3": "   Ingreso por lotería, rifas y similares",
+    "C4": "=-D153",
+    "C5": "=+D249"
+  },
+  {
+    "r": 250,
+    "C3": "   Precio de venta del activo fijo vendido durante el año  y que se había poseído por más de dos años",
+    "C5": "=+D250"
+  },
+  {
+    "r": 251,
+    "C3": "Menos: Costo y parte no gravada"
+  },
+  {
+    "r": 252,
+    "C2": "(*-3)",
+    "C3": "Costo fiscal de venta que tenía el activo a la fecha en que se vendió",
+    "C5": "=+D252"
+  },
+  {
+    "r": 254,
+    "C2": "(*-4)",
+    "C3": "Ganancia (o pérdida) ocasional",
+    "C4": "=IF(D249+D250+D252>0,D249+D250+D252,0)",
+    "C5": "=IF(E249+E250+E252>0,E249+E250+E252,0)"
+  },
+  {
+    "r": 255,
+    "C3": "Impuesto de ganancias ocasionales",
+    "C4": "=+'Detalle renglones del 110'!L974",
+    "C5": "=+D255"
+  },
+  {
+    "r": 256,
+    "C3": "Menos: Descuentos tributarios "
+  },
+  {
+    "r": 257,
+    "C3": " -Que se pueden restar al impuesto de ganancia ocasional",
+    "C5": "=+D257"
+  },
+  {
+    "r": 258,
+    "C3": "Impuesto neto de ganancias ocasionales",
+    "C4": "=+D255+D257",
+    "C5": "=+E255+E257"
+  },
+  {
+    "r": 260,
+    "C3": "Más: impuesto voluntario del nuevo art. 244-1 del ET (creado con el art. 20 Ley 2277 de diciembre 13 de 2022)",
+    "C5": "=+D260"
+  },
+  {
+    "r": 262,
+    "C3": "Subtotal impuesto a cargo a liquidar para la Dian (impuesto corriente)",
+    "C4": "=+D241+D246+D258+D260",
+    "C5": "=+E241+E246+E258+E260"
+  },
+  {
+    "r": 264,
+    "C3": "Impuesto diferido (valores que solamente son contables)"
+  },
+  {
+    "r": 265,
+    "C3": "Más: Valor contable sobre diferencias temporarias de los activos y pasivos que se registrará como  \"pasivo diferido por impuesto a las ganancias\" (ver la sección respectiva del formato 2516)",
+    "C5": "=-'2516 impto diferido'!J51"
+  },
+  {
+    "r": 267,
+    "C3": "Menos: Valor contable sobre diferencias temporarias de los activos y pasivos que se registrará como  \"activo diferido por impuesto a las ganancias\" (ver la sección respectiva del formato 2516)",
+    "C5": "=+'2516 impto diferido'!J31",
+    "C6": "=-SUM(E262:E267)"
+  },
+  {
+    "r": 269,
+    "C2": "(a)",
+    "C3": "Utilidad (o pérdida) contable después de impuestos disponible a socios",
+    "C6": "=+F131+F267"
+  },
+  {
+    "r": 274,
+    "C2": "(a) El monto máximo de la utilidad contable después de impuestos que se podría apropiar como reservas no gravadas o como utilidades"
+  },
+  {
+    "r": 275,
+    "C2": "      no gravadas disponibles a socios será (ver artículos 48 y 49 del ET):"
+  },
+  {
+    "r": 279,
+    "C2": "  Renta líquida fiscal gravable del ejercicio",
+    "C6": "=+E203"
+  },
+  {
+    "r": 280,
+    "C2": "  Más: Ganancias ocasionales del ejercicio ",
+    "C6": "=+D254"
+  },
+  {
+    "r": 281,
+    "C2": "  Menos: Impuesto básico de renta (disminuido con descuento por impuesto pagado en el exterior ",
+    "C6": "=-E210"
+  },
+  {
+    "r": 282,
+    "C2": "              sobre dividendos artículo 254 del ET cuando exista)"
+  },
+  {
+    "r": 283,
+    "C2": "  Menos: Impuesto de ganancia ocasional ",
+    "C6": "=-D255"
+  },
+  {
+    "r": 284,
+    "C5": "Subtotal",
+    "C6": "=SUM(F279:F283)"
+  },
+  {
+    "r": 285,
+    "C2": "  Más: Ingresos no gravados por dividendos que obtuvo la sociedad por ser socia en"
+  },
+  {
+    "r": 286,
+    "C2": "          otra sociedad",
+    "C6": "=-E140"
+  },
+  {
+    "r": 287,
+    "C2": "  Más: Monto de la deducción especial por inversión en activos fijos (artículo 158-3 del ET)"
+  },
+  {
+    "r": 289,
+    "C5": "Total",
+    "C6": "=SUM(F284:F287)"
+  },
+  {
+    "r": 292,
+    "C2": "Por tanto, la futura distribución de la utilidad contable después de impuestos entre los socios o accionistas quedaría así:"
+  },
+  {
+    "r": 293,
+    "C2": "Parte que se entregaría como no gravada en cabeza de socios o accionistas",
+    "C4": "=IF(F269>0,IF(F269<F289,F269,F289),0)",
+    "C5": "(*)"
+  },
+  {
+    "r": 294,
+    "C2": "Parte que se entregaría como gravada en cabeza de socios o accionistas",
+    "C4": "=IF(F269>D293,F269-D293,0)"
+  },
+  {
+    "r": 295,
+    "C3": "Total que se distribuiría",
+    "C4": "=+D293+D294"
+  },
+  {
+    "r": 296,
+    "C4": "=+D295-F269"
+  },
+  {
+    "r": 297,
+    "C2": "(*) Nota: si esos \"dividendos o participaciones no gravadas\" se llegan a distribuir a socios o accionistas que sean personas naturales residentes del régimen ordinario (es decir, que no se trasladaron al régimen simple), y sin importar si se les reparten en dinero o con nuevas acciones, dichos divid"
+  },
+  {
+    "r": 299,
+    "C2": "Comentarios a ciertas partidas de la depuración"
+  },
+  {
+    "r": 300,
+    "C2": "(*-1)",
+    "C3": "Entiéndase que en este ejemplo el ingreso por servicio de generación de energía eléctrica con tecnología eólica, luego de enfrentarle sus respectivos costos y gastos, le formará una \"renta exenta\"  (ver artículo 235-2 numeral 3 del ET). "
+  },
+  {
+    "r": 302,
+    "C2": "(*-2)",
+    "C3": "Aquí se está restando la utilidad que produjo la actividad de generación de energía eléctrica con tecnología eólica y se está cuidando que el valor a restar no sea mayor a la cifra que sea la mayor entre la \"renta líquida compensada\" o la \"renta presuntiva\" (así controla el formulario virtual de la "
+  },
+  {
+    "r": 304,
+    "C2": "(*-3)",
+    "C3": "Aunque el verdadero costo fiscal era $7.618.000 (aproximado al múltiplo de mil más cercano) y con eso se iba a formar una \"pérdida en venta de activo fijo\" por $5.617.887 (ver la celda F123), lo que hace la Dian en este caso, porque en la misma zona habrá un ingreso por \"loterías, rifas y similares\""
+  },
+  {
+    "r": 306,
+    "C2": "(*-4)",
+    "C3": "Si existen ingresos por \"loterías, rifas y similares\", como mínimo la \"ganancia ocasional\" tiene que mostrar el valor bruto de este tipo de ingresos. Es decir, los ingresos por \"loterías, rifas y similares\" no se pueden afectar con \"pérdidas\" que se formen entre los demás ingresos y gastos de esta m"
+  }
+]

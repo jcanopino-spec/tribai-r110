@@ -29,18 +29,70 @@ export const TOLERANCIA = 1;
 
 export type CategoriaConc = "temporaria_deducible" | "temporaria_imponible" | "permanente";
 
+/**
+ * Sub-categorías replicando la estructura del archivo de actualicese
+ * (Diego Hernández) que es la referencia técnica más detallada en el
+ * mercado. Permite agrupar las partidas dentro de cada categoría NIC 12
+ * según su origen tributario:
+ *
+ *  · ingresos_no_gravados              · dividendos no gravados, indemnizaciones por daño emergente
+ *  · ingresos_contables_no_fiscales    · reintegro de provisiones, método de participación patrimonial
+ *  · gastos_fiscales_no_contables      · parafiscales causados años anteriores, ICA opción 100% Art. 115
+ *  · gastos_no_deducibles              · impuestos no deducibles, mayor depreciación contable, exceso subcap, deterioros, multas, donaciones
+ *  · ingresos_fiscales_no_contables    · intereses presuntivos Art. 35
+ *  · partidas_no_afectan_renta         · utilidad/pérdida venta AF, GO loterías (van a R83 no a R72)
+ *  · null                              · sin subcategoría · partidas atípicas
+ */
+export type SubcategoriaConc =
+  | "ingresos_no_gravados"
+  | "ingresos_contables_no_fiscales"
+  | "gastos_fiscales_no_contables"
+  | "gastos_no_deducibles"
+  | "ingresos_fiscales_no_contables"
+  | "partidas_no_afectan_renta"
+  | null;
+
 export type SignoConc = "mas" | "menos";
 
 export type PartidaConc = {
   id: string;
   origen: "auto" | "manual";
   categoria: CategoriaConc;
+  /** Sub-categoría detallada (estructura archivo actualicese). Opcional. */
+  subcategoria?: SubcategoriaConc;
   signo: SignoConc;
   concepto: string;
   valor: number;
   fuente?: string;
   observacion?: string | null;
 };
+
+/**
+ * Etiquetas humanas para cada subcategoría · usadas en UI.
+ */
+export const SUBCATEGORIA_LABEL: Record<NonNullable<SubcategoriaConc>, string> = {
+  ingresos_no_gravados: "Menos · Ingresos no gravados",
+  ingresos_contables_no_fiscales: "Menos · Ingresos contables no fiscales",
+  gastos_fiscales_no_contables: "Menos · Gastos fiscales no contables",
+  gastos_no_deducibles: "Más · Gastos contables no deducibles",
+  ingresos_fiscales_no_contables: "Más · Ingresos fiscales no contables",
+  partidas_no_afectan_renta: "Partidas que no afectan renta del año",
+};
+
+/**
+ * Agrupa partidas por subcategoría, preservando el orden de inserción.
+ * Las partidas sin subcategoría caen en `_otros`.
+ */
+export function agruparPorSubcategoria(
+  partidas: PartidaConc[],
+): Record<string, PartidaConc[]> {
+  const grupos: Record<string, PartidaConc[]> = {};
+  for (const p of partidas) {
+    const key = p.subcategoria ?? "_otros";
+    (grupos[key] ??= []).push(p);
+  }
+  return grupos;
+}
 
 /**
  * Bloque PyG · una fila por concepto del estado de resultados con
@@ -268,5 +320,102 @@ function filaTotal(
     fiscal,
     diferencia: fiscal - contable,
     esTotal: true,
+  };
+}
+
+// ============================================================
+// CONTROL DE LÍMITE A LOS BENEFICIOS · Art. 240 par. 5 E.T.
+// ============================================================
+
+/**
+ * Tarifa estándar usada como referencia cuando no se provee.
+ * El cálculo del par. 5 se hace siempre con la tarifa nominal del régimen.
+ */
+const TARIFA_REFERENCIA_PAR5 = 0.35;
+
+export type LimiteBeneficiosInput = {
+  /**
+   * Renta líquida gravable general del año (R203 del archivo Aries · R79 del F110).
+   */
+  rentaLiquidaGravable: number;
+  /**
+   * Σ deducciones especiales mencionadas EXPRESAMENTE en el Art. 240 par. 5
+   * (deducciones que no son ordinarias del E.T. sino tratamientos especiales,
+   * ej. inversiones en CTI con deducción reforzada Art. 158-1).
+   */
+  deduccionesEspeciales: number;
+  /**
+   * Σ ingresos no gravados especiales mencionados en el Art. 240 par. 5
+   * (ej. intereses de bonos verdes Ley 2068, dividendos Decisión 578 CAN).
+   */
+  ingresosNoGravadosEspeciales: number;
+  /**
+   * Σ descuentos tributarios especiales mencionados en el Art. 240 par. 5
+   * (ej. Art. 256 CTI, Art. 257 donaciones cuando exceden el tope general).
+   */
+  descuentosEspeciales: number;
+  /**
+   * Tarifa del régimen aplicable. Default 35%.
+   */
+  tarifa?: number;
+};
+
+export type LimiteBeneficiosResultado = {
+  /**
+   * Parámetro 1 (R228) · referencia "razonable":
+   *   = (RL gravable + deducciones especiales) × tarifa
+   * Es el impuesto que se causaría si las deducciones especiales NO se hubieran usado.
+   */
+  parametro1: number;
+  /**
+   * Parámetro 2 (R237) · efecto neto de los beneficios:
+   *   = (deducciones esp + ingresos no gravados esp) × tarifa + descuentos esp
+   * Es el "valor" que el contribuyente se ahorró al usar los beneficios.
+   */
+  parametro2: number;
+  /**
+   * Impuesto a adicionar (R239):
+   *   = max(0, parametro2 − parametro1)
+   * Si parametro2 > parametro1 significa que el beneficio supera el tope del 3% RL
+   * y debe adicionarse al impuesto. Si no hay exceso, queda en 0.
+   */
+  impuestoAdicionar: number;
+  /**
+   * Si el adicional es > 0, los beneficios estan superando el límite.
+   */
+  excedeLimite: boolean;
+};
+
+/**
+ * Cálculo del control del límite del 35% al uso de beneficios fiscales
+ * (Art. 240 par. 5 E.T.). Replica la lógica del bloque R222-R241 del
+ * archivo Aries (actualicese.com).
+ *
+ * El espíritu del par. 5 es: la combinación de deducciones especiales,
+ * ingresos no gravados especiales y descuentos tributarios especiales no
+ * puede beneficiar al contribuyente más de lo que se ahorraría con la
+ * sola tarifa del 35% sobre la renta líquida ajustada.
+ *
+ * Si un contribuyente NO usa beneficios especiales, parametro2 = 0 y no
+ * hay adicional. Por eso para Aries (régimen general sin beneficios
+ * especiales) este cálculo da 0.
+ */
+export function computarLimiteBeneficios(
+  input: LimiteBeneficiosInput,
+): LimiteBeneficiosResultado {
+  const tarifa = input.tarifa ?? TARIFA_REFERENCIA_PAR5;
+  const rlAjustada = input.rentaLiquidaGravable + input.deduccionesEspeciales;
+  const parametro1 = Math.round(rlAjustada * tarifa);
+  const parametro2 = Math.round(
+    (input.deduccionesEspeciales + input.ingresosNoGravadosEspeciales) *
+      tarifa +
+      input.descuentosEspeciales,
+  );
+  const impuestoAdicionar = Math.max(0, parametro2 - parametro1);
+  return {
+    parametro1,
+    parametro2,
+    impuestoAdicionar,
+    excedeLimite: impuestoAdicionar > 0,
   };
 }

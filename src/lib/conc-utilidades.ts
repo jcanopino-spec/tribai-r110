@@ -113,6 +113,7 @@ async function calcularPartidasAuto(
       id: "auto-ica-50",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "gastos_no_deducibles",
       signo: "mas",
       concepto: "50% ICA pagado (tomado como descuento tributario)",
       valor: totalIca * 0.5,
@@ -128,6 +129,7 @@ async function calcularPartidasAuto(
       id: "auto-incrngo",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "ingresos_no_gravados",
       signo: "menos",
       concepto: "Ingresos no constitutivos de renta ni GO (R60)",
       valor: totalIncrngo,
@@ -143,6 +145,7 @@ async function calcularPartidasAuto(
       id: "auto-recup",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "ingresos_fiscales_no_contables",
       signo: "mas",
       concepto: "Renta líquida por recuperación de deducciones (R70)",
       valor: totalRecup,
@@ -160,6 +163,7 @@ async function calcularPartidasAuto(
       id: "auto-donaciones",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "gastos_no_deducibles",
       signo: "mas",
       concepto: "Donaciones tomadas como descuento (no deducibles como gasto)",
       valor: totalDonaciones * 4, // descuento 25% → gasto base ~4x
@@ -178,6 +182,7 @@ async function calcularPartidasAuto(
       id: "auto-gmf-50",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "gastos_no_deducibles",
       signo: "mas",
       concepto: "50% GMF no deducible",
       valor: totalGmf * 0.5,
@@ -211,6 +216,7 @@ async function calcularPartidasAuto(
       id: "auto-deterioro",
       origen: "auto",
       categoria: "temporaria_deducible",
+      subcategoria: "gastos_no_deducibles",
       signo: ajusteDc > 0 ? "menos" : "mas",
       concepto:
         ajusteDc > 0
@@ -233,6 +239,7 @@ async function calcularPartidasAuto(
       id: "auto-int-presuntivo",
       origen: "auto",
       categoria: "permanente",
+      subcategoria: "ingresos_fiscales_no_contables",
       signo: "mas",
       concepto: "Interés presuntivo a socios (Art. 35 E.T.)",
       valor: totalIp,
@@ -255,6 +262,7 @@ async function calcularPartidasAuto(
         id: "auto-subcap",
         origen: "auto",
         categoria: "permanente",
+        subcategoria: "gastos_no_deducibles",
         signo: "mas",
         concepto: "Intereses no deducibles por subcapitalización (Art. 118-1)",
         valor: intNoDed,
@@ -280,6 +288,10 @@ async function calcularPartidasAuto(
       origen: "auto",
       categoria:
         totalDifCambio > 0 ? "temporaria_imponible" : "temporaria_deducible",
+      subcategoria:
+        totalDifCambio > 0
+          ? "ingresos_fiscales_no_contables"
+          : "gastos_no_deducibles",
       signo: totalDifCambio > 0 ? "mas" : "menos",
       concepto:
         totalDifCambio > 0
