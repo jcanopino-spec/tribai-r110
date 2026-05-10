@@ -567,3 +567,131 @@ describe("computarRenglones · Datos informativos nómina", () => {
 function redondear(n: number): number {
   return Math.round(n / 1000) * 1000;
 }
+
+// ============================================================
+// Fixes fiscales críticos · Sprint A
+// ============================================================
+
+describe("R77 · Tope rentas exentas Art. 235-2 par. 5 (10% RL)", () => {
+  it("Sin tope: las rentas se restan al 100% (compat con totalRentasExentas)", () => {
+    // Renta líquida = 100M, rentas exentas sin tope = 30M → R77 = 30M
+    const g = compute(
+      { 47: 200_000_000, 62: 100_000_000 },
+      { totalRentasExentas: 30_000_000 },
+    );
+    // R72 = 100M (200 - 100), R75 = 100M, R77 = 30M
+    expect(g(77)).toBe(30_000_000);
+    expect(g(79)).toBe(70_000_000); // 100M - 30M
+  });
+
+  it("Con tope: 10% × max(R75, R76) limita las rentas exentas", () => {
+    // RL = 100M, exentas con tope = 50M → tope = 10M, exentas aplicadas = 10M
+    const g = compute(
+      { 47: 200_000_000, 62: 100_000_000 },
+      { totalRentasExentasConTope: 50_000_000 },
+    );
+    expect(g(77)).toBe(10_000_000); // 10% de 100M
+    expect(g(79)).toBe(90_000_000);
+  });
+
+  it("Mezcla: rentas sin tope al 100% + rentas con tope acotadas al 10%", () => {
+    // RL = 100M, sin tope = 5M (100%), con tope = 50M (cap 10M)
+    const g = compute(
+      { 47: 200_000_000, 62: 100_000_000 },
+      { totalRentasExentas: 5_000_000, totalRentasExentasConTope: 50_000_000 },
+    );
+    expect(g(77)).toBe(15_000_000); // 5M sin tope + 10M con tope
+    expect(g(79)).toBe(85_000_000);
+  });
+});
+
+describe("R74 · Compensaciones plazo 12 años (Art. 147)", () => {
+  it("Solo compensa pérdidas con año_origen >= ano_gravable - 12", () => {
+    const g = compute(
+      { 47: 200_000_000, 62: 100_000_000 },
+      {
+        anoGravable: 2025,
+        compensacionesConAno: [
+          { ano_origen: 2010, compensar: 30_000_000 }, // VENCIDA (>12 años)
+          { ano_origen: 2014, compensar: 20_000_000 }, // VIGENTE (11 años atrás)
+          { ano_origen: 2020, compensar: 10_000_000 }, // VIGENTE
+        ],
+      },
+    );
+    // Solo se compensan 20M + 10M = 30M (descarta 30M vencida de 2010)
+    expect(g(74)).toBe(30_000_000);
+  });
+
+  it("Compensaciones limitadas a R72 incluso si las vigentes superan", () => {
+    const g = compute(
+      { 47: 100_000_000, 62: 70_000_000 },
+      {
+        anoGravable: 2025,
+        compensacionesConAno: [
+          { ano_origen: 2020, compensar: 50_000_000 },
+        ],
+      },
+    );
+    // R72 = 30M, compensación pedida 50M → cap a 30M
+    expect(g(74)).toBe(30_000_000);
+  });
+
+  it("Sin compensacionesConAno usa totalCompensaciones (compat)", () => {
+    const g = compute(
+      { 47: 200_000_000, 62: 100_000_000 },
+      { totalCompensaciones: 25_000_000 },
+    );
+    expect(g(74)).toBe(25_000_000);
+  });
+});
+
+describe("R85 · Sobretasa Art. 240 por tipo de actividad", () => {
+  // Helper: forzar un R79 específico vía renta presuntiva (R76).
+  // R75=0, R76=presunta → max(75,76) = presunta · R77/R78 = 0 → R79 = presunta.
+  function ctxConR79(rlg: number, extra: ComputeContext = {}) {
+    return { rentaPresuntiva: rlg, uvtVigente: UVT, tarifaRegimen: 0, ...extra };
+  }
+
+  it("Financiera (par. 1) · 5pp sobre exceso de 120k UVT", () => {
+    const rlg = 200_000 * UVT;
+    const g = compute({}, ctxConR79(rlg, { tipoSobretasa: "financiera" }));
+    const exceso = rlg - 120_000 * UVT;
+    expect(g(79)).toBe(rlg);
+    expect(g(85)).toBe(redondear(Math.round(exceso * 0.05)));
+  });
+
+  it("Financiera por debajo del umbral · sobretasa = 0", () => {
+    const g = compute({}, ctxConR79(50_000 * UVT, { tipoSobretasa: "financiera" }));
+    expect(g(85)).toBe(0);
+  });
+
+  it("Hidroelectrica (par. 4) · 3pp sobre exceso de 30k UVT", () => {
+    const rlg = 60_000 * UVT;
+    const g = compute({}, ctxConR79(rlg, { tipoSobretasa: "hidroelectrica" }));
+    const exceso = 30_000 * UVT;
+    expect(g(85)).toBe(redondear(Math.round(exceso * 0.03)));
+  });
+
+  it("Extractora (par. 2) · puntos variables del contribuyente", () => {
+    const g = compute(
+      {},
+      ctxConR79(1_000_000_000, {
+        tipoSobretasa: "extractora",
+        puntosSobretasaExtractora: 0.10,
+      }),
+    );
+    expect(g(85)).toBe(redondear(100_000_000)); // 1B × 10%
+  });
+
+  it("Ninguna · sobretasa = 0 incluso con RLG alta", () => {
+    const g = compute({}, ctxConR79(9_000_000_000, { tipoSobretasa: "ninguna" }));
+    expect(g(85)).toBe(0);
+  });
+
+  it("Compat: esInstitucionFinanciera=true sin tipoSobretasa → financiera", () => {
+    const rlg = 200_000 * UVT;
+    const g = compute({}, ctxConR79(rlg, { esInstitucionFinanciera: true }));
+    const exceso = rlg - 120_000 * UVT;
+    expect(g(85)).toBe(redondear(Math.round(exceso * 0.05)));
+  });
+});

@@ -12,6 +12,7 @@ import {
   resumenValidaciones,
   type Validacion,
 } from "@/engine/validaciones";
+import { loadRentaComparacionPatrimonial } from "@/lib/conc-patrimonial";
 import { ultimoDigitoNit, evaluarPresentacion } from "@/engine/vencimientos";
 import { aplicaTTDPorRegimen } from "@/engine/condicionales";
 import { loadF2516Aggregates } from "@/lib/f2516-aggregates";
@@ -182,6 +183,18 @@ export default async function ValidacionesPage({
   const filasF2516 = await loadF2516Aggregates(supabase, declId, numerico);
   const validacionesF2516 = validarF2516(filasF2516);
 
+  // Conc patrimonial Art. 236 · alimenta validación cruzada (R78 sugerido)
+  const concPatrimonial = await loadRentaComparacionPatrimonial(
+    supabase,
+    declId,
+    declaracion,
+    numerico,
+  );
+
+  // Anticipo sugerido · cálculo del Art. 807 ya en numerico (R108).
+  // El comparativo es contra lo declarado por el usuario (input manual).
+  // Si no se está sobreescribiendo, V15 no genera hallazgo.
+
   // Validaciones V1-V18 oficiales del .xlsm (cruces internos del 110)
   const validacionesCuadres = validarCuadresF110(numerico, {
     totalAutorretenciones: anexosCtx.totalAutorretenciones,
@@ -192,6 +205,16 @@ export default async function ValidacionesPage({
     // Pérdidas fiscales acumuladas · viene del Anexo de pérdidas. Si no se
     // ha capturado, V16 no se evalúa (simplemente no genera hallazgo).
     perdidasAcumuladas: undefined,
+    // V13 · TTD · si la TTD aplica, R95 ya está calculado en `numerico`
+    // por computarRenglones. La V13 sólo dispara si el usuario sobreescribió.
+    impuestoAdicionarTTD: numerico.get(95),
+    // V17 · Σ dividendos del Anexo 18 (R49..R56)
+    totalDividendosAnexo: Object.values(anexosCtx.dividendos ?? {}).reduce(
+      (s, n) => s + Number(n || 0),
+      0,
+    ),
+    // Conc patrimonial · diferencia no justificada del Art. 236 → R78
+    rentaPorComparacionPatrimonial: concPatrimonial.rentaPorComparacion,
   });
 
   const validaciones = [

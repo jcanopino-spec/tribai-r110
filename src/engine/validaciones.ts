@@ -397,6 +397,14 @@ export function validarCuadresF110(
     totalRentasExentas?: number;
     totalCompensaciones?: number;
     perdidasAcumuladas?: number;
+    /** V13 · TTD aplicada · valor R95 esperado por la fórmula Art. 240 par. 6. */
+    impuestoAdicionarTTD?: number;
+    /** V15 · Anticipo R108 sugerido por el método óptimo (Art. 807). */
+    anticipoSugerido?: number;
+    /** V17 · Suma de dividendos del Anexo 18 · debe coincidir con R49..R56. */
+    totalDividendosAnexo?: number;
+    /** Anexo Conc Patrimonial · diferencia patrimonial no justificada → debería sumar a R78. */
+    rentaPorComparacionPatrimonial?: number;
   } = {},
 ): Validacion[] {
   const get = (n: number) => numerico.get(n) ?? 0;
@@ -523,7 +531,48 @@ export function validarCuadresF110(
     });
   }
 
-  // V18 · Suma R49..R56 dividendos · cruce de coherencia interna
+  // V13 · TTD aplicada · R95 declarado vs sugerido por la fórmula Art. 240 par. 6
+  if (typeof ctx.impuestoAdicionarTTD === "number") {
+    const dif = ctx.impuestoAdicionarTTD - get(95);
+    if (Math.abs(dif) > TOLERANCIA_CUADRE) {
+      out.push({
+        categoria: "fiscal",
+        nivel: ctx.impuestoAdicionarTTD > get(95) ? "error" : "warn",
+        renglon: 95,
+        mensaje: `V13 · R95 esperado por TTD (${formatMoney(ctx.impuestoAdicionarTTD)}) ≠ declarado (${formatMoney(get(95))}). Art. 240 par. 6.`,
+      });
+    }
+  }
+
+  // V15 · R108 anticipo declarado vs sugerido por el método óptimo
+  if (typeof ctx.anticipoSugerido === "number") {
+    const dif = ctx.anticipoSugerido - get(108);
+    if (Math.abs(dif) > TOLERANCIA_CUADRE) {
+      out.push({
+        categoria: "cuadre",
+        nivel: "warn",
+        renglon: 108,
+        mensaje: `V15 · R108 sugerido por Art. 807 (${formatMoney(ctx.anticipoSugerido)}) ≠ declarado (${formatMoney(get(108))}).`,
+      });
+    }
+  }
+
+  // V17 · Suma del Anexo 18 dividendos vs R49..R56 del F110
+  if (typeof ctx.totalDividendosAnexo === "number") {
+    let sumDiv = 0;
+    for (let n = 49; n <= 56; n++) sumDiv += get(n);
+    const dif = ctx.totalDividendosAnexo - sumDiv;
+    if (Math.abs(dif) > TOLERANCIA_CUADRE) {
+      out.push({
+        categoria: "cuadre",
+        nivel: "warn",
+        renglon: 49,
+        mensaje: `V17 · Anexo 18 dividendos (${formatMoney(ctx.totalDividendosAnexo)}) ≠ Σ R49..R56 (${formatMoney(sumDiv)}).`,
+      });
+    }
+  }
+
+  // V18 · R58 ingresos brutos cubre los dividendos R49..R56
   let sumDiv = 0;
   for (let n = 49; n <= 56; n++) sumDiv += get(n);
   if (sumDiv > 0 && get(58) < sumDiv) {
@@ -532,6 +581,22 @@ export function validarCuadresF110(
       nivel: "warn",
       renglon: 58,
       mensaje: `V18 · R58 ingresos brutos (${formatMoney(get(58))}) es menor que la suma de dividendos R49..R56 (${formatMoney(sumDiv)}).`,
+    });
+  }
+
+  // Conexión Conc Patrimonial → R78 (Art. 236 E.T.)
+  // Si hay renta por comparación patrimonial NO justificada y R78 está en 0,
+  // se debería capturar como adición de renta gravable.
+  if (
+    typeof ctx.rentaPorComparacionPatrimonial === "number" &&
+    ctx.rentaPorComparacionPatrimonial > TOLERANCIA_CUADRE &&
+    get(78) < ctx.rentaPorComparacionPatrimonial - TOLERANCIA_CUADRE
+  ) {
+    out.push({
+      categoria: "fiscal",
+      nivel: "warn",
+      renglon: 78,
+      mensaje: `Conc patrimonial · diferencia no justificada de ${formatMoney(ctx.rentaPorComparacionPatrimonial)} (Art. 236) debería estar en R78. Declarado: ${formatMoney(get(78))}.`,
     });
   }
 

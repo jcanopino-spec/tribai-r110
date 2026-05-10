@@ -31,6 +31,7 @@ type DeclMin = {
   total_nomina: number | string | null;
   aportes_seg_social: number | string | null;
   aportes_para_fiscales: number | string | null;
+  ano_gravable?: number | null;
 };
 
 export type AnexosCtx = {
@@ -44,7 +45,13 @@ export type AnexosCtx = {
   goCostos: number;
   goNoGravada: number;
   totalRentasExentas: number;
+  /** Subset de rentas exentas sujeto al tope del 10% RL (Art. 235-2 par. 5). */
+  totalRentasExentasConTope: number;
   totalCompensaciones: number;
+  /** Detalle de compensaciones con año de origen para validar plazo Art. 147. */
+  compensacionesConAno: { ano_origen: number; compensar: number }[];
+  /** Año gravable de la declaración (para Art. 147 plazo de 12 años). */
+  anoGravable?: number;
   totalRecuperaciones: number;
   totalIncrngo: number;
   totalInversionesEsalEfectuadas: number;
@@ -59,6 +66,10 @@ export type AnexosCtx = {
     r55: number;
     r56: number;
   };
+  /** Tipo de actividad para la sobretasa Art. 240. */
+  tipoSobretasa: "ninguna" | "financiera" | "hidroelectrica" | "extractora";
+  /** Para extractoras Art. 240 par. 2 · puntos según precio del año. */
+  puntosSobretasaExtractora: number;
 };
 
 /**
@@ -100,8 +111,14 @@ export async function loadAnexosCtx(
         "posesion_mas_2_anos, precio_venta, costo_fiscal, depreciacion_acumulada, reajustes_fiscales",
       )
       .eq("declaracion_id", declId),
-    supabase.from("anexo_rentas_exentas").select("valor_fiscal").eq("declaracion_id", declId),
-    supabase.from("anexo_compensaciones").select("compensar").eq("declaracion_id", declId),
+    supabase
+      .from("anexo_rentas_exentas")
+      .select("valor_fiscal, normatividad, sujeto_tope_10pct")
+      .eq("declaracion_id", declId),
+    supabase
+      .from("anexo_compensaciones")
+      .select("compensar, ano_origen")
+      .eq("declaracion_id", declId),
     supabase.from("anexo_recuperaciones").select("valor").eq("declaracion_id", declId),
     supabase.from("anexo_incrngo").select("valor").eq("declaracion_id", declId),
     supabase
@@ -177,6 +194,48 @@ export async function loadAnexosCtx(
     r56: (divs ?? []).reduce((s, d) => s + Number(d.gravados_proyectos), 0),
   };
 
+  // Rentas exentas: separa las sujetas al tope del 10% RL (Art. 235-2 par. 5).
+  // Prioridad:
+  //   1. Si el registro tiene `sujeto_tope_10pct` explícito (post-migración 031), úsalo
+  //   2. Sino, heurística por `normatividad`: numerales 1-6 del Art. 235-2 sí
+  //      tienen tope; numerales 7 (energías) y 8 (editorial) y convenios CAN/DTI no.
+  const sinTopeRegex = /art\.?\s*235-2.*num.*[78]|can|decisi[oó]n\s*578|conv\./i;
+  let totalRentasExentasSinTope = 0;
+  let totalRentasExentasConTope = 0;
+  for (const r of rentasExentas ?? []) {
+    const v = Number(r.valor_fiscal);
+    const norm = String(r.normatividad ?? "");
+    // Default conservador: aplicar tope (más restrictivo).
+    const sujetoTope = r.sujeto_tope_10pct ?? !sinTopeRegex.test(norm);
+    if (sujetoTope) totalRentasExentasConTope += v;
+    else totalRentasExentasSinTope += v;
+  }
+
+  // Compensaciones con año de origen para validar plazo Art. 147 (12 años).
+  const compensacionesConAno = (compensaciones ?? []).map((c) => ({
+    ano_origen: Number(c.ano_origen) || 0,
+    compensar: Number(c.compensar) || 0,
+  }));
+
+  // Sobretasa Art. 240 según el campo `tipo_sobretasa` de la declaración
+  // (migración 031). Compat: `es_institucion_financiera = true` mapea a
+  // 'financiera' cuando `tipo_sobretasa` es 'ninguna'.
+  type DeclSobretasa = {
+    tipo_sobretasa?: string | null;
+    puntos_sobretasa_extractora?: number | string | null;
+    es_institucion_financiera?: boolean | null;
+  };
+  const dec = declaracion as DeclMin & DeclSobretasa;
+  const tipoRaw = (dec.tipo_sobretasa ?? "ninguna") as string;
+  const tiposValidos = ["ninguna", "financiera", "hidroelectrica", "extractora"] as const;
+  type SobretasaT = (typeof tiposValidos)[number];
+  let tipoSobretasa: SobretasaT = (tiposValidos as readonly string[]).includes(tipoRaw)
+    ? (tipoRaw as SobretasaT)
+    : "ninguna";
+  if (tipoSobretasa === "ninguna" && dec.es_institucion_financiera) {
+    tipoSobretasa = "financiera";
+  }
+
   return {
     totalNomina: segSocial.totalNomina,
     aportesSegSocial: segSocial.aportesSegSocial,
@@ -187,18 +246,22 @@ export async function loadAnexosCtx(
     goIngresos: goAnexo.ingresos + ventaAfIngresos,
     goCostos: goAnexo.costos + ventaAfCostos,
     goNoGravada: goAnexo.noGravada,
-    totalRentasExentas: (rentasExentas ?? []).reduce(
-      (s, r) => s + Number(r.valor_fiscal),
+    // Total fallback (mantiene compat) + desglose para tope 10% RL
+    totalRentasExentas: totalRentasExentasSinTope,
+    totalRentasExentasConTope,
+    // Total fallback + desglose con año para validar plazo 12 años
+    totalCompensaciones: compensacionesConAno.reduce(
+      (s, c) => s + c.compensar,
       0,
     ),
-    totalCompensaciones: (compensaciones ?? []).reduce(
-      (s, c) => s + Number(c.compensar),
-      0,
-    ),
+    compensacionesConAno,
+    anoGravable: Number(declaracion.ano_gravable) || undefined,
     totalRecuperaciones: (recups ?? []).reduce((s, r) => s + Number(r.valor), 0),
     totalIncrngo: (incrngos ?? []).reduce((s, i) => s + Number(i.valor), 0),
     totalInversionesEsalEfectuadas,
     totalInversionesEsalLiquidadas,
     dividendos,
+    tipoSobretasa,
+    puntosSobretasaExtractora: Number(dec.puntos_sobretasa_extractora ?? 0),
   };
 }

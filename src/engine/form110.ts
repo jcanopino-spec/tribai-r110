@@ -92,8 +92,19 @@ export type ComputeContext = {
   uvtVigente?: number;
   /** Patrimonio líquido año gravable anterior (para sanción cuando no hay impuesto/ingresos). */
   patrimonioLiquidoAnterior?: number;
-  /** ¿Es institución financiera/aseguradora/hidroeléctrica/extractora? Activa sobretasa. */
+  /** ¿Es institución financiera/aseguradora? Sobretasa 5pp Par. 1 Art. 240 sobre exceso de 120.000 UVT. */
   esInstitucionFinanciera?: boolean;
+  /**
+   * Sobretasa Art. 240 según tipo de actividad. Permite distinguir los 4 casos:
+   *   - 'financiera'    · 5pp sobre exceso 120.000 UVT (Par. 1, AG 2023-2027)
+   *   - 'hidroelectrica'· 3pp sobre exceso 30.000 UVT  (Par. 4)
+   *   - 'extractora'    · puntos según precio promedio del año (Par. 2 · carbón/petróleo)
+   *   - 'ninguna'       · sin sobretasa
+   * Si está sin definir y `esInstitucionFinanciera=true` se asume 'financiera' por compat.
+   */
+  tipoSobretasa?: "ninguna" | "financiera" | "hidroelectrica" | "extractora";
+  /** Para extractoras Art. 240 par. 2 · puntos adicionales según precio (calc externo). 0..15. */
+  puntosSobretasaExtractora?: number;
   /** ¿Aplica Tasa Mínima de Tributación Depurada (Art. 240 par. 6° E.T.)? */
   aplicaTasaMinima?: boolean;
   /** Utilidad contable antes de impuestos (utilidad_contable − perdida_contable). Para fórmula TTD. */
@@ -115,10 +126,26 @@ export type ComputeContext = {
   goIngresos?: number;
   goCostos?: number;
   goNoGravada?: number;
-  /** Anexo 19 · total rentas exentas → R77 */
+  /**
+   * Anexo 19 · total rentas exentas → R77.
+   * Si `totalRentasExentasConTope` está definido, ese valor se considera el monto SUJETO al
+   * tope del 10% de la renta líquida (Art. 235-2 par. 5). El resto (sin tope) entra
+   * directo. La fórmula resultante es:
+   *   R77 = totalRentasExentas + min(totalRentasExentasConTope, max(0, R75 + R76) × 10%)
+   */
   totalRentasExentas?: number;
-  /** Anexo 20 · total compensaciones → R74 */
+  /** Subconjunto de rentas exentas sujeto al tope del 10% RL (Art. 235-2 par. 5). */
+  totalRentasExentasConTope?: number;
+  /** Año gravable de la declaración · para validar plazo de compensaciones (Art. 147). */
+  anoGravable?: number;
+  /**
+   * Anexo 20 · total compensaciones → R74.
+   * Si `compensacionesConAno` está definido, se valida el plazo de 12 años del Art. 147
+   * y se ignoran las pérdidas vencidas. `totalCompensaciones` queda como fallback.
+   */
   totalCompensaciones?: number;
+  /** Compensaciones con año de origen para validar plazo · pérdidas con `año >= anoGravable - 12`. */
+  compensacionesConAno?: { ano_origen: number; compensar: number }[];
   /** Anexo 17 · total recuperación de deducciones → R70 */
   totalRecuperaciones?: number;
   /** Anexo Inversiones ESAL · total efectuadas → R68 (deducción ESAL Art. 358) */
@@ -148,10 +175,22 @@ const TARIFA_ANTICIPO: Record<NonNullable<ComputeContext["aniosDeclarando"]>, nu
   tercero_o_mas: 0.75,
 };
 
-// Umbral en UVT para aplicar sobretasa de instituciones financieras
-// (Par. 1° Art. 240 E.T., 5 puntos adicionales sobre el exceso)
+// Sobretasas del Art. 240 por tipo de actividad (umbral en UVT + puntos adicionales)
+//   Par. 1° · financieras y aseguradoras: 5pp sobre exceso de 120.000 UVT (AG 2023-2027)
+//   Par. 4° · hidroeléctricas:            3pp sobre exceso de  30.000 UVT
+//   Par. 2° · extractoras:                puntos variables según precio del año
+const SOBRETASAS = {
+  financiera: { umbralUVT: 120000, puntos: 0.05 },
+  hidroelectrica: { umbralUVT: 30000, puntos: 0.03 },
+} as const;
+
+// Compatibilidad · alias usados en versiones previas
 const UMBRAL_SOBRETASA_UVT = 120000;
 const PUNTOS_SOBRETASA = 0.05;
+// Plazo del Art. 147 E.T. · pérdidas fiscales compensables hasta 12 períodos siguientes
+const PLAZO_COMPENSACION_ANOS = 12;
+// Tope del Art. 235-2 par. 5 · rentas exentas sujetas al límite (10% RL)
+const TOPE_RENTAS_EXENTAS = 0.1;
 
 /**
  * Calcula los valores derivados a partir de los inputs.
@@ -240,16 +279,35 @@ export function computarRenglones(
   if (typeof ctx.rentaPresuntiva === "number") {
     v.set(76, ctx.rentaPresuntiva);
   }
-  // 74 = Compensaciones (Anexo 20). Limitada al monto de la renta líquida (R72)
-  if (typeof ctx.totalCompensaciones === "number") {
+  // 74 = Compensaciones (Anexo 20). Limitada al monto de la renta líquida (R72).
+  // Validar plazo Art. 147 E.T.: solo se compensan pérdidas con año_origen ≥ anoGravable − 12.
+  // Si se proveen las compensaciones con año, descartamos las vencidas.
+  if (Array.isArray(ctx.compensacionesConAno) && typeof ctx.anoGravable === "number") {
+    const anoMin = ctx.anoGravable - PLAZO_COMPENSACION_ANOS;
+    const totalVigente = ctx.compensacionesConAno
+      .filter((c) => c.ano_origen >= anoMin)
+      .reduce((s, c) => s + (c.compensar || 0), 0);
+    v.set(74, Math.min(totalVigente, get(72)));
+  } else if (typeof ctx.totalCompensaciones === "number") {
+    // Fallback · usuario provee total ya validado externamente
     v.set(74, Math.min(ctx.totalCompensaciones, get(72)));
-  }
-  // 77 = Rentas exentas (Anexo 19)
-  if (typeof ctx.totalRentasExentas === "number") {
-    v.set(77, ctx.totalRentasExentas);
   }
   // 75 = max(0, 72 - 74)
   v.set(75, Math.max(0, get(72) - get(74)));
+  // 77 = Rentas exentas (Anexo 19) con TOPE 10% RL del Art. 235-2 par. 5.
+  // El subconjunto `totalRentasExentasConTope` aplica el límite; el resto entra directo.
+  if (
+    typeof ctx.totalRentasExentas === "number" ||
+    typeof ctx.totalRentasExentasConTope === "number"
+  ) {
+    const exentasSinTope = ctx.totalRentasExentas ?? 0;
+    const exentasConTope = ctx.totalRentasExentasConTope ?? 0;
+    // Base del tope: max(R75, R76) ANTES de restar R77 (la renta sobre la que aplica el límite)
+    const baseTope = Math.max(get(75), get(76));
+    const topeAplicable = Math.max(0, baseTope) * TOPE_RENTAS_EXENTAS;
+    const exentasAcotadas = Math.min(exentasConTope, topeAplicable);
+    v.set(77, exentasSinTope + exentasAcotadas);
+  }
   // 79 = max(75, 76) - 77 + 78  (Renta líquida gravable)
   //   "al mayor valor entre 75 y 76 reste 77 y sume 78"
   v.set(79, Math.max(get(75), get(76)) - get(77) + get(78));
@@ -270,28 +328,30 @@ export function computarRenglones(
     v.set(84, 0);
   }
 
-  // 85 = Sobretasa instituciones financieras (Par. 1° Art. 240 E.T.)
-  //   5 puntos porcentuales sobre el EXCESO de la renta líquida gravable
-  //   por encima de 120.000 UVT. Fórmula oficial:
-  //     R85 = (R79 − 120.000 × UVT) × 5%   si R79 ≥ 120.000 UVT
-  //         = 0                            en caso contrario
-  //   La parte fija de R84 ya tiene la tarifa general (35%); R85 son SOLO
-  //   los puntos adicionales sobre el exceso, no sobre el total.
-  if (
-    ctx.esInstitucionFinanciera &&
-    typeof ctx.uvtVigente === "number" &&
-    ctx.uvtVigente > 0
-  ) {
-    const rentaGravable = Math.max(0, get(79));
-    const umbral = UMBRAL_SOBRETASA_UVT * ctx.uvtVigente;
-    if (rentaGravable >= umbral) {
-      const exceso = rentaGravable - umbral;
-      v.set(85, Math.round(exceso * PUNTOS_SOBRETASA));
-    } else {
-      v.set(85, 0);
-    }
-  } else {
+  // 85 = Sobretasa Art. 240 según tipo de actividad. 4 ramas:
+  //   · 'financiera'    · 5pp sobre exceso 120.000 UVT (Par. 1, AG 2023-2027)
+  //   · 'hidroelectrica'· 3pp sobre exceso 30.000 UVT  (Par. 4)
+  //   · 'extractora'    · puntos según precio promedio (Par. 2 · input externo)
+  //   · 'ninguna'       · 0
+  // Compat: si `tipoSobretasa` está sin definir y `esInstitucionFinanciera=true`
+  // asumimos 'financiera' (comportamiento previo).
+  const tipo: NonNullable<ComputeContext["tipoSobretasa"]> =
+    ctx.tipoSobretasa ??
+    (ctx.esInstitucionFinanciera ? "financiera" : "ninguna");
+  if (tipo === "ninguna" || typeof ctx.uvtVigente !== "number" || ctx.uvtVigente <= 0) {
     v.set(85, 0);
+  } else {
+    const rentaGravable = Math.max(0, get(79));
+    if (tipo === "extractora") {
+      // Para extractoras el contribuyente provee los puntos según precio del año.
+      const puntos = ctx.puntosSobretasaExtractora ?? 0;
+      v.set(85, Math.round(rentaGravable * puntos));
+    } else {
+      const cfg = SOBRETASAS[tipo];
+      const umbral = cfg.umbralUVT * ctx.uvtVigente;
+      const exceso = Math.max(0, rentaGravable - umbral);
+      v.set(85, Math.round(exceso * cfg.puntos));
+    }
   }
 
   // 86, 88, 89, 90 · Impuesto sobre dividendos por categoría (catálogo DIAN AG 2025)

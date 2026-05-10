@@ -588,6 +588,7 @@ export type Database = {
           id: number
           normatividad: string | null
           valor_fiscal: number
+          sujeto_tope_10pct: boolean
         }
         Insert: {
           created_at?: string
@@ -596,6 +597,7 @@ export type Database = {
           id?: number
           normatividad?: string | null
           valor_fiscal?: number
+          sujeto_tope_10pct?: boolean
         }
         Update: {
           created_at?: string
@@ -604,6 +606,7 @@ export type Database = {
           id?: number
           normatividad?: string | null
           valor_fiscal?: number
+          sujeto_tope_10pct?: boolean
         }
         Relationships: [
           {
@@ -1381,6 +1384,8 @@ export type Database = {
           empresa_id: string
           es_gran_contribuyente: boolean
           es_institucion_financiera: boolean
+          tipo_sobretasa: string
+          puntos_sobretasa_extractora: number
           estado: string
           existe_emplazamiento: boolean
           fecha_presentacion: string | null
@@ -1445,6 +1450,8 @@ export type Database = {
           empresa_id: string
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean
+          tipo_sobretasa?: string
+          puntos_sobretasa_extractora?: number
           estado?: string
           existe_emplazamiento?: boolean
           fecha_presentacion?: string | null
@@ -1509,6 +1516,8 @@ export type Database = {
           empresa_id?: string
           es_gran_contribuyente?: boolean
           es_institucion_financiera?: boolean
+          tipo_sobretasa?: string
+          puntos_sobretasa_extractora?: number
           estado?: string
           existe_emplazamiento?: boolean
           fecha_presentacion?: string | null
