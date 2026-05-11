@@ -8,6 +8,7 @@ export type AuthState = { error: string | null };
 export async function signInAction(_prev: AuthState, form: FormData): Promise<AuthState> {
   const email = String(form.get("email") ?? "").trim();
   const password = String(form.get("password") ?? "");
+  const next = String(form.get("next") ?? "").trim();
 
   if (!email || !password) {
     return { error: "Correo y contraseña son obligatorios." };
@@ -17,6 +18,12 @@ export async function signInAction(_prev: AuthState, form: FormData): Promise<Au
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
     return { error: traducirError(error.message) };
+  }
+  // Honra ?next=<path> que viene de endpoints que redirigieron acá por
+  // sesión expirada (papel de trabajo, recalcular, etc.). Solo paths
+  // internos (evita open redirect).
+  if (next && next.startsWith("/") && !next.startsWith("//")) {
+    redirect(next);
   }
   redirect("/dashboard");
 }
