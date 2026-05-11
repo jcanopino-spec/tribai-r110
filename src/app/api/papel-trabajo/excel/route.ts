@@ -81,6 +81,24 @@ export async function GET(req: Request) {
     // correcta (PK + ZIP). El Buffer extiende Uint8Array así que es
     // BodyInit-compatible con NextResponse.
     body = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+
+    // Validación defensiva · todo xlsx válido empieza con la firma ZIP
+    // 0x50 0x4B 0x03 0x04 ("PK\x03\x04"). Si no, hubo corrupción durante
+    // la generación · mejor fallar con error claro que enviar bytes rotos.
+    if (
+      body.length < 4 ||
+      body[0] !== 0x50 ||
+      body[1] !== 0x4b ||
+      body[2] !== 0x03 ||
+      body[3] !== 0x04
+    ) {
+      const head = Array.from(body.slice(0, 8))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join(" ");
+      throw new Error(
+        `Binario xlsx corrupto · cabecera inválida (${head}). Esperado: 50 4b 03 04`,
+      );
+    }
   } catch (e) {
     const err = e as Error;
     console.error("[papel-trabajo/excel] build error:", err.message, err.stack);
