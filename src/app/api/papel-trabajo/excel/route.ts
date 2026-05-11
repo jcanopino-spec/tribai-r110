@@ -37,29 +37,59 @@ export async function GET(req: Request) {
   const supabase = await createClient();
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user) {
+    console.error("[papel-trabajo/excel] auth failed:", authError?.message);
+    return NextResponse.redirect(
+      new URL(`/login?next=${encodeURIComponent(new URL(req.url).pathname + new URL(req.url).search)}`, req.url),
+    );
+  }
 
-  const data = await loadPapelTrabajoData(supabase, declId);
+  let data: Awaited<ReturnType<typeof loadPapelTrabajoData>>;
+  try {
+    data = await loadPapelTrabajoData(supabase, declId);
+  } catch (e) {
+    console.error("[papel-trabajo/excel] loader error:", e);
+    return NextResponse.json(
+      { error: "Loader failed", detail: (e as Error).message },
+      { status: 500 },
+    );
+  }
 
-  const wb = XLSX.utils.book_new();
+  let arrayBuffer: ArrayBuffer;
+  try {
+    const wb = XLSX.utils.book_new();
+    addPortada(wb, data);
+    addResumenEjecutivo(wb, data);
+    addDatosContrib(wb, data);
+    addForm110(wb, data);
+    addConcUtilidad(wb, data);
+    addConcPatrimonial(wb, data);
+    addF2516(wb, data);
+    addAnexos(wb, data);
+    addValidaciones(wb, data);
+    addMarcoNormativo(wb);
+    addRecomendaciones(wb, data);
 
-  addPortada(wb, data);
-  addResumenEjecutivo(wb, data);
-  addDatosContrib(wb, data);
-  addForm110(wb, data);
-  addConcUtilidad(wb, data);
-  addConcPatrimonial(wb, data);
-  addF2516(wb, data);
-  addAnexos(wb, data);
-  addValidaciones(wb, data);
-  addMarcoNormativo(wb);
-  addRecomendaciones(wb, data);
+    // `type: "array"` devuelve Uint8Array · 100% compatible con Web APIs
+    // (Buffer puede comportarse distinto en serverless de Vercel).
+    const u8 = XLSX.write(wb, { type: "array", bookType: "xlsx" }) as Uint8Array;
+    // Copia a un ArrayBuffer nuevo para garantizar tipo no-shared
+    const ab = new ArrayBuffer(u8.byteLength);
+    new Uint8Array(ab).set(u8);
+    arrayBuffer = ab;
+  } catch (e) {
+    console.error("[papel-trabajo/excel] build error:", e);
+    return NextResponse.json(
+      { error: "Build failed", detail: (e as Error).message, stack: (e as Error).stack?.split("\n").slice(0, 5).join("\n") },
+      { status: 500 },
+    );
+  }
 
-  const buffer = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
   const filename = `Tribai_PapelTrabajo_${slug(data.empresa.razon_social)}_AG${data.declaracion.ano_gravable}.xlsx`;
 
-  return new NextResponse(buffer, {
+  return new NextResponse(arrayBuffer, {
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

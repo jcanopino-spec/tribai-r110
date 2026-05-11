@@ -20,8 +20,15 @@ export async function POST(req: Request) {
   const supabase = await createClient();
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user) {
+    console.error("[recalcular] auth failed:", authError?.message);
+    return NextResponse.json(
+      { ok: false, error: "Sesión expirada · refresca la página o vuelve a iniciar sesión" },
+      { status: 401 },
+    );
+  }
 
   // Verificar pertenencia: la declaración debe ser de una empresa del usuario
   const { data: declaracion } = await supabase

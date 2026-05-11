@@ -38,11 +38,38 @@ export async function GET(req: Request) {
   const supabase = await createClient();
   const {
     data: { user },
+    error: authError,
   } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user) {
+    console.error("[papel-trabajo/word] auth failed:", authError?.message, "url:", req.url);
+    // Si la sesión expiró, redirigir a login (mejor UX que un 401 JSON).
+    // El navegador completará el flujo y el usuario puede volver a hacer click.
+    return NextResponse.redirect(
+      new URL(`/login?next=${encodeURIComponent(new URL(req.url).pathname + new URL(req.url).search)}`, req.url),
+    );
+  }
 
-  const data = await loadPapelTrabajoData(supabase, declId);
-  const html = buildHtml(data);
+  let data;
+  try {
+    data = await loadPapelTrabajoData(supabase, declId);
+  } catch (e) {
+    console.error("[papel-trabajo/word] loader error:", e);
+    return NextResponse.json(
+      { error: "Loader failed", detail: (e as Error).message },
+      { status: 500 },
+    );
+  }
+
+  let html: string;
+  try {
+    html = buildHtml(data);
+  } catch (e) {
+    console.error("[papel-trabajo/word] build error:", e);
+    return NextResponse.json(
+      { error: "Build failed", detail: (e as Error).message },
+      { status: 500 },
+    );
+  }
 
   const filename = `Tribai_PapelTrabajo_${slug(data.empresa.razon_social)}_AG${data.declaracion.ano_gravable}.doc`;
 
