@@ -50,9 +50,14 @@ export async function GET(req: Request) {
   try {
     data = await loadPapelTrabajoData(supabase, declId);
   } catch (e) {
-    console.error("[papel-trabajo/excel] loader error:", e);
+    const err = e as Error;
+    console.error("[papel-trabajo/excel] loader error:", err.message, err.stack);
     return NextResponse.json(
-      { error: "Loader failed", detail: (e as Error).message },
+      {
+        error: "Error al cargar",
+        detalle: err.message,
+        stack: err.stack?.split("\n").slice(0, 8).join("\n"),
+      },
       { status: 500 },
     );
   }

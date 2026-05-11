@@ -169,9 +169,24 @@ export async function loadPapelTrabajoData(
     valoresF110,
   );
 
-  // Validaciones
+  // Validaciones · validarFormulario espera (Map<number,number>, ctx)
   const validaciones = [
-    ...validarFormulario(declaracion as unknown as Parameters<typeof validarFormulario>[0]),
+    ...validarFormulario(numerico, {
+      tarifaRegimen,
+      regimenCodigo: empresa.regimen_codigo ?? null,
+      impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
+      aniosDeclarando: (declaracion.anios_declarando ?? undefined) as string | undefined,
+      presentacion:
+        evaluacion.estado === "extemporanea"
+          ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
+          : evaluacion.estado === "oportuna"
+            ? { estado: "oportuna" }
+            : { estado: "no_presentada" },
+      calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
+      aplicaTasaMinima:
+        aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
+        (declaracion.aplica_tasa_minima ?? true),
+    }),
     ...validarCuadresF110(numerico, {
       totalAutorretenciones: anexosCtx.totalAutorretenciones,
       totalRetenciones: anexosCtx.totalRetenciones,
