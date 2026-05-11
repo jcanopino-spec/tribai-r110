@@ -17,6 +17,7 @@ import { evaluarChecklist, resumenChecklist } from "@/engine/checklist";
 import { evaluarObligacionPT } from "@/engine/precios-transferencia";
 import { ModuloHeader } from "@/components/modulo-header";
 import { IconDownload, IconDocument } from "@/components/icons";
+import { PapelTrabajoCard } from "./papel-trabajo-card";
 
 export const metadata = { title: "Dashboard" };
 
@@ -230,6 +231,11 @@ export default async function DashboardPage({
         preparación, alertas y vencimientos. Cada bloque es un cierre del
         flujo y enlaza al módulo correspondiente.
       </p>
+
+      {/* === Papel de trabajo Tribai (recalcular + descargas) === */}
+      <section className="mb-8">
+        <PapelTrabajoCard declId={declId} empresaId={empresaId} />
+      </section>
 
       {/* === Datos contribuyente === */}
       <section className="mt-8 grid gap-3 md:grid-cols-3">
