@@ -62,7 +62,7 @@ export async function GET(req: Request) {
     );
   }
 
-  let arrayBuffer: ArrayBuffer;
+  let body: Uint8Array;
   try {
     const wb = XLSX.utils.book_new();
     addPortada(wb, data);
@@ -77,24 +77,32 @@ export async function GET(req: Request) {
     addMarcoNormativo(wb);
     addRecomendaciones(wb, data);
 
-    // `type: "array"` devuelve Uint8Array · 100% compatible con Web APIs
-    // (Buffer puede comportarse distinto en serverless de Vercel).
-    const u8 = XLSX.write(wb, { type: "array", bookType: "xlsx" }) as Uint8Array;
-    // Copia a un ArrayBuffer nuevo para garantizar tipo no-shared
-    const ab = new ArrayBuffer(u8.byteLength);
-    new Uint8Array(ab).set(u8);
-    arrayBuffer = ab;
+    // `type: "buffer"` devuelve un Buffer de Node.js con la firma xlsx
+    // correcta (PK + ZIP). El Buffer extiende Uint8Array así que es
+    // BodyInit-compatible con NextResponse.
+    body = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
   } catch (e) {
-    console.error("[papel-trabajo/excel] build error:", e);
+    const err = e as Error;
+    console.error("[papel-trabajo/excel] build error:", err.message, err.stack);
     return NextResponse.json(
-      { error: "Build failed", detail: (e as Error).message, stack: (e as Error).stack?.split("\n").slice(0, 5).join("\n") },
+      {
+        error: "Build failed",
+        detalle: err.message,
+        stack: err.stack?.split("\n").slice(0, 8).join("\n"),
+      },
       { status: 500 },
     );
   }
 
   const filename = `Tribai_PapelTrabajo_${slug(data.empresa.razon_social)}_AG${data.declaracion.ano_gravable}.xlsx`;
 
-  return new NextResponse(arrayBuffer, {
+  // Envolver en Blob garantiza compatibilidad con BodyInit de fetch/Response
+  // sin perder los bytes del Buffer original.
+  const blob = new Blob([new Uint8Array(body)], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  return new NextResponse(blob, {
     headers: {
       "Content-Type":
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
