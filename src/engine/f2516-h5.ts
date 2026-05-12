@@ -11,57 +11,47 @@ export type F2516H5Concepto = {
   ayuda: string;
 };
 
+/**
+ * Conceptos oficiales DIAN del Formato 2516 H5 (modelo110.xlsm).
+ *
+ * 5 conceptos oficiales · cada uno con la matriz:
+ *   Pasivo por ingreso diferido (val1-val4)
+ *   Facturación emitida en el período (val5-val9)
+ *   Ingreso contable devengado (val10-val12)
+ *
+ * Replica los SUMIF de la hoja oficial que toman de la H3 ERI los
+ * ingresos brutos por categoría (venta bienes, servicios, otros).
+ */
 export const F2516_H5_CONCEPTOS: F2516H5Concepto[] = [
   {
-    id: "VENTAS_BIENES_NAC",
-    concepto: "Ventas de bienes nacionales",
-    ayuda: "Ingresos por venta de mercancía en el territorio nacional.",
-  },
-  {
-    id: "VENTAS_COMERCIALIZ",
-    concepto: "Ventas a sociedades de comercialización internacional",
-    ayuda: "Ventas a SCI · Decreto 380/2012.",
-  },
-  {
-    id: "SERVICIOS_NAC",
-    concepto: "Servicios prestados nacionales",
-    ayuda: "Honorarios, comisiones, servicios técnicos en territorio nacional.",
-  },
-  {
-    id: "SERVICIOS_EXP",
-    concepto: "Servicios prestados al exterior (exportación)",
-    ayuda: "Servicios facturados a clientes del exterior · Art. 481 E.T.",
-  },
-  {
-    id: "COMISIONES",
-    concepto: "Comisiones",
-    ayuda: "Comisiones por intermediación.",
-  },
-  {
-    id: "HONORARIOS",
-    concepto: "Honorarios profesionales",
-    ayuda: "Honorarios distintos a servicios técnicos.",
-  },
-  {
-    id: "ARRENDAMIENTOS",
-    concepto: "Arrendamientos",
-    ayuda: "Cánones de arrendamiento de bienes muebles e inmuebles.",
-  },
-  {
-    id: "RECUPERACIONES",
-    concepto: "Recuperaciones e indemnizaciones",
+    id: "VENTA_BIENES",
+    concepto: "Venta de bienes",
     ayuda:
-      "Recuperación de provisiones, deterioros, costos · Art. 195 E.T.",
+      "Ingresos por venta de bienes (R47 F110, clases PUC 4135/4140 ventas mercancía).",
   },
   {
-    id: "INTERESES",
-    concepto: "Ingresos por intereses (financieros)",
-    ayuda: "Intereses, rendimientos de inversiones.",
+    id: "PRESTACION_SERVICIOS",
+    concepto: "Prestación de servicios",
+    ayuda:
+      "Servicios prestados (R47 parcial, clases PUC 4145-4170: financieros, inmobiliarios, sociales, salud, enseñanza, consultoría).",
   },
   {
-    id: "DIVERSOS",
-    concepto: "Otros ingresos diversos",
-    ayuda: "Ingresos no clasificables en categorías anteriores.",
+    id: "OTROS_INGRESOS",
+    concepto: "Otros ingresos",
+    ayuda:
+      "Ingresos diferentes a actividades ordinarias (R48/R57 F110): intereses, rendimientos, recuperaciones, diversos.",
+  },
+  {
+    id: "INGRESOS_TERCEROS",
+    concepto: "Ingresos para terceros",
+    ayuda:
+      "Ingresos recibidos por cuenta de terceros que no constituyen renta para el contribuyente · Art. 28-1 E.T.",
+  },
+  {
+    id: "AJUSTES_FACTURADO",
+    concepto: "Ajustes al valor facturado (descuentos, notas)",
+    ayuda:
+      "Notas crédito, descuentos comerciales, devoluciones · R59 F110. Se RESTAN del total.",
   },
 ];
 

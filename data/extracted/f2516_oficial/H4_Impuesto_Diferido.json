@@ -1,0 +1,876 @@
+[
+  {
+    "r": 1,
+    "C1": "Activos y pasivos por impuestos diferidos"
+  },
+  {
+    "r": 7,
+    "C4": "val1",
+    "C5": "val2",
+    "C6": "val3",
+    "C7": "val4",
+    "C8": "val5",
+    "C9": "val6",
+    "C10": "val7"
+  },
+  {
+    "r": 8,
+    "C1": "1. Impuestos diferidos provenientes de diferencias temporarias"
+  },
+  {
+    "r": 10,
+    "C1": "NUM",
+    "C2": "Concepto",
+    "C4": "Base contable\n(Val1)",
+    "C5": "Base Fiscal\n(Val2)",
+    "C6": "Diferencia Temporaria\n(Val3)",
+    "C7": "Diferencia Permanente\n(Val4)",
+    "C8": "Saldo impuesto diferido\na 31 -DIC vigencia actual",
+    "C9": "Saldo impuesto diferido\na 31 -DIC vigencia  anterior",
+    "C10": "Variación\n(Val7)",
+    "C11": "Tasa fiscal aplicada\n(Val8)"
+  },
+  {
+    "r": 12,
+    "C1": "12",
+    "C2": "Activo (Diferencias temporarias deducibles)"
+  },
+  {
+    "r": 13,
+    "C1": "=A12+1",
+    "C3": "Efectivo y equivalentes al efectivo",
+    "C4": "=+IF('H2 (ESF - Patrimonio)'!G11-'H2 (ESF - Patrimonio)'!K11<0,'H2 (ESF - Patrimonio)'!G11,0)",
+    "C5": "=+IF(D13>0,'H2 (ESF - Patrimonio)'!K11,0)",
+    "C6": "=ABS(+D13-E13)",
+    "C8": "=F13*35%",
+    "C10": "=I13-H13",
+    "C11": "=IF(F13=\" \",0,IF(F13=0,0,H13/F13))",
+    "C13": "=IF(ABS($F13+$G13)=ABS($D13-$E13),\"OK\",\"ERROR\")",
+    "C14": "=IF((M13=\"Error\"),CONCATENATE(\"Error en el concepto \",C13,\" de la Hoja 4 Fila  \",A13),\"\")"
+  },
+  {
+    "r": 14,
+    "C1": "=A13+1",
+    "C3": "Inversiones e instrumentos derivados",
+    "C4": "=+IF('H2 (ESF - Patrimonio)'!G15-'H2 (ESF - Patrimonio)'!K15<0,'H2 (ESF - Patrimonio)'!G15,0)",
+    "C5": "=+IF(D14>0,'H2 (ESF - Patrimonio)'!K15,0)",
+    "C6": "=ABS(+D14-E14)",
+    "C8": "=F14*35%",
+    "C10": "=I14-H14",
+    "C11": "=IF(F14=\" \",0,IF(F14=0,0,H14/F14))",
+    "C13": "=IF(ABS($F14+$G14)=ABS($D14-$E14),\"OK\",\"ERROR\")",
+    "C14": "=IF((M14=\"Error\"),CONCATENATE(\"Error en el concepto \",C14,\" de la Hoja 4 Fila  \",A14),\"\")"
+  },
+  {
+    "r": 15,
+    "C1": "=A14+1",
+    "C3": "Cuentas por cobrar",
+    "C4": "=+IF('H2 (ESF - Patrimonio)'!G38-+'H2 (ESF - Patrimonio)'!K38<0,+'H2 (ESF - Patrimonio)'!G38,0)",
+    "C5": "=+IF(D15>0,'H2 (ESF - Patrimonio)'!K38,0)",
+    "C6": "=ABS(+D15-E15)",
+    "C8": "=F15*35%",
+    "C10": "=I15-H15",
+    "C11": "=IF(F15=\" \",0,IF(F15=0,0,H15/F15))",
+    "C13": "=IF(ABS($F15+$G15)=ABS($D15-$E15),\"OK\",\"ERROR\")",
+    "C14": "=IF((M15=\"Error\"),CONCATENATE(\"Error en el concepto \",C15,\" de la Hoja 4 Fila  \",A15),\"\")"
+  },
+  {
+    "r": 16,
+    "C1": "=A15+1",
+    "C3": "Inventarios",
+    "C4": "=+IF('H2 (ESF - Patrimonio)'!G61-+'H2 (ESF - Patrimonio)'!K61<0,+'H2 (ESF - Patrimonio)'!G61,0)",
+    "C5": "=+IF(D16>0,'H2 (ESF - Patrimonio)'!K61,0)",
+    "C6": "=ABS(+D16-E16)",
+    "C8": "=F16*35%",
+    "C10": "=I16-H16",
+    "C11": "=IF(F16=\" \",0,IF(F16=0,0,H16/F16))",
+    "C13": "=IF(ABS($F16+$G16)=ABS($D16-$E16),\"OK\",\"ERROR\")",
+    "C14": "=IF((M16=\"Error\"),CONCATENATE(\"Error en el concepto \",C16,\" de la Hoja 4 Fila  \",A16),\"\")"
+  },
+  {
+    "r": 17,
+    "C1": "=A16+1",
+    "C3": "Propiedades, planta y equipo",
+    "C4": "=IF('H2 (ESF - Patrimonio)'!G84-'H2 (ESF - Patrimonio)'!K84<0,'H2 (ESF - Patrimonio)'!G84,0)",
+    "C5": "=+IF(D17>0,'H2 (ESF - Patrimonio)'!K84,0)",
+    "C6": "=ABS(+D17-E17)",
+    "C8": "=F17*35%",
+    "C10": "=I17-H17",
+    "C11": "=IF(F17=\" \",0,IF(F17=0,0,H17/F17))",
+    "C13": "=IF(ABS($F17+$G17)=ABS($D17-$E17),\"OK\",\"ERROR\")",
+    "C14": "=IF((M17=\"Error\"),CONCATENATE(\"Error en el concepto \",C17,\" de la Hoja 4 Fila  \",A17),\"\")"
+  },
+  {
+    "r": 18,
+    "C1": "=A17+1",
+    "C3": "Activos intangibles",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G94-'H2 (ESF - Patrimonio)'!K94<0,'H2 (ESF - Patrimonio)'!G94,0)",
+    "C5": "=+IF(D18>0,'H2 (ESF - Patrimonio)'!K94,0)",
+    "C6": "=ABS(+D18-E18)",
+    "C8": "=F18*35%",
+    "C10": "=I18-H18",
+    "C11": "=IF(F18=\" \",0,IF(F18=0,0,H18/F18))",
+    "C13": "=IF(ABS($F18+$G18)=ABS($D18-$E18),\"OK\",\"ERROR\")",
+    "C14": "=IF((M18=\"Error\"),CONCATENATE(\"Error en el concepto \",C18,\" de la Hoja 4 Fila  \",A18),\"\")"
+  },
+  {
+    "r": 19,
+    "C1": "=A18+1",
+    "C3": "Propiedades de inversión",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G113-'H2 (ESF - Patrimonio)'!K113<0,'H2 (ESF - Patrimonio)'!G113,0)",
+    "C5": "=+IF(D19>0,'H2 (ESF - Patrimonio)'!K113,0)",
+    "C6": "=ABS(+D19-E19)",
+    "C8": "=F19*35%",
+    "C10": "=I19-H19",
+    "C11": "=IF(F19=\" \",0,IF(F19=0,0,H19/F19))",
+    "C13": "=IF(ABS($F19+$G19)=ABS($D19-$E19),\"OK\",\"ERROR\")",
+    "C14": "=IF((M19=\"Error\"),CONCATENATE(\"Error en el concepto \",C19,\" de la Hoja 4 Fila  \",A19),\"\")"
+  },
+  {
+    "r": 20,
+    "C1": "=A19+1",
+    "C3": "Activos biológicos",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G123-'H2 (ESF - Patrimonio)'!K123<0,'H2 (ESF - Patrimonio)'!G123,0)",
+    "C5": "=+IF(D20>0,'H2 (ESF - Patrimonio)'!K123,0)",
+    "C6": "=ABS(+D20-E20)",
+    "C8": "=F20*35%",
+    "C10": "=I20-H20",
+    "C11": "=IF(F20=\" \",0,IF(F20=0,0,H20/F20))",
+    "C13": "=IF(ABS($F20+$G20)=ABS($D20-$E20),\"OK\",\"ERROR\")",
+    "C14": "=IF((M20=\"Error\"),CONCATENATE(\"Error en el concepto \",C20,\" de la Hoja 4 Fila  \",A20),\"\")"
+  },
+  {
+    "r": 21,
+    "C1": "=A20+1",
+    "C3": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G118-'H2 (ESF - Patrimonio)'!K118<0,'H2 (ESF - Patrimonio)'!G118,0)",
+    "C5": "=+IF(D21>0,'H2 (ESF - Patrimonio)'!K118,0)",
+    "C6": "=ABS(+D21-E21)",
+    "C8": "=F21*35%",
+    "C10": "=I21-H21",
+    "C11": "=IF(F21=\" \",0,IF(F21=0,0,H21/F21))",
+    "C13": "=IF(ABS($F21+$G21)=ABS($D21-$E21),\"OK\",\"ERROR\")",
+    "C14": "=IF((M21=\"Error\"),CONCATENATE(\"Error en el concepto \",C21,\" de la Hoja 4 Fila  \",A21),\"\")"
+  },
+  {
+    "r": 22,
+    "C1": "=A21+1",
+    "C3": "Pasivos financieros y cuentas por pagar",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G146-'H2 (ESF - Patrimonio)'!K146>0,'H2 (ESF - Patrimonio)'!G146,0)",
+    "C5": "=+IF(D22>0,'H2 (ESF - Patrimonio)'!K146,0)",
+    "C6": "=ABS(+D22-E22)",
+    "C8": "=F22*35%",
+    "C10": "=I22-H22",
+    "C11": "=IF(F22=\" \",0,IF(F22=0,0,H22/F22))",
+    "C13": "=IF(ABS($F22+$G22)=ABS($D22-$E22),\"OK\",\"ERROR\")",
+    "C14": "=IF((M22=\"Error\"),CONCATENATE(\"Error en el concepto \",C22,\" de la Hoja 4 Fila  \",A22),\"\")"
+  },
+  {
+    "r": 23,
+    "C1": "=A22+1",
+    "C3": "Impuestos, gravámenes y tasas",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G169-'H2 (ESF - Patrimonio)'!K169>0,'H2 (ESF - Patrimonio)'!G169,0)",
+    "C5": "=+IF(D23>0,'H2 (ESF - Patrimonio)'!K169,0)",
+    "C6": "=ABS(+D23-E23)",
+    "C8": "=F23*35%",
+    "C10": "=I23-H23",
+    "C11": "=IF(F23=\" \",0,IF(F23=0,0,H23/F23))",
+    "C13": "=IF(ABS($F23+$G23)=ABS($D23-$E23),\"OK\",\"ERROR\")",
+    "C14": "=IF((M23=\"Error\"),CONCATENATE(\"Error en el concepto \",C23,\" de la Hoja 4 Fila  \",A23),\"\")"
+  },
+  {
+    "r": 24,
+    "C1": "=A23+1",
+    "C3": "Beneficios a Empleados",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G174-'H2 (ESF - Patrimonio)'!K174>0,'H2 (ESF - Patrimonio)'!G174,0)",
+    "C5": "=+IF(D24>0,'H2 (ESF - Patrimonio)'!K174,0)",
+    "C6": "=ABS(+D24-E24)",
+    "C8": "=F24*35%",
+    "C10": "=I24-H24",
+    "C11": "=IF(F24=\" \",0,IF(F24=0,0,H24/F24))",
+    "C13": "=IF(ABS($F24+$G24)=ABS($D24-$E24),\"OK\",\"ERROR\")",
+    "C14": "=IF((M24=\"Error\"),CONCATENATE(\"Error en el concepto \",C24,\" de la Hoja 4 Fila  \",A24),\"\")"
+  },
+  {
+    "r": 25,
+    "C1": "=A24+1",
+    "C3": "Provisiones",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G179-'H2 (ESF - Patrimonio)'!K179>0,'H2 (ESF - Patrimonio)'!G179,0)",
+    "C5": "=+IF(D25>0,'H2 (ESF - Patrimonio)'!K179,0)",
+    "C6": "=ABS(+D25-E25)",
+    "C8": "=F25*35%",
+    "C10": "=I25-H25",
+    "C11": "=IF(F25=\" \",0,IF(F25=0,0,H25/F25))",
+    "C13": "=IF(ABS($F25+$G25)=ABS($D25-$E25),\"OK\",\"ERROR\")",
+    "C14": "=IF((M25=\"Error\"),CONCATENATE(\"Error en el concepto \",C25,\" de la Hoja 4 Fila  \",A25),\"\")"
+  },
+  {
+    "r": 26,
+    "C1": "=A25+1",
+    "C3": "Otros Pasivos Anticipos y avances recibidos",
+    "C4": "=IF(S26>0,Q26,0)",
+    "C5": "=+IF(D26>0,R26,0)",
+    "C6": "=ABS(+D26-E26)",
+    "C8": "=F26*35%",
+    "C10": "=I26-H26",
+    "C11": "=IF(F26=\" \",0,IF(F26=0,0,H26/F26))",
+    "C13": "=IF(ABS($F26+$G26)=ABS($D26-$E26),\"OK\",\"ERROR\")",
+    "C14": "=IF((M26=\"Error\"),CONCATENATE(\"Error en el concepto \",C26,\" de la Hoja 4 Fila  \",A26),\"\")",
+    "C17": "=+'H2 (ESF - Patrimonio)'!G159+'H2 (ESF - Patrimonio)'!G163+'H2 (ESF - Patrimonio)'!G191+'H2 (ESF - Patrimonio)'!G196",
+    "C18": "=+'H2 (ESF - Patrimonio)'!K159+'H2 (ESF - Patrimonio)'!K163+'H2 (ESF - Patrimonio)'!K191+'H2 (ESF - Patrimonio)'!K196",
+    "C19": "=+Q26-R26"
+  },
+  {
+    "r": 27,
+    "C1": "=A26+1",
+    "C3": "Operaciones con títulos y derivados",
+    "C4": "0",
+    "C5": "0",
+    "C6": "=ABS(+D27-E27)",
+    "C8": "=F27*35%",
+    "C10": "=I27-H27",
+    "C11": "=IF(F27=\" \",0,IF(F27=0,0,H27/F27))",
+    "C13": "=IF(ABS($F27+$G27)=ABS($D27-$E27),\"OK\",\"ERROR\")",
+    "C14": "=IF((M27=\"Error\"),CONCATENATE(\"Error en el concepto \",C27,\" de la Hoja 4 Fila  \",A27),\"\")"
+  },
+  {
+    "r": 28,
+    "C1": "=A27+1",
+    "C3": "Pérdidas fiscales y/o excesos de renta presuntiva",
+    "C4": "0",
+    "C5": "=+J70+J90",
+    "C6": "=ABS(+D28-E28)",
+    "C8": "=F28*35%",
+    "C10": "=I28-H28",
+    "C11": "=IF(F28=\" \",0,IF(F28=0,0,H28/F28))",
+    "C13": "=IF(ABS($F28+$G28)=ABS($D28-$E28),\"OK\",\"ERROR\")",
+    "C14": "=IF((M28=\"Error\"),CONCATENATE(\"Error en el concepto \",C28,\" de la Hoja 4 Fila  \",A28),\"\")"
+  },
+  {
+    "r": 29,
+    "C1": "=A28+1",
+    "C3": "Activos reconocidos solamente para fines fiscales",
+    "C4": "0",
+    "C5": "=+'H2 (ESF - Patrimonio)'!J143",
+    "C6": "=ABS(+D29-E29)",
+    "C8": "=F29*35%",
+    "C10": "=I29-H29",
+    "C11": "=IF(F29=\" \",0,IF(F29=0,0,H29/F29))",
+    "C13": "=IF(ABS($F29+$G29)=ABS($D29-$E29),\"OK\",\"ERROR\")",
+    "C14": "=IF((M29=\"Error\"),CONCATENATE(\"Error en el concepto \",C29,\" de la Hoja 4 Fila  \",A29),\"\")"
+  },
+  {
+    "r": 30,
+    "C1": "=A29+1",
+    "C3": "Otros activos",
+    "C4": "=IF(('H2 (ESF - Patrimonio)'!G73+'H2 (ESF - Patrimonio)'!G78)-('H2 (ESF - Patrimonio)'!K73+'H2 (ESF - Patrimonio)'!K78)<0,('H2 (ESF - Patrimonio)'!G73+'H2 (ESF - Patrimonio)'!G78),0)",
+    "C5": "=+IF(D30>0,('H2 (ESF - Patrimonio)'!K73+'H2 (ESF - Patrimonio)'!K78),0)",
+    "C6": "=ABS(+D30-E30)",
+    "C8": "=F30*35%",
+    "C10": "=I30-H30",
+    "C11": "=IF(F30=\" \",0,IF(F30=0,0,H30/F30))",
+    "C13": "=IF(ABS($F30+$G30)=ABS($D30-$E30),\"OK\",\"ERROR\")",
+    "C14": "=IF((M30=\"Error\"),CONCATENATE(\"Error en el concepto \",C30,\" de la Hoja 4 Fila  \",A30),\"\")"
+  },
+  {
+    "r": 31,
+    "C1": "=A30+1",
+    "C3": "Valor total",
+    "C8": "=SUM(H13:H30)",
+    "C9": "=SUM(I13:I30)",
+    "C10": "=SUM(J13:J30)",
+    "C13": "=IF('H2 (ESF - Patrimonio)'!G83='H4 (Impuesto Diferido)'!H31,\"OK\",\"ERROR\")",
+    "C14": "=IF((M31=\"Error\"),CONCATENATE(\"Error en el concepto \",C31,\" de la Hoja 4 Fila  \",A31),\"\")"
+  },
+  {
+    "r": 32,
+    "C1": "32",
+    "C2": "Pasivo (Diferencias temporarias imponibles)",
+    "C8": "I",
+    "C13": "=IF(ABS($F32+$G32)=ABS($D32-$E32),\"OK\",\"ERROR\")",
+    "C14": "=IF((M32=\"Error\"),CONCATENATE(\"Error en el concepto \",C32,\" de la Hoja 4 Fila  \",A32),\"\")"
+  },
+  {
+    "r": 33,
+    "C1": "33",
+    "C3": "Efectivo y equivalentes al efectivo",
+    "C4": "=IF('H2 (ESF - Patrimonio)'!G11-'H2 (ESF - Patrimonio)'!K11>0,'H2 (ESF - Patrimonio)'!G11,0)",
+    "C5": "=IF(D33>0,'H2 (ESF - Patrimonio)'!K11,0)",
+    "C6": "=ABS(D33-E33)",
+    "C8": "=+F33*35%",
+    "C10": "=I33-H33",
+    "C11": "=IF(F33=\" \",0,IF(F33=0,0,H33/F33))",
+    "C13": "=IF(ABS($F33+$G33)=ABS($D33-$E33),\"OK\",\"ERROR\")",
+    "C14": "=IF((M33=\"Error\"),CONCATENATE(\"Error en el concepto \",C33,\" de la Hoja 4 Fila  \",A33),\"\")"
+  },
+  {
+    "r": 34,
+    "C1": "=A33+1",
+    "C3": "Inversiones e instrumentos derivados",
+    "C4": "=IF('H2 (ESF - Patrimonio)'!G12-'H2 (ESF - Patrimonio)'!K12>0,'H2 (ESF - Patrimonio)'!G12,0)",
+    "C5": "=IF(D34>0,'H2 (ESF - Patrimonio)'!K15,0)",
+    "C6": "=ABS(D34-E34)",
+    "C8": "=+F34*35%",
+    "C10": "=I34-H34",
+    "C11": "=IF(F34=\" \",0,IF(F34=0,0,H34/F34))",
+    "C13": "=IF(ABS($F34+$G34)=ABS($D34-$E34),\"OK\",\"ERROR\")",
+    "C14": "=IF((M34=\"Error\"),CONCATENATE(\"Error en el concepto \",C34,\" de la Hoja 4 Fila  \",A34),\"\")"
+  },
+  {
+    "r": 35,
+    "C1": "=A34+1",
+    "C3": "Cuentas por cobrar",
+    "C4": "=IF('H2 (ESF - Patrimonio)'!G38-+'H2 (ESF - Patrimonio)'!K38>0,+'H2 (ESF - Patrimonio)'!G38,0)",
+    "C5": "=IF(D35>0,'H2 (ESF - Patrimonio)'!K38,0)",
+    "C6": "=ABS(D35-E35)",
+    "C8": "=+F35*35%",
+    "C10": "=I35-H35",
+    "C11": "=IF(F35=\" \",0,IF(F35=0,0,H35/F35))",
+    "C13": "=IF(ABS($F35+$G35)=ABS($D35-$E35),\"OK\",\"ERROR\")",
+    "C14": "=IF((M35=\"Error\"),CONCATENATE(\"Error en el concepto \",C35,\" de la Hoja 4 Fila  \",A35),\"\")"
+  },
+  {
+    "r": 36,
+    "C1": "=A35+1",
+    "C3": "Inventarios",
+    "C4": "=+IF('H2 (ESF - Patrimonio)'!G61-+'H2 (ESF - Patrimonio)'!K61>0,+'H2 (ESF - Patrimonio)'!G61,0)",
+    "C5": "=IF(D36>0,'H2 (ESF - Patrimonio)'!K61,0)",
+    "C6": "=ABS(D36-E36)",
+    "C8": "=+F36*35%",
+    "C10": "=I36-H36",
+    "C11": "=IF(F36=\" \",0,IF(F36=0,0,H36/F36))",
+    "C13": "=IF(ABS($F36+$G36)=ABS($D36-$E36),\"OK\",\"ERROR\")",
+    "C14": "=IF((M36=\"Error\"),CONCATENATE(\"Error en el concepto \",C36,\" de la Hoja 4 Fila  \",A36),\"\")"
+  },
+  {
+    "r": 37,
+    "C1": "=A36+1",
+    "C3": "Propiedades, planta y equipo",
+    "C4": "=IF('H2 (ESF - Patrimonio)'!G84-'H2 (ESF - Patrimonio)'!K84>0,'H2 (ESF - Patrimonio)'!G84,0)",
+    "C5": "=IF(D37>0,'H2 (ESF - Patrimonio)'!K84,0)",
+    "C6": "=ABS(D37-E37)",
+    "C8": "=+F37*35%",
+    "C10": "=I37-H37",
+    "C11": "=IF(F37=\" \",0,IF(F37=0,0,H37/F37))",
+    "C13": "=IF(ABS($F37+$G37)=ABS($D37-$E37),\"OK\",\"ERROR\")",
+    "C14": "=IF((M37=\"Error\"),CONCATENATE(\"Error en el concepto \",C37,\" de la Hoja 4 Fila  \",A37),\"\")"
+  },
+  {
+    "r": 38,
+    "C1": "=A37+1",
+    "C3": "Activos intangibles",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G94-'H2 (ESF - Patrimonio)'!K94>0,'H2 (ESF - Patrimonio)'!G94,0)",
+    "C5": "=IF(D38>0,'H2 (ESF - Patrimonio)'!K94,0)",
+    "C6": "=ABS(D38-E38)",
+    "C8": "=+F38*35%",
+    "C10": "=I38-H38",
+    "C11": "=IF(F38=\" \",0,IF(F38=0,0,H38/F38))",
+    "C13": "=IF(ABS($F38+$G38)=ABS($D38-$E38),\"OK\",\"ERROR\")",
+    "C14": "=IF((M38=\"Error\"),CONCATENATE(\"Error en el concepto \",C38,\" de la Hoja 4 Fila  \",A38),\"\")"
+  },
+  {
+    "r": 39,
+    "C1": "=A38+1",
+    "C3": "Propiedades de inversión",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G113-'H2 (ESF - Patrimonio)'!K113>0,'H2 (ESF - Patrimonio)'!G113,0)",
+    "C5": "=IF(D39>0,'H2 (ESF - Patrimonio)'!K113,0)",
+    "C6": "=ABS(D39-E39)",
+    "C8": "=+F39*35%",
+    "C10": "=I39-H39",
+    "C11": "=IF(F39=\" \",0,IF(F39=0,0,H39/F39))",
+    "C13": "=IF(ABS($F39+$G39)=ABS($D39-$E39),\"OK\",\"ERROR\")",
+    "C14": "=IF((M39=\"Error\"),CONCATENATE(\"Error en el concepto \",C39,\" de la Hoja 4 Fila  \",A39),\"\")"
+  },
+  {
+    "r": 40,
+    "C1": "=A39+1",
+    "C3": "Activos biológicos",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G123-'H2 (ESF - Patrimonio)'!K123>0,'H2 (ESF - Patrimonio)'!G123,0)",
+    "C5": "=IF(D40>0,'H2 (ESF - Patrimonio)'!K123,0)",
+    "C6": "=ABS(D40-E40)",
+    "C8": "=+F40*35%",
+    "C10": "=I40-H40",
+    "C11": "=IF(F40=\" \",0,IF(F40=0,0,H40/F40))",
+    "C13": "=IF(ABS($F40+$G40)=ABS($D40-$E40),\"OK\",\"ERROR\")",
+    "C14": "=IF((M40=\"Error\"),CONCATENATE(\"Error en el concepto \",C40,\" de la Hoja 4 Fila  \",A40),\"\")"
+  },
+  {
+    "r": 41,
+    "C1": "=A40+1",
+    "C3": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G118-'H2 (ESF - Patrimonio)'!K118>0,'H2 (ESF - Patrimonio)'!G118,0)",
+    "C5": "=IF(D41>0,'H2 (ESF - Patrimonio)'!K118,0)",
+    "C6": "=ABS(D41-E41)",
+    "C8": "=+F41*35%",
+    "C10": "=I41-H41",
+    "C11": "=IF(F41=\" \",0,IF(F41=0,0,H41/F41))",
+    "C13": "=IF(ABS($F41+$G41)=ABS($D41-$E41),\"OK\",\"ERROR\")",
+    "C14": "=IF((M41=\"Error\"),CONCATENATE(\"Error en el concepto \",C41,\" de la Hoja 4 Fila  \",A41),\"\")"
+  },
+  {
+    "r": 42,
+    "C1": "=A41+1",
+    "C3": "Pasivos financieros y cuentas por pagar",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G146-'H2 (ESF - Patrimonio)'!K146<0,'H2 (ESF - Patrimonio)'!G146,0)",
+    "C5": "=IF(D42>0,'H2 (ESF - Patrimonio)'!K146,0)",
+    "C6": "=ABS(D42-E42)",
+    "C8": "=+F42*35%",
+    "C10": "=I42-H42",
+    "C11": "=IF(F42=\" \",0,IF(F42=0,0,H42/F42))",
+    "C13": "=IF(ABS($F42+$G42)=ABS($D42-$E42),\"OK\",\"ERROR\")",
+    "C14": "=IF((M42=\"Error\"),CONCATENATE(\"Error en el concepto \",C42,\" de la Hoja 4 Fila  \",A42),\"\")"
+  },
+  {
+    "r": 43,
+    "C1": "=A42+1",
+    "C3": "Impuestos, gravámenes y tasas",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G169-'H2 (ESF - Patrimonio)'!K169<0,'H2 (ESF - Patrimonio)'!G169,0)",
+    "C5": "=IF(D43>0,'H2 (ESF - Patrimonio)'!K169,0)",
+    "C6": "=ABS(D43-E43)",
+    "C8": "=+F43*35%",
+    "C10": "=I43-H43",
+    "C11": "=IF(F43=\" \",0,IF(F43=0,0,H43/F43))",
+    "C13": "=IF(ABS($F43+$G43)=ABS($D43-$E43),\"OK\",\"ERROR\")",
+    "C14": "=IF((M43=\"Error\"),CONCATENATE(\"Error en el concepto \",C43,\" de la Hoja 4 Fila  \",A43),\"\")"
+  },
+  {
+    "r": 44,
+    "C1": "=A43+1",
+    "C3": "Beneficios a Empleados",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G174-'H2 (ESF - Patrimonio)'!K174<0,'H2 (ESF - Patrimonio)'!G174,0)",
+    "C5": "=IF(D44>0,'H2 (ESF - Patrimonio)'!K174,0)",
+    "C6": "=ABS(D44-E44)",
+    "C8": "=+F44*35%",
+    "C10": "=I44-H44",
+    "C11": "=IF(F44=\" \",0,IF(F44=0,0,H44/F44))",
+    "C13": "=IF(ABS($F44+$G44)=ABS($D44-$E44),\"OK\",\"ERROR\")",
+    "C14": "=IF((M44=\"Error\"),CONCATENATE(\"Error en el concepto \",C44,\" de la Hoja 4 Fila  \",A44),\"\")"
+  },
+  {
+    "r": 45,
+    "C1": "=A44+1",
+    "C3": "Provisiones",
+    "C4": "=IF(+'H2 (ESF - Patrimonio)'!G179-'H2 (ESF - Patrimonio)'!K179<0,'H2 (ESF - Patrimonio)'!G179,0)",
+    "C5": "=IF(D45>0,'H2 (ESF - Patrimonio)'!K179,0)",
+    "C6": "=ABS(D45-E45)",
+    "C8": "=+F45*35%",
+    "C10": "=I45-H45",
+    "C11": "=IF(F45=\" \",0,IF(F45=0,0,H45/F45))",
+    "C13": "=IF(ABS($F45+$G45)=ABS($D45-$E45),\"OK\",\"ERROR\")",
+    "C14": "=IF((M45=\"Error\"),CONCATENATE(\"Error en el concepto \",C45,\" de la Hoja 4 Fila  \",A45),\"\")"
+  },
+  {
+    "r": 46,
+    "C1": "=A45+1",
+    "C3": "Otros Pasivos Anticipos y avances recibidos",
+    "C4": "=IF(S26<0,Q26,0)",
+    "C5": "=IF(D46>0,R26,0)",
+    "C6": "=ABS(D46-E46)",
+    "C8": "=+F46*35%",
+    "C10": "=I46-H46",
+    "C11": "=IF(F46=\" \",0,IF(F46=0,0,H46/F46))",
+    "C13": "=IF(ABS($F46+$G46)=ABS($D46-$E46),\"OK\",\"ERROR\")",
+    "C14": "=IF((M46=\"Error\"),CONCATENATE(\"Error en el concepto \",C46,\" de la Hoja 4 Fila  \",A46),\"\")"
+  },
+  {
+    "r": 47,
+    "C1": "=A46+1",
+    "C3": "Operaciones con títulos y derivados",
+    "C4": "0",
+    "C5": "0",
+    "C6": "=ABS(D47-E47)",
+    "C8": "=+F47*35%",
+    "C10": "=I47-H47",
+    "C11": "=IF(F47=\" \",0,IF(F47=0,0,H47/F47))",
+    "C13": "=IF(ABS($F47+$G47)=ABS($D47-$E47),\"OK\",\"ERROR\")",
+    "C14": "=IF((M47=\"Error\"),CONCATENATE(\"Error en el concepto \",C47,\" de la Hoja 4 Fila  \",A47),\"\")"
+  },
+  {
+    "r": 48,
+    "C1": "=A47+1",
+    "C3": "Pérdidas fiscales y/o excesos de renta presuntiva",
+    "C4": "0",
+    "C5": "0",
+    "C6": "=ABS(D48-E48)",
+    "C8": "=+F48*35%",
+    "C10": "=I48-H48",
+    "C11": "=IF(F48=\" \",0,IF(F48=0,0,H48/F48))",
+    "C13": "=IF(ABS($F48+$G48)=ABS($D48-$E48),\"OK\",\"ERROR\")",
+    "C14": "=IF((M48=\"Error\"),CONCATENATE(\"Error en el concepto \",C48,\" de la Hoja 4 Fila  \",A48),\"\")"
+  },
+  {
+    "r": 49,
+    "C1": "=A48+1",
+    "C3": "Activos reconocidos solamente para fines fiscales",
+    "C4": "0",
+    "C5": "0",
+    "C6": "=ABS(D49-E49)",
+    "C8": "=+F49*35%",
+    "C10": "=I49-H49",
+    "C11": "=IF(F49=\" \",0,IF(F49=0,0,H49/F49))",
+    "C13": "=IF(ABS($F49+$G49)=ABS($D49-$E49),\"OK\",\"ERROR\")",
+    "C14": "=IF((M49=\"Error\"),CONCATENATE(\"Error en el concepto \",C49,\" de la Hoja 4 Fila  \",A49),\"\")"
+  },
+  {
+    "r": 50,
+    "C1": "=A49+1",
+    "C3": "Otros activos",
+    "C4": "=IF(('H2 (ESF - Patrimonio)'!G73+'H2 (ESF - Patrimonio)'!G78)-('H2 (ESF - Patrimonio)'!K73+'H2 (ESF - Patrimonio)'!K78)>0,('H2 (ESF - Patrimonio)'!G73+'H2 (ESF - Patrimonio)'!G78),0)",
+    "C5": "=+IF(D30>0,('H2 (ESF - Patrimonio)'!K73+'H2 (ESF - Patrimonio)'!K78),0)",
+    "C6": "=ABS(D50-E50)",
+    "C8": "=+F50*35%",
+    "C10": "=I50-H50",
+    "C11": "=IF(F50=\" \",0,IF(F50=0,0,H50/F50))",
+    "C13": "=IF(ABS($F50+$G50)=ABS($D50-$E50),\"OK\",\"ERROR\")",
+    "C14": "=IF((M50=\"Error\"),CONCATENATE(\"Error en el concepto \",C50,\" de la Hoja 4 Fila  \",A50),\"\")"
+  },
+  {
+    "r": 51,
+    "C1": "=A50+1",
+    "C3": "Valor total",
+    "C8": "=SUM(H33:H50)",
+    "C9": "=SUM(I33:I50)",
+    "C10": "=SUM(J33:J50)",
+    "C13": "=IF('H2 (ESF - Patrimonio)'!G173='H4 (Impuesto Diferido)'!H51,\"OK\",\"ERROR\")",
+    "C14": "=IF((M51=\"Error\"),CONCATENATE(\"Error en el concepto \",C51,\" de la Hoja 4 Fila  \",A51),\"\")"
+  },
+  {
+    "r": 52,
+    "C8": "G"
+  },
+  {
+    "r": 55,
+    "C1": "2. Activos por créditos tributarios (saldos a favor e Impuestos pagados en el exterior)"
+  },
+  {
+    "r": 57,
+    "C1": "NUM",
+    "C2": "Tipo de crédito tributario",
+    "C4": "Saldo al 31 -DIC vigencia actual",
+    "C5": "Saldo al 31-DIC vigencia anterior",
+    "C6": "Variación",
+    "C7": "Explicación de la variación"
+  },
+  {
+    "r": 58,
+    "C7": "Reducción (compensación / aplicación) ",
+    "C8": "Incremento \n(generado en el periodo)",
+    "C9": "Correcciones en declaraciones anteriores",
+    "C11": "Ajustes contables por correcciones valorativas"
+  },
+  {
+    "r": 59,
+    "C9": "Mayor valor",
+    "C10": "Menor valor",
+    "C11": "Mayor valor",
+    "C12": "Menor valor"
+  },
+  {
+    "r": 60,
+    "C1": "60",
+    "C2": "Saldos a favor",
+    "C4": "=+'110 MUISCA'!D299",
+    "C5": "=+'110 MUISCA'!D266",
+    "C6": "=D60-E60",
+    "C14": "=IF((M60=\"Error\"),CONCATENATE(\"Error en el concepto \",B60,\" de la Hoja 4 Fila  \",A60),\"\")"
+  },
+  {
+    "r": 61,
+    "C1": "=A60+1",
+    "C2": "Impuestos pagados en el exterior",
+    "C6": "=D61-E61",
+    "C14": "=IF((M61=\"Error\"),CONCATENATE(\"Error en el concepto \",B61,\" de la Hoja 4 Fila  \",A61),\"\")"
+  },
+  {
+    "r": 64,
+    "C1": "3. Detalle de compensación de pérdidas fiscales"
+  },
+  {
+    "r": 67,
+    "C1": "NUM",
+    "C2": "AÑO",
+    "C4": "Pérdida fiscal acumulada por compensar al inicio del periodo",
+    "C5": "Pérdida fiscal generada en el periodo (+)",
+    "C6": "Pérdida fiscal compensada en el período              (-)",
+    "C7": "Valores no compensados por caducidad                                 (-)",
+    "C8": "Ajustes por corrección de la declaración",
+    "C10": "Pérdida fiscal acumulada por compensar al final del periodo",
+    "C11": "Saldo activo por impuesto diferido al final del período"
+  },
+  {
+    "r": 68,
+    "C8": "Mayor valor",
+    "C9": "Menor valor"
+  },
+  {
+    "r": 69,
+    "C1": "69",
+    "C2": "2017",
+    "C10": "=D69+E69-F69-G69+H69-I69",
+    "C13": "=IF(J69<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M69=\"Error\"),CONCATENATE(\"Error en el concepto \",C69,\" de la Hoja 4 Fila  \",A69),\"\")"
+  },
+  {
+    "r": 70,
+    "C1": "=A69+1",
+    "C2": "2018",
+    "C4": "=J69",
+    "C10": "=D70+E70-F70-G70+H70-I70",
+    "C13": "=IF(J70<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M70=\"Error\",CONCATENATE(\"Error en el concepto \",B70,\" de la Hoja 2 Fila  \",A70),\"\")"
+  },
+  {
+    "r": 71,
+    "C1": "=A70+1",
+    "C2": "2019",
+    "C4": "=J70",
+    "C10": "=D71+E71-F71-G71+H71-I71",
+    "C13": "=IF(J71<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M71=\"Error\",CONCATENATE(\"Error en el concepto \",B71,\" de la Hoja 2 Fila  \",A71),\"\")"
+  },
+  {
+    "r": 72,
+    "C1": "=A71+1",
+    "C2": "2020",
+    "C4": "=J71",
+    "C10": "=D72+E72-F72-G72+H72-I72",
+    "C13": "=IF(J72<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M72=\"Error\",CONCATENATE(\"Error en el concepto \",B72,\" de la Hoja 2 Fila  \",A72),\"\")"
+  },
+  {
+    "r": 73,
+    "C1": "=A72+1",
+    "C2": "2021",
+    "C4": "=J72",
+    "C10": "=D73+E73-F73-G73+H73-I73",
+    "C13": "=IF(J73<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M73=\"Error\",CONCATENATE(\"Error en el concepto \",B73,\" de la Hoja 2 Fila  \",A73),\"\")"
+  },
+  {
+    "r": 74,
+    "C1": "=A73+1",
+    "C2": "2022",
+    "C4": "=J73",
+    "C10": "=D74+E74-F74-G74+H74-I74",
+    "C13": "=IF(J74<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M74=\"Error\",CONCATENATE(\"Error en el concepto \",B74,\" de la Hoja 2 Fila  \",A74),\"\")"
+  },
+  {
+    "r": 75,
+    "C1": "=A74+1",
+    "C2": "2023",
+    "C4": "=J74",
+    "C10": "=D75+E75-F75-G75+H75-I75",
+    "C13": "=IF(J75<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M75=\"Error\",CONCATENATE(\"Error en el concepto \",B75,\" de la Hoja 2 Fila  \",A75),\"\")"
+  },
+  {
+    "r": 76,
+    "C1": "=A75+1",
+    "C2": "2024",
+    "C4": "=J75",
+    "C5": "=+'110 MUISCA'!D168",
+    "C6": "=+'Σ Renta'!K21",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0",
+    "C10": "=D76+E76-F76-G76+H76-I76",
+    "C11": "=+J75*35%",
+    "C13": "=IF(J76<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M76=\"Error\",CONCATENATE(\"Error en el concepto \",B76,\" de la Hoja 2 Fila  \",A76),\"\")"
+  },
+  {
+    "r": 77,
+    "C1": "=A76+1",
+    "C2": "2025",
+    "C4": "=J76",
+    "C10": "=D77+E77-F77-G77+H77-I77",
+    "C13": "=IF(J77<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M77=\"Error\",CONCATENATE(\"Error en el concepto \",B77,\" de la Hoja 2 Fila  \",A77),\"\")"
+  },
+  {
+    "r": 78,
+    "C1": "=A77+1",
+    "C2": "2026",
+    "C4": "=J77",
+    "C10": "=D78+E78-F78-G78+H78-I78",
+    "C13": "=IF(J78<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M78=\"Error\",CONCATENATE(\"Error en el concepto \",B78,\" de la Hoja 2 Fila  \",A78),\"\")"
+  },
+  {
+    "r": 79,
+    "C1": "=A78+1",
+    "C2": "2027",
+    "C4": "=J78",
+    "C10": "=D79+E79-F79-G79+H79-I79",
+    "C13": "=IF(J79<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M79=\"Error\",CONCATENATE(\"Error en el concepto \",B79,\" de la Hoja 2 Fila  \",A79),\"\")"
+  },
+  {
+    "r": 80,
+    "C1": "=A79+1",
+    "C2": "2028",
+    "C4": "=J79",
+    "C10": "=D80+E80-F80-G80+H80-I80",
+    "C13": "=IF(J80<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M80=\"Error\",CONCATENATE(\"Error en el concepto \",B80,\" de la Hoja 2 Fila  \",A80),\"\")"
+  },
+  {
+    "r": 81,
+    "C1": "=A80+1",
+    "C2": "2029",
+    "C4": "=J80",
+    "C10": "=D81+E81-F81-G81+H81-I81",
+    "C13": "=IF(J81<0,\"ERROR\",\"OK\")",
+    "C14": "=IF(M81=\"Error\",CONCATENATE(\"Error en el concepto \",B81,\" de la Hoja 2 Fila  \",A81),\"\")"
+  },
+  {
+    "r": 82,
+    "C14": "=IF((M82=\"Error\"),CONCATENATE(\"Error en el concepto \",C82,\" de la Hoja 2 Fila  \",A82),\"\")"
+  },
+  {
+    "r": 83,
+    "C14": "=IF((M83=\"Error\"),CONCATENATE(\"Error en el concepto \",C83,\" de la Hoja 2 Fila  \",A83),\"\")"
+  },
+  {
+    "r": 84,
+    "C1": "4. Detalle de compensación por exceso de renta presuntiva",
+    "C14": "=IF((M84=\"Error\"),CONCATENATE(\"Error en el concepto \",C84,\" de la Hoja 2 Fila  \",A84),\"\")"
+  },
+  {
+    "r": 85,
+    "C14": "=IF((M85=\"Error\"),CONCATENATE(\"Error en el concepto \",C85,\" de la Hoja 2 Fila  \",A85),\"\")"
+  },
+  {
+    "r": 86,
+    "C14": "=IF((M86=\"Error\"),CONCATENATE(\"Error en el concepto \",C86,\" de la Hoja 2 Fila  \",A86),\"\")"
+  },
+  {
+    "r": 87,
+    "C1": "NUM",
+    "C2": "AÑO",
+    "C5": "Valor generado en el periodo \n(+)",
+    "C6": "Valor compensado en el período \n(-)",
+    "C7": "Valores no compensados por caducidad   \n (-)",
+    "C8": "Ajustes por corrección de la declaración",
+    "C10": "Valor acumulado por compensar al final del periodo",
+    "C11": "Saldo activo por impuesto diferido al final del período",
+    "C14": "=IF((M87=\"Error\"),CONCATENATE(\"Error en el concepto \",C87,\" de la Hoja 2 Fila  \",A87),\"\")"
+  },
+  {
+    "r": 88,
+    "C8": "Mayor valor",
+    "C9": "Menor valor",
+    "C14": "=IF((M88=\"Error\"),CONCATENATE(\"Error en el concepto \",C88,\" de la Hoja 2 Fila  \",A88),\"\")"
+  },
+  {
+    "r": 89,
+    "C1": "89",
+    "C2": "2017",
+    "C10": "=D89+E89-F89-G89+H89-I89",
+    "C13": "=IF(J89<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M89=\"Error\"),CONCATENATE(\"Error en el concepto \",B89,\" de la Hoja 2 Fila  \",A89),\"\")"
+  },
+  {
+    "r": 90,
+    "C1": "=A89+1",
+    "C2": "2018",
+    "C4": "=J89",
+    "C10": "=D90+E90-F90-G90+H90-I90",
+    "C13": "=IF(J90<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M90=\"Error\"),CONCATENATE(\"Error en el concepto \",B90,\" de la Hoja 4 Fila  \",A90),\"\")"
+  },
+  {
+    "r": 91,
+    "C1": "=A90+1",
+    "C2": "2019",
+    "C4": "=J90",
+    "C10": "=D91+E91-F91-G91+H91-I91",
+    "C13": "=IF(J91<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M91=\"Error\"),CONCATENATE(\"Error en el concepto \",B91,\" de la Hoja 4 Fila  \",A91),\"\")"
+  },
+  {
+    "r": 92,
+    "C1": "=A91+1",
+    "C2": "2020",
+    "C4": "=J91",
+    "C10": "=D92+E92-F92-G92+H92-I92",
+    "C13": "=IF(J92<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M92=\"Error\"),CONCATENATE(\"Error en el concepto \",B92,\" de la Hoja 4 Fila  \",A92),\"\")"
+  },
+  {
+    "r": 93,
+    "C1": "=A92+1",
+    "C2": "2021",
+    "C4": "=J92",
+    "C10": "=D93+E93-F93-G93+H93-I93",
+    "C13": "=IF(J93<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M93=\"Error\"),CONCATENATE(\"Error en el concepto \",B93,\" de la Hoja 4 Fila  \",A93),\"\")"
+  },
+  {
+    "r": 94,
+    "C1": "=A93+1",
+    "C2": "2022",
+    "C4": "=J93",
+    "C10": "=D94+E94-F94-G94+H94-I94",
+    "C13": "=IF(J94<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M94=\"Error\"),CONCATENATE(\"Error en el concepto \",B94,\" de la Hoja 4 Fila  \",A94),\"\")"
+  },
+  {
+    "r": 95,
+    "C1": "=A94+1",
+    "C2": "2023",
+    "C4": "=J94",
+    "C10": "=D95+E95-F95-G95+H95-I95"
+  },
+  {
+    "r": 96,
+    "C1": "=A95+1",
+    "C2": "2024",
+    "C4": "=J95",
+    "C10": "=D96+E96-F96-G96+H96-I96"
+  },
+  {
+    "r": 97,
+    "C1": "=A96+1",
+    "C2": "2025",
+    "C4": "=J96",
+    "C5": "=IF('Hoja Sumaria'!H3251>'Hoja Sumaria'!H3250,'Hoja Sumaria'!H3251-'Hoja Sumaria'!H3250,0)",
+    "C6": "='Hoja Sumaria'!$H$3249",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0",
+    "C10": "=D97+E97-F97-G97+H97-I97",
+    "C11": "=+J96*35%"
+  },
+  {
+    "r": 98,
+    "C1": "=A97+1",
+    "C2": "2026",
+    "C4": "=J97",
+    "C10": "=D98+E98-F98-G98+H98-I98"
+  },
+  {
+    "r": 99,
+    "C1": "=A98+1",
+    "C2": "2027",
+    "C4": "=J98",
+    "C10": "=D99+E99-F99-G99+H99-I99"
+  },
+  {
+    "r": 100,
+    "C1": "=A99+1",
+    "C2": "2028",
+    "C4": "=J99",
+    "C10": "=D100+E100-F100-G100+H100-I100"
+  },
+  {
+    "r": 101,
+    "C1": "=A100+1",
+    "C2": "2029",
+    "C4": "=J100",
+    "C10": "=D101+E101-F101-G101+H101-I101",
+    "C13": "=IF(J101<0,\"ERROR\",\"OK\")",
+    "C14": "=IF((M101=\"Error\"),CONCATENATE(\"Error en el concepto \",B101,\" de la Hoja 4 Fila  \",A101),\"\")"
+  }
+]

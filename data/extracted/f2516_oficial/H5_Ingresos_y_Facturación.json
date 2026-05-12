@@ -1,0 +1,128 @@
+[
+  {
+    "r": 1,
+    "C2": "Conciliación ingreso contable (devengado) y facturación emitida "
+  },
+  {
+    "r": 7,
+    "C3": "val1",
+    "C4": "val2",
+    "C5": "val3",
+    "C6": "val4",
+    "C7": "val5",
+    "C8": "val6",
+    "C9": "val7",
+    "C10": "val8",
+    "C11": "val9",
+    "C12": "val10",
+    "C13": "val11",
+    "C14": "val12"
+  },
+  {
+    "r": 9,
+    "C1": "NUM",
+    "C2": "Concepto",
+    "C3": "Pasivo por ingreso diferido",
+    "C7": "Facturación emitida en el período",
+    "C12": "Ingreso contable devengado en el período"
+  },
+  {
+    "r": 10,
+    "C3": "Saldo al inicio del período\n(Val1)",
+    "C4": "Registrado como ingreso contable en el período\n(Val2)",
+    "C5": "Generado en el período\n(Val3)",
+    "C6": "Saldo al final del período \n(val 4)",
+    "C7": "Devengada como ingreso en períodos anteriores\n(Val 5)",
+    "C8": "Devengada como ingresos del periodo\n(Val 6)",
+    "C9": "Registrada como pasivo por ingreso diferido\n(Val 7)",
+    "C10": "Solo facturado      (No ha generado ingreso ni pasivo diferido)\n(Val 8)",
+    "C11": "Valor total\n(Val9)",
+    "C12": "Sin facturar\n(Val10)",
+    "C13": "Facturado períodos anteriores\n(Val11)",
+    "C14": "Valor total\n(Val12)"
+  },
+  {
+    "r": 11,
+    "C3": "1",
+    "C4": "2",
+    "C5": "3",
+    "C6": "4=1-2+3",
+    "C7": "5",
+    "C8": "6",
+    "C9": "7",
+    "C10": "8",
+    "C11": "9=5+6+7+8",
+    "C12": "10",
+    "C13": "11",
+    "C14": "12=6+10+11",
+    "C16": "Lista Validaciones"
+  },
+  {
+    "r": 12,
+    "C1": "12",
+    "C2": "Venta de bienes",
+    "C6": "=C12-D12+E12",
+    "C8": "='H3 (ERI - Renta Liquida)'!I13+'H3 (ERI - Renta Liquida)'!I14+'H3 (ERI - Renta Liquida)'!I15+'H3 (ERI - Renta Liquida)'!I16+'H3 (ERI - Renta Liquida)'!I17+'H3 (ERI - Renta Liquida)'!I18",
+    "C11": "=G12+H12+I12+J12",
+    "C14": "=H12+L12+M12",
+    "C16": "=IF(C12-D12+E12<0,\"ERROR\",\"OK\")",
+    "C17": "=IF((P12=\"Error\"),CONCATENATE(\"El saldo al final del período del pasivo por ingreso deferido no puede ser negativo \",B12,\" de la Hoja 5 Fila  \",A12),\"\")"
+  },
+  {
+    "r": 13,
+    "C1": "=A12+1",
+    "C2": "Prestación de servicios",
+    "C6": "=C13-D13+E13",
+    "C8": "='H3 (ERI - Renta Liquida)'!I19+'H3 (ERI - Renta Liquida)'!I20+'H3 (ERI - Renta Liquida)'!I21+'H3 (ERI - Renta Liquida)'!I22+'H3 (ERI - Renta Liquida)'!I23+'H3 (ERI - Renta Liquida)'!I24",
+    "C11": "=G13+H13+I13+J13",
+    "C14": "=H13+L13+M13",
+    "C16": "=IF(C13-D13+E13<0,\"ERROR\",\"OK\")",
+    "C17": "=IF((P13=\"Error\"),CONCATENATE(\"El saldo al final del período del pasivo por ingreso deferido no puede ser negativo \",B13,\" de la Hoja 5 Fila  \",A13),\"\")"
+  },
+  {
+    "r": 14,
+    "C1": "=A13+1",
+    "C2": "Otros ingresos ",
+    "C6": "=C14-D14+E14",
+    "C8": "='H3 (ERI - Renta Liquida)'!I25+'H3 (ERI - Renta Liquida)'!I27+'H3 (ERI - Renta Liquida)'!I30+'H3 (ERI - Renta Liquida)'!I29+'H3 (ERI - Renta Liquida)'!I64+'H3 (ERI - Renta Liquida)'!I73",
+    "C11": "=G14+H14+I14+J14",
+    "C14": "=H14+L14+M14",
+    "C16": "=IF(C14-D14+E14<0,\"ERROR\",\"OK\")",
+    "C17": "=IF((P14=\"Error\"),CONCATENATE(\"El saldo al final del período del pasivo por ingreso deferido no puede ser negativo \",B14,\" de la Hoja 5 Fila  \",A14),\"\")"
+  },
+  {
+    "r": 15,
+    "C1": "=A14+1",
+    "C2": "Ingresos para terceros",
+    "C6": "=C15-D15+E15",
+    "C11": "=G15+H15+I15+J15",
+    "C14": "=H15+L15+M15"
+  },
+  {
+    "r": 16,
+    "C1": "=A15+1",
+    "C2": "Ajustes al valor facturado (descuentos, notas)",
+    "C6": "=C16-D16+E16",
+    "C11": "=G16+H16+I16+J16",
+    "C14": "=H16+L16+M16",
+    "C16": "=IF(OR(G17<0,H17<0,I17<0,J17<0,L17<0,M17<0),\"ERROR\",\"OK\")",
+    "C17": "=IF((P16=\"Error\"),CONCATENATE(\"El resultado TOTAL no puede ser menor que cero. Revisar concepto \",B16,\" de la Hoja 5 Fila  \",A16),\"\")"
+  },
+  {
+    "r": 17,
+    "C1": "=A16+1",
+    "C2": "TOTAL",
+    "C3": "=SUM(C12:C15)-C16",
+    "C4": "=SUM(D12:D15)-D16",
+    "C5": "=SUM(E12:E15)-E16",
+    "C6": "=SUM(F12:F15)-F16",
+    "C7": "=SUM(G12:G15)-G16",
+    "C8": "=SUM(H12:H15)-H16",
+    "C9": "=SUM(I12:I15)-I16",
+    "C10": "=SUM(J12:J15)-J16",
+    "C11": "=SUM(K12:K15)-K16",
+    "C12": "=SUM(L12:L15)-L16",
+    "C13": "=SUM(M12:M15)-M16",
+    "C14": "=SUM(N12:N15)-N16"
+  }
+]

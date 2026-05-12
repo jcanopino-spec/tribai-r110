@@ -19,99 +19,54 @@ export type F2516H4Categoria = {
   ayuda: string;
 };
 
+/**
+ * Catálogo oficial DIAN H4 del Formato 2516 (modelo110.xlsm).
+ *
+ * Estructura exacta: 18 categorías por lado (ATD y PTD), cada una con su
+ * espejo. Cubre todo el balance NIIF que puede generar diferencias
+ * temporarias respecto al fiscal.
+ *
+ * Las 18 categorías son las mismas tanto en activos diferidos (ATD ·
+ * diferencias temporarias deducibles) como en pasivos diferidos (PTD ·
+ * diferencias temporarias imponibles), reflejando la simetría que la
+ * DIAN espera para la conciliación NIC 12.
+ */
+const CATEGORIAS_BASE = [
+  "Efectivo y equivalentes al efectivo",
+  "Inversiones e instrumentos derivados",
+  "Cuentas por cobrar",
+  "Inventarios",
+  "Propiedades, planta y equipo",
+  "Activos intangibles",
+  "Propiedades de inversión",
+  "Activos biológicos",
+  "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+  "Pasivos financieros y cuentas por pagar",
+  "Impuestos, gravámenes y tasas",
+  "Beneficios a Empleados",
+  "Provisiones",
+  "Otros Pasivos · Anticipos y avances recibidos",
+  "Operaciones con títulos y derivados",
+  "Pérdidas fiscales y/o excesos de renta presuntiva",
+  "Activos reconocidos solamente para fines fiscales",
+  "Otros activos",
+] as const;
+
 export const F2516_H4_CATEGORIAS: F2516H4Categoria[] = [
-  // Activos por impuesto diferido (diferencias deducibles)
-  {
-    id: "A1",
-    tipo: "atd",
-    concepto: "PP&E (depreciación contable > fiscal)",
-    ayuda:
-      "La depreciación NIIF acumulada es mayor que la fiscal · genera diferencia deducible que se realizará en periodos futuros.",
-  },
-  {
-    id: "A2",
-    tipo: "atd",
-    concepto: "Intangibles (amortización mayor)",
-    ayuda:
-      "Amortización contable mayor que la fiscal o vida útil distinta · revisar Art. 143-1 E.T.",
-  },
-  {
-    id: "A3",
-    tipo: "atd",
-    concepto: "Inventarios (deterioro fiscal limitado)",
-    ayuda: "Deterioro contable de inventarios no aceptado fiscalmente.",
-  },
-  {
-    id: "A4",
-    tipo: "atd",
-    concepto: "Cartera (provisión deterioro Art. 145)",
-    ayuda:
-      "Provisión contable de deterioro de cartera no totalmente deducible · Art. 145 E.T.",
-  },
-  {
-    id: "A5",
-    tipo: "atd",
-    concepto: "Inversiones (medición a valor razonable)",
-    ayuda: "Pérdidas no realizadas reconocidas contablemente.",
-  },
-  {
-    id: "A6",
-    tipo: "atd",
-    concepto: "Beneficios empleados (provisiones)",
-    ayuda:
-      "Provisiones por bonos, prestaciones, etc. no causadas fiscalmente.",
-  },
-  {
-    id: "A7",
-    tipo: "atd",
-    concepto: "Pérdidas fiscales acumuladas",
-    ayuda: "Pérdidas fiscales pendientes de compensar · Art. 147 E.T.",
-  },
-  {
-    id: "A8",
-    tipo: "atd",
-    concepto: "Excesos de renta presuntiva",
-    ayuda:
-      "Excesos de renta presuntiva sobre líquida pendientes de compensar · Art. 189 par.",
-  },
-  // Pasivos por impuesto diferido (diferencias imponibles)
-  {
-    id: "P1",
-    tipo: "ptd",
-    concepto: "PP&E (depreciación fiscal > contable)",
-    ayuda: "Depreciación fiscal acelerada mayor que la contable.",
-  },
-  {
-    id: "P2",
-    tipo: "ptd",
-    concepto: "Activos biológicos (medición razonable)",
-    ayuda: "Ganancias no realizadas reconocidas contablemente (NIC 41).",
-  },
-  {
-    id: "P3",
-    tipo: "ptd",
-    concepto: "Inversiones (revalúo fiscal mayor)",
-    ayuda: "Ganancias no realizadas en inversiones medidas a valor razonable.",
-  },
-  {
-    id: "P4",
-    tipo: "ptd",
-    concepto: "Diferencias en cambio (causación distinta)",
-    ayuda:
-      "Diferencia en cambio realizada fiscalmente pero no contablemente o viceversa · Art. 285 E.T.",
-  },
-  {
-    id: "P5",
-    tipo: "ptd",
-    concepto: "Subvenciones gubernamentales",
-    ayuda: "Subvenciones diferidas contablemente pero ya reconocidas fiscalmente.",
-  },
-  {
-    id: "P6",
-    tipo: "ptd",
-    concepto: "Otros pasivos diferidos",
-    ayuda: "Otras diferencias temporarias imponibles.",
-  },
+  // 18 Activos por impuesto diferido · diferencias temporarias deducibles
+  ...CATEGORIAS_BASE.map((concepto, i) => ({
+    id: `A${i + 1}`,
+    tipo: "atd" as const,
+    concepto,
+    ayuda: `Diferencia temporaria deducible · ${concepto}. Genera Activo por Impuesto Diferido (ATD) cuando la base contable supera la fiscal · revierte en periodos futuros como deducción.`,
+  })),
+  // 18 Pasivos por impuesto diferido · diferencias temporarias imponibles
+  ...CATEGORIAS_BASE.map((concepto, i) => ({
+    id: `P${i + 1}`,
+    tipo: "ptd" as const,
+    concepto,
+    ayuda: `Diferencia temporaria imponible · ${concepto}. Genera Pasivo por Impuesto Diferido (PTD) cuando la base fiscal supera la contable · revierte en periodos futuros como ingreso gravable.`,
+  })),
 ];
 
 export type F2516H4Captura = {

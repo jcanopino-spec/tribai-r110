@@ -29,8 +29,14 @@ import {
 type SC = SupabaseClient<Database>;
 
 // ---------- H1 Carátula ----------
+// Estructura oficial DIAN modelo110.xlsm (~42 campos):
+//   1. Identificación (NIT, razón social, dirección)
+//   2. Tarifa aplicable + artículo (Art. 240, 240-1, 19-4, etc.)
+//   3. Datos informativos · 22 flags SI/NO (campos 30-51 MUISCA)
+//   4. Signatario + códigos representación/contador/RF (campos 89-997)
 export type F2516H1Caratula = {
   declaracion_id: string;
+  // Bloque 1 · Representante legal, contador, RF
   rep_legal_nombre: string | null;
   rep_legal_tipo_doc: string | null;
   rep_legal_numero_doc: string | null;
@@ -51,6 +57,40 @@ export type F2516H1Caratula = {
   telefono: string | null;
   correo: string | null;
   observaciones: string | null;
+  // Bloque 2 · Tarifa
+  tarifa_aplicable: number | null;
+  art_aplicable: string | null;
+  // Bloque 3 · 22 flags MUISCA (campos 30-51)
+  pn_sin_residencia: boolean;
+  rte: boolean;
+  entidad_cooperativa: boolean;
+  entidad_sector_financiero: boolean;
+  nueva_sociedad_zomac: boolean;
+  obras_por_impuestos_zomac: boolean;
+  reorganizacion_empresarial: boolean;
+  soc_extranjera_transporte: boolean;
+  sist_especial_valoracion: boolean;
+  costo_inv_juego_inv: boolean;
+  costo_inv_simultaneo: boolean;
+  progresividad_tarifa: boolean;
+  contrato_estabilidad: boolean;
+  moneda_funcional_diferente: boolean;
+  mega_inversiones: boolean;
+  economia_naranja: boolean;
+  holding_colombiana: boolean;
+  zese: boolean;
+  extraccion_hulla_carbon: boolean;
+  extraccion_petroleo: boolean;
+  generacion_energia_hidro: boolean;
+  zona_franca: boolean;
+  // Bloque 4 · Signatario y representación
+  signatario_nit: string | null;
+  signatario_dv: string | null;
+  codigo_representacion: string | null;
+  codigo_contador_rf: string | null;
+  numero_tarjeta_profesional: string | null;
+  con_salvedades: boolean;
+  fecha_efectiva_transaccion: string | null;
 };
 
 export async function loadF2516H1(
@@ -165,17 +205,19 @@ function sumByPrefixes(
 // manualmente. Por ahora todo se mapea a la columna "gravados" porque el
 // balance no distingue gravado/exento/excluido/exportación · esa
 // clasificación es un input del contador.
+// Catálogo oficial DIAN H5 (modelo110.xlsm) · 5 conceptos del MUISCA.
+// Cada uno se auto-puebla desde el balance con los prefijos PUC oficiales:
+//   VENTA_BIENES         · 4135 (Comercio al por mayor y menor) + 4140 (parcial · venta industria)
+//   PRESTACION_SERVICIOS · 4145-4170 (servicios financieros, inmobiliarios, sociales, salud, enseñanza, consultoría)
+//   OTROS_INGRESOS       · 42* (todos los no operacionales)
+//   INGRESOS_TERCEROS    · capturado manual
+//   AJUSTES_FACTURADO    · 4175 (devoluciones, rebajas y descuentos)
 const H5_AUTO_PREFIJOS: Record<string, { incluir: string[]; excluir?: string[] } | null> = {
-  VENTAS_BIENES_NAC: { incluir: ["4135"] },
-  VENTAS_COMERCIALIZ: null,
-  SERVICIOS_NAC: { incluir: ["4140", "4145", "4150", "4155", "4160", "4165", "4170"] },
-  SERVICIOS_EXP: null,
-  COMISIONES: null,
-  HONORARIOS: null,
-  ARRENDAMIENTOS: null,
-  RECUPERACIONES: { incluir: ["425"] },
-  INTERESES: { incluir: ["421"] },
-  DIVERSOS: { incluir: ["4295"] },
+  VENTA_BIENES: { incluir: ["4135", "4140"] },
+  PRESTACION_SERVICIOS: { incluir: ["4145", "4150", "4155", "4160", "4165", "4170"] },
+  OTROS_INGRESOS: { incluir: ["42"], excluir: ["4275"] },
+  INGRESOS_TERCEROS: null,
+  AJUSTES_FACTURADO: { incluir: ["4175"] },
 };
 
 export async function loadF2516H5(

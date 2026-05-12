@@ -845,6 +845,37 @@ export type Database = {
           correo: string | null
           observaciones: string | null
           updated_at: string
+          tarifa_aplicable: number | null
+          art_aplicable: string | null
+          pn_sin_residencia: boolean
+          rte: boolean
+          entidad_cooperativa: boolean
+          entidad_sector_financiero: boolean
+          nueva_sociedad_zomac: boolean
+          obras_por_impuestos_zomac: boolean
+          reorganizacion_empresarial: boolean
+          soc_extranjera_transporte: boolean
+          sist_especial_valoracion: boolean
+          costo_inv_juego_inv: boolean
+          costo_inv_simultaneo: boolean
+          progresividad_tarifa: boolean
+          contrato_estabilidad: boolean
+          moneda_funcional_diferente: boolean
+          mega_inversiones: boolean
+          economia_naranja: boolean
+          holding_colombiana: boolean
+          zese: boolean
+          extraccion_hulla_carbon: boolean
+          extraccion_petroleo: boolean
+          generacion_energia_hidro: boolean
+          zona_franca: boolean
+          signatario_nit: string | null
+          signatario_dv: string | null
+          codigo_representacion: string | null
+          codigo_contador_rf: string | null
+          numero_tarjeta_profesional: string | null
+          con_salvedades: boolean
+          fecha_efectiva_transaccion: string | null
         }
         Insert: {
           declaracion_id: string
@@ -869,6 +900,37 @@ export type Database = {
           correo?: string | null
           observaciones?: string | null
           updated_at?: string
+          tarifa_aplicable?: number | null
+          art_aplicable?: string | null
+          pn_sin_residencia?: boolean
+          rte?: boolean
+          entidad_cooperativa?: boolean
+          entidad_sector_financiero?: boolean
+          nueva_sociedad_zomac?: boolean
+          obras_por_impuestos_zomac?: boolean
+          reorganizacion_empresarial?: boolean
+          soc_extranjera_transporte?: boolean
+          sist_especial_valoracion?: boolean
+          costo_inv_juego_inv?: boolean
+          costo_inv_simultaneo?: boolean
+          progresividad_tarifa?: boolean
+          contrato_estabilidad?: boolean
+          moneda_funcional_diferente?: boolean
+          mega_inversiones?: boolean
+          economia_naranja?: boolean
+          holding_colombiana?: boolean
+          zese?: boolean
+          extraccion_hulla_carbon?: boolean
+          extraccion_petroleo?: boolean
+          generacion_energia_hidro?: boolean
+          zona_franca?: boolean
+          signatario_nit?: string | null
+          signatario_dv?: string | null
+          codigo_representacion?: string | null
+          codigo_contador_rf?: string | null
+          numero_tarjeta_profesional?: string | null
+          con_salvedades?: boolean
+          fecha_efectiva_transaccion?: string | null
         }
         Update: {
           declaracion_id?: string

@@ -1,0 +1,181 @@
+[
+  {
+    "r": 2,
+    "C10": "REPORTE DE CONCILIACION FISCAL ANEXO FORMULARIO 110"
+  },
+  {
+    "r": 5,
+    "C2": "1. Año",
+    "C5": "='Datos Informativos'!D11"
+  },
+  {
+    "r": 7,
+    "C4": "=45000*'Datos Básicos'!E7"
+  },
+  {
+    "r": 8,
+    "C2": "=IF('Formulario 110'!M51+'Formulario 110'!M63+'Formulario 110'!M64+'Formulario 110'!AD32>=D7,\"Obligado a presentar Formato 2516 año gravable 2025\",\"NO Obligado a presentar Formato 2516 año gravable 2025\")"
+  },
+  {
+    "r": 12,
+    "C2": "Datos del\ndeclarante",
+    "C4": " 5. Número de Identificación Tributaria (NIT)",
+    "C20": " 6.DV.",
+    "C23": " 7. Primer apellido"
+  },
+  {
+    "r": 13,
+    "C4": "=+'Datos Informativos'!D12",
+    "C20": "=+'Datos Informativos'!D13"
+  },
+  {
+    "r": 14,
+    "C4": " 11. Razón social"
+  },
+  {
+    "r": 15,
+    "C4": "=+'Datos Informativos'!D18"
+  },
+  {
+    "r": 17,
+    "C2": "24. No. Declaración de renta asociada:",
+    "C19": " Si es una corrección Indique:    26. Cód.                                                    27. No. Formulario anterior"
+  },
+  {
+    "r": 18,
+    "C2": "29. Tarifas",
+    "C15": "0.09",
+    "C17": "Art. 240 E.T. (parágrafos 1, 2, 4 y 5)"
+  },
+  {
+    "r": 19,
+    "C15": "0.15",
+    "C18": "Art. 240-1 E.T. (Zona Franca, parágrafo 4)"
+  },
+  {
+    "r": 20,
+    "C2": "Datos informativos (SI / NO)"
+  },
+  {
+    "r": 21,
+    "C2": "30. Persona Natural sin residencia"
+  },
+  {
+    "r": 22,
+    "C2": "31. Contribuyente del Régimen Tributario Especial"
+  },
+  {
+    "r": 23,
+    "C2": "32. Entidad Cooperativa (artículo 19-4 Estatuto Tributario)"
+  },
+  {
+    "r": 24,
+    "C2": "33. Entidad del sector financiero"
+  },
+  {
+    "r": 25,
+    "C2": "34. Nueva sociedad - ZOMAC"
+  },
+  {
+    "r": 26,
+    "C2": "35. Obras por impuestos - ZOMAC"
+  },
+  {
+    "r": 27,
+    "C2": "36. Programa de reorganización empresarial durante el año gravable"
+  },
+  {
+    "r": 28,
+    "C2": "37. Sociedad extranjera que presta servicio de transporte entre lugares colombianos y extranjeros"
+  },
+  {
+    "r": 29,
+    "C2": "38. Obligado a aplicar sistemas especiales de valoración de inversiones"
+  },
+  {
+    "r": 30,
+    "C2": "39. Costo de los inventarios establecidos por el sistema de juego de inventarios"
+  },
+  {
+    "r": 31,
+    "C2": "40. Costo de los inventarios establecido simultáneamente por el juego de inventarios y por el sistema de inventario permanente"
+  },
+  {
+    "r": 32,
+    "C2": "41. Progresividad de la tarifa de impuesto de renta, o, sociedad extranjera o entidad extranjera sin sucursal o establecimiento permanente"
+  },
+  {
+    "r": 33,
+    "C2": "42. Contrato de estabilidad jurídica"
+  },
+  {
+    "r": 34,
+    "C2": "43. Moneda funcional diferente al peso colombiano"
+  },
+  {
+    "r": 35,
+    "C2": "44. Mega - Inversiones"
+  },
+  {
+    "r": 36,
+    "C2": "45. Empresa de Economía naranja"
+  },
+  {
+    "r": 37,
+    "C2": "46. Compañía Holding Colombiana"
+  },
+  {
+    "r": 38,
+    "C2": "47. Zona Económica y Social Especial"
+  },
+  {
+    "r": 39,
+    "C2": "48. Extracción de hulla (carbón de piedra) CIIU- 0510 y \nextracción de carbón lignito CIIU - 0520"
+  },
+  {
+    "r": 40,
+    "C2": "49. Extracción de petróleo crudo CIIU – 0610"
+  },
+  {
+    "r": 41,
+    "C2": "50. Generación de energía eléctrica a través de recursos \nhídricos"
+  },
+  {
+    "r": 42,
+    "C2": "51. Zona Franca"
+  },
+  {
+    "r": 44,
+    "C2": "89. No. Identificación Signatario",
+    "C23": "90. DV"
+  },
+  {
+    "r": 45,
+    "C2": "981. Cód. Representación",
+    "C22": "997. Fecha efectiva de la transacción"
+  },
+  {
+    "r": 46,
+    "C2": "Firma del Declarante o de quien lo representa"
+  },
+  {
+    "r": 49,
+    "C2": "982. Código contador o Revisor Fiscal"
+  },
+  {
+    "r": 50,
+    "C2": "Firma Contador o Revisor Fiscal     994. Con salvedades"
+  },
+  {
+    "r": 53,
+    "C2": "983, No. Tarjeta profesional"
+  },
+  {
+    "r": 57,
+    "C2": "X"
+  },
+  {
+    "r": 89,
+    "C3": "}"
+  }
+]
