@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { loadF2516H2, type F2516H2Fila } from "@/lib/f2516-h2-h3";
+import { loadF2516H2 } from "@/lib/f2516-h2-h3";
 import { ModuloHeader } from "@/components/modulo-header";
+import { H2FilasEditables } from "./form-inline";
 
 export const metadata = { title: "F2516 H2 ESF Patrimonio" };
 
@@ -77,119 +78,15 @@ export default async function H2ESFPage({
         se capturan manualmente. El <strong>valor fiscal</strong> = Contable + Conversión − Menor + Mayor.
       </p>
 
-      <div className="mb-4 rounded-md border border-amber-500/40 bg-amber-500/5 p-3 text-xs">
-        💡 <strong>Mapeo de cuentas:</strong> para que las cuentas del balance lleguen
-        a su renglón H2 correcto, ve a{" "}
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h2-esf/mapeo`}
-          className="underline hover:text-foreground"
-        >
-          Mapeo cuenta → renglón H2
-        </Link>
-        . Las cuentas sin mapear no aparecen en esta hoja.
+      <div className="mb-4 rounded-md border border-emerald-500/40 bg-emerald-500/5 p-3 text-xs">
+        ✓ <strong>Auto-poblado oficial DIAN:</strong> el contable se calcula
+        automáticamente con el mapeo de 2239 cuentas PUC oficiales (Hoja Sumaria
+        del modelo110). Los ajustes (Val2-Val4) son editables abajo · al guardar
+        recalcula Val5 (Fiscal).
       </div>
 
-      {/* Tabla H2 estilo DIAN */}
-      <div className="overflow-x-auto rounded-md border" style={{ borderColor: DIAN_BLUE }}>
-        <table className="w-full border-collapse text-xs">
-          <thead style={{ backgroundColor: DIAN_BLUE, color: "white" }}>
-            <tr>
-              <th className="border border-white/30 px-2 py-2 text-left font-bold uppercase">
-                NUM
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-left font-bold uppercase">
-                Concepto
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-right font-bold uppercase">
-                Val 1 · Contable
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-right font-bold uppercase">
-                Val 2 · Conversión
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-right font-bold uppercase">
-                Val 3 · Menor Fiscal
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-right font-bold uppercase">
-                Val 4 · Mayor Fiscal
-              </th>
-              <th className="border border-white/30 px-2 py-2 text-right font-bold uppercase">
-                Val 5 · Fiscal
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {filas.map((f) => (
-              <FilaH2 key={f.id} f={f} />
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <p className="mt-6 text-xs text-muted-foreground">
-        Para capturar ajustes manuales por renglón, click en cada fila.
-        El mapeo de cuentas se gestiona en{" "}
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/balance`}
-          className="underline hover:text-foreground"
-        >
-          Balance
-        </Link>
-        .
-      </p>
+      <H2FilasEditables declId={declId} empresaId={empresaId} filas={filas} />
     </div>
-  );
-}
-
-function FilaH2({ f }: { f: F2516H2Fila }) {
-  const bgByNivel: Record<number, string> = {
-    1: DIAN_BLUE, // categoría principal · banner azul
-    2: DIAN_BLUE_LIGHT,
-    3: "transparent",
-    4: "transparent",
-    5: "transparent",
-  };
-  const colorByNivel: Record<number, string> = {
-    1: "white",
-    2: DIAN_BLUE,
-    3: "inherit",
-    4: "#666",
-    5: "#888",
-  };
-  const fontWeight = f.nivel === 1 || f.esTotal ? "bold" : "normal";
-  const indent = (f.nivel - 1) * 12;
-
-  return (
-    <tr
-      style={{
-        backgroundColor: bgByNivel[f.nivel] ?? "transparent",
-        color: colorByNivel[f.nivel] ?? "inherit",
-        fontWeight,
-      }}
-    >
-      <td className="border border-border px-2 py-1 font-mono">{f.id}</td>
-      <td className="border border-border px-2 py-1" style={{ paddingLeft: indent + 8 }}>
-        {f.esTotal ? "• " : ""}
-        {f.concepto}
-      </td>
-      <td className="border border-border px-2 py-1 text-right font-mono tabular-nums">
-        {f.contable === 0 ? "" : FMT.format(f.contable)}
-      </td>
-      <td className="border border-border px-2 py-1 text-right font-mono tabular-nums text-amber-700 dark:text-amber-400">
-        {f.conversion === 0 ? "" : FMT.format(f.conversion)}
-      </td>
-      <td className="border border-border px-2 py-1 text-right font-mono tabular-nums text-amber-700 dark:text-amber-400">
-        {f.menor_fiscal === 0 ? "" : FMT.format(f.menor_fiscal)}
-      </td>
-      <td className="border border-border px-2 py-1 text-right font-mono tabular-nums text-amber-700 dark:text-amber-400">
-        {f.mayor_fiscal === 0 ? "" : FMT.format(f.mayor_fiscal)}
-      </td>
-      <td
-        className="border border-border px-2 py-1 text-right font-mono tabular-nums"
-        style={{ backgroundColor: f.esTotal ? "#FFF8E1" : "transparent", fontWeight: f.esTotal ? "bold" : "normal" }}
-      >
-        {f.fiscal === 0 ? "" : FMT.format(f.fiscal)}
-      </td>
-    </tr>
   );
 }
 

@@ -12,6 +12,29 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/db/types";
 import { F2516_H2_CATALOGO, type F2516_H2Renglon } from "@/engine/f2516-h2-catalogo";
 import { F2516_H3_CATALOGO, type F2516_H3Renglon } from "@/engine/f2516-h3-catalogo";
+import { MAPEO_PUC_H2 } from "@/engine/f2516-mapeo-h2";
+import { MAPEO_PUC_H3 } from "@/engine/f2516-mapeo-h3";
+
+/**
+ * Resolver mapeo cuenta → renglón usando el catálogo oficial DIAN.
+ * Busca primero match exacto, luego el prefijo más largo posible.
+ *
+ * Ejemplo · cuenta "11050501" busca: "11050501" (no encontrado), "1105050"
+ * (no), "110505" (encontrado · renglón 12 Efectivo).
+ */
+function resolverRenglonOficial(
+  cuenta: string,
+  mapping: Record<string, number>,
+): number | null {
+  // Match exacto
+  if (mapping[cuenta] != null) return mapping[cuenta];
+  // Prefijo más largo
+  for (let n = cuenta.length - 1; n >= 2; n--) {
+    const prefix = cuenta.substring(0, n);
+    if (mapping[prefix] != null) return mapping[prefix];
+  }
+  return null;
+}
 
 type SC = SupabaseClient<Database>;
 
@@ -59,33 +82,43 @@ export type F2516H3Fila = F2516_H3Renglon & {
 };
 
 /**
- * Carga el balance del usuario y suma por renglón H2 según el mapeo en
- * balance_renglon_h2_h3. Las cuentas sin mapeo NO entran al H2.
+ * Carga el balance y suma por renglón H2.
+ *
+ * Estrategia:
+ *   1. Si hay mapeo manual en `balance_renglon_h2_h3` para la cuenta · úsalo
+ *   2. Sino · usa el catálogo oficial `MAPEO_PUC_H2` (2239 cuentas DIAN)
+ *      con resolución por prefijo más largo (110505 → renglón Efectivo)
+ *
+ * Esto garantiza que H2/H3 traen información SIN requerir captura manual.
  */
 async function cargarContablesH2(
   supabase: SC,
   declId: string,
 ): Promise<Map<number, number>> {
-  const { data } = await supabase
-    .from("balance_renglon_h2_h3")
-    .select("cuenta, renglon_h2")
-    .eq("declaracion_id", declId)
-    .not("renglon_h2", "is", null);
+  const [{ data: mapeoManualData }, { data: lineas }] = await Promise.all([
+    supabase
+      .from("balance_renglon_h2_h3")
+      .select("cuenta, renglon_h2")
+      .eq("declaracion_id", declId)
+      .not("renglon_h2", "is", null),
+    supabase
+      .from("balance_prueba_lineas")
+      .select("cuenta, saldo, ajuste_debito, ajuste_credito, balance_pruebas!inner(declaracion_id)")
+      .eq("balance_pruebas.declaracion_id", declId),
+  ]);
 
-  const mapping = new Map<string, number>();
-  for (const r of data ?? []) {
-    if (r.renglon_h2 != null) mapping.set(String(r.cuenta), r.renglon_h2);
+  const mapeoManual = new Map<string, number>();
+  for (const r of mapeoManualData ?? []) {
+    if (r.renglon_h2 != null) mapeoManual.set(String(r.cuenta), r.renglon_h2);
   }
-
-  // Cargar saldos
-  const { data: lineas } = await supabase
-    .from("balance_prueba_lineas")
-    .select("cuenta, saldo, ajuste_debito, ajuste_credito, balance_pruebas!inner(declaracion_id)")
-    .eq("balance_pruebas.declaracion_id", declId);
 
   const totales = new Map<number, number>();
   for (const l of lineas ?? []) {
-    const rgl = mapping.get(String(l.cuenta));
+    const cuenta = String(l.cuenta);
+    // Prioridad: manual → oficial (catálogo DIAN)
+    const rgl =
+      mapeoManual.get(cuenta) ??
+      resolverRenglonOficial(cuenta, MAPEO_PUC_H2);
     if (rgl == null) continue;
     const saldo =
       Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);
@@ -98,25 +131,29 @@ async function cargarContablesH3(
   supabase: SC,
   declId: string,
 ): Promise<Map<number, number>> {
-  const { data } = await supabase
-    .from("balance_renglon_h2_h3")
-    .select("cuenta, renglon_h3")
-    .eq("declaracion_id", declId)
-    .not("renglon_h3", "is", null);
+  const [{ data: mapeoManualData }, { data: lineas }] = await Promise.all([
+    supabase
+      .from("balance_renglon_h2_h3")
+      .select("cuenta, renglon_h3")
+      .eq("declaracion_id", declId)
+      .not("renglon_h3", "is", null),
+    supabase
+      .from("balance_prueba_lineas")
+      .select("cuenta, saldo, ajuste_debito, ajuste_credito, balance_pruebas!inner(declaracion_id)")
+      .eq("balance_pruebas.declaracion_id", declId),
+  ]);
 
-  const mapping = new Map<string, number>();
-  for (const r of data ?? []) {
-    if (r.renglon_h3 != null) mapping.set(String(r.cuenta), r.renglon_h3);
+  const mapeoManual = new Map<string, number>();
+  for (const r of mapeoManualData ?? []) {
+    if (r.renglon_h3 != null) mapeoManual.set(String(r.cuenta), r.renglon_h3);
   }
-
-  const { data: lineas } = await supabase
-    .from("balance_prueba_lineas")
-    .select("cuenta, saldo, ajuste_debito, ajuste_credito, balance_pruebas!inner(declaracion_id)")
-    .eq("balance_pruebas.declaracion_id", declId);
 
   const totales = new Map<number, number>();
   for (const l of lineas ?? []) {
-    const rgl = mapping.get(String(l.cuenta));
+    const cuenta = String(l.cuenta);
+    const rgl =
+      mapeoManual.get(cuenta) ??
+      resolverRenglonOficial(cuenta, MAPEO_PUC_H3);
     if (rgl == null) continue;
     const saldo =
       Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);

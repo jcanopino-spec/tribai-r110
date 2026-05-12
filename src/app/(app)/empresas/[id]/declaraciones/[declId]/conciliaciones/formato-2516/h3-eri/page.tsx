@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { loadF2516H3, type F2516H3Fila } from "@/lib/f2516-h2-h3";
+import { loadF2516H3 } from "@/lib/f2516-h2-h3";
 import { ModuloHeader } from "@/components/modulo-header";
+import { H3FilasEditables } from "./form-inline";
 
 export const metadata = { title: "F2516 H3 ERI Renta Líquida" };
 
@@ -75,124 +76,16 @@ export default async function H3ERIPage({
         mega-inversiones, par. 5 Art. 240, dividendos, ganancias ocasionales.
       </p>
 
-      <div className="mb-4 rounded-md border border-amber-500/40 bg-amber-500/5 p-3 text-xs">
-        💡 <strong>Mapeo:</strong> para alimentar el contable, las cuentas deben
-        mapearse a su renglón H3 en{" "}
-        <Link
-          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h3-eri/mapeo`}
-          className="underline hover:text-foreground"
-        >
-          Mapeo cuenta → renglón H3
-        </Link>
-        .
+      <div className="mb-4 rounded-md border border-emerald-500/40 bg-emerald-500/5 p-3 text-xs">
+        ✓ <strong>Auto-poblado oficial DIAN:</strong> el contable se calcula
+        automáticamente con el mapeo de 725 cuentas PUC oficiales (Hoja Sumaria
+        del modelo110). Los ajustes (Val2-Val4 + RL por tarifa) son editables
+        abajo.
       </div>
 
-      <div className="overflow-x-auto rounded-md border" style={{ borderColor: DIAN_BLUE }}>
-        <table className="w-full border-collapse text-[11px]">
-          <thead style={{ backgroundColor: DIAN_BLUE, color: "white" }}>
-            <tr>
-              <th className="border border-white/30 px-1 py-2 text-left">NUM</th>
-              <th className="border border-white/30 px-1 py-2 text-left" colSpan={1}>
-                Concepto
-              </th>
-              <th className="border border-white/30 px-1 py-2 text-right">Val1 · Contable</th>
-              <th className="border border-white/30 px-1 py-2 text-right">Val2 · Conv</th>
-              <th className="border border-white/30 px-1 py-2 text-right">Val3 · Menor</th>
-              <th className="border border-white/30 px-1 py-2 text-right">Val4 · Mayor</th>
-              <th
-                className="border border-white/30 px-1 py-2 text-right"
-                style={{ backgroundColor: TRIBAI_GOLD, color: DIAN_BLUE }}
-              >
-                Val5 · FISCAL
-              </th>
-              <th className="border border-white/30 px-1 py-2 text-right">RL Gen</th>
-              <th className="border border-white/30 px-1 py-2 text-right">RL ZF</th>
-              <th className="border border-white/30 px-1 py-2 text-right">RL Div</th>
-              <th className="border border-white/30 px-1 py-2 text-right">RL GO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filas.map((f) => (
-              <FilaH3 key={f.id} f={f} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <H3FilasEditables declId={declId} empresaId={empresaId} filas={filas} />
     </div>
   );
-}
-
-function FilaH3({ f }: { f: F2516H3Fila }) {
-  const bgByNivel: Record<number, string> = {
-    1: DIAN_BLUE,
-    2: DIAN_BLUE_LIGHT,
-    3: "transparent",
-    4: "transparent",
-    5: "transparent",
-    6: "transparent",
-  };
-  const colorByNivel: Record<number, string> = {
-    1: "white",
-    2: DIAN_BLUE,
-    3: "inherit",
-    4: "#555",
-    5: "#777",
-    6: "#999",
-  };
-  const fontWeight = f.nivel === 1 || f.esTotal ? "bold" : "normal";
-  const indent = (f.nivel - 1) * 8;
-  return (
-    <tr
-      style={{
-        backgroundColor: bgByNivel[f.nivel] ?? "transparent",
-        color: colorByNivel[f.nivel] ?? "inherit",
-        fontWeight,
-      }}
-    >
-      <td className="border border-border px-1 py-0.5 font-mono">{f.id}</td>
-      <td
-        className="border border-border px-1 py-0.5"
-        style={{ paddingLeft: indent + 4 }}
-      >
-        {f.esTotal ? "• " : ""}
-        {f.concepto}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.contable)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.conversion)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.menor_fiscal)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.mayor_fiscal)}
-      </td>
-      <td
-        className="border border-border px-1 py-0.5 text-right font-mono tabular-nums"
-        style={{ backgroundColor: f.esTotal ? "#FFF8E1" : "transparent", fontWeight: "bold" }}
-      >
-        {fmtCell(f.fiscal)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.rl_tarifa_general)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.rl_zf)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.rl_dividendos)}
-      </td>
-      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
-        {fmtCell(f.rl_go)}
-      </td>
-    </tr>
-  );
-}
-
-function fmtCell(v: number): string {
-  return v === 0 ? "" : FMT.format(v);
 }
 
 function Stat({
