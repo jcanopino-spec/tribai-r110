@@ -28,34 +28,39 @@ const BLACK = "FF000000";
 const FMT_MONEY = '"$"#,##0;[Red]"($"#,##0")";"-"';
 const FMT_PCT = "0.00%";
 
-// Nombres exactos de hoja (referenciados en fórmulas)
+// Nombres exactos de hoja (referenciados en fórmulas) · alineados al modelo guía DIAN modelo110.xlsm
 const SHEET = {
-  PORTADA: "01_Portada",
-  DATOS_BASICOS: "02_Datos_Basicos",
-  DATOS_INF: "03_Datos_Informativos",
-  BALANCE: "04_Balance_Prueba",
-  SUMARIA: "05_Hoja_Sumaria",
-  H1: "06_F2516_H1",
-  H2: "07_F2516_H2_ESF",
-  H3: "08_F2516_H3_ERI",
-  H4: "09_F2516_H4_ImpDif",
-  H5: "10_F2516_H5_Ingresos",
-  H6: "11_F2516_H6_ActivosF",
-  H7: "12_F2516_H7_Resumen",
-  S_PATR: "13_Sigma_Patrimonio",
-  S_ING: "14_Sigma_Ingresos",
-  S_COSTOS: "15_Sigma_Costos",
-  S_RENTA: "16_Sigma_Renta",
-  AX_CONCI_PATR: "17_Anx_Conc_Patrimonial",
-  AX_CONCI_UTIL: "18_Anx_Conc_Utilidad",
-  AX_RP: "19_Anx_Renta_Presuntiva",
-  AX_RET: "20_Anx_Retenciones",
-  AX_AF: "21_Anx_Activos_Fijos",
-  AX_NOMINA: "22_Anx_Nomina_SS",
-  AX_PERDIDAS: "23_Anx_Perdidas_Fisc",
-  LIQUID: "24_Liquidacion_Privada",
-  FORM110: "25_Formulario_110",
-  AUDIT_RF: "26_Auditoria_RF",
+  PORTADA: "PRESENTACIÓN",
+  DATOS_BASICOS: "Datos Básicos",
+  DATOS_INF: "Datos Informativos",
+  BALANCE: "Balance de Prueba",
+  SUMARIA: "Hoja Sumaria",
+  IMP_DIF: "Impuesto Diferido",
+  LIQUID: "Liquidacion Privada",
+  S_PATR: "Σ Patrimonio",
+  S_ING: "Σ Ingresos",
+  S_COSTOS: "Σ Costos y Deducciones",
+  S_RENTA: "Σ Renta",
+  AX_RP: "Anexo 1 Renta Presuntiva",
+  AX_RET: "Anexo 3 Retenciones y Auto",
+  AX_AF: "Anexo 5 Venta AF",
+  AX_CONCI_PATR: "Anexo 16 Conci Patr",
+  AX_CONCI_UTIL: "Anexo 17 Conci Utilidad",
+  AX_PERDIDAS: "Anexo 20 Comp Pérdidas",
+  AX_NOMINA: "Anexo 21 Pagos Seg. Social",
+  TASA_MIN: "Tasa Mínima - TTD",
+  FORM110: "Formulario 110",
+  H1: "H1 (Caratula)",
+  H2: "H2 (ESF - Patrimonio)",
+  H3: "H3 (ERI - Renta Liquida)",
+  H4: "H4 (Impuesto Diferido)",
+  H5: "H5 (Ingresos y Facturación)",
+  H6: "H6 (Activos fijos)",
+  H7: "H7 (Resumen ESF-ERI)",
+  F110_2516: "F110_2516",
+  F110_CONCI: "F110_Conciliación",
+  AUDI_F110: "Audi_F-110",
+  AUDIT_RF: "Auditoría_F-110",
 } as const;
 
 // =========================================================================
@@ -90,11 +95,27 @@ export async function GET(req: Request) {
     wb.subject = `Declaración de renta AG ${data.declaracion.ano_gravable}`;
     wb.description = "Anexo para auditoría de Revisoría Fiscal · arquitectura modelo guía DIAN.";
 
+    // Orden alineado al modelo guía DIAN modelo110.xlsm
     addPortada(wb, data);
     addDatosBasicos(wb, data);
     addDatosInformativos(wb, data);
     addBalancePrueba(wb, data);
     addHojaSumaria(wb, data);
+    addImpuestoDiferido(wb, data);
+    addLiquidacionPrivada(wb, data);
+    addSigmaPatrimonio(wb, data);
+    addSigmaIngresos(wb, data);
+    addSigmaCostos(wb, data);
+    addSigmaRenta(wb, data);
+    addAnxRentaPresuntiva(wb, data);
+    addAnxRetenciones(wb, data);
+    addAnxActivosFijos(wb, data);
+    addAnxConciPatr(wb, data);
+    addAnxConciUtil(wb, data);
+    addAnxPerdidasFisc(wb, data);
+    addAnxNominaSS(wb, data);
+    addTasaMinima(wb, data);
+    addFormulario110(wb, data);
     addH1Caratula(wb, data);
     addH2ESF(wb, data);
     addH3ERI(wb, data);
@@ -102,19 +123,9 @@ export async function GET(req: Request) {
     addH5Ingresos(wb, data);
     addH6ActivosFijos(wb, data);
     addH7Resumen(wb, data);
-    addSigmaPatrimonio(wb, data);
-    addSigmaIngresos(wb, data);
-    addSigmaCostos(wb, data);
-    addSigmaRenta(wb, data);
-    addAnxConciPatr(wb, data);
-    addAnxConciUtil(wb, data);
-    addAnxRentaPresuntiva(wb, data);
-    addAnxRetenciones(wb, data);
-    addAnxActivosFijos(wb, data);
-    addAnxNominaSS(wb, data);
-    addAnxPerdidasFisc(wb, data);
-    addLiquidacionPrivada(wb, data);
-    addFormulario110(wb, data);
+    addF110_2516(wb, data);
+    addF110_Conciliacion(wb, data);
+    addAudiF110(wb, data);
     addAuditoriaRF(wb, data);
 
     arrayBuf = (await wb.xlsx.writeBuffer()) as ArrayBuffer;
@@ -385,28 +396,33 @@ function addPortada(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
 
   // Índice de hojas
   ws.mergeCells("B31:E31");
-  ws.getCell("B31").value = "4. ÍNDICE DEL PAPEL DE TRABAJO · 26 HOJAS";
+  ws.getCell("B31").value = "4. ÍNDICE DEL PAPEL DE TRABAJO · 31 HOJAS";
   ws.getCell("B31").style = stySection();
   ws.getRow(31).height = 22;
 
   const indice: string[] = [
-    "01. Portada · esta hoja",
-    "02. Datos básicos · empresa, NIT, régimen, dirección",
-    "03. Datos informativos · 22 flags MUISCA + marco normativo",
-    "04. Balance de prueba · saldos contables + ajustes (input)",
-    "05. Hoja Sumaria · pivote · cuenta → R110/F2516 (formulada)",
-    "06-12. F-2516 H1 a H7 · oficial DIAN Res. 71/2019",
-    "13-16. Σ Sigmas · Patrimonio, Ingresos, Costos, Renta",
-    "17. Anexo Conc. Patrimonial · cuadre patrimonio cont vs fiscal",
-    "18. Anexo Conc. Utilidad · utilidad contable → renta fiscal",
-    "19. Anexo Renta Presuntiva · cálculo art. 188",
-    "20. Anexo Retenciones · RF + autorretenciones + anticipo",
-    "21. Anexo Activos Fijos · matriz depreciación fiscal",
-    "22. Anexo Nómina Seg. Social · aportes salud/pensión/ARL",
-    "23. Anexo Pérdidas Fiscales · compensación de años anteriores",
-    "24. Liquidación Privada · cálculo impuesto y saldo a pagar",
-    "25. Formulario 110 · plantilla oficial 88 renglones",
-    "26. Auditoría RF · checklist de cuadres y firma",
+    "PRESENTACIÓN · esta hoja",
+    "Datos Básicos · empresa, NIT, régimen, dirección",
+    "Datos Informativos · 22 flags MUISCA + marco normativo",
+    "Balance de Prueba · saldos contables + ajustes (input)",
+    "Hoja Sumaria · pivote · cuenta → R110/F2516 (formulada)",
+    "Impuesto Diferido · ATD/PTD detallado (Art. 290 E.T.)",
+    "Liquidacion Privada · cálculo final impuesto y saldo",
+    "Σ Patrimonio / Σ Ingresos / Σ Costos / Σ Renta · totalizadores",
+    "Anexo 1 Renta Presuntiva · Art. 188 E.T.",
+    "Anexo 3 Retenciones y Auto · RF + autorretención + anticipo",
+    "Anexo 5 Venta AF · enajenación de activos fijos",
+    "Anexo 16 Conci Patr · patrimonio contable vs fiscal",
+    "Anexo 17 Conci Utilidad · utilidad contable → renta fiscal",
+    "Anexo 20 Comp Pérdidas · pérdidas fiscales por compensar",
+    "Anexo 21 Pagos Seg. Social · aportes salud/pensión/ARL/parafiscales",
+    "Tasa Mínima - TTD · Art. 240 par. 6 E.T. (Ley 2277)",
+    "Formulario 110 · 88 renglones con valor (plantilla oficial)",
+    "H1 a H7 · F-2516 oficial DIAN Res. 71/2019",
+    "F110_2516 · cruce renglón F-110 vs F-2516 H7",
+    "F110_Conciliación · cruce F-110 contable vs fiscal",
+    "Audi_F-110 · checklist liviano de cuadres clave",
+    "Auditoría_F-110 · checklist extenso + validaciones + firma RF",
   ];
   indice.forEach((line, i) => {
     const ri = 32 + i;
@@ -415,20 +431,21 @@ function addPortada(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   });
 
   // Firma RF
-  ws.mergeCells("B50:E50");
-  ws.getCell("B50").value = "5. FIRMA REVISORÍA FISCAL";
-  ws.getCell("B50").style = stySection();
-  ws.getRow(50).height = 22;
-  ws.mergeCells("B51:E51");
-  ws.getCell("B51").value = "Certifico que la información contenida en este papel de trabajo se preparó conforme a las NIA (Normas Internacionales de Auditoría) y refleja la base sobre la cual se calculó la declaración de renta. Las cifras contables provienen del balance de prueba auditado; los ajustes fiscales fueron revisados uno a uno contra el Estatuto Tributario.";
-  ws.getCell("B51").style = { ...styLabel(), alignment: { vertical: "top", horizontal: "justify", wrapText: true, indent: 1 } };
-  ws.getRow(51).height = 70;
-  ws.mergeCells("B53:C53");
-  ws.getCell("B53").value = "Firma RF: ____________________________";
-  ws.getCell("B53").style = styLabel();
-  ws.mergeCells("D53:E53");
-  ws.getCell("D53").value = `T.P.: ${d.h1?.rf_tarjeta_prof ?? "______________"}`;
-  ws.getCell("D53").style = styLabel();
+  const sFi = 32 + indice.length + 2;
+  ws.mergeCells(`B${sFi}:E${sFi}`);
+  ws.getCell(`B${sFi}`).value = "5. FIRMA REVISORÍA FISCAL";
+  ws.getCell(`B${sFi}`).style = stySection();
+  ws.getRow(sFi).height = 22;
+  ws.mergeCells(`B${sFi + 1}:E${sFi + 1}`);
+  ws.getCell(`B${sFi + 1}`).value = "Certifico que la información contenida en este papel de trabajo se preparó conforme a las NIA (Normas Internacionales de Auditoría) y refleja la base sobre la cual se calculó la declaración de renta. Las cifras contables provienen del balance de prueba auditado; los ajustes fiscales fueron revisados uno a uno contra el Estatuto Tributario.";
+  ws.getCell(`B${sFi + 1}`).style = { ...styLabel(), alignment: { vertical: "top", horizontal: "justify", wrapText: true, indent: 1 } };
+  ws.getRow(sFi + 1).height = 70;
+  ws.mergeCells(`B${sFi + 3}:C${sFi + 3}`);
+  ws.getCell(`B${sFi + 3}`).value = "Firma RF: ____________________________";
+  ws.getCell(`B${sFi + 3}`).style = styLabel();
+  ws.mergeCells(`D${sFi + 3}:E${sFi + 3}`);
+  ws.getCell(`D${sFi + 3}`).value = `T.P.: ${d.h1?.rf_tarjeta_prof ?? "______________"}`;
+  ws.getCell(`D${sFi + 3}`).style = styLabel();
 }
 
 // =========================================================================
@@ -442,7 +459,7 @@ function addDatosBasicos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 32 }, { width: 60 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "02 · DATOS BÁSICOS DEL CONTRIBUYENTE";
+  ws.getCell("B2").value = "DATOS BÁSICOS DEL CONTRIBUYENTE";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -484,7 +501,7 @@ function addDatosInformativos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 65 }, { width: 12 }, { width: 3 }];
 
   ws.mergeCells("B2:D2");
-  ws.getCell("B2").value = "03 · DATOS INFORMATIVOS · FLAGS MUISCA";
+  ws.getCell("B2").value = "DATOS INFORMATIVOS · FLAGS MUISCA";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -569,7 +586,7 @@ function addBalancePrueba(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ];
 
   ws.mergeCells("B2:J2");
-  ws.getCell("B2").value = "04 · BALANCE DE PRUEBA · CUENTAS PUC CON SALDOS Y AJUSTES";
+  ws.getCell("B2").value = "BALANCE DE PRUEBA · CUENTAS PUC CON SALDOS Y AJUSTES";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -639,7 +656,7 @@ function addHojaSumaria(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ];
 
   ws.mergeCells("B2:I2");
-  ws.getCell("B2").value = "05 · HOJA SUMARIA · PIVOTE CENTRAL (formulada desde Balance)";
+  ws.getCell("B2").value = "HOJA SUMARIA · PIVOTE CENTRAL (formulada desde Balance)";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -707,7 +724,7 @@ function addH1Caratula(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 50 }, { width: 35 }, { width: 3 }];
 
   ws.mergeCells("B2:D2");
-  ws.getCell("B2").value = "06 · F-2516 H1 · CARÁTULA (Reporte Conciliación Fiscal)";
+  ws.getCell("B2").value = "F-2516 H1 · CARÁTULA (Reporte Conciliación Fiscal)";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -786,7 +803,7 @@ function addH2ESF(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ];
 
   ws.mergeCells("B2:H2");
-  ws.getCell("B2").value = "07 · F-2516 H2 · ESTADO DE SITUACIÓN FINANCIERA · PATRIMONIO";
+  ws.getCell("B2").value = "F-2516 H2 · ESTADO DE SITUACIÓN FINANCIERA · PATRIMONIO";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -874,7 +891,7 @@ function addH3ERI(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ];
 
   ws.mergeCells("B2:L2");
-  ws.getCell("B2").value = "08 · F-2516 H3 · ESTADO DE RESULTADOS · RENTA LÍQUIDA";
+  ws.getCell("B2").value = "F-2516 H3 · ESTADO DE RESULTADOS · RENTA LÍQUIDA";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -939,7 +956,7 @@ function addH4ImpDif(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 50 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "09 · F-2516 H4 · IMPUESTO DIFERIDO";
+  ws.getCell("B2").value = "F-2516 H4 · IMPUESTO DIFERIDO";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1007,7 +1024,7 @@ function addH5Ingresos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 50 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "10 · F-2516 H5 · INGRESOS Y FACTURACIÓN";
+  ws.getCell("B2").value = "F-2516 H5 · INGRESOS Y FACTURACIÓN";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1048,7 +1065,7 @@ function addH6ActivosFijos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ];
 
   ws.mergeCells("B2:H2");
-  ws.getCell("B2").value = "11 · F-2516 H6 · ACTIVOS FIJOS · DEPRECIACIÓN FISCAL";
+  ws.getCell("B2").value = "F-2516 H6 · ACTIVOS FIJOS · DEPRECIACIÓN FISCAL";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1098,7 +1115,7 @@ function addH7Resumen(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 50 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "12 · F-2516 H7 · RESUMEN ESF / ERI · CONEXIONES";
+  ws.getCell("B2").value = "F-2516 H7 · RESUMEN ESF / ERI · CONEXIONES";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1142,7 +1159,7 @@ function addSigmaPatrimonio(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 60 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:F2");
-  ws.getCell("B2").value = "13 · Σ PATRIMONIO · DETALLE";
+  ws.getCell("B2").value = "Σ PATRIMONIO · DETALLE";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:F3");
@@ -1191,7 +1208,7 @@ function addSigmaIngresos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 60 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "14 · Σ INGRESOS · DETALLE DESDE H3";
+  ws.getCell("B2").value = "Σ INGRESOS · DETALLE DESDE H3";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1235,7 +1252,7 @@ function addSigmaCostos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 60 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "15 · Σ COSTOS Y DEDUCCIONES";
+  ws.getCell("B2").value = "Σ COSTOS Y DEDUCCIONES";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1278,7 +1295,7 @@ function addSigmaRenta(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "16 · Σ RENTA · CÁLCULO FINAL";
+  ws.getCell("B2").value = "Σ RENTA · CÁLCULO FINAL";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1324,7 +1341,7 @@ function addAnxConciPatr(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "17 · ANEXO 24 · CONCILIACIÓN PATRIMONIAL";
+  ws.getCell("B2").value = "ANEXO 16 · CONCILIACIÓN PATRIMONIAL";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:C3");
@@ -1378,7 +1395,7 @@ function addAnxConciUtil(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 50 }, { width: 18 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "18 · ANEXO 17 · CONCILIACIÓN UTILIDAD CONTABLE → RENTA FISCAL";
+  ws.getCell("B2").value = "ANEXO 17 · CONCILIACIÓN UTILIDAD CONTABLE → RENTA FISCAL";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1436,7 +1453,7 @@ function addAnxRentaPresuntiva(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "19 · ANEXO 1 · RENTA PRESUNTIVA";
+  ws.getCell("B2").value = "ANEXO 1 · RENTA PRESUNTIVA";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:C3");
@@ -1497,7 +1514,7 @@ function addAnxRetenciones(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "20 · ANEXO 3 · RETENCIONES + ANEXO 2 · ANTICIPO";
+  ws.getCell("B2").value = "ANEXO 3 · RETENCIONES Y AUTORRETENCIÓN + ANTICIPO";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1533,7 +1550,7 @@ function addAnxActivosFijos(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 35 }, { width: 16 }, { width: 12 }, { width: 16 }, { width: 16 }, { width: 16 }, { width: 3 }];
 
   ws.mergeCells("B2:G2");
-  ws.getCell("B2").value = "21 · ANEXO ACTIVOS FIJOS · DEPRECIACIÓN FISCAL";
+  ws.getCell("B2").value = "ANEXO 5 · VENTA Y DEPRECIACIÓN DE ACTIVOS FIJOS";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:G3");
@@ -1579,7 +1596,7 @@ function addAnxNominaSS(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 50 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "22 · ANEXO 21 · PAGOS SEGURIDAD SOCIAL";
+  ws.getCell("B2").value = "ANEXO 21 · PAGOS SEGURIDAD SOCIAL";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
 
@@ -1618,7 +1635,7 @@ function addAnxPerdidasFisc(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 18 }, { width: 22 }, { width: 22 }, { width: 22 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "23 · ANEXO 20 · PÉRDIDAS FISCALES COMPENSACIÓN";
+  ws.getCell("B2").value = "ANEXO 20 · COMPENSACIÓN DE PÉRDIDAS FISCALES";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:E3");
@@ -1659,7 +1676,7 @@ function addLiquidacionPrivada(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 20 }, { width: 3 }];
 
   ws.mergeCells("B2:C2");
-  ws.getCell("B2").value = "24 · LIQUIDACIÓN PRIVADA";
+  ws.getCell("B2").value = "LIQUIDACIÓN PRIVADA · CÁLCULO FINAL DEL IMPUESTO";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:C3");
@@ -1709,7 +1726,7 @@ function addFormulario110(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 8 }, { width: 50 }, { width: 18 }, { width: 18 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "25 · FORMULARIO 110 · DECLARACIÓN DE RENTA AG " + d.declaracion.ano_gravable;
+  ws.getCell("B2").value = "FORMULARIO 110 · DECLARACIÓN DE RENTA AG " + d.declaracion.ano_gravable;
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:E3");
@@ -1745,7 +1762,7 @@ function addAuditoriaRF(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.columns = [{ width: 3 }, { width: 55 }, { width: 18 }, { width: 18 }, { width: 14 }, { width: 3 }];
 
   ws.mergeCells("B2:E2");
-  ws.getCell("B2").value = "26 · AUDITORÍA REVISORÍA FISCAL · CHECKLIST DE CUADRES";
+  ws.getCell("B2").value = "AUDITORÍA F-110 · CHECKLIST EXTENSO + VALIDACIONES + FIRMA RF";
   ws.getCell("B2").style = styBannerDIAN();
   ws.getRow(2).height = 28;
   ws.mergeCells("B3:E3");
@@ -1843,4 +1860,322 @@ function addAuditoriaRF(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
   ws.mergeCells(`D${sFirma + 3}:E${sFirma + 3}`);
   ws.getCell(`D${sFirma + 3}`).value = `T.P.: ${d.h1?.rf_tarjeta_prof ?? "______________"}`;
   ws.getCell(`D${sFirma + 3}`).style = styLabel();
+}
+
+// =========================================================================
+// HOJA · IMPUESTO DIFERIDO (hoja de cálculo · independiente del H4 oficial)
+// =========================================================================
+function addImpuestoDiferido(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
+  const ws = wb.addWorksheet(SHEET.IMP_DIF, {
+    properties: { tabColor: { argb: DIAN_BLUE_DEEP } },
+    views: [{ showGridLines: false, state: "frozen", ySplit: 5 }],
+  });
+  ws.columns = [
+    { width: 3 }, { width: 42 },
+    { width: 16 }, { width: 16 }, { width: 16 },
+    { width: 14 }, { width: 16 }, { width: 16 }, { width: 3 },
+  ];
+
+  ws.mergeCells("B2:H2");
+  ws.getCell("B2").value = "IMPUESTO DIFERIDO · DETALLE ATD / PTD POR DIFERENCIA TEMPORARIA";
+  ws.getCell("B2").style = styBannerDIAN();
+  ws.getRow(2).height = 28;
+
+  ws.mergeCells("B3:H3");
+  ws.getCell("B3").value = "Hoja de cálculo (NIC 12 · Art. 290 E.T.) · alimenta el formato F-2516 H4 oficial";
+  ws.getCell("B3").style = stySubBanner();
+
+  const hdrs = ["Categoría / partida", "Base contable", "Base fiscal", "Diferencia", "Tarifa", "ATD", "PTD"];
+  hdrs.forEach((h, i) => {
+    const c = String.fromCharCode("B".charCodeAt(0) + i);
+    ws.getCell(`${c}5`).value = h; ws.getCell(`${c}5`).style = styColHeader();
+  });
+  ws.getRow(5).height = 28;
+
+  const cats = d.h4?.filas?.length
+    ? d.h4.filas.map((f) => f.categoria.concepto)
+    : [
+      "Efectivo y equivalentes", "Inversiones", "Cuentas por cobrar", "Inventarios",
+      "Propiedad planta y equipo", "Intangibles", "Propiedades de inversión",
+      "Activos biológicos", "ANCMV", "Pasivos financieros", "Impuestos por pagar",
+      "Beneficios empleados", "Provisiones", "Otros pasivos", "Operaciones títulos",
+      "Pérdidas fiscales", "Activos solo fiscales", "Otros",
+    ];
+
+  cats.forEach((nombre, i) => {
+    const ri = 6 + i;
+    ws.getCell(`B${ri}`).value = nombre; ws.getCell(`B${ri}`).style = styLabel();
+    ws.getCell(`C${ri}`).value = 0; ws.getCell(`C${ri}`).style = styMoneyInput();
+    ws.getCell(`D${ri}`).value = 0; ws.getCell(`D${ri}`).style = styMoneyInput();
+    ws.getCell(`E${ri}`).value = { formula: `D${ri}-C${ri}` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`E${ri}`).style = styMoney();
+    ws.getCell(`F${ri}`).value = d.tarifaRegimen;
+    ws.getCell(`F${ri}`).style = { ...styMoneyInput(), numFmt: FMT_PCT };
+    ws.getCell(`G${ri}`).value = { formula: `IF(E${ri}>0,E${ri}*F${ri},0)` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`G${ri}`).style = styMoney();
+    ws.getCell(`H${ri}`).value = { formula: `IF(E${ri}<0,-E${ri}*F${ri},0)` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`H${ri}`).style = styMoney();
+  });
+
+  const tot = 6 + cats.length;
+  ws.getCell(`B${tot}`).value = "TOTAL"; ws.getCell(`B${tot}`).style = stySection();
+  ["C", "D", "E", "G", "H"].forEach((c) => {
+    ws.getCell(`${c}${tot}`).value = { formula: `SUM(${c}6:${c}${tot - 1})` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`${c}${tot}`).style = styMoneyTotal();
+  });
+
+  // Resumen neto
+  const sR = tot + 2;
+  ws.mergeCells(`B${sR}:H${sR}`);
+  ws.getCell(`B${sR}`).value = "RESUMEN · ATD − PTD = IMPUESTO DIFERIDO NETO"; ws.getCell(`B${sR}`).style = stySection();
+  ws.getRow(sR).height = 22;
+  ws.getCell(`B${sR + 1}`).value = "Total ATD (impuesto diferido activo)"; ws.getCell(`B${sR + 1}`).style = styLabelBold();
+  ws.getCell(`G${sR + 1}`).value = { formula: `G${tot}` } as ExcelJS.CellFormulaValue; ws.getCell(`G${sR + 1}`).style = styMoneyTotal();
+  ws.getCell(`B${sR + 2}`).value = "Total PTD (impuesto diferido pasivo)"; ws.getCell(`B${sR + 2}`).style = styLabelBold();
+  ws.getCell(`G${sR + 2}`).value = { formula: `H${tot}` } as ExcelJS.CellFormulaValue; ws.getCell(`G${sR + 2}`).style = styMoneyTotal();
+  ws.getCell(`B${sR + 3}`).value = "IMPUESTO DIFERIDO NETO (ATD − PTD)"; ws.getCell(`B${sR + 3}`).style = stySection();
+  ws.getCell(`G${sR + 3}`).value = { formula: `G${sR + 1}-G${sR + 2}` } as ExcelJS.CellFormulaValue; ws.getCell(`G${sR + 3}`).style = styMoneyTotal();
+}
+
+// =========================================================================
+// HOJA · TASA MÍNIMA - TTD (Art. 240 par. 6 E.T. · Ley 2277/2022)
+// =========================================================================
+function addTasaMinima(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
+  const ws = wb.addWorksheet(SHEET.TASA_MIN, {
+    properties: { tabColor: { argb: TRIBAI_GOLD } },
+    views: [{ showGridLines: false }],
+  });
+  ws.columns = [{ width: 3 }, { width: 60 }, { width: 22 }, { width: 14 }, { width: 3 }];
+
+  ws.mergeCells("B2:D2");
+  ws.getCell("B2").value = "TASA MÍNIMA DE TRIBUTACIÓN (TTD) · Art. 240 par. 6 E.T.";
+  ws.getCell("B2").style = styBannerDIAN();
+  ws.getRow(2).height = 28;
+  ws.mergeCells("B3:D3");
+  ws.getCell("B3").value = "Ley 2277/2022 · garantiza tarifa efectiva mínima del 15% sobre la utilidad depurada (TTD = ID/UD)";
+  ws.getCell("B3").style = stySubBanner();
+
+  const n = d.numerico;
+  const get = (k: number) => Number(n?.get(k) ?? 0);
+
+  const filas: { concepto: string; valor: number | string; norma?: string; tipo?: "input" | "calc" | "total" }[] = [
+    { concepto: "Utilidad contable neta del ejercicio", valor: 0, norma: "Insumo balance", tipo: "input" },
+    { concepto: "(+) Diferencias permanentes que aumentan", valor: 0, norma: "Art. 240 par. 6.1", tipo: "input" },
+    { concepto: "(=) Utilidad depurada (UD)", valor: "", norma: "UD = UCN + DPA", tipo: "calc" },
+    { concepto: "Impuesto neto de renta sobre renta líquida (R94)", valor: get(94), norma: "F-110 R94", tipo: "calc" },
+    { concepto: "(+) Descuentos tributarios aplicados (R98)", valor: get(98), norma: "F-110 R98", tipo: "calc" },
+    { concepto: "(+) Impuesto sobre ganancia ocasional (R90)", valor: get(90), norma: "F-110 R90", tipo: "calc" },
+    { concepto: "(=) Impuesto depurado (ID)", valor: "", norma: "ID = R94 + R98 + R90", tipo: "calc" },
+    { concepto: "Tasa Efectiva de Tributación (TTD) = ID / UD", valor: "", norma: "Comparada vs 15%", tipo: "calc" },
+    { concepto: "Tasa mínima Art. 240 par. 6 (Ley 2277)", valor: 0.15, norma: "—", tipo: "calc" },
+    { concepto: "Impuesto adicional para llegar al 15% (R95)", valor: get(95), norma: "F-110 R95", tipo: "total" },
+  ];
+
+  filas.forEach((f, i) => {
+    const ri = 5 + i;
+    ws.getCell(`B${ri}`).value = f.concepto;
+    ws.getCell(`B${ri}`).style = f.tipo === "total" ? stySection() : styLabelBold();
+    if (typeof f.valor === "number") {
+      ws.getCell(`C${ri}`).value = f.valor;
+      const isPct = f.concepto.startsWith("Tasa mínima") || f.concepto.startsWith("Tasa Efectiva");
+      ws.getCell(`C${ri}`).style = isPct
+        ? { ...styMoney(), numFmt: FMT_PCT }
+        : f.tipo === "input"
+          ? styMoneyInput()
+          : f.tipo === "total"
+            ? styMoneyTotal()
+            : styMoney();
+    } else if (i === 2) {
+      ws.getCell(`C${ri}`).value = { formula: `C${ri - 2}+C${ri - 1}` } as ExcelJS.CellFormulaValue;
+      ws.getCell(`C${ri}`).style = styMoneyTotal();
+    } else if (i === 6) {
+      ws.getCell(`C${ri}`).value = { formula: `C${ri - 3}+C${ri - 2}+C${ri - 1}` } as ExcelJS.CellFormulaValue;
+      ws.getCell(`C${ri}`).style = styMoneyTotal();
+    } else if (i === 7) {
+      ws.getCell(`C${ri}`).value = { formula: `IFERROR(C${ri - 1}/C${ri - 5},0)` } as ExcelJS.CellFormulaValue;
+      ws.getCell(`C${ri}`).style = { ...styMoneyTotal(), numFmt: FMT_PCT };
+    }
+    if (f.norma) {
+      ws.getCell(`D${ri}`).value = f.norma;
+      ws.getCell(`D${ri}`).style = { ...styLabel(), font: { color: { argb: "FF666666" }, size: 9, name: "Calibri" } };
+    }
+  });
+
+  // Veredicto
+  const sV = 5 + filas.length + 2;
+  ws.mergeCells(`B${sV}:D${sV}`);
+  ws.getCell(`B${sV}`).value = "VEREDICTO · Si TTD < 15% se adiciona R95 hasta cumplir el piso (cálculo automático en F-110)";
+  ws.getCell(`B${sV}`).style = stySection();
+  ws.getRow(sV).height = 28;
+}
+
+// =========================================================================
+// HOJA · F110_2516 · CRUCE F-110 ↔ F-2516 H7
+// =========================================================================
+function addF110_2516(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
+  const ws = wb.addWorksheet(SHEET.F110_2516, {
+    properties: { tabColor: { argb: DIAN_BLUE } },
+    views: [{ showGridLines: false, state: "frozen", ySplit: 5 }],
+  });
+  ws.columns = [
+    { width: 3 }, { width: 8 }, { width: 55 },
+    { width: 16 }, { width: 16 }, { width: 16 }, { width: 12 }, { width: 3 },
+  ];
+
+  ws.mergeCells("B2:G2");
+  ws.getCell("B2").value = "CRUCE F-110 ↔ F-2516 H7 · CONCILIACIÓN DE TOTALES";
+  ws.getCell("B2").style = styBannerDIAN();
+  ws.getRow(2).height = 28;
+  ws.mergeCells("B3:G3");
+  ws.getCell("B3").value = "Renglón F-110 vs total equivalente en F-2516 H7 · diferencia debe ser 0";
+  ws.getCell("B3").style = stySubBanner();
+
+  const hdrs = ["REN.", "Concepto", "F-110", "F-2516 H7", "Diferencia", "Estado"];
+  hdrs.forEach((h, i) => {
+    const c = String.fromCharCode("B".charCodeAt(0) + i);
+    ws.getCell(`${c}5`).value = h; ws.getCell(`${c}5`).style = styColHeader();
+  });
+  ws.getRow(5).height = 24;
+
+  const n = d.numerico;
+  const get = (k: number) => Number(n?.get(k) ?? 0);
+
+  // Map: renglón F-110 ↔ fila aproximada en H7 (los H7 rows dependen de catalogo)
+  const cruces: { ren: number; concepto: string; valor: number; h7Ref: string }[] = [
+    { ren: 32, concepto: "Total Patrimonio Bruto", valor: get(32), h7Ref: "C6" },
+    { ren: 33, concepto: "Total Pasivos", valor: get(33), h7Ref: "C7" },
+    { ren: 46, concepto: "Patrimonio Líquido", valor: get(46), h7Ref: "C8" },
+    { ren: 58, concepto: "Total ingresos brutos", valor: get(58), h7Ref: "C9" },
+    { ren: 67, concepto: "Total costos y gastos deducibles", valor: get(67), h7Ref: "C10" },
+    { ren: 76, concepto: "Renta líquida ordinaria", valor: get(76), h7Ref: "C11" },
+    { ren: 79, concepto: "Renta líquida gravable", valor: get(79), h7Ref: "C11" },
+  ];
+
+  cruces.forEach((c, i) => {
+    const ri = 6 + i;
+    ws.getCell(`B${ri}`).value = String(c.ren); ws.getCell(`B${ri}`).style = styRenglon();
+    ws.getCell(`C${ri}`).value = c.concepto; ws.getCell(`C${ri}`).style = styLabel();
+    ws.getCell(`D${ri}`).value = { formula: `'${SHEET.FORM110}'!D${c.ren - 23}` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`D${ri}`).style = styMoney();
+    ws.getCell(`E${ri}`).value = { formula: `'${SHEET.H7}'!${c.h7Ref}` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`E${ri}`).style = styMoney();
+    ws.getCell(`F${ri}`).value = { formula: `D${ri}-E${ri}` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`F${ri}`).style = styMoneyTotal();
+    ws.getCell(`G${ri}`).value = { formula: `IF(ABS(F${ri})<1,"✓ OK","✗ DIF")` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`G${ri}`).style = { ...styLabel(), alignment: { vertical: "middle", horizontal: "center" }, font: { bold: true, color: { argb: DIAN_BLUE_DEEP }, size: 10 } };
+  });
+}
+
+// =========================================================================
+// HOJA · F110_Conciliación · CONTABLE ↔ FISCAL
+// =========================================================================
+function addF110_Conciliacion(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
+  const ws = wb.addWorksheet(SHEET.F110_CONCI, {
+    properties: { tabColor: { argb: DIAN_BLUE } },
+    views: [{ showGridLines: false, state: "frozen", ySplit: 5 }],
+  });
+  ws.columns = [
+    { width: 3 }, { width: 8 }, { width: 50 },
+    { width: 16 }, { width: 16 }, { width: 16 }, { width: 16 }, { width: 3 },
+  ];
+
+  ws.mergeCells("B2:G2");
+  ws.getCell("B2").value = "F-110 · CONCILIACIÓN CONTABLE ↔ FISCAL · PARTIDA POR PARTIDA";
+  ws.getCell("B2").style = styBannerDIAN();
+  ws.getRow(2).height = 28;
+  ws.mergeCells("B3:G3");
+  ws.getCell("B3").value = "Renglón F-110 · contable (Σ desde Balance) vs fiscal (valor declarado) · diferencias explicadas";
+  ws.getCell("B3").style = stySubBanner();
+
+  const hdrs = ["REN.", "Concepto", "Contable", "Fiscal F-110", "Diferencia", "Tipo"];
+  hdrs.forEach((h, i) => {
+    const c = String.fromCharCode("B".charCodeAt(0) + i);
+    ws.getCell(`${c}5`).value = h; ws.getCell(`${c}5`).style = styColHeader();
+  });
+  ws.getRow(5).height = 24;
+
+  const n = d.numerico;
+  const get = (k: number) => Number(n?.get(k) ?? 0);
+
+  const partidas: { ren: number; concepto: string }[] = [
+    { ren: 32, concepto: "Patrimonio Bruto" },
+    { ren: 33, concepto: "Pasivos" },
+    { ren: 46, concepto: "Patrimonio Líquido" },
+    { ren: 47, concepto: "Ingresos brutos operacionales" },
+    { ren: 48, concepto: "Ingresos brutos no operacionales" },
+    { ren: 49, concepto: "Intereses y rendimientos financieros" },
+    { ren: 58, concepto: "Total ingresos brutos" },
+    { ren: 59, concepto: "Devoluciones, rebajas, descuentos en ventas" },
+    { ren: 64, concepto: "Costo de ventas y de servicios" },
+    { ren: 67, concepto: "Total costos y deducciones" },
+    { ren: 72, concepto: "Renta líquida del ejercicio" },
+    { ren: 76, concepto: "Renta líquida ordinaria" },
+    { ren: 79, concepto: "Renta líquida gravable" },
+  ];
+
+  partidas.forEach((p, i) => {
+    const ri = 6 + i;
+    const valFiscal = get(p.ren);
+    ws.getCell(`B${ri}`).value = String(p.ren); ws.getCell(`B${ri}`).style = styRenglon();
+    ws.getCell(`C${ri}`).value = p.concepto; ws.getCell(`C${ri}`).style = styLabel();
+    ws.getCell(`D${ri}`).value = 0; ws.getCell(`D${ri}`).style = styMoneyInput();
+    ws.getCell(`E${ri}`).value = valFiscal; ws.getCell(`E${ri}`).style = styMoney();
+    ws.getCell(`F${ri}`).value = { formula: `E${ri}-D${ri}` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`F${ri}`).style = styMoneyTotal();
+    ws.getCell(`G${ri}`).value = { formula: `IF(ABS(F${ri})<1,"·",IF(F${ri}>0,"Permanente +","Permanente −"))` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`G${ri}`).style = { ...styLabel(), alignment: { vertical: "middle", horizontal: "center" } };
+  });
+}
+
+// =========================================================================
+// HOJA · Audi_F-110 · CHECKLIST LIVIANO (pruebas críticas resumidas)
+// =========================================================================
+function addAudiF110(wb: ExcelJS.Workbook, d: PapelTrabajoRFData) {
+  const ws = wb.addWorksheet(SHEET.AUDI_F110, {
+    properties: { tabColor: { argb: TRIBAI_GOLD } },
+    views: [{ showGridLines: false }],
+  });
+  ws.columns = [{ width: 3 }, { width: 55 }, { width: 18 }, { width: 18 }, { width: 14 }, { width: 3 }];
+
+  ws.mergeCells("B2:E2");
+  ws.getCell("B2").value = "Audi_F-110 · CHECKLIST LIVIANO DE CUADRES CRÍTICOS";
+  ws.getCell("B2").style = styBannerDIAN();
+  ws.getRow(2).height = 28;
+  ws.mergeCells("B3:E3");
+  ws.getCell("B3").value = "Vista compacta · 6 pruebas críticas · semáforo OK/DIF para revisión rápida";
+  ws.getCell("B3").style = stySubBanner();
+
+  ws.getCell("B5").value = "PRUEBA"; ws.getCell("B5").style = styColHeader();
+  ws.getCell("C5").value = "ESPERADO"; ws.getCell("C5").style = styColHeader();
+  ws.getCell("D5").value = "OBTENIDO"; ws.getCell("D5").style = styColHeader();
+  ws.getCell("E5").value = "STATUS"; ws.getCell("E5").style = styColHeader();
+  ws.getRow(5).height = 22;
+
+  const n = d.numerico;
+  const get = (k: number) => Number(n?.get(k) ?? 0);
+
+  const pruebas: { nombre: string; esp: string | number; obt: string | number }[] = [
+    { nombre: "ESF · Activos = Pasivos + Patrimonio", esp: get(32), obt: get(33) + get(46) },
+    { nombre: "Ingresos − costos = Renta líquida (R67 base)", esp: get(58) - get(67), obt: get(72) },
+    { nombre: "Impuesto R94 = R79 × tarifa", esp: Math.round(get(79) * d.tarifaRegimen), obt: get(94) },
+    { nombre: "Total impuesto a cargo R99 = R94+R95+R98+R90 ajustes", esp: get(99), obt: get(94) + get(95) + get(98) + get(90) },
+    { nombre: "Saldo a pagar/favor mutuamente excluyentes (R113·R114=0)", esp: 0, obt: Math.min(get(113), get(114)) },
+    { nombre: "TTD ≥ 15% (impuesto adicional R95 ≥ 0)", esp: 0, obt: get(95) },
+  ];
+
+  pruebas.forEach((p, i) => {
+    const ri = 6 + i;
+    ws.getCell(`B${ri}`).value = p.nombre; ws.getCell(`B${ri}`).style = styLabel();
+    ws.getCell(`C${ri}`).value = Number(p.esp); ws.getCell(`C${ri}`).style = styMoney();
+    ws.getCell(`D${ri}`).value = Number(p.obt); ws.getCell(`D${ri}`).style = styMoney();
+    ws.getCell(`E${ri}`).value = { formula: `IF(ABS(D${ri}-C${ri})<1,"✓ OK","✗ DIFERENCIA")` } as ExcelJS.CellFormulaValue;
+    ws.getCell(`E${ri}`).style = { ...styLabel(), alignment: { vertical: "middle", horizontal: "center" }, font: { bold: true, color: { argb: DIAN_BLUE_DEEP }, size: 10 } };
+  });
+
+  // Pie · referencia a hoja completa
+  const sP = 6 + pruebas.length + 2;
+  ws.mergeCells(`B${sP}:E${sP}`);
+  ws.getCell(`B${sP}`).value = "Para validaciones extensas y firma del Revisor Fiscal, ver hoja Auditoría_F-110.";
+  ws.getCell(`B${sP}`).style = stySection();
+  ws.getRow(sP).height = 22;
 }
