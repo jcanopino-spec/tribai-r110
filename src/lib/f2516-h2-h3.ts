@@ -26,14 +26,27 @@ function resolverRenglonOficial(
   cuenta: string,
   mapping: Record<string, number>,
 ): number | null {
-  // Match exacto
   if (mapping[cuenta] != null) return mapping[cuenta];
-  // Prefijo más largo
   for (let n = cuenta.length - 1; n >= 2; n--) {
     const prefix = cuenta.substring(0, n);
     if (mapping[prefix] != null) return mapping[prefix];
   }
   return null;
+}
+
+/**
+ * Filtra cuentas-padre: una cuenta es hoja si ninguna otra del balance la
+ * tiene como prefijo. Evita duplicación al sumar (e.g. "1" $13B y "1305xx"
+ * $X serían contados dos veces).
+ */
+function filtrarHojas<T extends { cuenta: string }>(lineas: T[]): T[] {
+  const todas = new Set(lineas.map((l) => l.cuenta));
+  return lineas.filter((l) => {
+    for (const otra of todas) {
+      if (otra !== l.cuenta && otra.startsWith(l.cuenta)) return false;
+    }
+    return true;
+  });
 }
 
 type SC = SupabaseClient<Database>;
@@ -112,13 +125,17 @@ async function cargarContablesH2(
     if (r.renglon_h2 != null) mapeoManual.set(String(r.cuenta), r.renglon_h2);
   }
 
+  const lineasNormalizadas = (lineas ?? []).map((l) => ({ ...l, cuenta: String(l.cuenta) }));
+  const hojas = filtrarHojas(lineasNormalizadas).filter((l) => {
+    const c = l.cuenta[0];
+    return c === "1" || c === "2" || c === "3";
+  });
+
   const totales = new Map<number, number>();
-  for (const l of lineas ?? []) {
-    const cuenta = String(l.cuenta);
-    // Prioridad: manual → oficial (catálogo DIAN)
+  for (const l of hojas) {
     const rgl =
-      mapeoManual.get(cuenta) ??
-      resolverRenglonOficial(cuenta, MAPEO_PUC_H2);
+      mapeoManual.get(l.cuenta) ??
+      resolverRenglonOficial(l.cuenta, MAPEO_PUC_H2);
     if (rgl == null) continue;
     const saldo =
       Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);
@@ -148,12 +165,17 @@ async function cargarContablesH3(
     if (r.renglon_h3 != null) mapeoManual.set(String(r.cuenta), r.renglon_h3);
   }
 
+  const lineasNormalizadas = (lineas ?? []).map((l) => ({ ...l, cuenta: String(l.cuenta) }));
+  const hojas = filtrarHojas(lineasNormalizadas).filter((l) => {
+    const c = l.cuenta[0];
+    return c === "4" || c === "5" || c === "6" || c === "7";
+  });
+
   const totales = new Map<number, number>();
-  for (const l of lineas ?? []) {
-    const cuenta = String(l.cuenta);
+  for (const l of hojas) {
     const rgl =
-      mapeoManual.get(cuenta) ??
-      resolverRenglonOficial(cuenta, MAPEO_PUC_H3);
+      mapeoManual.get(l.cuenta) ??
+      resolverRenglonOficial(l.cuenta, MAPEO_PUC_H3);
     if (rgl == null) continue;
     const saldo =
       Number(l.saldo) + Number(l.ajuste_debito ?? 0) - Number(l.ajuste_credito ?? 0);
