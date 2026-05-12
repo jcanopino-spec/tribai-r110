@@ -4,15 +4,9 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { TRIBAI_BRAND } from "@/lib/brand";
 
-/**
- * Card "Papel de trabajo Tribai" · controla:
- *   - Botón "🔄 Actualizar cálculos" (recálculo en cascada + revalidate)
- *   - Botón "📄 Descargar Word" (papel de trabajo técnico-gerencial)
- *   - Botón "📊 Descargar Excel" (auditable, 11 hojas)
- *
- * El recálculo invalida el caché de TODAS las páginas hijas para que la
- * siguiente vista refleje los nuevos valores sin necesidad de F5.
- */
+// Card "Expediente Renta": botón "Actualizar cálculos" + descarga del
+// Expediente Renta (Excel 31 hojas alineado al modelo guía DIAN). El
+// recálculo invalida el caché de las páginas hijas.
 export function PapelTrabajoCard({
   declId,
   empresaId,
@@ -55,15 +49,15 @@ export function PapelTrabajoCard({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="font-serif text-xl tracking-[-0.01em]">
-            Papel de trabajo Tribai
+            Expediente Renta
           </h2>
           <p className="mt-1 text-xs" style={{ color: TRIBAI_BRAND.gold }}>
             El Estatuto, la calculadora y el criterio. Todo en uno.
           </p>
           <p className="mt-3 max-w-xl text-xs opacity-80">
-            Genera el papel de trabajo técnico-gerencial completo con la
-            normativa colombiana, conciliaciones, anexos y validaciones.
-            Cada descarga refleja el estado más reciente.
+            Libro Excel de 31 hojas alineado al modelo guía DIAN con balance,
+            sumaria, F-2516, anexos, liquidación y validaciones. Recalcula los
+            valores antes de descargar para reflejar el estado más reciente.
           </p>
         </div>
       </div>
@@ -83,30 +77,12 @@ export function PapelTrabajoCard({
         </button>
 
         <a
-          href={`/api/papel-trabajo/word?decl=${declId}`}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border px-4 text-sm font-medium transition hover:bg-white/10"
-          style={{ borderColor: TRIBAI_BRAND.paper, color: TRIBAI_BRAND.paper }}
-          title="Documento Word con identidad Tribai para enviar a revisoría fiscal y auditores"
-        >
-          📄 Papel de trabajo (Word)
-        </a>
-
-        <a
-          href={`/api/papel-trabajo/excel?decl=${declId}`}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border px-4 text-sm font-medium transition hover:bg-white/10"
-          style={{ borderColor: TRIBAI_BRAND.paper, color: TRIBAI_BRAND.paper }}
-          title="Libro Excel con 11 hojas conectadas para auditoría detallada"
-        >
-          📊 Papel de trabajo (Excel)
-        </a>
-
-        <a
           href={`/api/papel-trabajo-rf/excel?decl=${declId}`}
           className="inline-flex h-10 items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition"
           style={{ backgroundColor: TRIBAI_BRAND.gold, color: TRIBAI_BRAND.ink }}
-          title="Papel de trabajo Revisoría Fiscal · 26 hojas · arquitectura modelo guía DIAN · fórmulas SUMIFS cross-sheet"
+          title="Expediente Renta · 31 hojas · arquitectura modelo guía DIAN · fórmulas SUMIFS cross-sheet"
         >
-          🏛️ Anexo Revisoría Fiscal
+          🏛️ Expediente Renta
         </a>
       </div>
 
