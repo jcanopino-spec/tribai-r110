@@ -99,6 +99,15 @@ export function PapelTrabajoCard({
         >
           📊 Papel de trabajo (Excel)
         </a>
+
+        <a
+          href={`/api/papel-trabajo-rf/excel?decl=${declId}`}
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-md px-4 text-sm font-semibold transition"
+          style={{ backgroundColor: TRIBAI_BRAND.gold, color: TRIBAI_BRAND.ink }}
+          title="Papel de trabajo Revisoría Fiscal · 26 hojas · arquitectura modelo guía DIAN · fórmulas SUMIFS cross-sheet"
+        >
+          🏛️ Anexo Revisoría Fiscal
+        </a>
       </div>
 
       {status && (
