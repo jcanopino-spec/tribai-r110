@@ -1,19 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { computarRenglones } from "@/engine/form110";
-import { normalizarSigno } from "@/engine/utils";
-import { evaluarPresentacion, ultimoDigitoNit } from "@/engine/vencimientos";
-import { aplicaTTDPorRegimen } from "@/engine/condicionales";
-import { loadAnexosCtx } from "@/lib/anexos-ctx";
-import { loadTasaMinimaInputs } from "@/lib/tasa-minima-inputs";
-import { loadF2516Aggregates } from "@/lib/f2516-aggregates";
+import { loadF2516H3, type F2516H3Fila } from "@/lib/f2516-h2-h3";
 import { ModuloHeader } from "@/components/modulo-header";
-import { FilaRow } from "../fila-row";
 
-export const metadata = { title: "F2516 H3 ERI" };
+export const metadata = { title: "F2516 H3 ERI Renta Líquida" };
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
+const DIAN_BLUE = "#1B5AAB";
+const DIAN_BLUE_LIGHT = "#E8F1FA";
+const TRIBAI_GOLD = "#C4952A";
 
 export default async function H3ERIPage({
   params,
@@ -25,246 +21,206 @@ export default async function H3ERIPage({
 
   const { data: declaracion } = await supabase
     .from("declaraciones")
-    .select("*")
+    .select("id, ano_gravable, empresa_id")
     .eq("id", declId)
     .single();
   if (!declaracion) notFound();
   const { data: empresa } = await supabase
     .from("empresas")
-    .select("id, razon_social, nit, regimen_codigo")
+    .select("razon_social, nit")
     .eq("id", declaracion.empresa_id)
     .single();
   if (!empresa) notFound();
 
-  // Setup compute · idéntico a H2 (omitido aquí por brevedad pero igual)
-  let tarifaRegimen: number | null = null;
-  if (empresa.regimen_codigo) {
-    const { data: reg } = await supabase
-      .from("regimenes_tarifas")
-      .select("tarifa")
-      .eq("codigo", empresa.regimen_codigo)
-      .eq("ano_gravable", declaracion.ano_gravable)
-      .maybeSingle();
-    tarifaRegimen = reg ? Number(reg.tarifa) : null;
-  }
-  const { data: uvtRow } = await supabase
-    .from("parametros_anuales")
-    .select("valor")
-    .eq("ano_gravable", declaracion.ano_gravable + 1)
-    .eq("codigo", "uvt")
-    .maybeSingle();
-  const uvtVigente = uvtRow ? Number(uvtRow.valor) : null;
-  const tipoContribuyente = declaracion.es_gran_contribuyente
-    ? "gran_contribuyente"
-    : "persona_juridica";
-  const digito = ultimoDigitoNit(empresa.nit);
-  let vencimientoSugerido: string | null = null;
-  if (digito !== null) {
-    const { data: venc } = await supabase
-      .from("vencimientos_form110")
-      .select("fecha_vencimiento")
-      .eq("ano_gravable", declaracion.ano_gravable)
-      .eq("tipo_contribuyente", tipoContribuyente)
-      .eq("ultimo_digito", digito)
-      .maybeSingle();
-    vencimientoSugerido = venc?.fecha_vencimiento ?? null;
-  }
-  const evaluacion = evaluarPresentacion(
-    declaracion.fecha_vencimiento ?? vencimientoSugerido,
-    declaracion.fecha_presentacion,
-  );
-  const { data: tarifaRpRow } = await supabase
-    .from("parametros_anuales")
-    .select("valor")
-    .eq("ano_gravable", declaracion.ano_gravable)
-    .eq("codigo", "tarifa_renta_presuntiva")
-    .maybeSingle();
-  const tarifaRP = tarifaRpRow ? Number(tarifaRpRow.valor) : 0;
-  const plAnt =
-    Number(declaracion.patrimonio_bruto_anterior ?? 0) -
-    Number(declaracion.pasivos_anterior ?? 0);
-  const depRP =
-    Number(declaracion.rp_acciones_sociedades_nacionales ?? 0) +
-    Number(declaracion.rp_bienes_actividades_improductivas ?? 0) +
-    Number(declaracion.rp_bienes_fuerza_mayor ?? 0) +
-    Number(declaracion.rp_bienes_periodo_improductivo ?? 0) +
-    Number(declaracion.rp_bienes_mineria ?? 0) +
-    Number(declaracion.rp_primeros_19000_uvt_vivienda ?? 0);
-  const rentaPresuntiva =
-    Math.max(0, plAnt - depRP) * tarifaRP +
-    Number(declaracion.rp_renta_gravada_bienes_excluidos ?? 0);
-  const [{ data: valores }, anexosCtx, ttdInputs] = await Promise.all([
-    supabase.from("form110_valores").select("numero, valor").eq("declaracion_id", declId),
-    loadAnexosCtx(supabase, declId, declaracion),
-    loadTasaMinimaInputs(supabase, declId, declaracion),
-  ]);
-  const inputs = new Map<number, number>();
-  for (const v of valores ?? []) {
-    inputs.set(v.numero, normalizarSigno(v.numero, Number(v.valor)));
-  }
-  const numerico = computarRenglones(inputs, {
-    ...anexosCtx,
-    tarifaRegimen: tarifaRegimen ?? undefined,
-    impuestoNetoAnterior: Number(declaracion.impuesto_neto_anterior ?? 0),
-    aniosDeclarando: declaracion.anios_declarando as
-      | "primero" | "segundo" | "tercero_o_mas" | undefined,
-    presentacion:
-      evaluacion.estado === "extemporanea"
-        ? { estado: "extemporanea", mesesExtemporanea: evaluacion.mesesExtemporanea }
-        : evaluacion.estado === "oportuna"
-          ? { estado: "oportuna" }
-          : { estado: "no_presentada" },
-    calculaSancionExtemporaneidad: !!declaracion.calcula_sancion_extemporaneidad,
-    aplicaTasaMinima:
-      aplicaTTDPorRegimen(empresa.regimen_codigo).aplica &&
-      (declaracion.aplica_tasa_minima ?? true),
-    utilidadContableNeta: ttdInputs.utilidadContableNeta,
-    difPermanentesAumentan: ttdInputs.difPermanentesAumentan,
-    calculaSancionCorreccion: !!declaracion.calcula_sancion_correccion,
-    mayorValorCorreccion: Number(declaracion.mayor_valor_correccion ?? 0),
-    existeEmplazamiento: !!declaracion.existe_emplazamiento,
-    reduccionSancion: (declaracion.reduccion_sancion ?? "0") as "0" | "50" | "75",
-    uvtVigente: uvtVigente ?? undefined,
-    patrimonioLiquidoAnterior: plAnt,
-    esInstitucionFinanciera: !!declaracion.es_institucion_financiera,
-    rentaPresuntiva,
-  });
+  const filas = await loadF2516H3(supabase, declId);
 
-  const filas = await loadF2516Aggregates(supabase, declId, numerico);
-  const eri = filas.filter((f) =>
-    ["ERI · Ingresos", "ERI · Costos", "Resultado"].includes(f.fila.seccion),
-  );
-  const ingresos =
-    eri.find((f) => f.fila.id === "ERI_12_INGRESOS")?.fiscal ?? 0;
-  const costos =
-    eri.find((f) => f.fila.id === "ERI_16_COSTOS")?.fiscal ?? 0;
-  const utilidad = ingresos - costos;
-  const descuadres = eri.filter(
-    (f) => f.diferencia !== null && Math.abs(f.diferencia) > 1000,
-  ).length;
+  const totalIngresos = filas.find((f) => f.concepto === "INGRESOS")?.fiscal ?? 0;
+  const totalCostos = filas.find((f) => /COSTOS/i.test(f.concepto) && f.nivel === 1)?.fiscal ?? 0;
+  const conValores = filas.filter((f) => f.fiscal !== 0).length;
 
   return (
-    <div className="max-w-6xl">
+    <div className="max-w-[1400px]">
       <ModuloHeader
-        titulo="F2516 · H3 ESTADO DE RESULTADOS INTEGRAL"
-        moduloLabel="Ingresos · Costos · Resultado del ejercicio"
+        titulo="F2516 · H3 ERI Renta Líquida"
+        moduloLabel="Estado de Resultados Integral · Resolución DIAN 71/2019"
         volverHref={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516`}
         volverLabel="Formato 2516"
-        contexto={`${empresa.razon_social} · AG ${declaracion.ano_gravable}`}
+        contexto={`AG ${declaracion.ano_gravable} · ${empresa.razon_social}`}
       />
 
-      <div className="mb-6 grid gap-3 md:grid-cols-4">
-        <Stat label="Total ingresos" value={FMT.format(ingresos)} />
-        <Stat label="Total costos" value={FMT.format(costos)} />
-        <Stat label="Utilidad/RLG" value={FMT.format(utilidad)} highlight />
-        <Stat label="Descuadres > $1.000" value={String(descuadres)} alert={descuadres > 0} />
+      <div className="mb-6 rounded-md border" style={{ borderColor: DIAN_BLUE }}>
+        <div
+          className="px-5 py-3 text-center text-white"
+          style={{ backgroundColor: DIAN_BLUE }}
+        >
+          <h2 className="text-base font-bold uppercase tracking-wide">
+            ESTADO DE RESULTADOS INTEGRAL · RENTA LÍQUIDA
+          </h2>
+          <p className="text-xs opacity-90">
+            {filas.length} renglones oficiales · modelo110.xlsm · 12 columnas de valor
+          </p>
+        </div>
+        <div className="grid grid-cols-4 gap-4 px-5 py-3" style={{ backgroundColor: DIAN_BLUE_LIGHT }}>
+          <Stat label="Total INGRESOS (fiscal)" value={totalIngresos} />
+          <Stat label="Total COSTOS y deducciones" value={totalCostos} />
+          <Stat label="Resultado bruto" value={totalIngresos - totalCostos} highlight />
+          <Stat label="Renglones con valor" value={conValores} text />
+        </div>
       </div>
 
-      <table className="w-full border-collapse">
-        <thead>
-          <tr className="border-b-2 border-foreground text-left">
-            <Th>#</Th>
-            <Th>Concepto</Th>
-            <Th align="right">Contable</Th>
-            <Th align="right">Conversión</Th>
-            <Th align="right">Menor Fiscal</Th>
-            <Th align="right">Mayor Fiscal</Th>
-            <Th align="right">Fiscal</Th>
-            <Th align="right">F110</Th>
-            <Th align="right">Δ</Th>
-            <Th>{""}</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {eri.map((it) => (
-            <FilaRow
-              key={it.fila.id}
-              declId={declId}
-              empresaId={empresaId}
-              filaId={it.fila.id}
-              numero={it.fila.numero}
-              label={it.fila.label}
-              esTotal={!!it.fila.esTotal}
-              contable={it.contable}
-              conversion={it.conversion}
-              menorFiscal={it.menorFiscal}
-              mayorFiscal={it.mayorFiscal}
-              fiscal={it.fiscal}
-              observacion={it.observacion}
-              r110={it.r110}
-              diferencia={it.diferencia}
-              cuadraConR110={it.fila.cuadraConR110}
-              ayuda={it.fila.ayuda}
-            />
-          ))}
-        </tbody>
-      </table>
+      <p className="mb-4 text-sm text-muted-foreground">
+        Hoja con estructura jerárquica oficial DIAN (590 renglones · 6 niveles).
+        Cada renglón tiene 5 columnas básicas (Val1-Val5) + 7 columnas de
+        <strong> Renta Líquida por tarifa</strong> (Val6-Val12): general, ZF, ECE,
+        mega-inversiones, par. 5 Art. 240, dividendos, ganancias ocasionales.
+      </p>
 
-      <div className="mt-6 rounded-md border border-dashed border-border p-4 text-xs text-muted-foreground">
-        <p className="font-medium text-foreground">¿Cómo conciliar el ERI?</p>
-        <ul className="mt-2 list-disc space-y-1 pl-5">
-          <li>Los ingresos R47-R57 vienen del balance + anexos (dividendos, GO).</li>
-          <li>Los costos R62-R66 vienen del balance contable.</li>
-          <li>
-            Use ajustes para reclasificar gastos no deducibles y partidas
-            de conciliación contable-fiscal (50% GMF, deterioros, etc).
-          </li>
-          <li>
-            Para captura detallada de ingresos por concepto, ver{" "}
-            <Link
-              href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h5-ingresos-facturacion`}
-              className="underline hover:text-foreground"
-            >
-              H5 Ingresos y Facturación
-            </Link>
-            .
-          </li>
-        </ul>
+      <div className="mb-4 rounded-md border border-amber-500/40 bg-amber-500/5 p-3 text-xs">
+        💡 <strong>Mapeo:</strong> para alimentar el contable, las cuentas deben
+        mapearse a su renglón H3 en{" "}
+        <Link
+          href={`/empresas/${empresaId}/declaraciones/${declId}/conciliaciones/formato-2516/h3-eri/mapeo`}
+          className="underline hover:text-foreground"
+        >
+          Mapeo cuenta → renglón H3
+        </Link>
+        .
+      </div>
+
+      <div className="overflow-x-auto rounded-md border" style={{ borderColor: DIAN_BLUE }}>
+        <table className="w-full border-collapse text-[11px]">
+          <thead style={{ backgroundColor: DIAN_BLUE, color: "white" }}>
+            <tr>
+              <th className="border border-white/30 px-1 py-2 text-left">NUM</th>
+              <th className="border border-white/30 px-1 py-2 text-left" colSpan={1}>
+                Concepto
+              </th>
+              <th className="border border-white/30 px-1 py-2 text-right">Val1 · Contable</th>
+              <th className="border border-white/30 px-1 py-2 text-right">Val2 · Conv</th>
+              <th className="border border-white/30 px-1 py-2 text-right">Val3 · Menor</th>
+              <th className="border border-white/30 px-1 py-2 text-right">Val4 · Mayor</th>
+              <th
+                className="border border-white/30 px-1 py-2 text-right"
+                style={{ backgroundColor: TRIBAI_GOLD, color: DIAN_BLUE }}
+              >
+                Val5 · FISCAL
+              </th>
+              <th className="border border-white/30 px-1 py-2 text-right">RL Gen</th>
+              <th className="border border-white/30 px-1 py-2 text-right">RL ZF</th>
+              <th className="border border-white/30 px-1 py-2 text-right">RL Div</th>
+              <th className="border border-white/30 px-1 py-2 text-right">RL GO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filas.map((f) => (
+              <FilaH3 key={f.id} f={f} />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
+}
+
+function FilaH3({ f }: { f: F2516H3Fila }) {
+  const bgByNivel: Record<number, string> = {
+    1: DIAN_BLUE,
+    2: DIAN_BLUE_LIGHT,
+    3: "transparent",
+    4: "transparent",
+    5: "transparent",
+    6: "transparent",
+  };
+  const colorByNivel: Record<number, string> = {
+    1: "white",
+    2: DIAN_BLUE,
+    3: "inherit",
+    4: "#555",
+    5: "#777",
+    6: "#999",
+  };
+  const fontWeight = f.nivel === 1 || f.esTotal ? "bold" : "normal";
+  const indent = (f.nivel - 1) * 8;
+  return (
+    <tr
+      style={{
+        backgroundColor: bgByNivel[f.nivel] ?? "transparent",
+        color: colorByNivel[f.nivel] ?? "inherit",
+        fontWeight,
+      }}
+    >
+      <td className="border border-border px-1 py-0.5 font-mono">{f.id}</td>
+      <td
+        className="border border-border px-1 py-0.5"
+        style={{ paddingLeft: indent + 4 }}
+      >
+        {f.esTotal ? "• " : ""}
+        {f.concepto}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.contable)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.conversion)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.menor_fiscal)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.mayor_fiscal)}
+      </td>
+      <td
+        className="border border-border px-1 py-0.5 text-right font-mono tabular-nums"
+        style={{ backgroundColor: f.esTotal ? "#FFF8E1" : "transparent", fontWeight: "bold" }}
+      >
+        {fmtCell(f.fiscal)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.rl_tarifa_general)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.rl_zf)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.rl_dividendos)}
+      </td>
+      <td className="border border-border px-1 py-0.5 text-right font-mono tabular-nums">
+        {fmtCell(f.rl_go)}
+      </td>
+    </tr>
+  );
+}
+
+function fmtCell(v: number): string {
+  return v === 0 ? "" : FMT.format(v);
 }
 
 function Stat({
   label,
   value,
-  alert,
   highlight,
+  text,
 }: {
   label: string;
-  value: string;
-  alert?: boolean;
+  value: number;
   highlight?: boolean;
+  text?: boolean;
 }) {
-  const cls = alert
-    ? "border-destructive/40 bg-destructive/5"
-    : highlight
-      ? "border-foreground/40 bg-amber-500/5"
-      : "border-border";
   return (
-    <div className={`rounded-md border p-3 ${cls}`}>
-      <p className="font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground">
+    <div className="rounded border bg-white p-2" style={{ borderColor: DIAN_BLUE }}>
+      <p className="font-mono text-[9px] uppercase tracking-[0.05em]" style={{ color: DIAN_BLUE }}>
         {label}
       </p>
-      <p className="mt-1 font-serif text-xl tabular-nums">{value}</p>
+      <p
+        className="mt-1 font-mono tabular-nums"
+        style={{
+          color: highlight ? TRIBAI_GOLD : DIAN_BLUE,
+          fontSize: highlight ? "1.3rem" : "1rem",
+          fontWeight: "bold",
+        }}
+      >
+        {text ? value : FMT.format(value)}
+      </p>
     </div>
-  );
-}
-
-function Th({
-  children,
-  align,
-}: {
-  children: React.ReactNode;
-  align?: "right";
-}) {
-  return (
-    <th
-      className={`px-2 py-2 font-mono text-[10px] uppercase tracking-[0.05em] text-muted-foreground ${
-        align === "right" ? "text-right" : ""
-      }`}
-    >
-      {children}
-    </th>
   );
 }

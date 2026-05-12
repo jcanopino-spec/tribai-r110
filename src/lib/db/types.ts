@@ -1089,6 +1089,132 @@ export type Database = {
           },
         ]
       }
+      formato_2516_h2_ajustes: {
+        Row: {
+          declaracion_id: string
+          renglon_id: number
+          conversion: number
+          menor_fiscal: number
+          mayor_fiscal: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          renglon_id: number
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          renglon_id?: number
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h2_ajustes_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      formato_2516_h3_ajustes: {
+        Row: {
+          declaracion_id: string
+          renglon_id: number
+          conversion: number
+          menor_fiscal: number
+          mayor_fiscal: number
+          rl_tarifa_general: number
+          rl_zf: number
+          rl_ece: number
+          rl_mega_inv: number
+          rl_par5: number
+          rl_dividendos: number
+          rl_go: number
+          observacion: string | null
+          updated_at: string
+        }
+        Insert: {
+          declaracion_id: string
+          renglon_id: number
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          rl_tarifa_general?: number
+          rl_zf?: number
+          rl_ece?: number
+          rl_mega_inv?: number
+          rl_par5?: number
+          rl_dividendos?: number
+          rl_go?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Update: {
+          declaracion_id?: string
+          renglon_id?: number
+          conversion?: number
+          menor_fiscal?: number
+          mayor_fiscal?: number
+          rl_tarifa_general?: number
+          rl_zf?: number
+          rl_ece?: number
+          rl_mega_inv?: number
+          rl_par5?: number
+          rl_dividendos?: number
+          rl_go?: number
+          observacion?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "formato_2516_h3_ajustes_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      balance_renglon_h2_h3: {
+        Row: {
+          declaracion_id: string
+          cuenta: string
+          renglon_h2: number | null
+          renglon_h3: number | null
+        }
+        Insert: {
+          declaracion_id: string
+          cuenta: string
+          renglon_h2?: number | null
+          renglon_h3?: number | null
+        }
+        Update: {
+          declaracion_id?: string
+          cuenta?: string
+          renglon_h2?: number | null
+          renglon_h3?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "balance_renglon_h2_h3_declaracion_id_fkey"
+            columns: ["declaracion_id"]
+            isOneToOne: false
+            referencedRelation: "declaraciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       formato_2516_h6_activos_fijos: {
         Row: {
           declaracion_id: string

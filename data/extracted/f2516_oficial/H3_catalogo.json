@@ -1,0 +1,4738 @@
+[
+  {
+    "id": "R001",
+    "fila_excel": 5,
+    "nivel": 6,
+    "concepto": "Estado de resultados - Impuesto de Renta y complementarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R002",
+    "fila_excel": 9,
+    "nivel": 1,
+    "concepto": "CONCEPTO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R003",
+    "fila_excel": 10,
+    "nivel": 1,
+    "concepto": "INGRESOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R004",
+    "fila_excel": 11,
+    "nivel": 2,
+    "concepto": "Ingresos netos Actividad Industrial, comercial y servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R005",
+    "fila_excel": 12,
+    "nivel": 3,
+    "concepto": "Ingresos brutos Actividad Industrial, comercial y servicios",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R006",
+    "fila_excel": 13,
+    "nivel": 4,
+    "concepto": "Venta de bienes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R007",
+    "fila_excel": 14,
+    "nivel": 6,
+    "concepto": "Exportación a otros países",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R008",
+    "fila_excel": 15,
+    "nivel": 6,
+    "concepto": "Zona franca",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R009",
+    "fila_excel": 16,
+    "nivel": 6,
+    "concepto": "Comercializadoras Internacionales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R010",
+    "fila_excel": 17,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R011",
+    "fila_excel": 18,
+    "nivel": 6,
+    "concepto": "Vinculado Económicos zona Franca y exterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R012",
+    "fila_excel": 19,
+    "nivel": 4,
+    "concepto": "Prestación de servicios (diferentes de honorarios profesionales)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R013",
+    "fila_excel": 20,
+    "nivel": 6,
+    "concepto": "Exportación a otros países",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R014",
+    "fila_excel": 21,
+    "nivel": 6,
+    "concepto": "Zona franca",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R015",
+    "fila_excel": 22,
+    "nivel": 6,
+    "concepto": "Comercializadoras Internacionales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R016",
+    "fila_excel": 23,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R017",
+    "fila_excel": 24,
+    "nivel": 6,
+    "concepto": "Vinculado Económicos zona Franca y exterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R018",
+    "fila_excel": 25,
+    "nivel": 4,
+    "concepto": "Servicios de construcción",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R019",
+    "fila_excel": 26,
+    "nivel": 4,
+    "concepto": "Acuerdos de concesión de servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R020",
+    "fila_excel": 27,
+    "nivel": 4,
+    "concepto": "Arrendamientos operativos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R021",
+    "fila_excel": 28,
+    "nivel": 4,
+    "concepto": "Regalías",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R022",
+    "fila_excel": 29,
+    "nivel": 4,
+    "concepto": "Comisiones (relaciones de agencia)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R023",
+    "fila_excel": 30,
+    "nivel": 4,
+    "concepto": "Honorarios Profesionales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R024",
+    "fila_excel": 31,
+    "nivel": 4,
+    "concepto": "Actividades de seguros y de capitalización",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R025",
+    "fila_excel": 32,
+    "nivel": 4,
+    "concepto": "Liberación de reservas en contratos de seguros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R026",
+    "fila_excel": 33,
+    "nivel": 4,
+    "concepto": "Comisiones bancarias, costos de transacción, entre otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R027",
+    "fila_excel": 34,
+    "nivel": 4,
+    "concepto": "Otros ingresos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R028",
+    "fila_excel": 35,
+    "nivel": 3,
+    "concepto": "Devoluciones, rebajas y descuentos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R029",
+    "fila_excel": 36,
+    "nivel": 4,
+    "concepto": "En venta de bienes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R030",
+    "fila_excel": 37,
+    "nivel": 4,
+    "concepto": "En prestación de servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R031",
+    "fila_excel": 38,
+    "nivel": 4,
+    "concepto": "Otras devoluciones, rebajas y descuentos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R032",
+    "fila_excel": 39,
+    "nivel": 2,
+    "concepto": "Ingresos financieros ",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R033",
+    "fila_excel": 40,
+    "nivel": 3,
+    "concepto": "Arrendamiento financiero o mercantil (leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R034",
+    "fila_excel": 41,
+    "nivel": 3,
+    "concepto": "Intereses - sector financiero",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R035",
+    "fila_excel": 42,
+    "nivel": 3,
+    "concepto": "Intereses por préstamos a terceros (diferentes al sector financiero)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R036",
+    "fila_excel": 43,
+    "nivel": 3,
+    "concepto": "Por instrumentos financieros medidos a costo amortizado distinto a préstamos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R037",
+    "fila_excel": 44,
+    "nivel": 3,
+    "concepto": "Intereses implícitos (transacciones de financiación)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R038",
+    "fila_excel": 45,
+    "nivel": 3,
+    "concepto": "Diferencia en cambio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R039",
+    "fila_excel": 46,
+    "nivel": 3,
+    "concepto": "Otros ingresos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R040",
+    "fila_excel": 47,
+    "nivel": 2,
+    "concepto": "Ganancias por inversiones en subsidiarias, asociadas y/o negocios conjuntos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R041",
+    "fila_excel": 48,
+    "nivel": 3,
+    "concepto": "Ganancias por el método de participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R042",
+    "fila_excel": 49,
+    "nivel": 3,
+    "concepto": "Ganancias cambios en el valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R043",
+    "fila_excel": 50,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones no constitutivos de renta ni ganancia ocasional (incluye capitalizaciones no gravadas)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R044",
+    "fila_excel": 51,
+    "nivel": 3,
+    "concepto": "Dividendos o participaciones distribuidos por entidades no residentes en Colombia a una CHC y prima en colocación de acciones.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R045",
+    "fila_excel": 52,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones gravadas a la tarifa general provenientes de sociedades y entidades extranjeras o de sociedades nacionales.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R046",
+    "fila_excel": 53,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones gravadas recibidas por personas naturales sin residencia fiscal (año 2016 y anteriores)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R047",
+    "fila_excel": 54,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones gravadas recibidas por personas naturales sin residencia fiscal (año 2017 y siguientes)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R048",
+    "fila_excel": 55,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones gravadas al 10%",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R049",
+    "fila_excel": 56,
+    "nivel": 3,
+    "concepto": "Dividendos y/o participaciones gravadas a tarifa general (EP y sociedades extranjeras - utilidades generadas a partir del año 2017)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R050",
+    "fila_excel": 57,
+    "nivel": 3,
+    "concepto": "Dividendos y participaciones provenientes de proyectos calificados como mega inversión gravadas al 27%",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R051",
+    "fila_excel": 58,
+    "nivel": 2,
+    "concepto": "Ingresos por mediciones a valor razonable",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R052",
+    "fila_excel": 59,
+    "nivel": 3,
+    "concepto": "Activos biológicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R053",
+    "fila_excel": 60,
+    "nivel": 3,
+    "concepto": "Propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R054",
+    "fila_excel": 61,
+    "nivel": 3,
+    "concepto": "Instrumentos financieros, diferente a inversiones en subsidiarias, asociadas y/o negocios conjuntos ",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R055",
+    "fila_excel": 62,
+    "nivel": 3,
+    "concepto": "Instrumentos derivados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R056",
+    "fila_excel": 63,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R057",
+    "fila_excel": 64,
+    "nivel": 2,
+    "concepto": "Utilidad en la venta o enajenación de activos, bienes poseídos por menos de dos años",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R058",
+    "fila_excel": 65,
+    "nivel": 3,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R059",
+    "fila_excel": 66,
+    "nivel": 3,
+    "concepto": "Propiedades de Inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R060",
+    "fila_excel": 67,
+    "nivel": 3,
+    "concepto": "Activos biológicos (sin plantas productoras)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R061",
+    "fila_excel": 68,
+    "nivel": 3,
+    "concepto": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R062",
+    "fila_excel": 69,
+    "nivel": 3,
+    "concepto": "Activos Intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R063",
+    "fila_excel": 70,
+    "nivel": 3,
+    "concepto": "Inversiones en acciones y otras participaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R064",
+    "fila_excel": 71,
+    "nivel": 3,
+    "concepto": "Por disposición de otros instrumentos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R065",
+    "fila_excel": 72,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R066",
+    "fila_excel": 73,
+    "nivel": 2,
+    "concepto": "Utilidad por venta o enajenación de activos, bienes poseídos por dos años o más (ganancia ocasional)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R067",
+    "fila_excel": 74,
+    "nivel": 3,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R068",
+    "fila_excel": 75,
+    "nivel": 3,
+    "concepto": "Propiedades de Inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R069",
+    "fila_excel": 76,
+    "nivel": 3,
+    "concepto": "Activos biológicos (sin plantas productoras)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R070",
+    "fila_excel": 77,
+    "nivel": 3,
+    "concepto": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R071",
+    "fila_excel": 78,
+    "nivel": 3,
+    "concepto": "Activos Intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R072",
+    "fila_excel": 79,
+    "nivel": 3,
+    "concepto": "Inversiones en acciones y otras participaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R073",
+    "fila_excel": 80,
+    "nivel": 3,
+    "concepto": "Por disposición de otros instrumentos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R074",
+    "fila_excel": 81,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R075",
+    "fila_excel": 82,
+    "nivel": 2,
+    "concepto": "Ingresos por reversión de deterioro del valor",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R076",
+    "fila_excel": 83,
+    "nivel": 3,
+    "concepto": "Inventarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R077",
+    "fila_excel": 84,
+    "nivel": 3,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R078",
+    "fila_excel": 85,
+    "nivel": 3,
+    "concepto": "Activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R079",
+    "fila_excel": 86,
+    "nivel": 3,
+    "concepto": "Activos de exploración y evaluación de recursos minerales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R080",
+    "fila_excel": 87,
+    "nivel": 3,
+    "concepto": "Propiedades de inversión medidas al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R081",
+    "fila_excel": 88,
+    "nivel": 3,
+    "concepto": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R082",
+    "fila_excel": 89,
+    "nivel": 3,
+    "concepto": "Activos biológicos medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R083",
+    "fila_excel": 90,
+    "nivel": 3,
+    "concepto": "Bienes de arte y cultura",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R084",
+    "fila_excel": 91,
+    "nivel": 3,
+    "concepto": "Activos financieros (diferentes a cartera de crédito y operaciones de leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R085",
+    "fila_excel": 92,
+    "nivel": 3,
+    "concepto": "Cartera de crédito y operaciones de leasing",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R086",
+    "fila_excel": 93,
+    "nivel": 3,
+    "concepto": "Otras inversiones medidas al costo o el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R087",
+    "fila_excel": 94,
+    "nivel": 3,
+    "concepto": "Otros deterioros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R088",
+    "fila_excel": 95,
+    "nivel": 2,
+    "concepto": "Ingresos por reversión de provisiones (pasivos de monto o fecha inciertos)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R089",
+    "fila_excel": 96,
+    "nivel": 3,
+    "concepto": "Garantías",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R090",
+    "fila_excel": 97,
+    "nivel": 3,
+    "concepto": "Contratos onerosos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R091",
+    "fila_excel": 98,
+    "nivel": 3,
+    "concepto": "Litigios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R092",
+    "fila_excel": 99,
+    "nivel": 3,
+    "concepto": "Reembolsos a clientes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R093",
+    "fila_excel": 100,
+    "nivel": 3,
+    "concepto": "Reestructuraciones de negocios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R094",
+    "fila_excel": 101,
+    "nivel": 3,
+    "concepto": "Pasivos contingentes asumidos en una combinación de negocios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R095",
+    "fila_excel": 102,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R096",
+    "fila_excel": 103,
+    "nivel": 2,
+    "concepto": "Ingresos por reversión de pasivos por beneficios a los empleados",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R097",
+    "fila_excel": 104,
+    "nivel": 3,
+    "concepto": "Beneficios de corto plazo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R098",
+    "fila_excel": 105,
+    "nivel": 3,
+    "concepto": "Beneficios de largo plazo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R099",
+    "fila_excel": 106,
+    "nivel": 3,
+    "concepto": "Beneficios a empleados por terminación del vínculo laboral",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R100",
+    "fila_excel": 107,
+    "nivel": 3,
+    "concepto": "Beneficios a empleados post-empleo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R101",
+    "fila_excel": 108,
+    "nivel": 2,
+    "concepto": "Otros ingresos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R102",
+    "fila_excel": 109,
+    "nivel": 3,
+    "concepto": "Transferencias, subvenciones y ayudas gubernamentales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R103",
+    "fila_excel": 110,
+    "nivel": 3,
+    "concepto": "Donaciones, aportaciones y similares",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R104",
+    "fila_excel": 111,
+    "nivel": 3,
+    "concepto": "Reembolsos de compañías de seguros (indemnizaciones)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R105",
+    "fila_excel": 112,
+    "nivel": 3,
+    "concepto": "Otras indemnizaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R106",
+    "fila_excel": 113,
+    "nivel": 3,
+    "concepto": "Otras reversiones o recuperaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R107",
+    "fila_excel": 114,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R108",
+    "fila_excel": 115,
+    "nivel": 2,
+    "concepto": "Ganancias netas en operaciones discontinuadas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R109",
+    "fila_excel": 116,
+    "nivel": 2,
+    "concepto": "Ajustes fiscales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R110",
+    "fila_excel": 117,
+    "nivel": 3,
+    "concepto": "Adición de ingresos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R111",
+    "fila_excel": 118,
+    "nivel": 4,
+    "concepto": "Recuperación de deducciones sin incidencia contable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R112",
+    "fila_excel": 119,
+    "nivel": 4,
+    "concepto": "Intereses presuntos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R113",
+    "fila_excel": 120,
+    "nivel": 4,
+    "concepto": "Mayor ingreso - Precios de Transferencia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R114",
+    "fila_excel": 121,
+    "nivel": 4,
+    "concepto": "Otros ingresos fiscales y no incluidos contablemente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R115",
+    "fila_excel": 122,
+    "nivel": 2,
+    "concepto": "Ingresos no constitutivos de renta ni ganancia ocasional",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R116",
+    "fila_excel": 123,
+    "nivel": 2,
+    "concepto": "TOTAL INGRESOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R117",
+    "fila_excel": 124,
+    "nivel": 1,
+    "concepto": "COSTOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R118",
+    "fila_excel": 125,
+    "nivel": 2,
+    "concepto": "Materias primas, reventa de bienes terminados y servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R119",
+    "fila_excel": 126,
+    "nivel": 3,
+    "concepto": "Costo de ventas calculado por el sistema permanente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R120",
+    "fila_excel": 127,
+    "nivel": 3,
+    "concepto": "Materias primas (para procesos de producción)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R121",
+    "fila_excel": 128,
+    "nivel": 6,
+    "concepto": "compras locales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R122",
+    "fila_excel": 129,
+    "nivel": 6,
+    "concepto": "Importaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R123",
+    "fila_excel": 130,
+    "nivel": 6,
+    "concepto": "Inventario final",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R124",
+    "fila_excel": 131,
+    "nivel": 3,
+    "concepto": "Costos de los bienes vendidos (para comerciantes por reventa de bienes terminados)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R125",
+    "fila_excel": 132,
+    "nivel": 6,
+    "concepto": "compras locales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R126",
+    "fila_excel": 133,
+    "nivel": 6,
+    "concepto": "Importaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R127",
+    "fila_excel": 134,
+    "nivel": 6,
+    "concepto": "Inventario final",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R128",
+    "fila_excel": 135,
+    "nivel": 3,
+    "concepto": "Productos en proceso",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R129",
+    "fila_excel": 136,
+    "nivel": 6,
+    "concepto": "Inventario final",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R130",
+    "fila_excel": 137,
+    "nivel": 3,
+    "concepto": "Producto terminado",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R131",
+    "fila_excel": 138,
+    "nivel": 6,
+    "concepto": "Inventario final",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R132",
+    "fila_excel": 139,
+    "nivel": 3,
+    "concepto": "Costos en la prestación de servicios (para prestadores de servicios)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R133",
+    "fila_excel": 140,
+    "nivel": 3,
+    "concepto": "Otro sistema de determinación del costo de ventas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R134",
+    "fila_excel": 141,
+    "nivel": 3,
+    "concepto": "Ajustes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R135",
+    "fila_excel": 142,
+    "nivel": 2,
+    "concepto": "Mano de obra",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R136",
+    "fila_excel": 143,
+    "nivel": 3,
+    "concepto": "Beneficios a empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R137",
+    "fila_excel": 144,
+    "nivel": 6,
+    "concepto": "De largo plazo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R138",
+    "fila_excel": 145,
+    "nivel": 6,
+    "concepto": "Por terminación del vínculo laboral",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R139",
+    "fila_excel": 146,
+    "nivel": 6,
+    "concepto": "Post-empleo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R140",
+    "fila_excel": 147,
+    "nivel": 2,
+    "concepto": "Depreciaciones, amortizaciones y deterioros",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R141",
+    "fila_excel": 148,
+    "nivel": 3,
+    "concepto": "Depreciación propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R142",
+    "fila_excel": 149,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R143",
+    "fila_excel": 150,
+    "nivel": 3,
+    "concepto": "Depreciación propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R144",
+    "fila_excel": 151,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R145",
+    "fila_excel": 152,
+    "nivel": 3,
+    "concepto": "Depreciación activos biológicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R146",
+    "fila_excel": 153,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R147",
+    "fila_excel": 154,
+    "nivel": 3,
+    "concepto": "Amortización activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R148",
+    "fila_excel": 155,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R149",
+    "fila_excel": 156,
+    "nivel": 3,
+    "concepto": "Depreciación derechos de uso en arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R150",
+    "fila_excel": 157,
+    "nivel": 3,
+    "concepto": "Otras depreciaciones y amortizaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R151",
+    "fila_excel": 158,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R152",
+    "fila_excel": 159,
+    "nivel": 3,
+    "concepto": "Deterioro del valor de los activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R153",
+    "fila_excel": 160,
+    "nivel": 5,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R154",
+    "fila_excel": 161,
+    "nivel": 5,
+    "concepto": "Activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R155",
+    "fila_excel": 162,
+    "nivel": 5,
+    "concepto": "Activos de exploración y evaluación de recursos minerales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R156",
+    "fila_excel": 163,
+    "nivel": 5,
+    "concepto": "Propiedades de inversión medidas al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R157",
+    "fila_excel": 164,
+    "nivel": 5,
+    "concepto": "Activos no corrientes mantenidos para la venta / distribuir a los propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R158",
+    "fila_excel": 165,
+    "nivel": 5,
+    "concepto": "Activos biológicos medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R159",
+    "fila_excel": 166,
+    "nivel": 5,
+    "concepto": "Bienes de arte y cultura medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R160",
+    "fila_excel": 167,
+    "nivel": 5,
+    "concepto": "Activos financieros (diferentes a cartera de crédito y operaciones de leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R161",
+    "fila_excel": 168,
+    "nivel": 5,
+    "concepto": "Cartera de crédito y operaciones de leasing",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R162",
+    "fila_excel": 169,
+    "nivel": 5,
+    "concepto": "Otras inversiones medidas al costo o por el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R163",
+    "fila_excel": 170,
+    "nivel": 5,
+    "concepto": "Derechos de uso en arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R164",
+    "fila_excel": 171,
+    "nivel": 5,
+    "concepto": "Otros deterioros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R165",
+    "fila_excel": 172,
+    "nivel": 2,
+    "concepto": "Otros costos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R166",
+    "fila_excel": 173,
+    "nivel": 3,
+    "concepto": "Arrendamientos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R167",
+    "fila_excel": 174,
+    "nivel": 3,
+    "concepto": "Seguros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R168",
+    "fila_excel": 175,
+    "nivel": 3,
+    "concepto": "Servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R169",
+    "fila_excel": 176,
+    "nivel": 3,
+    "concepto": "Honorarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R170",
+    "fila_excel": 177,
+    "nivel": 3,
+    "concepto": "Servicios técnicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R171",
+    "fila_excel": 178,
+    "nivel": 5,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R172",
+    "fila_excel": 179,
+    "nivel": 5,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R173",
+    "fila_excel": 180,
+    "nivel": 3,
+    "concepto": "Asistencia técnica",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R174",
+    "fila_excel": 181,
+    "nivel": 5,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R175",
+    "fila_excel": 182,
+    "nivel": 5,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R176",
+    "fila_excel": 183,
+    "nivel": 3,
+    "concepto": "Otros conceptos reconocidos como costo en el estado de resultados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R177",
+    "fila_excel": 184,
+    "nivel": 3,
+    "concepto": "Otros costos fiscales no reconocidos contablemente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R178",
+    "fila_excel": 185,
+    "nivel": 2,
+    "concepto": "Menor costo - ajuste Precios de Transferencia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R179",
+    "fila_excel": 186,
+    "nivel": 2,
+    "concepto": "TOTAL COSTOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R180",
+    "fila_excel": 187,
+    "nivel": 1,
+    "concepto": "GASTOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R181",
+    "fila_excel": 188,
+    "nivel": 2,
+    "concepto": "De administración",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R182",
+    "fila_excel": 189,
+    "nivel": 3,
+    "concepto": "Mano de obra",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R183",
+    "fila_excel": 190,
+    "nivel": 4,
+    "concepto": "Beneficios a empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R184",
+    "fila_excel": 191,
+    "nivel": 6,
+    "concepto": "De largo plazo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R185",
+    "fila_excel": 192,
+    "nivel": 6,
+    "concepto": "Por terminación del vínculo laboral",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R186",
+    "fila_excel": 193,
+    "nivel": 6,
+    "concepto": "Post-empleo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R187",
+    "fila_excel": 194,
+    "nivel": 3,
+    "concepto": "Otros gastos de administración",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R188",
+    "fila_excel": 195,
+    "nivel": 4,
+    "concepto": "Impuestos distintos al impuesto de renta y complementarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R189",
+    "fila_excel": 196,
+    "nivel": 4,
+    "concepto": "Arrendamientos operativos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R190",
+    "fila_excel": 197,
+    "nivel": 4,
+    "concepto": "Contribuciones y afiliaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R191",
+    "fila_excel": 198,
+    "nivel": 4,
+    "concepto": "Honorarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R192",
+    "fila_excel": 199,
+    "nivel": 4,
+    "concepto": "Seguros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R193",
+    "fila_excel": 200,
+    "nivel": 4,
+    "concepto": "Servicios administrativos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R194",
+    "fila_excel": 201,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R195",
+    "fila_excel": 202,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R196",
+    "fila_excel": 203,
+    "nivel": 4,
+    "concepto": "Regalías",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R197",
+    "fila_excel": 204,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R198",
+    "fila_excel": 205,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R199",
+    "fila_excel": 206,
+    "nivel": 4,
+    "concepto": "Asistencia técnica",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R200",
+    "fila_excel": 207,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R201",
+    "fila_excel": 208,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R202",
+    "fila_excel": 209,
+    "nivel": 4,
+    "concepto": "Otros servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R203",
+    "fila_excel": 210,
+    "nivel": 4,
+    "concepto": "Investigación y desarrollo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R204",
+    "fila_excel": 211,
+    "nivel": 4,
+    "concepto": "Gastos legales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R205",
+    "fila_excel": 212,
+    "nivel": 4,
+    "concepto": "Reparación, mantenimiento, adecuación e instalaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R206",
+    "fila_excel": 213,
+    "nivel": 4,
+    "concepto": "Transporte",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R207",
+    "fila_excel": 214,
+    "nivel": 4,
+    "concepto": "Otros gastos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R208",
+    "fila_excel": 215,
+    "nivel": 3,
+    "concepto": "Depreciaciones, amortizaciones y deterioros",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R209",
+    "fila_excel": 216,
+    "nivel": 4,
+    "concepto": "Depreciación propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R210",
+    "fila_excel": 217,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R211",
+    "fila_excel": 218,
+    "nivel": 4,
+    "concepto": "Depreciación propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R212",
+    "fila_excel": 219,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R213",
+    "fila_excel": 220,
+    "nivel": 4,
+    "concepto": "Depreciación Arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R214",
+    "fila_excel": 221,
+    "nivel": 4,
+    "concepto": "Otras depreciaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R215",
+    "fila_excel": 222,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R216",
+    "fila_excel": 223,
+    "nivel": 4,
+    "concepto": "Amortización activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R217",
+    "fila_excel": 224,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R218",
+    "fila_excel": 225,
+    "nivel": 4,
+    "concepto": "Otras amortizaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R219",
+    "fila_excel": 226,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R220",
+    "fila_excel": 227,
+    "nivel": 4,
+    "concepto": "Deterioro del valor de los activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R221",
+    "fila_excel": 228,
+    "nivel": 5,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R222",
+    "fila_excel": 229,
+    "nivel": 5,
+    "concepto": "Activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R223",
+    "fila_excel": 230,
+    "nivel": 5,
+    "concepto": "Activos de exploración y evaluación de recursos minerales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R224",
+    "fila_excel": 231,
+    "nivel": 5,
+    "concepto": "Propiedades de inversión medidas al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R225",
+    "fila_excel": 232,
+    "nivel": 5,
+    "concepto": "Activos no corrientes mantenidos para la venta / distribuir a los propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R226",
+    "fila_excel": 233,
+    "nivel": 5,
+    "concepto": "Bienes de arte y cultura medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R227",
+    "fila_excel": 234,
+    "nivel": 5,
+    "concepto": "Activos biológicos medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R228",
+    "fila_excel": 235,
+    "nivel": 5,
+    "concepto": "Activos financieros (diferentes a cartera de crédito y operaciones de leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R229",
+    "fila_excel": 236,
+    "nivel": 5,
+    "concepto": "Cartera de crédito y operaciones de leasing",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R230",
+    "fila_excel": 237,
+    "nivel": 5,
+    "concepto": "Otras inversiones medidas al costo o por el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R231",
+    "fila_excel": 238,
+    "nivel": 5,
+    "concepto": "Derechos de uso en arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R232",
+    "fila_excel": 239,
+    "nivel": 5,
+    "concepto": "Otros deterioros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R233",
+    "fila_excel": 240,
+    "nivel": 2,
+    "concepto": "Gastos de distribución y ventas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R234",
+    "fila_excel": 241,
+    "nivel": 3,
+    "concepto": "Mano de obra",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R235",
+    "fila_excel": 242,
+    "nivel": 4,
+    "concepto": "Beneficios a empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R236",
+    "fila_excel": 243,
+    "nivel": 6,
+    "concepto": "De largo plazo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R237",
+    "fila_excel": 244,
+    "nivel": 6,
+    "concepto": "Por terminación del vínculo laboral",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R238",
+    "fila_excel": 245,
+    "nivel": 6,
+    "concepto": "Post-empleo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R239",
+    "fila_excel": 246,
+    "nivel": 3,
+    "concepto": "Otros gastos de distribución y ventas",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R240",
+    "fila_excel": 247,
+    "nivel": 4,
+    "concepto": "Impuestos distintos al impuesto de renta y complementarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R241",
+    "fila_excel": 248,
+    "nivel": 4,
+    "concepto": "Arrendamientos operativos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R242",
+    "fila_excel": 249,
+    "nivel": 4,
+    "concepto": "Contribuciones y afiliaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R243",
+    "fila_excel": 250,
+    "nivel": 4,
+    "concepto": "Honorarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R244",
+    "fila_excel": 251,
+    "nivel": 4,
+    "concepto": "Seguros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R245",
+    "fila_excel": 252,
+    "nivel": 4,
+    "concepto": "Servicios administrativos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R246",
+    "fila_excel": 253,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R247",
+    "fila_excel": 254,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R248",
+    "fila_excel": 255,
+    "nivel": 4,
+    "concepto": "Regalías",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R249",
+    "fila_excel": 256,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R250",
+    "fila_excel": 257,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R251",
+    "fila_excel": 258,
+    "nivel": 4,
+    "concepto": "Asistencia técnica",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R252",
+    "fila_excel": 259,
+    "nivel": 6,
+    "concepto": "Jurisdicciones no cooperantes, de baja o nula imposición y regímenes tributarios preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R253",
+    "fila_excel": 260,
+    "nivel": 6,
+    "concepto": "No vinculados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R254",
+    "fila_excel": 261,
+    "nivel": 4,
+    "concepto": "Otros servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R255",
+    "fila_excel": 262,
+    "nivel": 4,
+    "concepto": "Investigación y desarrollo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R256",
+    "fila_excel": 263,
+    "nivel": 4,
+    "concepto": "Gastos legales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R257",
+    "fila_excel": 264,
+    "nivel": 4,
+    "concepto": "Reparación, mantenimiento, adecuación e instalaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R258",
+    "fila_excel": 265,
+    "nivel": 4,
+    "concepto": "Transporte",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R259",
+    "fila_excel": 266,
+    "nivel": 4,
+    "concepto": "Constitución de reservas (empresas aseguradoras)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R260",
+    "fila_excel": 267,
+    "nivel": 4,
+    "concepto": "Liquidación de siniestros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R261",
+    "fila_excel": 268,
+    "nivel": 4,
+    "concepto": "Primas de reaseguros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R262",
+    "fila_excel": 269,
+    "nivel": 4,
+    "concepto": "Otros gastos  ",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R263",
+    "fila_excel": 270,
+    "nivel": 3,
+    "concepto": "Depreciaciones, amortizaciones y deterioros",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R264",
+    "fila_excel": 271,
+    "nivel": 4,
+    "concepto": "Depreciación propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R265",
+    "fila_excel": 272,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R266",
+    "fila_excel": 273,
+    "nivel": 4,
+    "concepto": "Depreciación propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R267",
+    "fila_excel": 274,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R268",
+    "fila_excel": 275,
+    "nivel": 4,
+    "concepto": "Depreciación activos biológicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R269",
+    "fila_excel": 276,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R270",
+    "fila_excel": 277,
+    "nivel": 4,
+    "concepto": "Amortización activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R271",
+    "fila_excel": 278,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R272",
+    "fila_excel": 279,
+    "nivel": 4,
+    "concepto": "Depreciación Arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R273",
+    "fila_excel": 280,
+    "nivel": 4,
+    "concepto": "Otras depreciaciones y amortizaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R274",
+    "fila_excel": 281,
+    "nivel": 6,
+    "concepto": "Del ajuste acumulado por revaluaciones o reexpresiones",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R275",
+    "fila_excel": 282,
+    "nivel": 4,
+    "concepto": "Deterioro del valor de los activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R276",
+    "fila_excel": 283,
+    "nivel": 5,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R277",
+    "fila_excel": 284,
+    "nivel": 5,
+    "concepto": "Activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R278",
+    "fila_excel": 285,
+    "nivel": 5,
+    "concepto": "Activos de exploración y evaluación de recursos minerales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R279",
+    "fila_excel": 286,
+    "nivel": 5,
+    "concepto": "Propiedades de inversión medidas al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R280",
+    "fila_excel": 287,
+    "nivel": 5,
+    "concepto": "Activos no corrientes mantenidos para la venta o para distribuir a los propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R281",
+    "fila_excel": 288,
+    "nivel": 5,
+    "concepto": "Bienes de arte y cultura medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R282",
+    "fila_excel": 289,
+    "nivel": 5,
+    "concepto": "Activos biológicos medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R283",
+    "fila_excel": 290,
+    "nivel": 5,
+    "concepto": "Activos financieros (diferentes a cartera de crédito y operaciones de leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R284",
+    "fila_excel": 291,
+    "nivel": 5,
+    "concepto": "Cartera de crédito y operaciones de leasing",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R285",
+    "fila_excel": 292,
+    "nivel": 5,
+    "concepto": "Otras inversiones medidas al costo o el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R286",
+    "fila_excel": 293,
+    "nivel": 5,
+    "concepto": "Derechos de uso en arrendamientos operativos (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R287",
+    "fila_excel": 294,
+    "nivel": 5,
+    "concepto": "Otros deterioros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R288",
+    "fila_excel": 295,
+    "nivel": 2,
+    "concepto": "Gastos financieros ",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R289",
+    "fila_excel": 296,
+    "nivel": 3,
+    "concepto": "Arrendamiento",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R290",
+    "fila_excel": 297,
+    "nivel": 6,
+    "concepto": "Operativo (NIIF 16)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R291",
+    "fila_excel": 298,
+    "nivel": 3,
+    "concepto": "Intereses  devengados - sector financiero",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R292",
+    "fila_excel": 299,
+    "nivel": 3,
+    "concepto": "Intereses devengados por préstamos de terceros (distinto al sector financiero)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R293",
+    "fila_excel": 300,
+    "nivel": 3,
+    "concepto": "Por instrumentos financieros medidos a costo amortizado distinto a préstamos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R294",
+    "fila_excel": 301,
+    "nivel": 3,
+    "concepto": "Costos de transacción",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R295",
+    "fila_excel": 302,
+    "nivel": 3,
+    "concepto": "Diferencia en cambio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R296",
+    "fila_excel": 303,
+    "nivel": 3,
+    "concepto": "Intereses implícitos (transacciones de financiación)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R297",
+    "fila_excel": 304,
+    "nivel": 3,
+    "concepto": "Actualización de provisiones reconocidas a valor presente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R298",
+    "fila_excel": 305,
+    "nivel": 3,
+    "concepto": "Intereses por acciones preferenciales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R299",
+    "fila_excel": 306,
+    "nivel": 3,
+    "concepto": "Otros gastos financieros reconocidos como gasto en el estado de resultados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R300",
+    "fila_excel": 307,
+    "nivel": 2,
+    "concepto": "Pérdidas por inversiones en subsidiarias, asociadas y/o negocios conjuntos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R301",
+    "fila_excel": 308,
+    "nivel": 3,
+    "concepto": "Pérdidas por el método de participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R302",
+    "fila_excel": 309,
+    "nivel": 3,
+    "concepto": "Pérdidas por mediciones a valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R303",
+    "fila_excel": 310,
+    "nivel": 2,
+    "concepto": "Pérdidas por mediciones a valor razonable",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R304",
+    "fila_excel": 311,
+    "nivel": 3,
+    "concepto": "Activos biológicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R305",
+    "fila_excel": 312,
+    "nivel": 3,
+    "concepto": "Propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R306",
+    "fila_excel": 313,
+    "nivel": 3,
+    "concepto": "Instrumentos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R307",
+    "fila_excel": 314,
+    "nivel": 3,
+    "concepto": "Instrumentos derivados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R308",
+    "fila_excel": 315,
+    "nivel": 3,
+    "concepto": "Otras",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R309",
+    "fila_excel": 316,
+    "nivel": 2,
+    "concepto": "Pérdida en la venta o enajenación de activos fijos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R310",
+    "fila_excel": 317,
+    "nivel": 3,
+    "concepto": "Propiedades, planta y equipo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R311",
+    "fila_excel": 318,
+    "nivel": 3,
+    "concepto": "propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R312",
+    "fila_excel": 319,
+    "nivel": 3,
+    "concepto": "Activos no corrientes mantenidos para la venta / entregar a propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R313",
+    "fila_excel": 320,
+    "nivel": 3,
+    "concepto": "Valoración y venta de inversiones fondo de liquidez y títulos participativos, entre otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R314",
+    "fila_excel": 321,
+    "nivel": 3,
+    "concepto": "Por disposición de otros instrumentos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R315",
+    "fila_excel": 322,
+    "nivel": 3,
+    "concepto": "Activos Intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R316",
+    "fila_excel": 323,
+    "nivel": 3,
+    "concepto": "Descuento en operaciones de factoring",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R317",
+    "fila_excel": 324,
+    "nivel": 3,
+    "concepto": "Inversiones en acciones y otras participaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R318",
+    "fila_excel": 325,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R319",
+    "fila_excel": 326,
+    "nivel": 2,
+    "concepto": "Gastos por provisiones (pasivos de monto o fecha inciertos)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R320",
+    "fila_excel": 327,
+    "nivel": 3,
+    "concepto": "Garantías",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R321",
+    "fila_excel": 328,
+    "nivel": 3,
+    "concepto": "Contratos onerosos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R322",
+    "fila_excel": 329,
+    "nivel": 3,
+    "concepto": "Litigios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R323",
+    "fila_excel": 330,
+    "nivel": 3,
+    "concepto": "Reembolsos a clientes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R324",
+    "fila_excel": 331,
+    "nivel": 3,
+    "concepto": "Reestructuraciones de negocios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R325",
+    "fila_excel": 332,
+    "nivel": 3,
+    "concepto": "Pasivos contingentes asumidos en una combinación de negocios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R326",
+    "fila_excel": 333,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R327",
+    "fila_excel": 334,
+    "nivel": 2,
+    "concepto": "Otros gastos",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R328",
+    "fila_excel": 335,
+    "nivel": 3,
+    "concepto": "Transferencias, subvenciones y ayudas gubernamentales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R329",
+    "fila_excel": 336,
+    "nivel": 3,
+    "concepto": "Donaciones, aportaciones y similares",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R330",
+    "fila_excel": 337,
+    "nivel": 3,
+    "concepto": "Contribuciones a educación de los empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R331",
+    "fila_excel": 338,
+    "nivel": 3,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R332",
+    "fila_excel": 339,
+    "nivel": 3,
+    "concepto": "Deducciones fiscales no reconocidos contablemente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R333",
+    "fila_excel": 340,
+    "nivel": 2,
+    "concepto": "Pérdidas netas en operaciones discontinuadas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R334",
+    "fila_excel": 341,
+    "nivel": 2,
+    "concepto": "Menor gasto o deducción -  Ajuste Precios de Transferencia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R335",
+    "fila_excel": 342,
+    "nivel": 2,
+    "concepto": "TOTAL GASTOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R336",
+    "fila_excel": 343,
+    "nivel": 1,
+    "concepto": "GANANCIA O PÉRDIDA ANTES DE IMPUESTO A LA RENTA (incluyendo dividendos)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R337",
+    "fila_excel": 344,
+    "nivel": 1,
+    "concepto": "CLASIFICACIÓN DE DIFERENCIAS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R338",
+    "fila_excel": 345,
+    "nivel": 1,
+    "concepto": "AJUSTES AL RESULTADO CONTABLE POR DIFERENCIAS PERMANENTES",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R339",
+    "fila_excel": 347,
+    "nivel": 2,
+    "concepto": "Diferencias permanentes que disminuyen la Renta Líquida (-)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R340",
+    "fila_excel": 348,
+    "nivel": 3,
+    "concepto": "Ingresos no constitutivos de renta ni ganancia ocasional",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R341",
+    "fila_excel": 349,
+    "nivel": 3,
+    "concepto": "Utilidad en la venta o enajenación de activos poseídos por dos años o más (ganancia ocasional)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R342",
+    "fila_excel": 350,
+    "nivel": 3,
+    "concepto": "Ganancias por el método de participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R343",
+    "fila_excel": 351,
+    "nivel": 3,
+    "concepto": "Otros beneficios fiscales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R344",
+    "fila_excel": 352,
+    "nivel": 5,
+    "concepto": "Inversiones en investigación, desarrollo tecnológico e innovación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R345",
+    "fila_excel": 353,
+    "nivel": 5,
+    "concepto": "Mayor valor del costo de los activos fijos por reajustes fiscales o saneamientos año 1995",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R346",
+    "fila_excel": 354,
+    "nivel": 5,
+    "concepto": "Recuperación de deducciones (valor fiscal)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R347",
+    "fila_excel": 355,
+    "nivel": 5,
+    "concepto": "Salarios con deducciones especiales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R348",
+    "fila_excel": 356,
+    "nivel": 5,
+    "concepto": "Reintegro o recuperación de provisiones que constituyan diferencias permanentes, en períodos anteriores – provisiones para gastos no deducib",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R349",
+    "fila_excel": 357,
+    "nivel": 5,
+    "concepto": "Ajuste por atribución de rentas establecimientos permanentes y sucursales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R350",
+    "fila_excel": 358,
+    "nivel": 5,
+    "concepto": "Otros beneficios fiscales de naturaleza permanente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R351",
+    "fila_excel": 359,
+    "nivel": 2,
+    "concepto": "Diferencias permanentes que aumentan la Renta Líquida (+)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R352",
+    "fila_excel": 360,
+    "nivel": 3,
+    "concepto": "Pérdidas y Gastos no deducibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R353",
+    "fila_excel": 361,
+    "nivel": 5,
+    "concepto": "Gastos sin soporte",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R354",
+    "fila_excel": 362,
+    "nivel": 5,
+    "concepto": "Pagos al exterior sin la prueba de la retención en la fuente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R355",
+    "fila_excel": 363,
+    "nivel": 5,
+    "concepto": "Pagos al exterior que exceden el 15% de la renta líquida",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R356",
+    "fila_excel": 364,
+    "nivel": 5,
+    "concepto": "Donaciones que no cumplan los requisitos legales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R357",
+    "fila_excel": 365,
+    "nivel": 5,
+    "concepto": "Salarios sin el pago de los aportes parafiscales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R358",
+    "fila_excel": 366,
+    "nivel": 5,
+    "concepto": "Gastos de vigencias anteriores",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R359",
+    "fila_excel": 367,
+    "nivel": 5,
+    "concepto": "Gasto financiero no deducible por regla de subcapitalización",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R360",
+    "fila_excel": 368,
+    "nivel": 5,
+    "concepto": "Otros gastos financieros no deducibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R361",
+    "fila_excel": 369,
+    "nivel": 5,
+    "concepto": "Deterioro de inversiones para cubrir una pérdida en enajenación de acciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R362",
+    "fila_excel": 370,
+    "nivel": 5,
+    "concepto": "Pérdida en la enajenación de acciones y venta de bienes inmuebles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R363",
+    "fila_excel": 371,
+    "nivel": 5,
+    "concepto": "Pérdidas no deducibles por faltantes de inventarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R364",
+    "fila_excel": 372,
+    "nivel": 5,
+    "concepto": "Perdidas por el método de participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R365",
+    "fila_excel": 373,
+    "nivel": 5,
+    "concepto": "Pagos de regalías por concepto de intangibles a vinculados del exterior y zonas francas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R366",
+    "fila_excel": 374,
+    "nivel": 5,
+    "concepto": "Limitación de costos por compras a proveedores ficticios o insolventes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R367",
+    "fila_excel": 375,
+    "nivel": 5,
+    "concepto": "Impuestos, multas, sanciones, intereses moratorios y las condenas no deducibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R368",
+    "fila_excel": 376,
+    "nivel": 5,
+    "concepto": "Gastos que no guardan relación de causalidad y necesidad con la actividad productora de renta",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R369",
+    "fila_excel": 377,
+    "nivel": 5,
+    "concepto": "Monto que supera el límite permitido para atenciones a clientes, proveedores y empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R370",
+    "fila_excel": 378,
+    "nivel": 5,
+    "concepto": "Importación de tecnología, patentes y marcas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R371",
+    "fila_excel": 379,
+    "nivel": 5,
+    "concepto": "Gastos no deducibles en contratos de arrendamientos, de naturaleza permanente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R372",
+    "fila_excel": 380,
+    "nivel": 5,
+    "concepto": "Gastos no deducibles por operaciones gravadas con IVA realizadas con personas no inscritas como responsables del Impuesto Sobre las Ventas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R373",
+    "fila_excel": 381,
+    "nivel": 5,
+    "concepto": "Gasto no deducible por donaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R374",
+    "fila_excel": 382,
+    "nivel": 5,
+    "concepto": "Gastos no deducibles, atribuibles a ingresos exentos o no constitutivos de renta ni ganancia ocasional",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R375",
+    "fila_excel": 383,
+    "nivel": 5,
+    "concepto": "Otros gastos no deducibles de naturaleza permanente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R376",
+    "fila_excel": 384,
+    "nivel": 3,
+    "concepto": "Otros Ajustes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R377",
+    "fila_excel": 385,
+    "nivel": 5,
+    "concepto": "Rentas liquidas por ventas de inversiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R378",
+    "fila_excel": 386,
+    "nivel": 5,
+    "concepto": "Mayor ingreso, ajustes por precios de transferencia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R379",
+    "fila_excel": 387,
+    "nivel": 5,
+    "concepto": "Menor costo o deducción, ajustes por precios de transferencia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R380",
+    "fila_excel": 388,
+    "nivel": 5,
+    "concepto": "Rentas líquidas por recuperación de deducciones de naturaleza permanente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R381",
+    "fila_excel": 389,
+    "nivel": 5,
+    "concepto": "Ajuste por atribución de rentas establecimientos permanentes y sucursales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R382",
+    "fila_excel": 390,
+    "nivel": 5,
+    "concepto": "Otros ajustes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R383",
+    "fila_excel": 391,
+    "nivel": 2,
+    "concepto": "GANANCIA O PÉRDIDA CONTABLE CON DIFERENCIAS PERMANENTES",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R384",
+    "fila_excel": 392,
+    "nivel": 1,
+    "concepto": "AJUSTES AL RESULTADO CONTABLE POR DIFERENCIAS TEMPORALES (que afectan el resultado)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R385",
+    "fila_excel": 393,
+    "nivel": 2,
+    "concepto": "Diferencias temporales deducibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R386",
+    "fila_excel": 394,
+    "nivel": 3,
+    "concepto": "Pérdidas por deterioro del valor de los activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R387",
+    "fila_excel": 395,
+    "nivel": 5,
+    "concepto": "Propiedades, planta y equipo,",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R388",
+    "fila_excel": 396,
+    "nivel": 5,
+    "concepto": "Activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R389",
+    "fila_excel": 397,
+    "nivel": 5,
+    "concepto": "Activos de exploración y evaluación de recursos minerales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R390",
+    "fila_excel": 398,
+    "nivel": 5,
+    "concepto": "Propiedades de inversión medidas al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R391",
+    "fila_excel": 399,
+    "nivel": 5,
+    "concepto": "Activos no corrientes mantenidos para la venta / distribuir a los propietarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R392",
+    "fila_excel": 400,
+    "nivel": 5,
+    "concepto": "Activos biológicos medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R393",
+    "fila_excel": 401,
+    "nivel": 5,
+    "concepto": "Bienes de arte y cultura medidos al modelo de costo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R394",
+    "fila_excel": 402,
+    "nivel": 5,
+    "concepto": "Activos financieros (diferentes a cartera de crédito y operaciones de leasing)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R395",
+    "fila_excel": 403,
+    "nivel": 5,
+    "concepto": "Cartera de crédito y operaciones de leasing",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R396",
+    "fila_excel": 404,
+    "nivel": 5,
+    "concepto": "Otras inversiones medidas al costo o por el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R397",
+    "fila_excel": 405,
+    "nivel": 5,
+    "concepto": "Otras pérdidas por deterioro",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R398",
+    "fila_excel": 406,
+    "nivel": 3,
+    "concepto": "Gastos por Depreciación que han excedido el límite máximo fiscal",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R399",
+    "fila_excel": 407,
+    "nivel": 6,
+    "concepto": "Propiedades de inversión",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R400",
+    "fila_excel": 408,
+    "nivel": 6,
+    "concepto": "Activos biológicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R401",
+    "fila_excel": 409,
+    "nivel": 6,
+    "concepto": "Bienes de arte y cultura",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R402",
+    "fila_excel": 410,
+    "nivel": 6,
+    "concepto": "Otros activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R403",
+    "fila_excel": 411,
+    "nivel": 3,
+    "concepto": "Gastos por amortización que han excedido el límite máximo fiscal",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R404",
+    "fila_excel": 412,
+    "nivel": 3,
+    "concepto": "Pérdidas por medición a Valor Razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R405",
+    "fila_excel": 413,
+    "nivel": 6,
+    "concepto": "Instrumentos derivados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R406",
+    "fila_excel": 414,
+    "nivel": 6,
+    "concepto": "Otros instrumentos financieros, diferentes a títulos de renta fija, medidos al modelo del valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R407",
+    "fila_excel": 415,
+    "nivel": 3,
+    "concepto": "Pérdida por diferencia en cambio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R408",
+    "fila_excel": 416,
+    "nivel": 3,
+    "concepto": "Pérdidas esperadas en contratos de construcción y otros servicios (provisiones por contratos onerosos)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R409",
+    "fila_excel": 417,
+    "nivel": 3,
+    "concepto": "Intereses implícitos (ventas o préstamos concedidos a terceros)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R410",
+    "fila_excel": 418,
+    "nivel": 3,
+    "concepto": "Otras Provisiones asociadas a pasivos de monto o fecha inciertos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R411",
+    "fila_excel": 419,
+    "nivel": 3,
+    "concepto": "Por beneficios a empleados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R412",
+    "fila_excel": 420,
+    "nivel": 3,
+    "concepto": "Gastos por actualización de provisiones reconocidas a valor presente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R413",
+    "fila_excel": 421,
+    "nivel": 3,
+    "concepto": "Costos por préstamos atribuibles a activos aptos para entidades que aplican la NIIF para PYMES",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R414",
+    "fila_excel": 422,
+    "nivel": 3,
+    "concepto": "Pasivos por ingresos diferidos producto de programas de fidelización de clientes que no han sido reversados contablemente pero que deben ser",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R415",
+    "fila_excel": 423,
+    "nivel": 3,
+    "concepto": "Ajustes por contratos de concesión que incorporan las etapas de construcción, administración, operación y mantenimiento",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R416",
+    "fila_excel": 424,
+    "nivel": 3,
+    "concepto": "Gastos de establecimiento",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R417",
+    "fila_excel": 425,
+    "nivel": 3,
+    "concepto": "Gastos de investigación, desarrollo e innovación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R418",
+    "fila_excel": 426,
+    "nivel": 3,
+    "concepto": "Por pagos basados en acciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R419",
+    "fila_excel": 427,
+    "nivel": 3,
+    "concepto": "En la explotación de minas, petróleo y gas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R420",
+    "fila_excel": 428,
+    "nivel": 3,
+    "concepto": "Rentas con derecho a cobro (causadas) que no cumplieron criterios para ser contabilizadas como ingresos del período gravable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R421",
+    "fila_excel": 429,
+    "nivel": 3,
+    "concepto": "Otras diferencias temporales deducibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R422",
+    "fila_excel": 430,
+    "nivel": 3,
+    "concepto": "Total diferencias temporales deducibles",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R423",
+    "fila_excel": 431,
+    "nivel": 2,
+    "concepto": "Diferencias temporales imponibles (gravables)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R424",
+    "fila_excel": 432,
+    "nivel": 3,
+    "concepto": "Gastos por depreciaciones de activos fijos no aceptadas fiscalmente de naturaleza temporaria",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R425",
+    "fila_excel": 433,
+    "nivel": 6,
+    "concepto": "Aplicación del modelo de revaluación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R426",
+    "fila_excel": 434,
+    "nivel": 6,
+    "concepto": "Costos estimados de desmantelamiento",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R427",
+    "fila_excel": 435,
+    "nivel": 6,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R428",
+    "fila_excel": 436,
+    "nivel": 3,
+    "concepto": "Gastos por amortizaciones de activos intangibles no aceptadas fiscalmente de naturaleza temporaria",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R429",
+    "fila_excel": 437,
+    "nivel": 6,
+    "concepto": "Aplicación del modelo de revaluación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R430",
+    "fila_excel": 438,
+    "nivel": 6,
+    "concepto": "Plusvalía (Good Will, fondo de comercio y crédito mercantil)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R431",
+    "fila_excel": 439,
+    "nivel": 6,
+    "concepto": "Otros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R432",
+    "fila_excel": 440,
+    "nivel": 3,
+    "concepto": "Ganancias por la medición a valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R433",
+    "fila_excel": 441,
+    "nivel": 6,
+    "concepto": "Instrumentos derivados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R434",
+    "fila_excel": 442,
+    "nivel": 6,
+    "concepto": "Otros instrumentos financieros, diferentes a títulos de renta fija medidos al valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R435",
+    "fila_excel": 443,
+    "nivel": 3,
+    "concepto": "Ganancia por diferencia en cambio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R436",
+    "fila_excel": 444,
+    "nivel": 3,
+    "concepto": "Ingresos provenientes por contraprestación variable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R437",
+    "fila_excel": 445,
+    "nivel": 3,
+    "concepto": "Intereses implícitos (compras o préstamos obtenidos)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R438",
+    "fila_excel": 446,
+    "nivel": 3,
+    "concepto": "Deducción especial del impuesto sobre las ventas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R439",
+    "fila_excel": 447,
+    "nivel": 3,
+    "concepto": "Otras diferencias temporales imponibles (gravables)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R440",
+    "fila_excel": 448,
+    "nivel": 3,
+    "concepto": "Total diferencias temporales imponibles",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R441",
+    "fila_excel": 449,
+    "nivel": 2,
+    "concepto": "Otras diferencias temporales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R442",
+    "fila_excel": 451,
+    "nivel": 3,
+    "concepto": "Mediciones de activos biológicos al valor razonable menos costos de venta",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R443",
+    "fila_excel": 452,
+    "nivel": 6,
+    "concepto": "Costos de producción atribuibles a la transformación biológica ó pérdidas causadas en caso de destrucción, daños, muerte y otros eventos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R444",
+    "fila_excel": 453,
+    "nivel": 6,
+    "concepto": "Depreciación fiscal de animales productores",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R445",
+    "fila_excel": 454,
+    "nivel": 3,
+    "concepto": "Ajustes por títulos de renta fija (activos financieros) medidos al modelo del valor razonable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R446",
+    "fila_excel": 455,
+    "nivel": 6,
+    "concepto": "Ajuste por rendimientos financieros calculados de manera lineal para efectos fiscales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R447",
+    "fila_excel": 456,
+    "nivel": 3,
+    "concepto": "Gastos por amortización fiscal acelerada",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R448",
+    "fila_excel": 457,
+    "nivel": 3,
+    "concepto": "Ajustes por operaciones de reporto o repo, simultáneas y de transferencia temporal de valores",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R449",
+    "fila_excel": 458,
+    "nivel": 3,
+    "concepto": "Contratos de arrendamientos ",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R450",
+    "fila_excel": 459,
+    "nivel": 3,
+    "concepto": "Total otras diferencias temporales",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R451",
+    "fila_excel": 460,
+    "nivel": 1,
+    "concepto": "RENTA LÍQUIDA ORDINARIA DEL EJERCICIO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R452",
+    "fila_excel": 461,
+    "nivel": 1,
+    "concepto": "PÉRDIDA LÍQUIDA DEL EJERCICIO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R453",
+    "fila_excel": 462,
+    "nivel": 1,
+    "concepto": "AJUSTES PARA LIQUIDACION",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R454",
+    "fila_excel": 463,
+    "nivel": 1,
+    "concepto": "ESAL (R.T.E.)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R455",
+    "fila_excel": 464,
+    "nivel": 4,
+    "concepto": "Valor Inversiones liquidadas en el período",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R456",
+    "fila_excel": 465,
+    "nivel": 1,
+    "concepto": "Renta Pasiva - ECE sin residencia fiscal en Colombia",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R457",
+    "fila_excel": 466,
+    "nivel": 2,
+    "concepto": "Ingresos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R458",
+    "fila_excel": 467,
+    "nivel": 4,
+    "concepto": "Intereses y rendimientos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R459",
+    "fila_excel": 468,
+    "nivel": 4,
+    "concepto": "Provenientes de activos intangibles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R460",
+    "fila_excel": 469,
+    "nivel": 4,
+    "concepto": "Enajenación o cesión de derechos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R461",
+    "fila_excel": 470,
+    "nivel": 4,
+    "concepto": "Enajenación o arrendamiento de inmuebles",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R462",
+    "fila_excel": 471,
+    "nivel": 4,
+    "concepto": "Compra o venta de bienes corporales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R463",
+    "fila_excel": 472,
+    "nivel": 4,
+    "concepto": "Por servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R464",
+    "fila_excel": 473,
+    "nivel": 4,
+    "concepto": "TOTAL",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R465",
+    "fila_excel": 474,
+    "nivel": 2,
+    "concepto": "Costos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R466",
+    "fila_excel": 475,
+    "nivel": 2,
+    "concepto": "Deducciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R467",
+    "fila_excel": 476,
+    "nivel": 2,
+    "concepto": "RENTA LIQUIDA PASIVA",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R468",
+    "fila_excel": 477,
+    "nivel": 1,
+    "concepto": "RENTA LÍQUIDA POR RECUPERACIÓN DE DEDUCCIONES",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R469",
+    "fila_excel": 478,
+    "nivel": 1,
+    "concepto": "RENTA LIQUIDA ORDINARIA DEL EJERCICIO - EXCEDENTE NETO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R470",
+    "fila_excel": 479,
+    "nivel": 1,
+    "concepto": "PERDIDA LIQUIDA DEL EJERCICIO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R471",
+    "fila_excel": 480,
+    "nivel": 1,
+    "concepto": "Compensaciones",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R472",
+    "fila_excel": 481,
+    "nivel": 2,
+    "concepto": "De pérdidas fiscales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R473",
+    "fila_excel": 482,
+    "nivel": 2,
+    "concepto": "Del exceso de renta presuntiva sobre renta ordinaria",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R474",
+    "fila_excel": 483,
+    "nivel": 1,
+    "concepto": "Renta líquida",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R475",
+    "fila_excel": 484,
+    "nivel": 1,
+    "concepto": "Renta presuntiva período gravable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R476",
+    "fila_excel": 485,
+    "nivel": 2,
+    "concepto": "Patrimonio líquido del año o período gravable anterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R477",
+    "fila_excel": 486,
+    "nivel": 2,
+    "concepto": "Valor patrimonial neto",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R478",
+    "fila_excel": 487,
+    "nivel": 5,
+    "concepto": "Bienes afectados por hechos constitutivos de fuerza mayor o caso fortuito",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R479",
+    "fila_excel": 488,
+    "nivel": 5,
+    "concepto": "Bienes vinculados a empresas en período improductivo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R480",
+    "fila_excel": 489,
+    "nivel": 5,
+    "concepto": "Bienes destinados exclusivamente a actividades deportivas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R481",
+    "fila_excel": 490,
+    "nivel": 5,
+    "concepto": "Bienes vinculados a empresas exclusivamente mineras",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R482",
+    "fila_excel": 491,
+    "nivel": 2,
+    "concepto": "Primeras 19.000 UVT de activos destinados al sector agropecuario",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R483",
+    "fila_excel": 492,
+    "nivel": 2,
+    "concepto": "Otras exclusiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R484",
+    "fila_excel": 493,
+    "nivel": 2,
+    "concepto": "Base de cálculo de la renta presuntiva",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R485",
+    "fila_excel": 494,
+    "nivel": 2,
+    "concepto": "Cálculo renta presuntiva (0,0%)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R486",
+    "fila_excel": 495,
+    "nivel": 2,
+    "concepto": "Renta gravable generada por los activos excluidos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R487",
+    "fila_excel": 496,
+    "nivel": 1,
+    "concepto": "Renta Exenta",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R488",
+    "fila_excel": 497,
+    "nivel": 1,
+    "concepto": "Rentas gravables (renta líquida)",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R489",
+    "fila_excel": 498,
+    "nivel": 2,
+    "concepto": "Otras rentas gravables",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R490",
+    "fila_excel": 499,
+    "nivel": 2,
+    "concepto": "Pasivos inexistentes",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R491",
+    "fila_excel": 500,
+    "nivel": 2,
+    "concepto": "Omisión de activos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R492",
+    "fila_excel": 501,
+    "nivel": 2,
+    "concepto": "Comparación patrimonial",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R493",
+    "fila_excel": 502,
+    "nivel": 2,
+    "concepto": "ESAL (R.T.E.)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R494",
+    "fila_excel": 503,
+    "nivel": 5,
+    "concepto": "Asignaciones permanentes no ejecutadas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R495",
+    "fila_excel": 504,
+    "nivel": 5,
+    "concepto": "Inversiones liquidadas y no reinvertidas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R496",
+    "fila_excel": 505,
+    "nivel": 1,
+    "concepto": "Rentas líquidas gravables\nnacionales a tarifa general)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R497",
+    "fila_excel": 506,
+    "nivel": 1,
+    "concepto": "Impuesto sobre la renta líquida gravable",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R498",
+    "fila_excel": 507,
+    "nivel": 1,
+    "concepto": "Ganancias Ocasionales gravables",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R499",
+    "fila_excel": 508,
+    "nivel": 2,
+    "concepto": "Ingresos por ganancia ocasional en venta de activos fijos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R500",
+    "fila_excel": 509,
+    "nivel": 2,
+    "concepto": "Otros ingresos por ganancia ocasional",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R501",
+    "fila_excel": 510,
+    "nivel": 2,
+    "concepto": "Total Ingresos por ganancias ocasionales",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R502",
+    "fila_excel": 511,
+    "nivel": 2,
+    "concepto": "Costos por ganancia ocasional en venta de activos fijos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R503",
+    "fila_excel": 512,
+    "nivel": 2,
+    "concepto": "Otros costos por ganancias ocasionales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R504",
+    "fila_excel": 513,
+    "nivel": 2,
+    "concepto": "Total costos por ganancias ocasionales",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R505",
+    "fila_excel": 514,
+    "nivel": 2,
+    "concepto": "Ganancias ocasionales no gravadas por la venta de acciones ECE",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R506",
+    "fila_excel": 515,
+    "nivel": 2,
+    "concepto": "Otras ganancias ocasionales no gravadas y exentas",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R507",
+    "fila_excel": 516,
+    "nivel": 2,
+    "concepto": "Rentas deudores régimen Ley 1116 de 2006, Decretos 560 y 772\nde 2020",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R508",
+    "fila_excel": 517,
+    "nivel": 2,
+    "concepto": "Utilización pérdidas fiscales acumuladas (Inc. 2, Art 15 Decreto\n772 de 2020)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R509",
+    "fila_excel": 518,
+    "nivel": 2,
+    "concepto": "Impuesto de ganancia ocasional",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R510",
+    "fila_excel": 519,
+    "nivel": 1,
+    "concepto": "Descuentos tributarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R511",
+    "fila_excel": 520,
+    "nivel": 1,
+    "concepto": "Descuento por impuestos pagados en el exterior por ganancias ocasionales",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R512",
+    "fila_excel": 521,
+    "nivel": 1,
+    "concepto": "Valor inversión Obras por Impuestos hasta del 50 % del valor del impuesto a cargo (modalidad de pago 1)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R513",
+    "fila_excel": 522,
+    "nivel": 1,
+    "concepto": "Descuento efectivo inversión obras por impuestos (modalidad de pago 2)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R514",
+    "fila_excel": 523,
+    "nivel": 1,
+    "concepto": "Anticipo renta liquidado año anterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R515",
+    "fila_excel": 525,
+    "nivel": 1,
+    "concepto": "Anticipo sobretasa liquidado año gravable anterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R516",
+    "fila_excel": 526,
+    "nivel": 1,
+    "concepto": "Saldo a favor año gravable anterior sin solicitud de devolución o compensación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R517",
+    "fila_excel": 527,
+    "nivel": 1,
+    "concepto": "Autorretenciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R518",
+    "fila_excel": 528,
+    "nivel": 5,
+    "concepto": "Por servicios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R519",
+    "fila_excel": 529,
+    "nivel": 5,
+    "concepto": "Por rendimientos financieros",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R520",
+    "fila_excel": 530,
+    "nivel": 5,
+    "concepto": "Autorretención Decreto 2201 del 2016",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R521",
+    "fila_excel": 531,
+    "nivel": 5,
+    "concepto": "Total autorretenciones",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R522",
+    "fila_excel": 532,
+    "nivel": 1,
+    "concepto": "Otras retenciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R523",
+    "fila_excel": 533,
+    "nivel": 5,
+    "concepto": "Por servicios.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R524",
+    "fila_excel": 534,
+    "nivel": 5,
+    "concepto": "Por honorarios y comisiones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R525",
+    "fila_excel": 535,
+    "nivel": 5,
+    "concepto": "Por rendimientos financieros.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R526",
+    "fila_excel": 536,
+    "nivel": 5,
+    "concepto": "Por dividendos y participaciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R527",
+    "fila_excel": 537,
+    "nivel": 5,
+    "concepto": "Otras retenciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R528",
+    "fila_excel": 538,
+    "nivel": 5,
+    "concepto": "Total otras retenciones",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R529",
+    "fila_excel": 539,
+    "nivel": 1,
+    "concepto": "Total retenciones año gravable que declara",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R530",
+    "fila_excel": 540,
+    "nivel": 1,
+    "concepto": "Anticipo renta por el año gravable siguiente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R531",
+    "fila_excel": 541,
+    "nivel": 1,
+    "concepto": "Anticipo Puntos adicionales año gravable anterior",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R532",
+    "fila_excel": 542,
+    "nivel": 1,
+    "concepto": "Puntos adicionales a la tarifa del impuesto renta",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R533",
+    "fila_excel": 543,
+    "nivel": 1,
+    "concepto": "Anticipo Puntos adicionales año gravable siguiente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R534",
+    "fila_excel": 544,
+    "nivel": 1,
+    "concepto": "Crédito fiscal para inversiones en proyectos de investigación, desarrollo tecnológico e innovación o vinculación de capital humano de alto n",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R535",
+    "fila_excel": 545,
+    "nivel": 1,
+    "concepto": "Sanciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R536",
+    "fila_excel": 546,
+    "nivel": 1,
+    "concepto": "Valor a Adicionar por ajuste a la tasa mínima de tributación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R537",
+    "fila_excel": 547,
+    "nivel": 1,
+    "concepto": "Impuesto a Adicionar, límite a beneficios y estímulos tributarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R538",
+    "fila_excel": 548,
+    "nivel": 1,
+    "concepto": "OTRO RESULTADO INTEGRAL (ORI)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R539",
+    "fila_excel": 550,
+    "nivel": 2,
+    "concepto": "No se reclasifican al resultado",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R540",
+    "fila_excel": 551,
+    "nivel": 4,
+    "concepto": "Nuevas mediciones de los planes de beneficios definidos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R541",
+    "fila_excel": 552,
+    "nivel": 4,
+    "concepto": "Inversiones en instrumentos de patrimonio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R542",
+    "fila_excel": 553,
+    "nivel": 4,
+    "concepto": "Participación otro resultado integral de asociadas y negocios conjuntos contabilizados utilizando el método de la participación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R543",
+    "fila_excel": 554,
+    "nivel": 4,
+    "concepto": "Instrumentos de cobertura que cubren inversiones en instrumentos de patrimonio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R544",
+    "fila_excel": 555,
+    "nivel": 4,
+    "concepto": "Cambio valor razonable de pasivos financieros atribuible a cambios en el riesgo de crédito del pasivo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R545",
+    "fila_excel": 556,
+    "nivel": 2,
+    "concepto": "Se reclasifican al resultado",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R546",
+    "fila_excel": 557,
+    "nivel": 4,
+    "concepto": "Activos financieros disponibles para la venta",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R547",
+    "fila_excel": 558,
+    "nivel": 4,
+    "concepto": "Activos financieros medidos al valor razonable con cambios en el ORI",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R548",
+    "fila_excel": 559,
+    "nivel": 4,
+    "concepto": "Cobertura de flujos de efectivo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R549",
+    "fila_excel": 560,
+    "nivel": 4,
+    "concepto": "Coberturas de inversiones netas en negocios en el extranjero",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R550",
+    "fila_excel": 561,
+    "nivel": 4,
+    "concepto": "Otras partidas que deban ser reconocidas en el ORI",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R551",
+    "fila_excel": 562,
+    "nivel": 2,
+    "concepto": "OTRO RESULTADO INTEGRAL ANTES DE IMPUESTOS",
+    "pucs": [],
+    "es_total": true
+  },
+  {
+    "id": "R552",
+    "fila_excel": 563,
+    "nivel": 1,
+    "concepto": "RESULTADO INTEGRAL TOTAL DEL AÑO",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R553",
+    "fila_excel": 564,
+    "nivel": 1,
+    "concepto": "Gasto / ingreso impuesto de renta y complementario del período",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R554",
+    "fila_excel": 565,
+    "nivel": 2,
+    "concepto": "Impuesto corriente",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R555",
+    "fila_excel": 566,
+    "nivel": 5,
+    "concepto": "Gastos por ajustes respecto a períodos anteriores",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R556",
+    "fila_excel": 567,
+    "nivel": 5,
+    "concepto": "Ingreso por ajustes respecto a períodos anteriores",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R557",
+    "fila_excel": 568,
+    "nivel": 5,
+    "concepto": "Impuestos asumidos del exterior - convenios o tratados",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R558",
+    "fila_excel": 569,
+    "nivel": 2,
+    "concepto": "Gasto por impuesto diferido",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R559",
+    "fila_excel": 570,
+    "nivel": 2,
+    "concepto": "Ingreso impuesto diferido",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R560",
+    "fila_excel": 571,
+    "nivel": 2,
+    "concepto": "Valor neto gasto por impuesto",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R561",
+    "fila_excel": 572,
+    "nivel": 1,
+    "concepto": "DATOS INFORMATIVOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R562",
+    "fila_excel": 573,
+    "nivel": 2,
+    "concepto": "INGRESOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R563",
+    "fila_excel": 574,
+    "nivel": 4,
+    "concepto": "Ingresos fiscales por fidelización de clientes, sin devengo contable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R564",
+    "fila_excel": 575,
+    "nivel": 4,
+    "concepto": "Retiros para consumo y publicidad, propaganda y promoción",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R565",
+    "fila_excel": 576,
+    "nivel": 4,
+    "concepto": "Dividendos decretados en el periodo gravable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R566",
+    "fila_excel": 577,
+    "nivel": 4,
+    "concepto": "Dividendos cobrados en el periodo gravable",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R567",
+    "fila_excel": 578,
+    "nivel": 4,
+    "concepto": "Ingresos devengados de fideicomisos o encargos fiduciarios, calidad de fideicomitente o fiduciante",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R568",
+    "fila_excel": 579,
+    "nivel": 4,
+    "concepto": "Ingresos devengados de fideicomisos o encargos fiduciarios, calidad de beneficiario",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R569",
+    "fila_excel": 580,
+    "nivel": 2,
+    "concepto": "COSTOS Y GASTOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R570",
+    "fila_excel": 581,
+    "nivel": 4,
+    "concepto": "Bajas de inventarios (faltantes, caso fortuito o fuerza mayor), reconocidos como costo o gasto en el estado de resultados del ejercicio",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R571",
+    "fila_excel": 582,
+    "nivel": 4,
+    "concepto": "Costos indirectos de producción no distribuidos como costo del inventario, reconocidos como costo o gasto en el estado de resultados del eje",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R572",
+    "fila_excel": 583,
+    "nivel": 4,
+    "concepto": "Monto descuentos obtenidos en el período en la compra de inventarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R573",
+    "fila_excel": 584,
+    "nivel": 4,
+    "concepto": "Costos y gastos devengados de fideicomisos o encargos fiduciarios, calidad de fideicomitente o fiduciante",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R574",
+    "fila_excel": 585,
+    "nivel": 4,
+    "concepto": "Costos y gastos devengados de fideicomisos o encargos fiduciarios, calidad de beneficiario",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R575",
+    "fila_excel": 586,
+    "nivel": 4,
+    "concepto": "Costos y deducciones no procedentes - Actividad meritoria (Régimen Tributario Especial)",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R576",
+    "fila_excel": 587,
+    "nivel": 2,
+    "concepto": "OTROS DATOS INFORMATIVOS",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R577",
+    "fila_excel": 588,
+    "nivel": 4,
+    "concepto": "Aportes al sistema de seguridad social",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R578",
+    "fila_excel": 589,
+    "nivel": 4,
+    "concepto": "Aportes al SENA, ICBF, cajas de compensación",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R579",
+    "fila_excel": 590,
+    "nivel": 4,
+    "concepto": "Aportes del empleador a los seguros privados de pensiones\ny a los fondos de pensiones voluntarias",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R580",
+    "fila_excel": 591,
+    "nivel": 4,
+    "concepto": "Operaciones con vinculados económicos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R581",
+    "fila_excel": 592,
+    "nivel": 6,
+    "concepto": "Costos y deducciones",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R582",
+    "fila_excel": 593,
+    "nivel": 6,
+    "concepto": "Compra de inventarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R583",
+    "fila_excel": 594,
+    "nivel": 6,
+    "concepto": "compra de activos fijos",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R584",
+    "fila_excel": 595,
+    "nivel": 6,
+    "concepto": "Pasivo",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R585",
+    "fila_excel": 596,
+    "nivel": 4,
+    "concepto": "Bases para calcular el límite a beneficios y estímulos tributarios",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R586",
+    "fila_excel": 597,
+    "nivel": 6,
+    "concepto": "Descuento para inversiones realizadas en control, conservación y mejoramiento del medio ambiente, Art. 255 del E.T.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R587",
+    "fila_excel": 598,
+    "nivel": 6,
+    "concepto": "Becas por impuestos, Art. 257-1 del E.T.",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R588",
+    "fila_excel": 599,
+    "nivel": 6,
+    "concepto": "Financiación de los estudios de los trabajadores en instituciones de educación superior, Art. 124 de la Ley 30 de 1992",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R589",
+    "fila_excel": 600,
+    "nivel": 6,
+    "concepto": "Estímulos al patrimonio cultural de la nación, Art. 56 de la Ley 397 de 1997",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R590",
+    "fila_excel": 601,
+    "nivel": 6,
+    "concepto": "Estímulos para el proceso de capitalización, Art. 44 de la Ley 789 de 2002",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R591",
+    "fila_excel": 602,
+    "nivel": 6,
+    "concepto": "Deducción por ocupación de trabajadoras mujeres víctimas de la violencia comprobada, Art. 23 de la ley 1257 de 2008",
+    "pucs": [],
+    "es_total": false
+  },
+  {
+    "id": "R592",
+    "fila_excel": 603,
+    "nivel": 6,
+    "concepto": "Deducción por inversiones, Art. 4 de la Ley 1493 de 2011",
+    "pucs": [],
+    "es_total": false
+  }
+]

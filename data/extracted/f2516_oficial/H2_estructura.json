@@ -1,0 +1,2619 @@
+[
+  {
+    "r": 9,
+    "nivel": 1,
+    "concepto": "CONCEPTO",
+    "formulas": {
+      "7": "VALOR CONTABLE \n(VAL1)",
+      "8": "EFECTO DE CONVERSION (Moneda Funcional Diferente al Peso Colombiano)\n(VAL2)",
+      "9": "MENOR VALOR FISCAL (por reconocimiento, exenciones, etc.)\n(VAL3)",
+      "10": "MAYOR VALOR FISCAL (por reconocimiento, exenciones, etc.)\n(VAL4)",
+      "11": "VALOR FISCAL\n(VAL5)"
+    }
+  },
+  {
+    "r": 10,
+    "nivel": 1,
+    "concepto": "ACTIVOS",
+    "formulas": {}
+  },
+  {
+    "r": 11,
+    "nivel": 2,
+    "concepto": "Efectivo y equivalentes al efectivo",
+    "formulas": {
+      "7": "=SUM(G12:G14)",
+      "8": "=SUM(H12:H14)",
+      "9": "=SUM(I12:I14)",
+      "10": "=SUM(J12:J14)",
+      "11": "=SUM(K12:K14)"
+    }
+  },
+  {
+    "r": 12,
+    "nivel": 3,
+    "concepto": "Efectivo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,$A12))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,$A12))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,$A12))",
+      "11": "=G12+H12-I12+J12"
+    }
+  },
+  {
+    "r": 13,
+    "nivel": 3,
+    "concepto": "Equivalentes al efectivo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A13))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A13))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A13))",
+      "11": "=G13+H13-I13+J13"
+    }
+  },
+  {
+    "r": 14,
+    "nivel": 3,
+    "concepto": "Efectivo restringido",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A14))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A14))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A14))",
+      "11": "=G14+H14-I14+J14"
+    }
+  },
+  {
+    "r": 15,
+    "nivel": 2,
+    "concepto": "Inversiones e instrumentos financieros derivados (valor neto)",
+    "formulas": {
+      "7": "=G16-G30",
+      "8": "=H16-H30",
+      "9": "=I16-I30",
+      "10": "=J16-J30",
+      "11": "=K16-K30"
+    }
+  },
+  {
+    "r": 16,
+    "nivel": 3,
+    "concepto": "Inversiones e instrumentos financieros derivados (valor bruto)",
+    "formulas": {
+      "7": "=SUM(G17:G29)",
+      "8": "=SUM(H17:H29)",
+      "9": "=SUM(I17:I29)",
+      "10": "=SUM(J17:J29)",
+      "11": "=SUM(K17:K29)"
+    }
+  },
+  {
+    "r": 17,
+    "nivel": 4,
+    "concepto": "Derechos de recompra de inversiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A17))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A17))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A17))",
+      "11": "=G17+H17-I17+J17"
+    }
+  },
+  {
+    "r": 18,
+    "nivel": 4,
+    "concepto": "Inversiones en subsidiarias, asociadas y negocios conjuntos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A18))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A18))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A18))",
+      "11": "=G18+H18-I18+J18"
+    }
+  },
+  {
+    "r": 19,
+    "nivel": 5,
+    "concepto": "Valor razonable con cambios en el ORI",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A19))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A19))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A19))",
+      "11": "=G19+H19-I19+J19"
+    }
+  },
+  {
+    "r": 20,
+    "nivel": 5,
+    "concepto": "Método de la participación",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A20))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A20))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A20))",
+      "11": "=G20+H20-I20+J20"
+    }
+  },
+  {
+    "r": 21,
+    "nivel": 5,
+    "concepto": "al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A21))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A21))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A21))",
+      "11": "=G21+H21-I21+J21"
+    }
+  },
+  {
+    "r": 22,
+    "nivel": 4,
+    "concepto": "Instrumentos de deuda a costo amortizado",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A22))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A22))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A22))",
+      "11": "=G22+H22-I22+J22"
+    }
+  },
+  {
+    "r": 23,
+    "nivel": 4,
+    "concepto": "Instrumentos de deuda o patrimonio al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A23))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A23))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A23))",
+      "11": "=G23+H23-I23+J23"
+    }
+  },
+  {
+    "r": 24,
+    "nivel": 4,
+    "concepto": "Instrumentos de deuda o patrimonio al valor razonable con cambios en resultados",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A24))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A24))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A24))",
+      "11": "=G24+H24-I24+J24"
+    }
+  },
+  {
+    "r": 25,
+    "nivel": 4,
+    "concepto": "Instrumentos de deuda o patrimonio al valor razonable con cambios en el ORI",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A25))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A25))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A25))",
+      "11": "=G25+H25-I25+J25"
+    }
+  },
+  {
+    "r": 26,
+    "nivel": 4,
+    "concepto": "Instrumentos financieros derivados con fines de negociación",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A26))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A26))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A26))",
+      "11": "=G26+H26-I26+J26"
+    }
+  },
+  {
+    "r": 27,
+    "nivel": 4,
+    "concepto": "Instrumentos financieros derivados con fines de cobertura",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A27))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A27))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A27))",
+      "11": "=G27+H27-I27+J27"
+    }
+  },
+  {
+    "r": 28,
+    "nivel": 4,
+    "concepto": "Derechos fiduciarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A28))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A28))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A28))",
+      "11": "=G28+H28-I28+J28"
+    }
+  },
+  {
+    "r": 29,
+    "nivel": 4,
+    "concepto": "Otros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A29))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A29))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A29))",
+      "11": "=G29+H29-I29+J29"
+    }
+  },
+  {
+    "r": 30,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado de inversiones",
+    "formulas": {
+      "7": "=SUM(G31:G37)",
+      "8": "=SUM(H31:H37)",
+      "9": "=SUM(I31:I37)",
+      "10": "=SUM(J31:J37)",
+      "11": "=SUM(K31:K37)"
+    }
+  },
+  {
+    "r": 31,
+    "nivel": 4,
+    "concepto": "Derechos de recompra de inversiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A31))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A31))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A31))",
+      "11": "=G31+H31-I31+J31"
+    }
+  },
+  {
+    "r": 32,
+    "nivel": 4,
+    "concepto": "Inversiones en subsidiarias, asociadas y negocios conjuntos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A32))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A32))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A32))",
+      "11": "=G32+H32-I32+J32"
+    }
+  },
+  {
+    "r": 33,
+    "nivel": 5,
+    "concepto": "Costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A33))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A33))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A33))",
+      "11": "=G33+H33-I33+J33"
+    }
+  },
+  {
+    "r": 34,
+    "nivel": 4,
+    "concepto": "instrumentos de deuda a costo amortizado",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A34))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A34))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A34))",
+      "11": "=G34+H34-I34+J34"
+    }
+  },
+  {
+    "r": 35,
+    "nivel": 4,
+    "concepto": "Instrumentos de deuda o patrimonio al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A35))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A35))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A35))",
+      "11": "=G35+H35-I35+J35"
+    }
+  },
+  {
+    "r": 36,
+    "nivel": 4,
+    "concepto": "Derechos fiduciarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A36))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A36))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A36))",
+      "11": "=G36+H36-I36+J36"
+    }
+  },
+  {
+    "r": 37,
+    "nivel": 4,
+    "concepto": "Otros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A37))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A37))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A37))",
+      "11": "=G37+H37-I37+J37"
+    }
+  },
+  {
+    "r": 38,
+    "nivel": 2,
+    "concepto": "Cuentas comerciales por cobrar y otras cuentas por cobrar",
+    "formulas": {
+      "7": "=G39-G52",
+      "8": "=H39-H52",
+      "9": "=I39-I52",
+      "10": "=J39-J52",
+      "11": "=K39-K52"
+    }
+  },
+  {
+    "r": 39,
+    "nivel": 3,
+    "concepto": "Cuentas y documentos por cobrar",
+    "formulas": {
+      "7": "=SUM(G40:G51)",
+      "8": "=SUM(H40:H51)",
+      "9": "=SUM(I40:I51)",
+      "10": "=SUM(J40:J51)",
+      "11": "=SUM(K40:K51)"
+    }
+  },
+  {
+    "r": 40,
+    "nivel": 4,
+    "concepto": "Cartera de crédito (préstamos bancarios)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A40))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A40))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A40))",
+      "11": "=G40+H40-I40+J40"
+    }
+  },
+  {
+    "r": 41,
+    "nivel": 4,
+    "concepto": "Cuentas comerciales por cobrar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A41))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A41))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A41))",
+      "11": "=G41+H41-I41+J41"
+    }
+  },
+  {
+    "r": 42,
+    "nivel": 4,
+    "concepto": "Cuentas por cobrar en acuerdos de concesión (modelo del activo financiero)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A42))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A42))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A42))",
+      "11": "=G42+H42-I42+J42"
+    }
+  },
+  {
+    "r": 43,
+    "nivel": 4,
+    "concepto": "Arrendamiento financiero o leasing financiero",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A43))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A43))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A43))",
+      "11": "=G43+H43-I43+J43"
+    }
+  },
+  {
+    "r": 44,
+    "nivel": 4,
+    "concepto": "Dividendos y participaciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A44))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A44))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A44))",
+      "11": "=G44+H44-I44+J44"
+    }
+  },
+  {
+    "r": 45,
+    "nivel": 4,
+    "concepto": "Cuentas por cobrar a socios, accionistas o partícipes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A45))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A45))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A45))",
+      "11": "=G45+H45-I45+J45"
+    }
+  },
+  {
+    "r": 46,
+    "nivel": 4,
+    "concepto": "Cuentas y documentos por cobrar a otras partes relacionadas y asociadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A46))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A46))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A46))",
+      "11": "=G46+H46-I46+J46"
+    }
+  },
+  {
+    "r": 47,
+    "nivel": 4,
+    "concepto": "Primas de seguros por recaudar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A47))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A47))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A47))",
+      "11": "=G47+H47-I47+J47"
+    }
+  },
+  {
+    "r": 48,
+    "nivel": 4,
+    "concepto": "Cartera de difícil cobro",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A48))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A48))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A48))",
+      "11": "=G48+H48-I48+J48"
+    }
+  },
+  {
+    "r": 49,
+    "nivel": 4,
+    "concepto": "Reclamaciones por cobrar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A49))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A49))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A49))",
+      "11": "=G49+H49-I49+J49"
+    }
+  },
+  {
+    "r": 50,
+    "nivel": 4,
+    "concepto": "Anticipos de pagos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A50))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A50))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A50))",
+      "11": "=G50+H50-I50+J50"
+    }
+  },
+  {
+    "r": 51,
+    "nivel": 4,
+    "concepto": "Otras cuentas y documentos por cobrar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A51))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A51))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A51))",
+      "11": "=G51+H51-I51+J51"
+    }
+  },
+  {
+    "r": 52,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado del valor cuentas y documentos por cobrar",
+    "formulas": {
+      "7": "=SUM(G53:G60)",
+      "8": "=SUM(H53:H60)",
+      "9": "=SUM(I53:I60)",
+      "10": "=SUM(J53:J60)",
+      "11": "=SUM(K53:K60)"
+    }
+  },
+  {
+    "r": 53,
+    "nivel": 4,
+    "concepto": "Cartera de crédito (préstamos bancarios)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A53))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A53))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A53))",
+      "11": "=G53+H53-I53+J53"
+    }
+  },
+  {
+    "r": 54,
+    "nivel": 4,
+    "concepto": "Cuentas comerciales por cobrar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A54))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A54))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A54))",
+      "11": "=G54+H54-I54+J54"
+    }
+  },
+  {
+    "r": 55,
+    "nivel": 4,
+    "concepto": "Cuentas por cobrar en acuerdos de concesión (modelo del activo financiero)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A55))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A55))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A55))",
+      "11": "=G55+H55-I55+J55"
+    }
+  },
+  {
+    "r": 56,
+    "nivel": 4,
+    "concepto": "Arrendamiento financiero o leasing financiero",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A56))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A56))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A56))",
+      "11": "=G56+H56-I56+J56"
+    }
+  },
+  {
+    "r": 57,
+    "nivel": 4,
+    "concepto": "Dividendos y participaciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A57))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A57))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A57))",
+      "11": "=G57+H57-I57+J57"
+    }
+  },
+  {
+    "r": 58,
+    "nivel": 4,
+    "concepto": "Cuentas por cobrar a socios, accionistas o partícipes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A58))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A58))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A58))",
+      "11": "=G58+H58-I58+J58"
+    }
+  },
+  {
+    "r": 59,
+    "nivel": 4,
+    "concepto": "Cuentas por cobrar a otras partes relacionadas y asociadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A59))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A59))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A59))",
+      "11": "=G59+H59-I59+J59"
+    }
+  },
+  {
+    "r": 60,
+    "nivel": 4,
+    "concepto": "Otras cuentas por cobrar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A60))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A60))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A60))",
+      "11": "=G60+H60-I60+J60"
+    }
+  },
+  {
+    "r": 61,
+    "nivel": 2,
+    "concepto": "Inventarios",
+    "formulas": {
+      "7": "=SUM(G62:G71)-G72",
+      "8": "=SUM(H62:H71)-H72",
+      "9": "=SUM(I62:I71)-I72",
+      "10": "=SUM(J62:J71)-J72",
+      "11": "=SUM(K62:K71)-K72"
+    }
+  },
+  {
+    "r": 62,
+    "nivel": 3,
+    "concepto": "Para la venta, no producidos por la empresa",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A62))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A62))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A62))",
+      "11": "=G62+H62-I62+J62"
+    }
+  },
+  {
+    "r": 63,
+    "nivel": 3,
+    "concepto": "En tránsito",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A63))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A63))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A63))",
+      "11": "=G63+H63-I63+J63"
+    }
+  },
+  {
+    "r": 64,
+    "nivel": 3,
+    "concepto": "Materias primas, suministros y materiales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A64))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A64))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A64))",
+      "11": "=G64+H64-I64+J64"
+    }
+  },
+  {
+    "r": 65,
+    "nivel": 3,
+    "concepto": "En proceso (diferentes de obras o inmuebles en construcción para la venta)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A65))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A65))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A65))",
+      "11": "=G65+H65-I65+J65"
+    }
+  },
+  {
+    "r": 66,
+    "nivel": 3,
+    "concepto": "Costos prestadores de servicios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A66))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A66))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A66))",
+      "11": "=G66+H66-I66+J66"
+    }
+  },
+  {
+    "r": 67,
+    "nivel": 3,
+    "concepto": "Producto terminado (diferentes de obras o inmuebles terminados para la venta)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A67))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A67))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A67))",
+      "11": "=G67+H67-I67+J67"
+    }
+  },
+  {
+    "r": 68,
+    "nivel": 3,
+    "concepto": "Obras o inmuebles en construcción para la venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A68))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A68))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A68))",
+      "11": "=G68+H68-I68+J68"
+    }
+  },
+  {
+    "r": 69,
+    "nivel": 3,
+    "concepto": "Obras o inmuebles terminados para la venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A69))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A69))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A69))",
+      "11": "=G69+H69-I69+J69"
+    }
+  },
+  {
+    "r": 70,
+    "nivel": 3,
+    "concepto": "Piezas de repuesto y equipo auxiliar clasificados como inventarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A70))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A70))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A70))",
+      "11": "=G70+H70-I70+J70"
+    }
+  },
+  {
+    "r": 71,
+    "nivel": 3,
+    "concepto": "Inventario que surge de la actividad de extracción",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A71))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A71))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A71))",
+      "11": "=G71+H71-I71+J71"
+    }
+  },
+  {
+    "r": 72,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado del valor de inventarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A72))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A72))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A72))",
+      "11": "=G72+H72-I72+J72"
+    }
+  },
+  {
+    "r": 73,
+    "nivel": 2,
+    "concepto": "Gastos pagados por anticipado",
+    "formulas": {
+      "7": "=SUM(G74:G77)",
+      "8": "=SUM(H74:H77)",
+      "9": "=SUM(I74:I77)",
+      "10": "=SUM(J74:J77)",
+      "11": "=SUM(K74:K77)"
+    }
+  },
+  {
+    "r": 74,
+    "nivel": 3,
+    "concepto": "Publicidad",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A74))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A74))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A74))",
+      "11": "=G74+H74-I74+J74"
+    }
+  },
+  {
+    "r": 75,
+    "nivel": 3,
+    "concepto": "Primas de seguros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A75))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A75))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A75))",
+      "11": "=G75+H75-I75+J75"
+    }
+  },
+  {
+    "r": 76,
+    "nivel": 3,
+    "concepto": "Arrendamientos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A76))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A76))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A76))",
+      "11": "=G76+H76-I76+J76"
+    }
+  },
+  {
+    "r": 77,
+    "nivel": 3,
+    "concepto": "Otros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A77))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A77))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A77))",
+      "11": "=G77+H77-I77+J77"
+    }
+  },
+  {
+    "r": 78,
+    "nivel": 2,
+    "concepto": "Activos por impuestos corrientes",
+    "formulas": {
+      "7": "=SUM(G79:G82)",
+      "8": "=SUM(H79:H82)",
+      "9": "=SUM(I79:I82)",
+      "10": "=SUM(J79:J82)",
+      "11": "=SUM(K79:K82)"
+    }
+  },
+  {
+    "r": 79,
+    "nivel": 3,
+    "concepto": "Saldos a favor por el impuesto de renta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A79))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A79))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A79))",
+      "11": "=G79+H79-I79+J79"
+    }
+  },
+  {
+    "r": 80,
+    "nivel": 3,
+    "concepto": "Saldos a favor - otros impuestos y gravámenes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A80))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A80))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A80))",
+      "11": "=G80+H80-I80+J80"
+    }
+  },
+  {
+    "r": 81,
+    "nivel": 3,
+    "concepto": "Descuentos tributarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A81))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A81))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A81))",
+      "11": "=G81+H81-I81+J81"
+    }
+  },
+  {
+    "r": 82,
+    "nivel": 3,
+    "concepto": "Anticipos y otros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A82))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A82))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A82))",
+      "11": "=G82+H82-I82+J82"
+    }
+  },
+  {
+    "r": 83,
+    "nivel": 2,
+    "concepto": "Activos por impuestos diferidos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A83))",
+      "9": "=G83+H83",
+      "11": "=G83+H83-I83+J83"
+    }
+  },
+  {
+    "r": 84,
+    "nivel": 2,
+    "concepto": "Propiedades, planta y equipo",
+    "formulas": {
+      "7": "=SUM(G85:G91)-G92-G93",
+      "8": "=SUM(H85:H91)-H92-H93",
+      "9": "=SUM(I85:I91)-I92-I93",
+      "10": "=SUM(J85:J91)-J92-J93",
+      "11": "=SUM(K85:K91)-K92-K93"
+    }
+  },
+  {
+    "r": 85,
+    "nivel": 3,
+    "concepto": "Terrenos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A85))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A85))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A85))",
+      "11": "=G85+H85-I85+J85"
+    }
+  },
+  {
+    "r": 86,
+    "nivel": 3,
+    "concepto": "Construcciones en proceso ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A86))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A86))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A86))",
+      "11": "=G86+H86-I86+J86"
+    }
+  },
+  {
+    "r": 87,
+    "nivel": 3,
+    "concepto": "Edificios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A87))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A87))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A87))",
+      "11": "=G87+H87-I87+J87"
+    }
+  },
+  {
+    "r": 88,
+    "nivel": 5,
+    "concepto": "Ajuste acumulado por revaluaciones o reexpresiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A88))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A88))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A88))",
+      "11": "=G88+H88-I88+J88"
+    }
+  },
+  {
+    "r": 89,
+    "nivel": 3,
+    "concepto": "Activos tangibles para exploración y evaluación de recursos minerales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A89))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A89))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A89))",
+      "11": "=G89+H89-I89+J89"
+    }
+  },
+  {
+    "r": 90,
+    "nivel": 3,
+    "concepto": "Otras propiedades, planta y equipo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A90))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A90))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A90))",
+      "11": "=G90+H90-I90+J90"
+    }
+  },
+  {
+    "r": 91,
+    "nivel": 5,
+    "concepto": "Ajuste acumulado por revaluaciones o reexpresiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A91))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A91))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A91))",
+      "11": "=G91+H91-I91+J91"
+    }
+  },
+  {
+    "r": 92,
+    "nivel": 3,
+    "concepto": "Depreciación acumulada de propiedades, planta y equipo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A92))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A92))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A92))",
+      "11": "=G92+H92-I92+J92"
+    }
+  },
+  {
+    "r": 93,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado de propiedades, planta y equipo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A93))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A93))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A93))",
+      "11": "=G93+H93-I93+J93"
+    }
+  },
+  {
+    "r": 94,
+    "nivel": 2,
+    "concepto": "Activos intangibles   ",
+    "formulas": {
+      "7": "=G95+G106",
+      "8": "=H95+H106",
+      "9": "=I95+I106",
+      "10": "=J95+J106",
+      "11": "=K95+K106"
+    }
+  },
+  {
+    "r": 95,
+    "nivel": 3,
+    "concepto": "Activos intangibles distintos a la plusvalía",
+    "formulas": {
+      "7": "=SUM(G96:G103)-G104-G105",
+      "8": "=SUM(H96:H103)-H104-H105",
+      "9": "=SUM(I96:I103)-I104-I105",
+      "10": "=SUM(J96:J103)-J104-J105",
+      "11": "=SUM(K96:K103)-K104-K105"
+    }
+  },
+  {
+    "r": 96,
+    "nivel": 4,
+    "concepto": "Acuerdos de concesión (modelo del activo intangible)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A96))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A96))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A96))",
+      "11": "=G96+H96-I96+J96"
+    }
+  },
+  {
+    "r": 97,
+    "nivel": 4,
+    "concepto": "Activos intangibles exploración y evaluación de recursos minerales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A97))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A97))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A97))",
+      "11": "=G97+H97-I97+J97"
+    }
+  },
+  {
+    "r": 98,
+    "nivel": 4,
+    "concepto": "Marcas, patentes, licencias y otros derechos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A98))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A98))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A98))",
+      "11": "=G98+H98-I98+J98"
+    }
+  },
+  {
+    "r": 99,
+    "nivel": 5,
+    "concepto": "Ajuste acumulado por revaluaciones o reexpresiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A99))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A99))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A99))",
+      "11": "=G99+H99-I99+J99"
+    }
+  },
+  {
+    "r": 100,
+    "nivel": 4,
+    "concepto": "Arrendamiento Financiero",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A100))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A100))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A100))",
+      "11": "=G100+H100-I100+J100"
+    }
+  },
+  {
+    "r": 101,
+    "nivel": 5,
+    "concepto": "Ajuste acumulado por revaluaciones o reexpresiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A101))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A101))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A101))",
+      "11": "=G101+H101-I101+J101"
+    }
+  },
+  {
+    "r": 102,
+    "nivel": 4,
+    "concepto": "Otros activos intangibles",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A102))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A102))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A102))",
+      "11": "=G102+H102-I102+J102"
+    }
+  },
+  {
+    "r": 103,
+    "nivel": 5,
+    "concepto": "Ajuste acumulado por revaluaciones o reexpresiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A103))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A103))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A103))",
+      "11": "=G103+H103-I103+J103"
+    }
+  },
+  {
+    "r": 104,
+    "nivel": 4,
+    "concepto": "Amortización acumulada de activos intangibles distintos de la plusvalía",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A104))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A104))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A104))",
+      "11": "=G104+H104-I104+J104"
+    }
+  },
+  {
+    "r": 105,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado de activos intangibles distintos de la plusvalía",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A105))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A105))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A105))",
+      "11": "=G105+H105-I105+J105"
+    }
+  },
+  {
+    "r": 106,
+    "nivel": 3,
+    "concepto": "Plusvalía o Good Will",
+    "formulas": {
+      "7": "=SUM(G107:G110)-G111-G112",
+      "8": "=SUM(H107:H110)-H111-H112",
+      "9": "=SUM(I107:I110)-I111-I112",
+      "10": "=SUM(J107:J110)-J111-J112",
+      "11": "=SUM(K107:K110)-K111-K112"
+    }
+  },
+  {
+    "r": 107,
+    "nivel": 4,
+    "concepto": "Plusvalía o Good Will",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A107))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A107))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A107))",
+      "11": "=G107+H107-I107+J107"
+    }
+  },
+  {
+    "r": 108,
+    "nivel": 5,
+    "concepto": "Fusiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A108))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A108))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A108))",
+      "11": "=G108+H108-I108+J108"
+    }
+  },
+  {
+    "r": 109,
+    "nivel": 5,
+    "concepto": "Escisiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A109))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A109))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A109))",
+      "11": "=G109+H109-I109+J109"
+    }
+  },
+  {
+    "r": 110,
+    "nivel": 5,
+    "concepto": "Compra de acciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A110))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A110))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A110))",
+      "11": "=G110+H110-I110+J110"
+    }
+  },
+  {
+    "r": 111,
+    "nivel": 4,
+    "concepto": "Amortización acumulada de la plusvalía o Good Will",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A111))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A111))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A111))",
+      "11": "=G111+H111-I111+J111"
+    }
+  },
+  {
+    "r": 112,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado de la plusvalía o Good Will  ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A112))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A112))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A112))",
+      "11": "=G112+H112-I112+J112"
+    }
+  },
+  {
+    "r": 113,
+    "nivel": 2,
+    "concepto": "Propiedades de inversión",
+    "formulas": {
+      "7": "=G114+G115-G116-G117",
+      "8": "=H114+H115-H116-H117",
+      "9": "=I114+I115-I116-I117",
+      "10": "=J114+J115-J116-J117",
+      "11": "=K114+K115-K116-K117"
+    }
+  },
+  {
+    "r": 114,
+    "nivel": 3,
+    "concepto": "Terrenos y edificios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A114))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A114))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A114))",
+      "11": "=G114+H114-I114+J114"
+    }
+  },
+  {
+    "r": 115,
+    "nivel": 5,
+    "concepto": "Al valor razonable",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A115))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A115))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A115))",
+      "11": "=G115+H115-I115+J115"
+    }
+  },
+  {
+    "r": 116,
+    "nivel": 3,
+    "concepto": "Depreciación acumulada de propiedades de inversión",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A116))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A116))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A116))",
+      "11": "=G116+H116-I116+J116"
+    }
+  },
+  {
+    "r": 117,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado de propiedades de inversión",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A117))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A117))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A117))",
+      "11": "=G117+H117-I117+J117"
+    }
+  },
+  {
+    "r": 118,
+    "nivel": 2,
+    "concepto": "Activos no corrientes",
+    "formulas": {
+      "7": "=G119-G120+G121-G122",
+      "8": "=H119-H120+H121-H122",
+      "9": "=I119-I120+I121-I122",
+      "10": "=J119-J120+J121-J122",
+      "11": "=K119-K120+K121-K122"
+    }
+  },
+  {
+    "r": 119,
+    "nivel": 3,
+    "concepto": "Mantenidos para la venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A119))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A119))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A119))",
+      "11": "=G119+H119-I119+J119"
+    }
+  },
+  {
+    "r": 120,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado activos no corrientes mantenidos para la venta ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A120))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A120))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A120))",
+      "11": "=G120+H120-I120+J120"
+    }
+  },
+  {
+    "r": 121,
+    "nivel": 3,
+    "concepto": "Mantenidos para distribuir a los propietarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A121))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A121))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A121))",
+      "11": "=G121+H121-I121+J121"
+    }
+  },
+  {
+    "r": 122,
+    "nivel": 3,
+    "concepto": "Deterioro acumulado activos no corrientes mantenidos para distribuir a los propietarios ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A122))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A122))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A122))",
+      "11": "=G122+H122-I122+J122"
+    }
+  },
+  {
+    "r": 123,
+    "nivel": 2,
+    "concepto": "Activos biológicos",
+    "formulas": {
+      "7": "=G124+G132",
+      "8": "=H124+H132",
+      "9": "=I124+I132",
+      "10": "=J124+J132",
+      "11": "=K124+K132"
+    }
+  },
+  {
+    "r": 124,
+    "nivel": 3,
+    "concepto": "Animales vivos",
+    "formulas": {
+      "7": "=G125-G126-G127+G128+G129-G130+G131",
+      "8": "=H125-H126-H127+H128+H129-H130+H131",
+      "9": "=I125-I126-I127+I128+I129-I130+I131",
+      "10": "=J125-J126-J127+J128+J129-J130+J131",
+      "11": "=K125-K126-K127+K128+K129-K130+K131"
+    }
+  },
+  {
+    "r": 125,
+    "nivel": 4,
+    "concepto": "Animales productores medidos al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A125))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A125))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A125))",
+      "11": "=G125+H125-I125+J125"
+    }
+  },
+  {
+    "r": 126,
+    "nivel": 4,
+    "concepto": "Depreciación acumulada de animales productores medidos al costo ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A126))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A126))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A126))",
+      "11": "=G126+H126-I126+J126"
+    }
+  },
+  {
+    "r": 127,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado de animales productores medidos al costo ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A127))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A127))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A127))",
+      "11": "=G127+H127-I127+J127"
+    }
+  },
+  {
+    "r": 128,
+    "nivel": 4,
+    "concepto": "Animales productores medidos al valor razonable menos costos de venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A128))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A128))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A128))",
+      "11": "=G128+H128-I128+J128"
+    }
+  },
+  {
+    "r": 129,
+    "nivel": 4,
+    "concepto": "Animales consumibles medidos al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A129))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A129))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A129))",
+      "11": "=G129+H129-I129+J129"
+    }
+  },
+  {
+    "r": 130,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado animales consumibles medidos al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A130))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A130))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A130))",
+      "11": "=G130+H130-I130+J130"
+    }
+  },
+  {
+    "r": 131,
+    "nivel": 4,
+    "concepto": "Animales consumibles medidos al valor razonable menos costos de venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A131))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A131))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A131))",
+      "11": "=G131+H131-I131+J131"
+    }
+  },
+  {
+    "r": 132,
+    "nivel": 3,
+    "concepto": "Plantas productoras y cultivos consumibles",
+    "formulas": {
+      "7": "=G133-G134-G135+G136+G137-G138+G139",
+      "8": "=H133-H134-H135+H136+H137-H138+H139",
+      "9": "=I133-I134-I135+I136+I137-I138+I139",
+      "10": "=J133-J134-J135+J136+J137-J138+J139",
+      "11": "=K133-K134-K135+K136+K137-K138+K139"
+    }
+  },
+  {
+    "r": 133,
+    "nivel": 4,
+    "concepto": "Plantas productoras medidas al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A133))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A133))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A133))",
+      "11": "=G133+H133-I133+J133"
+    }
+  },
+  {
+    "r": 134,
+    "nivel": 4,
+    "concepto": "Depreciación acumulada de plantas productoras",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A134))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A134))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A134))",
+      "11": "=G134+H134-I134+J134"
+    }
+  },
+  {
+    "r": 135,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado de plantas productoras",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A135))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A135))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A135))",
+      "11": "=G135+H135-I135+J135"
+    }
+  },
+  {
+    "r": 136,
+    "nivel": 4,
+    "concepto": "Plantas productoras medidas al valor razonable",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A136))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A136))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A136))",
+      "11": "=G136+H136-I136+J136"
+    }
+  },
+  {
+    "r": 137,
+    "nivel": 4,
+    "concepto": "Cultivos consumibles medidos al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A137))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A137))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A137))",
+      "11": "=G137+H137-I137+J137"
+    }
+  },
+  {
+    "r": 138,
+    "nivel": 4,
+    "concepto": "Deterioro acumulado cultivos consumibles medidos al costo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A138))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A138))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A138))",
+      "11": "=G138+H138-I138+J138",
+      "12": "=SUM(G93+H93+G105+H105+G112+H112+G117+H117+G120+H120+G122+H122+G127+H127+G130+H130+G135+H135+G138+H138)"
+    }
+  },
+  {
+    "r": 139,
+    "nivel": 4,
+    "concepto": "Cultivos consumibles medidos al valor razonable menos costos de venta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A139))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A139))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A139))",
+      "11": "=G139+H139-I139+J139"
+    }
+  },
+  {
+    "r": 140,
+    "nivel": 2,
+    "concepto": "Otros activos",
+    "formulas": {
+      "7": "=SUM(G141:G143)",
+      "8": "=SUM(H141:H143)",
+      "9": "=SUM(I141:I143)",
+      "10": "=SUM(J141:J143)",
+      "11": "=SUM(K141:K143)"
+    }
+  },
+  {
+    "r": 141,
+    "nivel": 3,
+    "concepto": "Activos plan de beneficios a empleados",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A141))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A141))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A141))",
+      "11": "=G141+H141-I141+J141"
+    }
+  },
+  {
+    "r": 142,
+    "nivel": 3,
+    "concepto": "Otros activos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A142))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A142))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A142))",
+      "11": "=G142+H142-I142+J142"
+    }
+  },
+  {
+    "r": 143,
+    "nivel": 3,
+    "concepto": "Activos reconocidos solamente para fines fiscales",
+    "formulas": {
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!F169:F1632,'Hoja Sumaria'!J169:J1632,'H2 (ESF - Patrimonio)'!$A143))",
+      "11": "=G143+H143-I143+J143"
+    }
+  },
+  {
+    "r": 144,
+    "nivel": 2,
+    "concepto": "TOTAL ACTIVOS",
+    "formulas": {
+      "7": "=G11+G15+G38+G61+G73+G78+G83+G84+G94+G113+G118+G123+G140",
+      "8": "=H11+H15+H38+H61+H73+H78+H83+H84+H94+H113+H118+H123+H140",
+      "9": "=I11+I15+I38+I61+I73+I78+I83+I84+I94+I113+I118+I123+I140",
+      "10": "=J11+J15+J38+J61+J73+J78+J83+J84+J94+J113+J118+J123+J140",
+      "11": "=K11+K15+K38+K61+K73+K78+K83+K84+K94+K113+K118+K123+K140"
+    }
+  },
+  {
+    "r": 145,
+    "nivel": 1,
+    "concepto": "PASIVOS",
+    "formulas": {}
+  },
+  {
+    "r": 146,
+    "nivel": 2,
+    "concepto": "Obligaciones financieras y cuentas por pagar",
+    "formulas": {
+      "7": "=SUM(G147:G158)",
+      "8": "=SUM(H147:H158)",
+      "9": "=SUM(I147:I158)",
+      "10": "=SUM(J147:J158)",
+      "11": "=SUM(K147:K158)"
+    }
+  },
+  {
+    "r": 147,
+    "nivel": 3,
+    "concepto": "Obligaciones financieras en moneda local",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A147))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A147))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A147))",
+      "11": "=G147+H147-I147+J147"
+    }
+  },
+  {
+    "r": 148,
+    "nivel": 3,
+    "concepto": "Obligaciones financieras en moneda extranjera",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A148))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A148))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A148))",
+      "11": "=G148+H148-I148+J148"
+    }
+  },
+  {
+    "r": 149,
+    "nivel": 3,
+    "concepto": "Depósitos y exigibilidades",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A149))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A149))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A149))",
+      "11": "=G149+H149-I149+J149"
+    }
+  },
+  {
+    "r": 150,
+    "nivel": 3,
+    "concepto": "Cuentas comerciales por pagar en moneda local",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A150))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A150))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A150))",
+      "11": "=G150+H150-I150+J150"
+    }
+  },
+  {
+    "r": 151,
+    "nivel": 3,
+    "concepto": "Cuentas comerciales por pagar en moneda extranjera",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A151))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A151))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A151))",
+      "11": "=G151+H151-I151+J151"
+    }
+  },
+  {
+    "r": 152,
+    "nivel": 3,
+    "concepto": "Dividendos y participaciones por pagar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A152))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A152))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A152))",
+      "11": "=G152+H152-I152+J152"
+    }
+  },
+  {
+    "r": 153,
+    "nivel": 3,
+    "concepto": "Cuentas por pagar a socios, accionistas o partícipes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A153))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A153))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A153))",
+      "11": "=G153+H153-I153+J153"
+    }
+  },
+  {
+    "r": 154,
+    "nivel": 3,
+    "concepto": "Cuentas y documentos por pagar a otras partes relacionadas y asociadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A154))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A154))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A154))",
+      "11": "=G154+H154-I154+J154"
+    }
+  },
+  {
+    "r": 155,
+    "nivel": 3,
+    "concepto": "Reserva matemática y/o técnica y otros pasivos exclusivos en compañías de seguros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A155))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A155))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A155))",
+      "11": "=G155+H155-I155+J155"
+    }
+  },
+  {
+    "r": 156,
+    "nivel": 3,
+    "concepto": "Recaudo a favor de terceros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A156))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A156))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A156))",
+      "11": "=G156+H156-I156+J156"
+    }
+  },
+  {
+    "r": 157,
+    "nivel": 3,
+    "concepto": "Otras cuentas y documentos por pagar en moneda local",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A157))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A157))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A157))",
+      "11": "=G157+H157-I157+J157"
+    }
+  },
+  {
+    "r": 158,
+    "nivel": 3,
+    "concepto": "Otras cuentas y documentos por pagar en moneda extranjera",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A158))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A158))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A158))",
+      "11": "=G158+H158-I158+J158"
+    }
+  },
+  {
+    "r": 159,
+    "nivel": 2,
+    "concepto": "Arrendamientos por pagar",
+    "formulas": {
+      "7": "=SUM(G160:G162)",
+      "8": "=SUM(H160:H162)",
+      "9": "=SUM(I160:I162)",
+      "10": "=SUM(J160:J162)",
+      "11": "=SUM(K160:K162)"
+    }
+  },
+  {
+    "r": 160,
+    "nivel": 3,
+    "concepto": "Financiero o leasing - partes no relacionadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A160))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A160))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A160))",
+      "11": "=G160+H160-I160+J160"
+    }
+  },
+  {
+    "r": 161,
+    "nivel": 3,
+    "concepto": "Financiero o leasing - partes relacionadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A161))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A161))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A161))",
+      "11": "=G161+H161-I161+J161"
+    }
+  },
+  {
+    "r": 162,
+    "nivel": 3,
+    "concepto": "Operativo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A162))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A162))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A162))",
+      "11": "=G162+H162-I162+J162"
+    }
+  },
+  {
+    "r": 163,
+    "nivel": 2,
+    "concepto": "Otros pasivos financieros",
+    "formulas": {
+      "7": "=SUM(G164:G168)",
+      "8": "=SUM(H164:H168)",
+      "9": "=SUM(I164:I168)",
+      "10": "=SUM(J164:J168)",
+      "11": "=SUM(K164:K168)"
+    }
+  },
+  {
+    "r": 164,
+    "nivel": 3,
+    "concepto": "Bonos y documentos equivalentes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A164))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A164))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A164))",
+      "11": "=G164+H164-I164+J164"
+    }
+  },
+  {
+    "r": 165,
+    "nivel": 3,
+    "concepto": "Instrumentos financieros derivados ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A165))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A165))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A165))",
+      "11": "=G165+H165-I165+J165"
+    }
+  },
+  {
+    "r": 166,
+    "nivel": 3,
+    "concepto": "Acciones preferenciales o aportes de capital clasificados como pasivos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A166))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A166))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A166))",
+      "11": "=G166+H166-I166+J166"
+    }
+  },
+  {
+    "r": 167,
+    "nivel": 3,
+    "concepto": "Derechos fiduciarios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A167))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A167))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A167))",
+      "11": "=G167+H167-I167+J167"
+    }
+  },
+  {
+    "r": 168,
+    "nivel": 3,
+    "concepto": "Otros pasivos financieros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A168))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A168))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A168))",
+      "11": "=G168+H168-I168+J168"
+    }
+  },
+  {
+    "r": 169,
+    "nivel": 2,
+    "concepto": "Impuestos, gravámenes y tasas por pagar",
+    "formulas": {
+      "7": "=SUM(G170:G172)",
+      "8": "=SUM(H170:H172)",
+      "9": "=SUM(I170:I172)",
+      "10": "=SUM(J170:J172)",
+      "11": "=SUM(K170:K172)"
+    }
+  },
+  {
+    "r": 170,
+    "nivel": 3,
+    "concepto": "Impuesto de renta",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A170))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A170))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A170))",
+      "11": "=G170+H170-I170+J170"
+    }
+  },
+  {
+    "r": 171,
+    "nivel": 3,
+    "concepto": "Impuesto al valor agregado - IVA",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A171))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A171))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A171))",
+      "11": "=G171+H171-I171+J171"
+    }
+  },
+  {
+    "r": 172,
+    "nivel": 3,
+    "concepto": "Otros impuestos, gravámenes y tasas por pagar",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A172))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A172))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A172))",
+      "11": "=G172+H172-I172+J172"
+    }
+  },
+  {
+    "r": 173,
+    "nivel": 2,
+    "concepto": "Pasivos por impuestos diferidos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A173))",
+      "9": "=G173+H173",
+      "11": "=G173+H173-I173+J173"
+    }
+  },
+  {
+    "r": 174,
+    "nivel": 2,
+    "concepto": "Pasivos por beneficios a los empleados",
+    "formulas": {
+      "7": "=SUM(G175:G178)",
+      "8": "=SUM(H175:H178)",
+      "9": "=SUM(I175:I178)",
+      "10": "=SUM(J175:J178)",
+      "11": "=SUM(K175:K178)"
+    }
+  },
+  {
+    "r": 175,
+    "nivel": 3,
+    "concepto": "De corto plazo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A175))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A175))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A175))",
+      "11": "=G175+H175-I175+J175"
+    }
+  },
+  {
+    "r": 176,
+    "nivel": 3,
+    "concepto": "De largo plazo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A176))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A176))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A176))",
+      "11": "=G176+H176-I176+J176"
+    }
+  },
+  {
+    "r": 177,
+    "nivel": 3,
+    "concepto": "Por terminación del vínculo laboral o contractual",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A177))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A177))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A177))",
+      "11": "=G177+H177-I177+J177"
+    }
+  },
+  {
+    "r": 178,
+    "nivel": 3,
+    "concepto": "Post empleo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A178))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A178))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A178))",
+      "11": "=G178+H178-I178+J178"
+    }
+  },
+  {
+    "r": 179,
+    "nivel": 2,
+    "concepto": "Provisiones",
+    "formulas": {
+      "7": "=SUM(G180:G190)",
+      "8": "=SUM(H180:H190)",
+      "9": "=SUM(I180:I190)",
+      "10": "=SUM(J180:J190)",
+      "11": "=SUM(K180:K190)"
+    }
+  },
+  {
+    "r": 180,
+    "nivel": 3,
+    "concepto": "Procesos legales (litigios y demandas)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A180))",
+      "9": "=G180+H180",
+      "11": "=G180+H180-I180+J180"
+    }
+  },
+  {
+    "r": 181,
+    "nivel": 3,
+    "concepto": "Mantenimiento y reparaciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A181))",
+      "9": "=G181+H181",
+      "11": "=G181+H181-I181+J181"
+    }
+  },
+  {
+    "r": 182,
+    "nivel": 3,
+    "concepto": "Obligaciones fiscales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A182))",
+      "9": "=G182+H182",
+      "11": "=G182+H182-I182+J182"
+    }
+  },
+  {
+    "r": 183,
+    "nivel": 3,
+    "concepto": "Desmantelamientos, restauración y rehabilitación",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A183))",
+      "9": "=G183+H183",
+      "11": "=G183+H183-I183+J183"
+    }
+  },
+  {
+    "r": 184,
+    "nivel": 3,
+    "concepto": "Garantías",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A184))",
+      "9": "=G184+H184",
+      "11": "=G184+H184-I184+J184"
+    }
+  },
+  {
+    "r": 185,
+    "nivel": 3,
+    "concepto": "Contratos onerosos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A185))",
+      "9": "=G185+H185",
+      "11": "=G185+H185-I185+J185"
+    }
+  },
+  {
+    "r": 186,
+    "nivel": 3,
+    "concepto": "Reembolsos a clientes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A186))",
+      "9": "=G186+H186",
+      "11": "=G186+H186-I186+J186"
+    }
+  },
+  {
+    "r": 187,
+    "nivel": 3,
+    "concepto": "Reestructuraciones de negocios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A187))",
+      "9": "=G187+H187",
+      "11": "=G187+H187-I187+J187"
+    }
+  },
+  {
+    "r": 188,
+    "nivel": 3,
+    "concepto": "Pasivos contingentes asumidos en una combinación de negocios",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A188))",
+      "9": "=G188+H188",
+      "11": "=G188+H188-I188+J188"
+    }
+  },
+  {
+    "r": 189,
+    "nivel": 3,
+    "concepto": "Relacionadas con el medio ambiente",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A189))",
+      "9": "=G189+H189",
+      "11": "=G189+H189-I189+J189"
+    }
+  },
+  {
+    "r": 190,
+    "nivel": 3,
+    "concepto": "Otras provisiones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A190))",
+      "9": "=G190+H190",
+      "11": "=G190+H190-I190+J190"
+    }
+  },
+  {
+    "r": 191,
+    "nivel": 2,
+    "concepto": "Pasivos por ingresos diferidos",
+    "formulas": {
+      "7": "=SUM(G192:G195)",
+      "8": "=SUM(H192:H195)",
+      "9": "=SUM(I192:I195)",
+      "10": "=SUM(J192:J195)",
+      "11": "=SUM(K192:K195)"
+    }
+  },
+  {
+    "r": 192,
+    "nivel": 3,
+    "concepto": "Anticipos y avances recibidos de clientes",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A192))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A192))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A192))",
+      "11": "=G192+H192-I192+J192"
+    }
+  },
+  {
+    "r": 193,
+    "nivel": 3,
+    "concepto": "Ingresos diferidos por programas de fidelización",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A193))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A193))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A193))",
+      "11": "=G193+H193-I193+J193"
+    }
+  },
+  {
+    "r": 194,
+    "nivel": 3,
+    "concepto": "Subvenciones del gobierno y otras ayudas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A194))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A194))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A194))",
+      "11": "=G194+H194-I194+J194"
+    }
+  },
+  {
+    "r": 195,
+    "nivel": 3,
+    "concepto": "Otros pasivos por ingresos diferidos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A195))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A195))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A195))",
+      "11": "=G195+H195-I195+J195"
+    }
+  },
+  {
+    "r": 196,
+    "nivel": 2,
+    "concepto": "Otros pasivos",
+    "formulas": {
+      "7": "=SUM(G197:G204)",
+      "8": "=SUM(H197:H204)",
+      "9": "=SUM(I197:I204)",
+      "10": "=SUM(J197:J204)",
+      "11": "=SUM(K197:K204)"
+    }
+  },
+  {
+    "r": 197,
+    "nivel": 3,
+    "concepto": "Depósitos recibidos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A197))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A197))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A197))",
+      "11": "=G197+H197-I197+J197"
+    }
+  },
+  {
+    "r": 198,
+    "nivel": 3,
+    "concepto": "Retenciones a terceros sobre contratos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A198))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A198))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A198))",
+      "11": "=G198+H198-I198+J198"
+    }
+  },
+  {
+    "r": 199,
+    "nivel": 3,
+    "concepto": "Embargos judiciales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A199))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A199))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A199))",
+      "11": "=G199+H199-I199+J199"
+    }
+  },
+  {
+    "r": 200,
+    "nivel": 3,
+    "concepto": "Cuentas en participación",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A200))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A200))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A200))",
+      "11": "=G200+H200-I200+J200"
+    }
+  },
+  {
+    "r": 201,
+    "nivel": 3,
+    "concepto": "Pasivo para ejecución de excedentes - Régimen Tributario Especial",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A201))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A201))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A201))",
+      "11": "=G201+H201-I201+J201"
+    }
+  },
+  {
+    "r": 202,
+    "nivel": 3,
+    "concepto": "Fondos sociales, mutuales y otros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A202))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A202))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A202))",
+      "11": "=G202+H202-I202+J202"
+    }
+  },
+  {
+    "r": 203,
+    "nivel": 3,
+    "concepto": "Otros pasivos",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A203))",
+      "9": "=ABS(SUMIFS('Hoja Sumaria'!$F$3:$F$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A203))",
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A203))",
+      "11": "=G203+H203-I203+J203"
+    }
+  },
+  {
+    "r": 204,
+    "nivel": 3,
+    "concepto": "Pasivos reconocidos solamente para fines fiscales",
+    "formulas": {
+      "10": "=ABS(SUMIFS('Hoja Sumaria'!$G$3:$G$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A204))",
+      "11": "=G204+H204-I204+J204"
+    }
+  },
+  {
+    "r": 205,
+    "nivel": 2,
+    "concepto": "TOTAL PASIVOS",
+    "formulas": {
+      "7": "=G146+G159+G163+G169+G173+G174+G179+G191+G196",
+      "8": "=H146+H159+H163+H169+H173+H174+H179+H191+H196",
+      "9": "=I146+I159+I163+I169+I173+I174+I179+I191+I196",
+      "10": "=J146+J159+J163+J169+J173+J174+J179+J191+J196",
+      "11": "=K146+K159+K163+K169+K173+K174+K179+K191+K196"
+    }
+  },
+  {
+    "r": 206,
+    "nivel": 1,
+    "concepto": "PATRIMONIO (ACTIVOS - PASIVOS)",
+    "formulas": {
+      "7": "=G144-G205",
+      "8": "=H144-H205",
+      "9": "=I144-I205",
+      "10": "=J144-J205",
+      "11": "=K144-K205"
+    }
+  },
+  {
+    "r": 207,
+    "nivel": 1,
+    "concepto": "DETALLE PATRIMONIO CONTABLE",
+    "formulas": {
+      "7": "VALOR CONTABLE ",
+      "8": "EFECTO DE CONVERSION "
+    }
+  },
+  {
+    "r": 208,
+    "nivel": 2,
+    "concepto": "Capital social y reservas",
+    "formulas": {
+      "7": "=SUM(G209:G223)-G224",
+      "8": "=SUM(H209:H223)-H224"
+    }
+  },
+  {
+    "r": 209,
+    "nivel": 3,
+    "concepto": "Capital pagado",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A209))"
+    }
+  },
+  {
+    "r": 210,
+    "nivel": 3,
+    "concepto": "Acciones, cuotas o partes de interés social propias en cartera",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A210))"
+    }
+  },
+  {
+    "r": 211,
+    "nivel": 3,
+    "concepto": "Aportes sociales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A211))"
+    }
+  },
+  {
+    "r": 212,
+    "nivel": 3,
+    "concepto": "Capital asignado",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A212))"
+    }
+  },
+  {
+    "r": 213,
+    "nivel": 3,
+    "concepto": "Fondo social mutual",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A213))"
+    }
+  },
+  {
+    "r": 214,
+    "nivel": 3,
+    "concepto": "Superávit de capital",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A214))"
+    }
+  },
+  {
+    "r": 215,
+    "nivel": 3,
+    "concepto": "Donaciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A215))"
+    }
+  },
+  {
+    "r": 216,
+    "nivel": 3,
+    "concepto": "Reservas legales o estatutarias",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A216))"
+    }
+  },
+  {
+    "r": 217,
+    "nivel": 3,
+    "concepto": "Reservas ocasionales",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A217))"
+    }
+  },
+  {
+    "r": 218,
+    "nivel": 3,
+    "concepto": "Reservas y fondos entidades solidarias",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A218))"
+    }
+  },
+  {
+    "r": 219,
+    "nivel": 3,
+    "concepto": "Asignaciones permanentes - Régimen Tributario Especial",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A219))"
+    }
+  },
+  {
+    "r": 220,
+    "nivel": 3,
+    "concepto": "Superávit por revaluaciones",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A220))"
+    }
+  },
+  {
+    "r": 221,
+    "nivel": 3,
+    "concepto": "Superávit método de participación",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A221))"
+    }
+  },
+  {
+    "r": 222,
+    "nivel": 3,
+    "concepto": "Dividendos o participaciones decretados en acciones, cuotas o partes de interés social",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A222))"
+    }
+  },
+  {
+    "r": 223,
+    "nivel": 3,
+    "concepto": "Saldo crédito Inversion suplementaria",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A223))"
+    }
+  },
+  {
+    "r": 224,
+    "nivel": 3,
+    "concepto": "Saldo débito Inversion suplementaria",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A224))"
+    }
+  },
+  {
+    "r": 225,
+    "nivel": 2,
+    "concepto": "Resultados del ejercicio",
+    "formulas": {
+      "7": "=G226+G227-G228-G229",
+      "8": "=H226+H227-H228-H229"
+    }
+  },
+  {
+    "r": 226,
+    "nivel": 3,
+    "concepto": "Utilidad o excedente del ejercicio en operaciones continuadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A226))"
+    }
+  },
+  {
+    "r": 227,
+    "nivel": 3,
+    "concepto": "Utilidad o excedente del ejercicio en operaciones discontinuadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A227))"
+    }
+  },
+  {
+    "r": 228,
+    "nivel": 3,
+    "concepto": "Pérdida o déficit del ejercicio en operaciones continuadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A228))"
+    }
+  },
+  {
+    "r": 229,
+    "nivel": 3,
+    "concepto": "Pérdida o déficit del ejercicio en operaciones discontinuadas",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A229))"
+    }
+  },
+  {
+    "r": 230,
+    "nivel": 2,
+    "concepto": "Resultados acumulados",
+    "formulas": {
+      "7": "=G231+G232+G233+G234-G235-G236-G237",
+      "8": "=H231+H232+H233+H234-H235-H236-H237"
+    }
+  },
+  {
+    "r": 231,
+    "nivel": 3,
+    "concepto": "Utilidades o excedentes acumulados susceptibles de distribución a título de no constitutivo de renta ni gananacia ocasio",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A231))"
+    }
+  },
+  {
+    "r": 232,
+    "nivel": 3,
+    "concepto": "Utilidades o excedentes acumulados susceptibles de distribución en calidad de gravados",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A232))"
+    }
+  },
+  {
+    "r": 233,
+    "nivel": 3,
+    "concepto": "Utilidades acumuladas por ajustes por correcciones de errores",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A233))"
+    }
+  },
+  {
+    "r": 234,
+    "nivel": 3,
+    "concepto": "Utilidades por ajustes por cambios en políticas contables",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A234))"
+    }
+  },
+  {
+    "r": 235,
+    "nivel": 3,
+    "concepto": "Pérdidas o déficit acumulados",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A235))"
+    }
+  },
+  {
+    "r": 236,
+    "nivel": 3,
+    "concepto": "Pérdidas acumuladas por ajustes por correcciones de errores",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A236))"
+    }
+  },
+  {
+    "r": 237,
+    "nivel": 3,
+    "concepto": "Pérdidas  por ajustes por cambios en políticas contables ",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A237))"
+    }
+  },
+  {
+    "r": 238,
+    "nivel": 2,
+    "concepto": "Ganancias (pérdidas) acumuladas o retenidas por la adopción por primera",
+    "formulas": {
+      "7": "=G239-G240",
+      "8": "=H239-H240"
+    }
+  },
+  {
+    "r": 239,
+    "nivel": 3,
+    "concepto": "Ganancias acumuladas netas en la adopción por primera vez",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A239))"
+    }
+  },
+  {
+    "r": 240,
+    "nivel": 3,
+    "concepto": "Pérdidas acumuladas netas - adopción por primera vez",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A240))"
+    }
+  },
+  {
+    "r": 241,
+    "nivel": 2,
+    "concepto": "Otro resultado integral acumulado",
+    "formulas": {
+      "7": "=G242-G243+G244-G245",
+      "8": "=H242-H243+H244-H245"
+    }
+  },
+  {
+    "r": 242,
+    "nivel": 3,
+    "concepto": "Ajuste positivo por efecto de conversión",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A242))"
+    }
+  },
+  {
+    "r": 243,
+    "nivel": 3,
+    "concepto": "Ajuste negativo por efecto de conversión",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A243))"
+    }
+  },
+  {
+    "r": 244,
+    "nivel": 3,
+    "concepto": "Ganancias acumuladas - ORI",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A244))"
+    }
+  },
+  {
+    "r": 245,
+    "nivel": 3,
+    "concepto": "Pérdidas acumuladas - ORI",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A245))"
+    }
+  },
+  {
+    "r": 246,
+    "nivel": 2,
+    "concepto": "TOTAL PATRIMONIO CONTABLE",
+    "formulas": {
+      "7": "=G208+G225+G230+G238+G241",
+      "8": "=H208+H225+H230+H238+H241"
+    }
+  },
+  {
+    "r": 247,
+    "nivel": 1,
+    "concepto": "DATOS INFORMATIVOS",
+    "formulas": {
+      "7": "VALOR CONTABLE ",
+      "8": "EFECTO DE CONVERSION ",
+      "11": "VALOR FISCAL"
+    }
+  },
+  {
+    "r": 248,
+    "nivel": 2,
+    "concepto": "ACTIVOS",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A248))"
+    }
+  },
+  {
+    "r": 249,
+    "nivel": 4,
+    "concepto": "Total activos (fideicomitidos y generados) en el periodo gravable por fideicomisos o encargos fiduciarios en donde el co",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A249))"
+    }
+  },
+  {
+    "r": 250,
+    "nivel": 4,
+    "concepto": "Inventarios de terceros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A250))"
+    }
+  },
+  {
+    "r": 251,
+    "nivel": 4,
+    "concepto": "Inventarios en poder de terceros",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A251))"
+    }
+  },
+  {
+    "r": 252,
+    "nivel": 4,
+    "concepto": "Retención en la fuente trasladable (Art. 242-1 ET)",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A252))"
+    }
+  },
+  {
+    "r": 253,
+    "nivel": 2,
+    "concepto": "PASIVOS",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A253))"
+    }
+  },
+  {
+    "r": 254,
+    "nivel": 4,
+    "concepto": "Total pasivos (fideicomitidos y generados) en el periodo gravable por fideicomisos o encargos fiduciarios en donde el co",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3:$E$1501,'Hoja Sumaria'!$J$3:$J$1501,'H2 (ESF - Patrimonio)'!$A254))"
+    }
+  },
+  {
+    "r": 255,
+    "nivel": 2,
+    "concepto": "PATRIMONIO",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A255))"
+    }
+  },
+  {
+    "r": 256,
+    "nivel": 4,
+    "concepto": "Dividendos o participaciones no gravados decretados en el periodo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A256))"
+    }
+  },
+  {
+    "r": 257,
+    "nivel": 4,
+    "concepto": "Dividendos o participaciones gravados efectivamente pagados o exigibles en el periodo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A257))"
+    }
+  },
+  {
+    "r": 258,
+    "nivel": 4,
+    "concepto": "Dividendos o participaciones no gravados efectivamente pagados o exigibles en el periodo",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A258))"
+    }
+  },
+  {
+    "r": 259,
+    "nivel": 4,
+    "concepto": "Dividendos o participaciones pagados o exigibles en el periodo, con cargo a utilidades del mismo período",
+    "formulas": {
+      "7": "=ABS(SUMIFS('Hoja Sumaria'!$E$3305:$E$3482,'Hoja Sumaria'!$J$3305:$J$3482,'H2 (ESF - Patrimonio)'!$A259))"
+    }
+  }
+]
