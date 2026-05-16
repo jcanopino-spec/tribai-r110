@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addDescuentoAction } from "./actions";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 import {
   CATEGORIAS,
   PLANTILLAS,
@@ -31,6 +32,7 @@ export function DescuentoForm({
 }) {
   const action = addDescuentoAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [categoria, setCategoria] = useState<Categoria>("otros");
   const [descripcion, setDescripcion] = useState("");
   const [normatividad, setNormatividad] = useState("");

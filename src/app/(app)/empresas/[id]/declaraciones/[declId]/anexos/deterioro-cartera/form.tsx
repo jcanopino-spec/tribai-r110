@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { saveDcAction, type DcState } from "./actions";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: DcState = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -34,6 +35,7 @@ type Metodo = "general" | "individual" | "combinado";
 export function DcForm({ declId, empresaId, declaracion }: any) {
   const action = saveDcAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
 
   const [c0_90, setC0_90] = useState(fmt(declaracion.dc_cartera_0_90));
   const [c91_180, setC91_180] = useState(fmt(declaracion.dc_cartera_91_180));

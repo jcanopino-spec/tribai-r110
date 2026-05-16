@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { addDividendoAction } from "./actions";
 import { CATEGORIAS, type State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 
@@ -18,6 +19,7 @@ export function DividendoForm({
 }) {
   const action = addDividendoAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addDifCambioAction } from "./actions";
 import type { Tipo, State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 4 });
@@ -26,6 +27,7 @@ export function DifCambioForm({
 }) {
   const action = addDifCambioAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [tipo, setTipo] = useState<Tipo>("activo");
   const formRef = useRef<HTMLFormElement>(null);
 

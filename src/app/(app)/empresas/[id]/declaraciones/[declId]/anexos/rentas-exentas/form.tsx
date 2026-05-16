@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 import { addRentaExentaAction } from "./actions";
 import { PLANTILLAS, type State } from "./consts";
 
@@ -26,6 +27,7 @@ export function RentasExentasForm({
 }) {
   const action = addRentaExentaAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [descripcion, setDescripcion] = useState("");
   const [normatividad, setNormatividad] = useState("");
   const [valor, setValor] = useState("");

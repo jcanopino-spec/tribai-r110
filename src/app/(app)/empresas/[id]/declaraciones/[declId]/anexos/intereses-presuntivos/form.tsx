@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { addInteresAction } from "./actions";
 import type { State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -25,6 +26,7 @@ export function InteresForm({
 }) {
   const action = addInteresAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [saldo, setSaldo] = useState("");
   const [registrado, setRegistrado] = useState("");
   const formRef = useRef<HTMLFormElement>(null);

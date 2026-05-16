@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addInversionEsalAction } from "./actions";
 import { CATEGORIAS_ESAL, ESTADO_INICIAL, type TipoInversion } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 
@@ -27,6 +28,7 @@ export function InversionEsalForm({
 }) {
   const action = addInversionEsalAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, ESTADO_INICIAL);
+  useRefreshOnSuccess(state);
   const [tipo, setTipo] = useState<TipoInversion>("efectuada");
   const [valor, setValor] = useState("");
   const [concepto, setConcepto] = useState("");

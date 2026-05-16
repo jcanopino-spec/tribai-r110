@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { saveRentaPresuntivaAction, type RpState } from "./actions";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
 const initial: RpState = { error: null, ok: false };
@@ -32,6 +33,7 @@ function parseNum(s: string): number {
 export function RentaPresuntivaForm({ declId, empresaId, tarifa, declaracion }: any) {
   const action = saveRentaPresuntivaAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
 
   const patrimonioLiquidoAnterior =
     Number(declaracion.patrimonio_bruto_anterior ?? 0) -

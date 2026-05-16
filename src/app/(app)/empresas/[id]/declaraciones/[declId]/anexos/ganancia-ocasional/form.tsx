@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addGoAction } from "./actions";
 import { CATEGORIAS, pideCostoFiscal, type Categoria, type GoState } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: GoState = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -26,6 +27,7 @@ export function GoForm({
 }) {
   const action = addGoAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [categoria, setCategoria] = useState<Categoria>("activo_fijo");
   const [precio, setPrecio] = useState("");
   const [costo, setCosto] = useState("");

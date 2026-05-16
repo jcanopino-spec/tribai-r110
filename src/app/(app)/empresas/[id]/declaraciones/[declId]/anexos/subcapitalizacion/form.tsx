@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { saveSubAction, type SubState } from "./actions";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: SubState = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -32,6 +33,7 @@ function parseNum(s: string): number {
 export function SubForm({ declId, empresaId, declaracion }: any) {
   const action = saveSubAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
 
   const [deuda, setDeuda] = useState(fmt(declaracion.sub_deuda_promedio));
   const [intereses, setIntereses] = useState(fmt(declaracion.sub_intereses));

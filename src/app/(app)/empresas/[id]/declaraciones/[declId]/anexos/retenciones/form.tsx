@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addRetencionAction } from "./actions";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 import {
   CONCEPTOS_RETENCION,
   CONCEPTOS_AUTORRETENCION,
@@ -31,6 +32,7 @@ export function RetencionForm({
 }) {
   const action = addRetencionAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [tipo, setTipo] = useState<"retencion" | "autorretencion">("retencion");
   const [base, setBase] = useState("");
   const [retenido, setRetenido] = useState("");

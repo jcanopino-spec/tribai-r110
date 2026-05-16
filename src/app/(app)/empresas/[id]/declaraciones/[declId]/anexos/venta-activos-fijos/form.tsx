@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { addVentaAfAction } from "./actions";
 import type { State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -25,6 +26,7 @@ export function VentaAfForm({
 }) {
   const action = addVentaAfAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [precio, setPrecio] = useState("");
   const [costo, setCosto] = useState("");
   const [depreciacion, setDepreciacion] = useState("");

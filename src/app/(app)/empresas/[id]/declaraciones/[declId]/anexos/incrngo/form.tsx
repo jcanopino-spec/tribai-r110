@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addIncrngoAction } from "./actions";
 import { PLANTILLAS, type State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -25,6 +26,7 @@ export function IncrngoForm({
 }) {
   const action = addIncrngoAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [concepto, setConcepto] = useState("");
   const [normatividad, setNormatividad] = useState("");
   const [valor, setValor] = useState("");

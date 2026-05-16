@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input, Select } from "@/components/ui/input";
 import { addCompensacionAction } from "./actions";
 import { TIPOS, type Tipo, type State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -28,6 +29,7 @@ export function CompensacionForm({
 }) {
   const action = addCompensacionAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const [tipo, setTipo] = useState<Tipo>("perdida");
   const [original, setOriginal] = useState("");
   const [comp, setComp] = useState("");

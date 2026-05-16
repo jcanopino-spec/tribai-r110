@@ -6,6 +6,7 @@ import { Field } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { addIcaAction } from "./actions";
 import type { State } from "./consts";
+import { useRefreshOnSuccess } from "@/lib/use-refresh-on-success";
 
 const initial: State = { error: null, ok: false };
 const FMT = new Intl.NumberFormat("es-CO", { maximumFractionDigits: 0 });
@@ -23,6 +24,7 @@ function fmtDecimal(s: string): string {
 export function IcaForm({ declId, empresaId }: { declId: string; empresaId: string }) {
   const action = addIcaAction.bind(null, declId, empresaId);
   const [state, formAction, pending] = useActionState(action, initial);
+  useRefreshOnSuccess(state);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
