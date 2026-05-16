@@ -28,11 +28,18 @@ import type { Database } from "@/lib/db/types";
 import { loadSegSocialTotals } from "./seg-social-totals";
 
 type DeclMin = {
+  empresa_id?: string | null;
   total_nomina: number | string | null;
   aportes_seg_social: number | string | null;
   aportes_para_fiscales: number | string | null;
   ano_gravable?: number | null;
 };
+
+// Régimenes Tributarios Especiales (Art. 19 + Art. 356-364 E.T.) · sus
+// rentas exentas (excedentes Art. 358) NO están sujetas al tope del 10%
+// que aplica solo a las rentas exentas Art. 235-2 par. 5 del régimen
+// ordinario. Códigos del catálogo DIAN.
+const REGIMENES_RTE = new Set(["02", "03", "08", "09", "12", "16", "20"]);
 
 export type AnexosCtx = {
   totalNomina: number;
@@ -196,17 +203,33 @@ export async function loadAnexosCtx(
 
   // Rentas exentas: separa las sujetas al tope del 10% RL (Art. 235-2 par. 5).
   // Prioridad:
+  //   0. Régimen RTE/ESAL (Art. 19, 356-364) → NUNCA tope · Art. 358 excedente
+  //      reinvertido es exento puro
   //   1. Si el registro tiene `sujeto_tope_10pct` explícito (post-migración 031), úsalo
   //   2. Sino, heurística por `normatividad`: numerales 1-6 del Art. 235-2 sí
   //      tienen tope; numerales 7 (energías) y 8 (editorial) y convenios CAN/DTI no.
+  let regimenCodigo: string | null = null;
+  if (declaracion.empresa_id) {
+    const { data: emp } = await supabase
+      .from("empresas")
+      .select("regimen_codigo")
+      .eq("id", declaracion.empresa_id)
+      .maybeSingle();
+    regimenCodigo = emp?.regimen_codigo ?? null;
+  }
+  const esRTE = regimenCodigo != null && REGIMENES_RTE.has(regimenCodigo);
+
   const sinTopeRegex = /art\.?\s*235-2.*num.*[78]|can|decisi[oó]n\s*578|conv\./i;
   let totalRentasExentasSinTope = 0;
   let totalRentasExentasConTope = 0;
   for (const r of rentasExentas ?? []) {
     const v = Number(r.valor_fiscal);
     const norm = String(r.normatividad ?? "");
-    // Default conservador: aplicar tope (más restrictivo).
-    const sujetoTope = r.sujeto_tope_10pct ?? !sinTopeRegex.test(norm);
+    // RTE/ESAL → siempre sin tope. Régimen ordinario → flag explícito o
+    // heurística. Default conservador en ordinario: aplicar tope.
+    const sujetoTope = esRTE
+      ? false
+      : (r.sujeto_tope_10pct ?? !sinTopeRegex.test(norm));
     if (sujetoTope) totalRentasExentasConTope += v;
     else totalRentasExentasSinTope += v;
   }
